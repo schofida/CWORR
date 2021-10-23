@@ -1528,8 +1528,10 @@ function StartCombatSoundsLoop()
 EndFunction
 
 function StopCombatSoundsLoop()
-	Sound.StopInstance(CombatSoundsLoopInstance)
-	
+	;USKP 2.0.2 - make sure this is valid first.
+	if( CombatSoundsLoopInstance != 0 )
+		Sound.StopInstance(CombatSoundsLoopInstance)
+	EndIf
 EndFunction
 
 function setupInteriorSiege(Location SiegeLocation, ObjectReference FieldCORef, ObjectReference CityCenterMarker)

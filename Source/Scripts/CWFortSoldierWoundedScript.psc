@@ -6,14 +6,18 @@ int Property PercentChanceToAppear = 75 Auto
 ObjectReference Property CampEnableMarker Auto
 {MANDATORY!!! Pointer to the camp's enable marker}
 
+Actor Property Legate Auto
+{Added by USKP 1.3.3 - If the camp's Legate is dead, stop spawning wounded soldiers}
+
 Event OnCellLoad()
 
 	disable()
-
-	if CampEnableMarker.IsEnabled() && Utility.RandomInt(1, 100) <= PercentChanceToAppear
-		Enable()
-		SetRestrained()
-
+	
+	if( CampEnableMarker.IsEnabled() && Utility.RandomInt(1, 100) <= PercentChanceToAppear )
+		if( !Legate.IsDead() )
+			Enable()
+			SetRestrained()
+		EndIf
 	EndIf
 
 EndEvent

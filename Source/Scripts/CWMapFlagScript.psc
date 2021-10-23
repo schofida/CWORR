@@ -7,3 +7,14 @@ EVENT OnActivate(ObjectReference akActionRef)
 		MapMarker.AddToMap()
 	endif
 endEVENT
+
+;Reset and detach events added by USKP 1.2.1 to deal with bloat caused by CWMapActivatorScript.psc
+EVENT OnReset()
+    DisableNoWait()
+    Delete()
+endEVENT
+
+Event OnCellDetach()
+    DisableNoWait()
+    Delete()
+EndEvent

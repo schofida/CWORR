@@ -15,7 +15,12 @@ Event OnTriggerEnter(ObjectReference akActionRef)
 			
 		Else
 ; 			CWScript.Log("CWFortSiegeScript", self + "OnTriggerEnter() Player entered, calling SetStageBasedOntrigger()")
-			(GetOwningQuest() as CWFortSiegeScript).SetStageBasedOnTrigger(GetReference())
+
+			;USLEEP 3.0.8 Bug #14642: Added this check to prevent triggers from calling the quest script when the quest is about to stop (stage 500 is the
+			;highest possible stage that can be set by any trigger, so there's no need for triggers anyway to call the quest script if currentStageID <= 500):
+			if GetOwningQuest().GetCurrentStageID() <= 500
+				(GetOwningQuest() as CWFortSiegeScript).SetStageBasedOnTrigger(GetReference())
+			endif
 
 		
 		EndIf
@@ -24,5 +29,3 @@ Event OnTriggerEnter(ObjectReference akActionRef)
 
 	EndIf
 EndEvent
-
-

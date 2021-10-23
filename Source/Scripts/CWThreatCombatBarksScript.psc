@@ -272,8 +272,13 @@ Function ProcessTriggerActor(Actor TriggerActor, float BattlePhase, bool Bridge 
 	
 	If BattlePhase == CWs.CWBattlePhase.GetValue()
 	
-		FactionTypeAlias.ForceRefTo(TriggerActor)
-		FactionTypeGlobal.setValue(1)
+		;USKP 2.0.4 - It appears possible for this TriggerActor to be NULL somehow.
+		if( TriggerActor == None )
+			debug.TraceStack( Self+" Error: TriggerActor is NULL. Please report to the USKP team with a copy of the log surrounding this notice." )
+		ElseIf FactionTypeAlias
+			FactionTypeAlias.ForceRefTo(TriggerActor)
+			FactionTypeGlobal.setValue(1)
+		EndIf
 		
 		if FactionTypeRoleAlias
 			FactionTypeRoleAlias.ForceRefTo(TriggerActor)

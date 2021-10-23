@@ -180,15 +180,21 @@ EndFunction
 function lockMe(ReferenceAlias DoorToLock, int lockLevel = 255)
 	ObjectReference DoorRef = DoorToLock.GetReference()
 
-	DoorRef.SetLockLevel(lockLevel)
-	DoorRef.Lock()
+	;USKP 2.0.2 - These doors can be optional.
+	if( DoorRef )
+		DoorRef.SetLockLevel(lockLevel)
+		DoorRef.Lock()
+	EndIf
 
 EndFunction
 
 function UnlockMe(ReferenceAlias DoorToUnlock, int UnlockLevel = 255)
 	ObjectReference DoorRef = DoorToUnlock.GetReference()
 
-	DoorRef.lock(false)
+	;USKP 2.0.2 - These doors can be optional.
+	if( DoorRef )
+		DoorRef.lock(false)
+	EndIf
 
 EndFunction
 

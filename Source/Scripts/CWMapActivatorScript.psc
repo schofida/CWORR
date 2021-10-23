@@ -116,12 +116,11 @@ Keyword Property CWOwner Auto
 
 EVENT OnCellAttach()
 
-	RemoveFlags()
+	;RemoveFlags() <--- Disabled by USKP. The flags will now be disabled in CWMapFlagScript.psc instead.
 
 	if Is3DLoaded()
 		PlaceFlags()
 	EndIf
-
 	
 endEVENT
 

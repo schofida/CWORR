@@ -51,6 +51,11 @@ Function ForceAliasIntoFortJobAlias(ReferenceAlias AliasToCheck, ReferenceAlias 
 
 	Actor ActorRef = AliasToCheck.GetActorReference()
 
+	;USKP 2.0.1 - Check for None, otherwise a whole lot of errors get thrown and nothing productive happens.
+	if( ActorRef == None )
+		Return
+	EndIf
+	
 	if CWs.IsPlayerInMyFaction(ActorRef) == false
 	
 		If ActorRef.IsInFaction(CWs.CWJobFortGatekeeperFaction)
@@ -162,7 +167,7 @@ function PrisonerGearUp(Actor Prisoner)
 		Prisoner.AddItem(CWs.CWSoldierSonsGear)
 	EndIf
 	
-	followState = 1
+	;followState = 1 ;<-- Commented out by USKP 1.3.1. If you told the prisoners to wait, this causes them to ignore your order and attack anyway.
 	
 	prisoner.EvaluatePackage()
 	

@@ -2,379 +2,9 @@
 ;NEXT FRAGMENT INDEX 41
 Scriptname QF_CWSiege_000954E1 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase1D
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase1D Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons7 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase4B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase4B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase1D
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase1D Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthMoveDefenderTo2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableFastTravelTrigger
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableFastTravelTrigger Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle7 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunCaravanActor01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCaravanActor01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunIntEnableOnly
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunIntEnableOnly Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerStartRun01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerStartRun01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY JarlHaafingar
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_JarlHaafingar Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HouseCarl
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HouseCarl Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerStartRun02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerStartRun02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase3FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase3FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunSeverioPelagia
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunSeverioPelagia Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor04
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor04 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefendTrigger4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendTrigger4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHandleNearbyActor01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerAttack0
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack0 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor13
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor13 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor05
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor05 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor09
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor09 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY JarlWhiterun
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_JarlWhiterun Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunDefenderRikke
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDefenderRikke Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender7 Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY Attacker4
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_Attacker4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthGateLever1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthGateLever1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase4C
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase4C Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor05
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor05 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase5B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase5B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase5D
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase5D Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase4A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase4A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase2A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase2A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial7 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MapMarkerLocation2
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_MapMarkerLocation2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase2FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase2FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultAttacker1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultAttacker1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunDrawbridgeNavCollision
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDrawbridgeNavCollision Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MapMarkerLocation1
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_MapMarkerLocation1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Hold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_Hold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor12
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor12 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHandleNearbyActor02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeGateLever1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeGateLever1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunDrawbridgeAfter
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDrawbridgeAfter Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerDefend0
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend0 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Attacker6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MainGateInterior
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MainGateInterior Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Attacker1General
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker1General Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Barricade3B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Barricade3B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase5FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase5FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Barricade1A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Barricade1A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCO Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderSons3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderSons3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunDrawbridge
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDrawbridge Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultAttacker4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultAttacker4 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY RespawnDefenderPhase3A
@@ -382,54 +12,34 @@ ReferenceAlias Property Alias_CatapultAttacker4 Auto
 ReferenceAlias Property Alias_RespawnDefenderPhase3A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase3D
+;BEGIN ALIAS PROPERTY WhiterunCompanionsTrigger01
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase3D Auto
+ReferenceAlias Property Alias_WhiterunCompanionsTrigger01 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Attacker3
+;BEGIN ALIAS PROPERTY AttackerSons8
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker3 Auto
+ReferenceAlias Property Alias_AttackerSons8 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackTrigger5
+;BEGIN ALIAS PROPERTY AttackerImperial2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger5 Auto
+ReferenceAlias Property Alias_AttackerImperial2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase2C
+;BEGIN ALIAS PROPERTY Defender5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase2C Auto
+ReferenceAlias Property Alias_Defender5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase4D
+;BEGIN ALIAS PROPERTY WhiterunCaravanActor04
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase4D Auto
+ReferenceAlias Property Alias_WhiterunCaravanActor04 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor03
+;BEGIN ALIAS PROPERTY JarlHaafingar
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenHandleNearbyActor03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HouseCarlWhietrun
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HouseCarlWhietrun Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefendArrowVolleyParent4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendArrowVolleyParent4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Objective2A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective2A Auto
+ReferenceAlias Property Alias_JarlHaafingar Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Barricade3A
@@ -437,34 +47,149 @@ ReferenceAlias Property Alias_Objective2A Auto
 ReferenceAlias Property Alias_Barricade3A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CatapultDefender1
+;BEGIN ALIAS PROPERTY AttackerSons2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultDefender1 Auto
+ReferenceAlias Property Alias_AttackerSons2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackTrigger4
+;BEGIN ALIAS PROPERTY Objective2B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger4 Auto
+ReferenceAlias Property Alias_Objective2B Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY ThreatTriggersToggle
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase2B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ThreatTriggersToggle Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase2B Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SpeechCrowdMarkerFieldCO
+;BEGIN ALIAS PROPERTY SpeechMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarkerFieldCO Auto
+ReferenceAlias Property Alias_SpeechMarker Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase4C
+;BEGIN ALIAS PROPERTY WhiterunExtEnableOnly
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase4C Auto
+ReferenceAlias Property Alias_WhiterunExtEnableOnly Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunCompanionsTrigger01
+;BEGIN ALIAS PROPERTY NonRespawningDefenderSons3
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCompanionsTrigger01 Auto
+ReferenceAlias Property Alias_NonRespawningDefenderSons3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperialReinforceEnabler
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperialReinforceEnabler Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase4B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase4B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerStartRun03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerStartRun03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase4A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase4A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmGateLever2b
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmGateLever2b Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHeimskrNewHome
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHeimskrNewHome Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase1D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase1D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Barricade3B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Barricade3B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Barricade2B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Barricade2B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Objective1B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective1B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SolitudeGateLever1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeGateLever1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Defender6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Defender6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Defender8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Defender8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthGateLever1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthGateLever1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthMoveDefenderTo2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase3B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase3B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY ImpRikke
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ImpRikke Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Attacker10
@@ -477,144 +202,24 @@ ReferenceAlias Property Alias_Attacker10 Auto
 ReferenceAlias Property Alias_RespawnAttackerPhase3A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Objective3B
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor05
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective3B Auto
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor05 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Jarl
+;BEGIN ALIAS PROPERTY NonRespawningDefenderSons5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Jarl Auto
+ReferenceAlias Property Alias_NonRespawningDefenderSons5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefenderSons6
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor04
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons6 Auto
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor04 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Attacker5
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase3FailSafe
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase1B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase1B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial9
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial9 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackTrigger1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHandleNearbyActor3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial9
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial9 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial7 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackTrigger2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultAttacker2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultAttacker2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HouseCarlHaafingar
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HouseCarlHaafingar Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunBridgeLever1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunBridgeLever1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase1C
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase1C Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MainGateExterior
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MainGateExterior Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Objective1A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective1A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase1A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase1A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase5B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase5B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker1 Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase3FailSafe Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DefenderSons3
@@ -622,14 +227,224 @@ ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker1 Auto
 ReferenceAlias Property Alias_DefenderSons3 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase4D
+;BEGIN ALIAS PROPERTY SpeechCrowdMarkerFieldCO
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase4D Auto
+ReferenceAlias Property Alias_SpeechCrowdMarkerFieldCO Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase2D
+;BEGIN ALIAS PROPERTY AttackerSons10
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase2D Auto
+ReferenceAlias Property Alias_AttackerSons10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase4C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase4C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendArrowVolleyParent1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendArrowVolleyParent1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CatapultDefender2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CatapultDefender2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend0
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend0 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker1General
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker1General Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor01 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendArrowVolleyParent2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendArrowVolleyParent2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSons3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSons3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendArrowVolleyParent6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendArrowVolleyParent6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunBridgeLever2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunBridgeLever2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHandleNearbyActor01 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor13
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor13 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker9
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker9 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDefenderRikke
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDefenderRikke Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NonRespawningDefenderImperial1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY City
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_City Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSonsCampMapMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSonsCampMapMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSons6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSons6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase3FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase3FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackTrigger6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackTrigger6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackTrigger4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackTrigger4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackTrigger1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackTrigger1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Objective3A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective3A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY BattleCenterMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_BattleCenterMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor12
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor12 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Jarl
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Jarl Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHandleNearbyActor02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase2FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase2FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase3B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase3B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDrawbridgeAfter
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDrawbridgeAfter Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHandleNearbyActor1 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY AllyMarkerAttack2
@@ -637,24 +452,159 @@ ReferenceAlias Property Alias_RespawnDefenderPhase2D Auto
 ReferenceAlias Property Alias_AllyMarkerAttack2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WindhelmDockGate
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase5D
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmDockGate Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase5D Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerImperialCampMapMarker
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperialCampMapMarker Auto
+ReferenceAlias Property Alias_DisableMapMarkerForBattle5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY enableMarker
+;BEGIN ALIAS PROPERTY CatapultAttacker4
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_enableMarker Auto
+ReferenceAlias Property Alias_CatapultAttacker4 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefenderSons2
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase4A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons2 Auto
+ReferenceAlias Property Alias_RespawnAttackerPhase4A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase2FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase2FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase4D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase4D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase2D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase2D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase3C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase3C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor05
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor05 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY HouseCarlWhietrun
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_HouseCarlWhietrun Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenHandleNearbyActor03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendArrowVolleyParent4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendArrowVolleyParent4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Hold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_Hold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSons4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSons4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NonRespawningDefenderSons6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NonRespawningDefenderSons6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase1B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase1B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MapMarkerLocation3
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_MapMarkerLocation3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHandleNearbyActor3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase3C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase3C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CatapultDefender1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CatapultDefender1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunBridgeLever1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunBridgeLever1 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle9
@@ -667,59 +617,9 @@ ReferenceAlias Property Alias_DisableMapMarkerForBattle9 Auto
 ReferenceAlias Property Alias_SpeechCrowdMarkerFriend Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase1A
+;BEGIN ALIAS PROPERTY AttackerImperialCampMapMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase1A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase1B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase1B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase4FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase4FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultDefender3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultDefender3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerDefend1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderImperial3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerAttack3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DeliverSpeechMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DeliverSpeechMarker Auto
+ReferenceAlias Property Alias_AttackerImperialCampMapMarker Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DefendArrowVolleyParent7
@@ -727,49 +627,9 @@ ReferenceAlias Property Alias_DeliverSpeechMarker Auto
 ReferenceAlias Property Alias_DefendArrowVolleyParent7 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefenderImperial2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial2 Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle11
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_DisableMapMarkerForBattle11 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor06
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor06 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHandleNearbyActor1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial1 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Defender4
@@ -777,74 +637,69 @@ ReferenceAlias Property Alias_AttackerImperial1 Auto
 ReferenceAlias Property Alias_Defender4 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial4
+;BEGIN ALIAS PROPERTY AttackerImperial6
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial4 Auto
+ReferenceAlias Property Alias_AttackerImperial6 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase2B
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor06
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase2B Auto
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor06 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DeliverSpeechMarkerHouseCarl
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DeliverSpeechMarkerHouseCarl Auto
+;BEGIN ALIAS PROPERTY MapMarkerLocation4
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_MapMarkerLocation4 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Defender5
+;BEGIN ALIAS PROPERTY Defender7
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender5 Auto
+ReferenceAlias Property Alias_Defender7 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Attacker8
+;BEGIN ALIAS PROPERTY Defender3
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker8 Auto
+ReferenceAlias Property Alias_Defender3 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefenderImperial4
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase4FailSafe
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial4 Auto
+ReferenceAlias Property Alias_RespawnAttackerPhase4FailSafe Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker7
+;BEGIN ALIAS PROPERTY DefenderSons1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker7 Auto
+ReferenceAlias Property Alias_DefenderSons1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase1C
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor06
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase1C Auto
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor06 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunCaravanActor03
+;BEGIN ALIAS PROPERTY AttackTrigger2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCaravanActor03 Auto
+ReferenceAlias Property Alias_AttackTrigger2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker9
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase2D
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker9 Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase2D Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AllyMarkerAttack6
+;BEGIN ALIAS PROPERTY CatapultAttacker1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack6 Auto
+ReferenceAlias Property Alias_CatapultAttacker1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunExtEnableOnly
+;BEGIN ALIAS PROPERTY Barricade1B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunExtEnableOnly Auto
+ReferenceAlias Property Alias_Barricade1B Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AllyMarkerDefend5
+;BEGIN ALIAS PROPERTY Objective1A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Objective1B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective1B Auto
+ReferenceAlias Property Alias_Objective1A Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY WhiterunDrawbridgeOBJ
@@ -852,39 +707,24 @@ ReferenceAlias Property Alias_Objective1B Auto
 ReferenceAlias Property Alias_WhiterunDrawbridgeOBJ Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerStartRun03
+;BEGIN ALIAS PROPERTY AttackerImperial7
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerStartRun03 Auto
+ReferenceAlias Property Alias_AttackerImperial7 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY ImpTullius
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase5A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ImpTullius Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase5A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerSons6
+;BEGIN ALIAS PROPERTY NonRespawningDefenderSons2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons6 Auto
+ReferenceAlias Property Alias_NonRespawningDefenderSons2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CampEnableMarkerImperial
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase5C
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampEnableMarkerImperial Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerAttack1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY BarricadeGeneric2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_BarricadeGeneric2 Auto
+ReferenceAlias Property Alias_RespawnAttackerPhase5C Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor04
@@ -897,44 +737,44 @@ ReferenceAlias Property Alias_RiftenHandleNearbyActor04 Auto
 ReferenceAlias Property Alias_RespawnAttackerPhase2A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase2D
+;BEGIN ALIAS PROPERTY CatapultAttacker2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase2D Auto
+ReferenceAlias Property Alias_CatapultAttacker2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefenderImperial5
+;BEGIN ALIAS PROPERTY DisableFastTravelTrigger
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderImperial5 Auto
+ReferenceAlias Property Alias_DisableFastTravelTrigger Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase3FailSafe
+;BEGIN ALIAS PROPERTY DeliverSpeechMarkerHouseCarl
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase3FailSafe Auto
+ReferenceAlias Property Alias_DeliverSpeechMarkerHouseCarl Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefendArrowVolleyParent2
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendArrowVolleyParent2 Auto
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase4A
+;BEGIN ALIAS PROPERTY Objective3B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase4A Auto
+ReferenceAlias Property Alias_Objective3B Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase5C
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker7
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase5C Auto
+ReferenceAlias Property Alias_SpeechCrowdMarker7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker9
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker9 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY SolitudeCaravanMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_SolitudeCaravanMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunCaravanActor02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCaravanActor02 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable02
@@ -947,89 +787,19 @@ ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable02 Auto
 ReferenceAlias Property Alias_WhiterunDefenseMoveTo Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase3C
+;BEGIN ALIAS PROPERTY HouseCarlHaafingar
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase3C Auto
+ReferenceAlias Property Alias_HouseCarlHaafingar Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WindhelmGateLever2a
+;BEGIN ALIAS PROPERTY DefenderSons10
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmGateLever2a Auto
+ReferenceAlias Property Alias_DefenderSons10 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor03
+;BEGIN ALIAS PROPERTY Defender9
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerAttack4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase5C
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase5C Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase2B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase2B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerDefend2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase4FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase4FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase2C
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase2C Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunBridgeLever2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunBridgeLever2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CityCenterMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CityCenterMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSonsCampMapMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSonsCampMapMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunIntDisableOnly
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunIntDisableOnly Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase4B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase4B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase5A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase5A Auto
+ReferenceAlias Property Alias_Defender9 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DefendArrowVolleyParent5
@@ -1037,89 +807,9 @@ ReferenceAlias Property Alias_RespawnDefenderPhase5A Auto
 ReferenceAlias Property Alias_DefendArrowVolleyParent5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor11
+;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor11 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultDefender2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultDefender2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MapMarkerLocation3
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_MapMarkerLocation3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor04
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor04 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase5D
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase5D Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HouseCarlEastmarch
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HouseCarlEastmarch Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons9
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons9 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderSons2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderSons2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerAttack5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerAttack5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderSons4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderSons4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHeimskrNewHome
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHeimskrNewHome Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Barricade2A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Barricade2A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase3B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase3B Auto
+ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker1 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker3
@@ -1127,59 +817,19 @@ ReferenceAlias Property Alias_RespawnAttackerPhase3B Auto
 ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker3 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Objective3A
+;BEGIN ALIAS PROPERTY DefenderImperial9
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective3A Auto
+ReferenceAlias Property Alias_DefenderImperial9 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SonsGalmar
+;BEGIN ALIAS PROPERTY AllyMarkerDefend2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SonsGalmar Auto
+ReferenceAlias Property Alias_AllyMarkerDefend2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker6
+;BEGIN ALIAS PROPERTY AttackerImperial9
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY ImpRikke
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ImpRikke Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderSons5
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderSons5 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor05
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor05 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY City
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_City Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefendArrowVolleyParent6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendArrowVolleyParent6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenHandleNearbyActor02 Auto
+ReferenceAlias Property Alias_AttackerImperial9 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY GarrisonEnableMarkerImperialExterior
@@ -1187,84 +837,24 @@ ReferenceAlias Property Alias_RiftenHandleNearbyActor02 Auto
 ReferenceAlias Property Alias_GarrisonEnableMarkerImperialExterior Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Barricade2B
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Barricade2B Auto
+ReferenceAlias Property Alias_AttackArrowVolleyParent2 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Defender10
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase4C
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender10 Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase4C Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor02
+;BEGIN ALIAS PROPERTY Barricade1A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor02 Auto
+ReferenceAlias Property Alias_Barricade1A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MapMarkerLocation4
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_MapMarkerLocation4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunAttackerGalmar
+;BEGIN ALIAS PROPERTY Attacker2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunAttackerGalmar Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender1General
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender1General Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor04
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor04 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenMoveDefenderTo1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SpeechCrowdMarker8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SpeechCrowdMarker8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY GarrisonEnableMarkerSonsExterior
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_GarrisonEnableMarkerSonsExterior Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase5A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase5A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase2FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase2FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackTrigger3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackTrigger6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackTrigger6 Auto
+ReferenceAlias Property Alias_Attacker2 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker8
@@ -1272,184 +862,24 @@ ReferenceAlias Property Alias_AttackTrigger6 Auto
 ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker8 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefendTrigger2
+;BEGIN ALIAS PROPERTY DefenderSons8
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendTrigger2 Auto
+ReferenceAlias Property Alias_DefenderSons8 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker7
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker7 Auto
+ReferenceAlias Property Alias_NonRespawningDefenderImperial5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerSonsReinforceEnabler
+;BEGIN ALIAS PROPERTY Attacker5
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSonsReinforceEnabler Auto
+ReferenceAlias Property Alias_Attacker5 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RiftenDisableNearbyGarrisonEnableMarker2
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker8
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenDisableNearbyGarrisonEnableMarker2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY JarlEastmarch
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_JarlEastmarch Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent7
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent7 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY NonRespawningDefenderSons6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderSons6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase3B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase3B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Objective2B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective2B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SonsUlfric
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SonsUlfric Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmGateLever2b
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmGateLever2b Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunCaravanActor04
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCaravanActor04 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenMoveDefenderTo2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle14
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle14 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunCompanionsTrigger02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunCompanionsTrigger02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle12
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle12 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackArrowVolleyParent8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackArrowVolleyParent8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CampEnableMarkerSons
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampEnableMarkerSons Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefendArrowVolleyParent8
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendArrowVolleyParent8 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase1FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase1FailSafe Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY BarricadeGeneric1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_BarricadeGeneric1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnDefenderPhase3C
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnDefenderPhase3C Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenDisableNearbyGarrisonEnableMarker1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenDisableNearbyGarrisonEnableMarker1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefendTrigger3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendTrigger3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunHandleNearbyActor2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase3D
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase3D Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerSons1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Defender3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender3 Auto
+ReferenceAlias Property Alias_SpeechCrowdMarker8 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY AttackerSons7
@@ -1457,29 +887,319 @@ ReferenceAlias Property Alias_Defender3 Auto
 ReferenceAlias Property Alias_AttackerSons7 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker3
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor11
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker3 Auto
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor11 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker1
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor10
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker1 Auto
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor10 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker2
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor04
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker2 Auto
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor04 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle3
+;BEGIN ALIAS PROPERTY AttackerSons1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle3 Auto
+ReferenceAlias Property Alias_AttackerSons1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Attacker7
+;BEGIN ALIAS PROPERTY AttackerSons9
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker7 Auto
+ReferenceAlias Property Alias_AttackerSons9 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable04
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable04 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack0
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack0 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle15
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle15 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Defender10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Defender10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase3D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase3D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmDockGate
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmDockGate Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase5A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase5A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Defender2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Defender2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase5FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase5FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CatapultDefender3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CatapultDefender3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor05
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor05 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthGateLever2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthGateLever2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunIntEnableOnly
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunIntEnableOnly Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY enableMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_enableMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCO
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCO Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY JarlEastmarch
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_JarlEastmarch Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerStartRun02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerStartRun02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase5FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase5FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerImperial8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerImperial8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase1C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase1C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSonsReinforceEnabler
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSonsReinforceEnabler Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunAttackerGalmar
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunAttackerGalmar Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY ImpTullius
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ImpTullius Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CatapultAttacker3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CatapultAttacker3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenDisableNearbyGarrisonEnableMarker2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenDisableNearbyGarrisonEnableMarker2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DeliverSpeechMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DeliverSpeechMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase3D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase3D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase4D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase4D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase5B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase5B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase5C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase5C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY HouseCarl
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_HouseCarl Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenHandleNearbyActor01 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenMoveDefenderTo2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor09
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor09 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle14
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle14 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunSeverioPelagia
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunSeverioPelagia Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase4FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase4FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase5B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase5B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerStartRun01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerStartRun01 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MainGateExterior
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MainGateExterior Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackerSons5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackerSons5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase1FailSafe
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase1FailSafe Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NonRespawningDefenderImperial3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NonRespawningDefenderImperial4 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY MarkarthExteriorGate
@@ -1487,34 +1207,14 @@ ReferenceAlias Property Alias_Attacker7 Auto
 ReferenceAlias Property Alias_MarkarthExteriorGate Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefendArrowVolleyParent1
+;BEGIN ALIAS PROPERTY Objective2A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendArrowVolleyParent1 Auto
+ReferenceAlias Property Alias_Objective2A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DefendTrigger1
+;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable01
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefendTrigger1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultDefender4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultDefender4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WhiterunExtDisableOnly
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunExtDisableOnly Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY WindhelmCaravanMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmCaravanMarker Auto
+ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable01 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DefendArrowVolleyParent3
@@ -1522,19 +1222,289 @@ ReferenceAlias Property Alias_WindhelmCaravanMarker Auto
 ReferenceAlias Property Alias_DefendArrowVolleyParent3 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WindhelmGateLever1
+;BEGIN ALIAS PROPERTY NonRespawningDefenderSons4
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmGateLever1 Auto
+ReferenceAlias Property Alias_NonRespawningDefenderSons4 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerImperialReinforceEnabler
+;BEGIN ALIAS PROPERTY Barricade2A
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperialReinforceEnabler Auto
+ReferenceAlias Property Alias_Barricade2A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase4B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase4B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MainGateInterior
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MainGateInterior Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY BarricadeGeneric2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_BarricadeGeneric2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackTrigger3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackTrigger3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle12
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle12 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY HouseCarlEastmarch
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_HouseCarlEastmarch Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampEnableMarkerSons
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampEnableMarkerSons Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackTrigger5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackTrigger5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase1C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase1C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendArrowVolleyParent8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendArrowVolleyParent8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendTrigger2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendTrigger2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunHandleNearbyActor2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunHandleNearbyActor2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDrawbridge
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDrawbridge Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SpeechCrowdMarker6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpeechCrowdMarker6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons9
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons9 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunExtDisableOnly
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunExtDisableOnly Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampEnableMarkerImperial
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampEnableMarkerImperial Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase1A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase1A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MapMarkerLocation2
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_MapMarkerLocation2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenMoveDefenderTo1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SonsUlfric
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SonsUlfric Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY GarrisonEnableMarkerSonsExterior
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_GarrisonEnableMarkerSonsExterior Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AttackArrowVolleyParent6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AttackArrowVolleyParent6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY ThreatTriggersToggle
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ThreatTriggersToggle Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CityCenterMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CityCenterMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase2A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase2A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MapMarkerLocation1
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_MapMarkerLocation1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase1D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase1D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Defender1General
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Defender1General Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase5D
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase5D Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase2C
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase2C Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderImperial1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderImperial1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefenderSons2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefenderSons2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Attacker6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Attacker6 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor01
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_WindhelmHandleNearbyActor01 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunCaravanActor01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunCaravanActor01 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor08
@@ -1547,44 +1517,29 @@ ReferenceAlias Property Alias_MarkarthHandleNearbyActor08 Auto
 ReferenceAlias Property Alias_WhiterunCaravanMarker Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor07
+;BEGIN ALIAS PROPERTY WhiterunDrawbridgeNavCollision
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WindhelmHandleNearbyActor07 Auto
+ReferenceAlias Property Alias_WhiterunDrawbridgeNavCollision Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AllyMarkerDefend4
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor02
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend4 Auto
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor02 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AttackerSons9
+;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor03
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerSons9 Auto
+ReferenceAlias Property Alias_SolitudeHandleNearbyActor03 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MarkarthGateLever2
+;BEGIN ALIAS PROPERTY WindhelmGateLever1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthGateLever2 Auto
+ReferenceAlias Property Alias_WindhelmGateLever1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial3
+;BEGIN ALIAS PROPERTY WindhelmGateLever2a
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NonRespawningDefenderImperial3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DefenderSons4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DefenderSons4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RespawnAttackerPhase5FailSafe
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RespawnAttackerPhase5FailSafe Auto
+ReferenceAlias Property Alias_WindhelmGateLever2a Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor06
@@ -1592,79 +1547,9 @@ ReferenceAlias Property Alias_RespawnAttackerPhase5FailSafe Auto
 ReferenceAlias Property Alias_MarkarthHandleNearbyActor06 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor07
+;BEGIN ALIAS PROPERTY WindhelmHandleNearbyActor07
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthHandleNearbyActor07 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY BattleCenterMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_BattleCenterMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthMoveDefenderTo1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthMoveDefenderTo3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle16
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle16 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenMoveDefenderTo3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CatapultAttacker3
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CatapultAttacker3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RiftenHandleNearbyActor01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AllyMarkerDefend6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle15
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DisableMapMarkerForBattle15 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Attacker9
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker9 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY AttackerImperial6
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AttackerImperial6 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Attacker2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Attacker2 Auto
+ReferenceAlias Property Alias_WindhelmHandleNearbyActor07 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY RespawnAttackerPhase1FailSafe
@@ -1672,29 +1557,99 @@ ReferenceAlias Property Alias_Attacker2 Auto
 ReferenceAlias Property Alias_RespawnAttackerPhase1FailSafe Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker2
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor07
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker2 Auto
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor07 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY SolitudeHandleNearbyActor06
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase2C
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SolitudeHandleNearbyActor06 Auto
+ReferenceAlias Property Alias_RespawnDefenderPhase2C Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Defender9
+;BEGIN ALIAS PROPERTY BarricadeGeneric1
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Defender9 Auto
+ReferenceAlias Property Alias_BarricadeGeneric1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Barricade1B
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor01
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Barricade1B Auto
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor01 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker6
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase1B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker6 Auto
+ReferenceAlias Property Alias_RespawnAttackerPhase1B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthHandleNearbyActor04
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthHandleNearbyActor04 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnAttackerPhase2B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnAttackerPhase2B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NonRespawningDefenderImperial6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthMoveDefenderTo1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendTrigger4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendTrigger4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendTrigger1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendTrigger1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RespawnDefenderPhase1A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RespawnDefenderPhase1A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CatapultDefender4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CatapultDefender4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunIntDisableOnly
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunIntDisableOnly Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthMoveDefenderTo3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthMoveDefenderTo3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenHandleNearbyActor02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenHandleNearbyActor02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SonsGalmar
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SonsGalmar Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle16
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DisableMapMarkerForBattle16 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY NonRespawningDefenderSons1
@@ -1702,19 +1657,54 @@ ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker6 Auto
 ReferenceAlias Property Alias_NonRespawningDefenderSons1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunDisableNearbyGarrisonEnableMarker5
+;BEGIN ALIAS PROPERTY JarlWhiterun
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunDisableNearbyGarrisonEnableMarker5 Auto
+ReferenceAlias Property Alias_JarlWhiterun Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY WhiterunSonsSoldierToDisable04
+;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle7
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_WhiterunSonsSoldierToDisable04 Auto
+ReferenceAlias Property Alias_DisableMapMarkerForBattle7 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY AllyMarkerDefend3
+;BEGIN ALIAS PROPERTY NonRespawningDefenderImperial2
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_AllyMarkerDefend3 Auto
+ReferenceAlias Property Alias_NonRespawningDefenderImperial2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenMoveDefenderTo3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenMoveDefenderTo3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DefendTrigger3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DefendTrigger3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WindhelmCaravanMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WindhelmCaravanMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenDisableNearbyGarrisonEnableMarker1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenDisableNearbyGarrisonEnableMarker1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunCaravanActor03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunCaravanActor03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthDisableNearbyGarrisonEnableMarker4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthDisableNearbyGarrisonEnableMarker4 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DisableMapMarkerForBattle13
@@ -1722,645 +1712,15 @@ ReferenceAlias Property Alias_AllyMarkerDefend3 Auto
 ReferenceAlias Property Alias_DisableMapMarkerForBattle13 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_13
-Function Fragment_13()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 10")	;*** WRITE TO LOG
-
-;**ATTACK/DEFEND SPECIFIC
-if kmyquest.IsAttack()
-	kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-	;kmyquest.CWAttackerStartingScene.Stop()
-
-else
-	kmyquest.CWSiegeObj.SetObjectiveCompleted(2000, 1); COMPLETED - Meet with General
-
-endif
-
-;**CITY SPECIFIC:
-location cityVar = Alias_City.GetLocation()
-
-if cityVar == kmyquest.CWs.WhiterunLocation
-	kmyQuest.WeatherWhiterun.SetActive(True)
-
-	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
-
-	else
-		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
-		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
-		;kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2030, 1); DISPLAYED - barricade
-
-		Alias_Attacker1General.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker2.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker3.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker4.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker5.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker6.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker7.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker8.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker9.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-		Alias_Attacker10.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-	kmyQuest.WeatherMarkarth.SetActive(True)
-
-	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2030, 1); DISPLAYED - barricade
-
-	endif
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-	kmyQuest.WeatherRiften.SetActive(True)
-
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-
-		Alias_Barricade3A.GetReference().Enable(); Enable Barricades that were disabled in 5
-		Alias_Barricade2A.GetReference().Enable()
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2065, 1); DISPLAYED - barricade
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-	kmyQuest.WeatherSolitude.SetActive(True)
-
-	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-
-	else
-		;Currently no defense planned
-
-	endif
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-	kmyQuest.WeatherWindhelm.SetActive(True)
-
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
-
-	else
-		;Currently no defense planned
-
-	endif
-
-endif
-
-
-;Set BattlePhase
-kmyquest.CWs.CWBattlePhase.SetValue(2)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-;Reset Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(0)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
-kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
-kmyquest.CWStateAttackStarted.SetValue(0)
-kmyquest.CWStateDefenderFallingBack.SetValue(0)
-kmyquest.CWStateDefenderLastStand.SetValue(0)
-kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
-kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
-
-;Set Dialog States
-kmyquest.CWStateAttackStarted.SetValue(1) ;Setting this here since it will be the same for all attacks
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
-CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
-;Registers initial spawn points
-CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase2A, Alias_RespawnAttackerPhase2B, Alias_RespawnAttackerPhase2C, Alias_RespawnAttackerPhase2D, Alias_RespawnAttackerPhase2FailSafe)
-CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase2A, Alias_RespawnDefenderPhase2B, Alias_RespawnDefenderPhase2C, Alias_RespawnDefenderPhase2D, Alias_RespawnDefenderPhase2FailSafe)
-
-;EVP EVERYONE
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Alias_Defender1General.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-;used for failing if player leaves
-((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
-
-;TEMP AMBIENT SOUND TRACK
-;kmyquest.StartCombatSoundsLoop()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_10
-Function Fragment_10()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;DEFENSE ONLY triggered by walking out the main gate
-
-;Set BattlePhase
-kmyquest.CWBattlePhase.SetValue(0)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-;Set Global Dialog Stuff
-;Attack has started
-kmyQuest.CWs.CWStateAttackStarted.SetValue(0)
-
-;Make sure each of the attacking soldiers start charging right away
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Alias_Defender1General.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
-
-;**CITY SPECIFIC:
-location cityVar = Alias_City.GetLocation()
-
-if cityVar == kmyquest.CWs.WhiterunLocation
-	kmyQuest.WeatherWhiterun.ForceActive(True)
-
-	if kmyquest.IsAttack()
-		;Do Nothing
-
-	else
-		;Can't do this because the default starting animation for the bridge is open, so if i tell it to open again it looks broken.
-		;Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Backward", TRUE)	;Open the drawbridge just as i exit the city.
-
-		;Kill Severio Pelagia since his house is destroyed in whiterun.
-		Alias_WhiterunSeverioPelagia.GetActorReference().Kill()
-		Alias_WhiterunSeverioPelagia.GetActorReference().MoveToMyEditorLocation()
-
-	endif
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-	kmyQuest.WeatherMarkarth.ForceActive(True)
-
-	if kmyquest.IsAttack()
-		;Do Nothing
-
-	else
-		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Open the gate
-		Alias_Defender2.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo1.GetReference())
-		Alias_Defender3.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo2.GetReference())
-		Alias_Defender4.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo3.GetReference())
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-	kmyQuest.WeatherRiften.ForceActive(True)
-
-	if kmyquest.IsAttack()
-		;Do Nothing
-
-	else
-		Alias_Defender2.GetReference().MoveTo(Alias_RiftenMoveDefenderTo1.GetReference())
-		Alias_Defender3.GetReference().MoveTo(Alias_RiftenMoveDefenderTo2.GetReference())
-		Alias_Defender4.GetReference().MoveTo(Alias_RiftenMoveDefenderTo3.GetReference())
-
-	endif
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-	kmyQuest.WeatherSolitude.ForceActive(True)
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-	kmyQuest.WeatherWindhelm.ForceActive(True)
-
-endif
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_27
-Function Fragment_27()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
-
-Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
-Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
-
-Alias_DisableFastTravelTrigger.TryToDisable()
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePhase to 0");*** WRITE TO LOG
-
-if kmyQuest.CWPrepareCity.IsRunning()
-    kmyQuest.CWPrepareCity.Stop()
-endif
-
-kmyquest.CWs.CWBattlePhase.SetValue(0)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-	kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
-
-;DONE ELSEWHERE, BUT JUST IN CASE:
-;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-if kmyquest.CWs.WhiterunSiegeFinished == False
-	kmyquest.CWs.WhiterunSiegeFinished = True
-endif
-
-;Unlock the windhelm gate in case it's locked
-Alias_WindhelmDockGate.GetReference().Lock(false)
-
-;CLEAN UP
-kmyquest.DisableAllAliases()		;see CWSiegeScript.psc
-
-;allow player activation of main gate into city
-Alias_MainGateExterior.GetReference().BlockActivation(false)  ;normally happens in the course of the siege, but just in case.
-
-;Disable aliases
-Alias_ThreatTriggersToggle.TryToDisable()
-
-Alias_NonRespawningDefenderImperial1.TryToDisable()
-Alias_NonRespawningDefenderImperial2.TryToDisable()
-Alias_NonRespawningDefenderImperial3.TryToDisable()
-Alias_NonRespawningDefenderImperial4.TryToDisable()
-Alias_NonRespawningDefenderImperial5.TryToDisable()
-Alias_NonRespawningDefenderImperial6.TryToDisable()
-Alias_NonRespawningDefenderSons1.TryToDisable()
-Alias_NonRespawningDefenderSons2.TryToDisable()
-Alias_NonRespawningDefenderSons3.TryToDisable()
-Alias_NonRespawningDefenderSons4.TryToDisable()
-Alias_NonRespawningDefenderSons5.TryToDisable()
-Alias_NonRespawningDefenderSons6.TryToDisable()
-
-
-;THIS ALSO HAPPENS IN STAGE 200
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Shutdown phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
-;Turn off all the Catapults
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
-
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
-
-Alias_WhiterunDrawbridge.GetReference().Enable()
-
-;Release Weather
-weather.ReleaseOverride()
-
-;Zero out Global State Dialog Stuff
-kmyQuest.CWs.CWStateAttackStarted.SetValue(0)
-kmyQuest.CWs.CWStateAttackerAtGate.SetValue(0)
-kmyQuest.CWs.CWStateAttackerLowReinforcements.SetValue(0)
-kmyQuest.CWs.CWStateAttackerOutOfReinforcements.SetValue(0)
-kmyQuest.CWs.CWStateAttackerBrokeThrough.SetValue(0)
-kmyQuest.CWs.CWStateDefenderFallingBack.SetValue(0)
-kmyQuest.CWs.CWStateDefenderLastStand.SetValue(0)
-kmyQuest.CWs.CWStateDefenderLowReinforcements.SetValue(0)
-kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
-kmyquest.CWs.CWAlliesS.DeactivateAllies()
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
-UnregisterForUpdate()
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: ToggleMapMarkersAndFastTravelEndBattle().")
-kmyquest.ToggleMapMarkersAndFastTravelEndBattle(kmyquest.IsAttack())	;*** CHANGE THIS TO FALSE IF THIS IS A DEFENSE QUEST
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "turning on complex WI interactions")  ;*** WRITE TO LOG
-kmyquest.ToggleOnComplexWIInteractions(Alias_City)
-
-;Doublecheck that all reinforcements are disabled
-(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
-(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
-
-;ALSO HAPPENS IN STAGE 200
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255, stopping sounds and music") ;*** WRITE TO LOG
-kmyquest.StopCombatSoundsLoop()
-;Removes this music from the stack
-kmyQuest.MUSCombatCivilWar.Remove()
-
-;disabled battle center marker
-Alias_BattleCenterMarker.GetReference().Enable()
-
-Alias_WhiterunDefenderRikke.GetReference().Disable()
-Alias_WhiterunAttackerGalmar.GetReference().Disable()
-
-	Alias_WhiterunCaravanActor01.GetReference().Enable()
-	Alias_WhiterunCaravanActor02.GetReference().Enable()
-	Alias_WhiterunCaravanActor03.GetReference().Enable()
-	Alias_WhiterunCaravanActor04.GetReference().Enable()
-
-;*** CITY SPECIFIC SCRIPTING IN HERE ***
-
-;**CITY SPECIFIC
-Location cityVar = Alias_City.GetLocation()
-if cityVar == kmyquest.CWs.WhiterunLocation
-
-;PATCH 1.9 -- #73449
-;turn on random dragons if the MQ doesn't want them off
-if MQ106.getStage() >= 5 && MQ106.getStage() < 160
-	;do nothing, MQ still wants them off
-else
-	MQ106TurnOffRandomDragons.SetValue(0)
-endif
-
-
-if kmyquest.IsAttack()
-	Alias_WhiterunDrawbridge.GetReference().Disable()
-	Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
-	Alias_WhiterunDrawbridgeAfter.GetReference().Enable()
-
-else
-	;Nothing yet
-endif
-
-;if either attack or defense
-
-Alias_WhiterunBridgeLever1.GetReference().Disable()
-Alias_WhiterunBridgeLever2.GetReference().Disable()
-
-sound.StopInstance(kmyQuest.AMBDistantBattleSoundInstance)
-sound.StopInstance(kmyQuest.AMBDistantBattleStartInstance)
-sound.StopInstance(kmyQuest.AMBCloseBattleSoundInstance)
-kmyquest.WhiterunAmbExt01.Disable()
-kmyquest.WhiterunAmbExt02.Disable()
-kmyquest.WhiterunAmbExt03.Disable()
-
-(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(FALSE)
-
-
-;release reservations
-
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-;if either attack or defense
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-	;THIS PREVENTS THE MURDER SCENE DURING THE SIEGE
-	kmyquest.MS11.CivilWarBattle(false)
-
-endif
-
-Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-
-;under the current paradigm you won't ever be repeating a siege, but just incase:
-Alias_Attacker1General.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker2.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker3.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker4.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker5.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker6.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker7.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker8.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker9.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Attacker10.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-
-Alias_Defender1General.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender2.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender3.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender4.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender5.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender6.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender7.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender8.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender9.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Defender10.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-
-;Reset Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(0)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
-kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
-kmyquest.CWStateAttackStarted.SetValue(0)
-kmyquest.CWStateDefenderFallingBack.SetValue(0)
-kmyquest.CWStateDefenderLastStand.SetValue(0)
-kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
-kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
-
-if (kmyQuest.AttackersHaveWon == TRUE) && (kmyQuest.DefendersHaveWon == FALSE)
-	Alias_WhiterunHeimskrNewHome.GetReference().Enable()
-endif
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
-Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
-
-;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
-kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_40
-Function Fragment_40()
-;BEGIN CODE
-;Player skipped 40
-SetStage(40)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_22
-Function Fragment_22()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;*** this stage is called by the CWSiegeCityDoorScript script
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60")	;*** WRITE TO LOG
-
-Alias_WhiterunIntEnableOnly.GetReference().Enable()
-Alias_WhiterunIntDisableOnly.GetReference().Disable()
-kmyquest.WhiterunAmbExt01.Disable()
-kmyquest.WhiterunAmbExt02.Disable()
-kmyquest.WhiterunAmbExt03.Disable()
-
-;kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
-;kmyQuest.WeatherWhiterun.setActive(True)
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60 calling Stop()")	
-;stop()   ;JPD - Not 100% sure this is cool to do here, but I think so. Does anything set stage 100 or 200? If not then its cool, if so, maybe not
-
-;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
-;Turn off all the Catapults
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
-
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
-
-;**CITY SPECIFIC
-Location cityVar = Alias_City.GetLocation()
-if cityVar == kmyquest.CWs.WhiterunLocation
-
-	if kmyquest.IsAttack()
-		;If Attack
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
-
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
-
-	else
-		;If defense
-
-	endif
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-	Alias_MainGateInterior.GetReference().Lock(True)
-	Alias_MainGateInterior.GetReference().SetLockLevel(255)
-	Game.EnableFastTravel(FALSE)
-	Alias_DisableFastTravelTrigger.TryToEnable()
-
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
-	kmyquest.CWs.CWFinale.SetStage(10)
-
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
-
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-	Alias_MainGateInterior.GetReference().Lock(True)
-	Alias_MainGateInterior.GetReference().SetLockLevel(255)
-	Game.EnableFastTravel(FALSE)
-	Alias_DisableFastTravelTrigger.TryToEnable()
-
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
-	kmyquest.CWs.CWFinale.SetStage(10)
-
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
-
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
-
-endif
-;END CODE
-EndFunction
-;END FRAGMENT
+;BEGIN ALIAS PROPERTY WhiterunCaravanActor02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunCaravanActor02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY WhiterunCompanionsTrigger02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_WhiterunCompanionsTrigger02 Auto
+;END ALIAS PROPERTY
 
 ;BEGIN FRAGMENT Fragment_21
 Function Fragment_21()
@@ -2535,6 +1895,980 @@ endif
 
 kmyquest.CWs.CWBattlePhase.SetValue(6)
 Alias_WhiterunDrawbridge.GetReference().Enable()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_18
+Function Fragment_18()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Third Objective is complete
+
+;**ATTACK/DEFEND SPECIFIC
+if kmyquest.IsAttack()
+
+
+else
+
+
+endif
+
+;**CITY SPECIFIC:
+location cityVar = Alias_City.GetLocation()
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+	
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1030, 1); COMPLETED - Drawbridge
+		setStage(50)	; whiterun doesn't have a phase 5, so skip ahead.
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateAttackStarted.SetValue(0)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+
+	else
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2040, 1); FAIL - Drawbridge
+		setStage(50)	; whiterun doesn't have a phase 5, so skip ahead.
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+	if kmyquest.IsAttack()
+		;no new objectives
+
+	else
+		;no new objectives
+
+	endif
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - final barricade
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+
+	else
+		;no new objectives, already displayed the defend finale barricade
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+	if kmyquest.IsAttack()
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - barricade
+		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+
+	else
+		;Currently no defense planned
+
+	endif
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	if kmyquest.IsAttack()
+		if GetStageDone(41)
+			Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
+		else
+			;Do nothing since the player didn't hit the skip trigger.
+		endif
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
+		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+
+	else
+		;Currently no defense planned
+
+	endif
+
+endif
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 40")	;*** WRITE TO LOG
+
+;Set BattlePhase
+kmyquest.CWs.CWBattlePhase.SetValue(5)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+;Reset Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(0)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
+kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
+kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
+kmyquest.CWStateAttackStarted.SetValue(0)
+kmyquest.CWStateDefenderFallingBack.SetValue(0)
+kmyquest.CWStateDefenderLastStand.SetValue(0)
+kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
+kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
+;Registers initial spawn points
+CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase5A, Alias_RespawnAttackerPhase5B, Alias_RespawnAttackerPhase5C, Alias_RespawnAttackerPhase5D, Alias_RespawnAttackerPhase5FailSafe)
+CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase5A, Alias_RespawnDefenderPhase5B, Alias_RespawnDefenderPhase5C, Alias_RespawnDefenderPhase5D, Alias_RespawnDefenderPhase5FailSafe)
+
+
+;EVP EVERYONE
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1General.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
+
+Alias_WhiterunDrawbridge.GetReference().Enable()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_10
+Function Fragment_10()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;DEFENSE ONLY triggered by walking out the main gate
+
+;Set BattlePhase
+kmyquest.CWBattlePhase.SetValue(0)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+;Set Global Dialog Stuff
+;Attack has started
+kmyQuest.CWs.CWStateAttackStarted.SetValue(0)
+
+;Make sure each of the attacking soldiers start charging right away
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1General.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
+
+((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
+
+;**CITY SPECIFIC:
+location cityVar = Alias_City.GetLocation()
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+	kmyQuest.WeatherWhiterun.ForceActive(True)
+
+	if kmyquest.IsAttack()
+		;Do Nothing
+
+	else
+		;Can't do this because the default starting animation for the bridge is open, so if i tell it to open again it looks broken.
+		;Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Backward", TRUE)	;Open the drawbridge just as i exit the city.
+
+		;Kill Severio Pelagia since his house is destroyed in whiterun.
+		Alias_WhiterunSeverioPelagia.GetActorReference().Kill()
+		Alias_WhiterunSeverioPelagia.GetActorReference().MoveToMyEditorLocation()
+
+	endif
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+	kmyQuest.WeatherMarkarth.ForceActive(True)
+
+	if kmyquest.IsAttack()
+		;Do Nothing
+
+	else
+		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Open the gate
+		Alias_Defender2.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo1.GetReference())
+		Alias_Defender3.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo2.GetReference())
+		Alias_Defender4.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo3.GetReference())
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+	kmyQuest.WeatherRiften.ForceActive(True)
+
+	if kmyquest.IsAttack()
+		;Do Nothing
+
+	else
+		Alias_Defender2.GetReference().MoveTo(Alias_RiftenMoveDefenderTo1.GetReference())
+		Alias_Defender3.GetReference().MoveTo(Alias_RiftenMoveDefenderTo2.GetReference())
+		Alias_Defender4.GetReference().MoveTo(Alias_RiftenMoveDefenderTo3.GetReference())
+
+	endif
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+	kmyQuest.WeatherSolitude.ForceActive(True)
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+	kmyQuest.WeatherWindhelm.ForceActive(True)
+
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_24
+Function Fragment_24()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Defenders have run out of respawns and fallen too low - this is not a victory condition, attackers must still take objectives to win
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
+kmyquest.AttackersHaveWon = TRUE    ;Attackers have won causing defenders to retreat
+
+kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+
+;Set Dialog States
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+kmyquest.CWStateDefenderOutOfReinforcements.SetValue(1)
+
+;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+;Turn off all the Catapults
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
+
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_22
+Function Fragment_22()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;*** this stage is called by the CWSiegeCityDoorScript script
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60")	;*** WRITE TO LOG
+
+Alias_WhiterunIntEnableOnly.GetReference().Enable()
+Alias_WhiterunIntDisableOnly.GetReference().Disable()
+kmyquest.WhiterunAmbExt01.Disable()
+kmyquest.WhiterunAmbExt02.Disable()
+kmyquest.WhiterunAmbExt03.Disable()
+
+;kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
+;kmyQuest.WeatherWhiterun.setActive(True)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60 calling Stop()")	
+;stop()   ;JPD - Not 100% sure this is cool to do here, but I think so. Does anything set stage 100 or 200? If not then its cool, if so, maybe not
+
+;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+;Turn off all the Catapults
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
+
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
+
+;**CITY SPECIFIC
+Location cityVar = Alias_City.GetLocation()
+if cityVar == kmyquest.CWs.WhiterunLocation
+
+	if kmyquest.IsAttack()
+		;If Attack
+	;as a safety precaution, disable all the exterior guys
+	Alias_Attacker1General.TryToDisable()
+	Alias_Attacker2.TryToDisable()
+	Alias_Attacker3.TryToDisable()
+	Alias_Attacker4.TryToDisable()
+	Alias_Attacker5.TryToDisable()
+	Alias_Attacker6.TryToDisable()
+	Alias_Attacker7.TryToDisable()
+	Alias_Attacker8.TryToDisable()
+	Alias_Attacker9.TryToDisable()
+	Alias_Attacker10.TryToDisable()
+
+	Alias_Defender1General.TryToDisable()
+	Alias_Defender2.TryToDisable()
+	Alias_Defender3.TryToDisable()
+	Alias_Defender4.TryToDisable()
+	Alias_Defender5.TryToDisable()
+	Alias_Defender6.TryToDisable()
+	Alias_Defender7.TryToDisable()
+	Alias_Defender8.TryToDisable()
+	Alias_Defender9.TryToDisable()
+	Alias_Defender10.TryToDisable()
+
+	else
+		;If defense
+
+	endif
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+	Alias_MainGateInterior.GetReference().Lock(True)
+	Alias_MainGateInterior.GetReference().SetLockLevel(255)
+	Game.EnableFastTravel(FALSE)
+	Alias_DisableFastTravelTrigger.TryToEnable()
+
+; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
+	kmyquest.CWs.CWFinale.SetStage(10)
+
+	;as a safety precaution, disable all the exterior guys
+	Alias_Attacker1General.TryToDisable()
+	Alias_Attacker2.TryToDisable()
+	Alias_Attacker3.TryToDisable()
+	Alias_Attacker4.TryToDisable()
+	Alias_Attacker5.TryToDisable()
+	Alias_Attacker6.TryToDisable()
+	Alias_Attacker7.TryToDisable()
+	Alias_Attacker8.TryToDisable()
+	Alias_Attacker9.TryToDisable()
+	Alias_Attacker10.TryToDisable()
+
+	Alias_Defender1General.TryToDisable()
+	Alias_Defender2.TryToDisable()
+	Alias_Defender3.TryToDisable()
+	Alias_Defender4.TryToDisable()
+	Alias_Defender5.TryToDisable()
+	Alias_Defender6.TryToDisable()
+	Alias_Defender7.TryToDisable()
+	Alias_Defender8.TryToDisable()
+	Alias_Defender9.TryToDisable()
+	Alias_Defender10.TryToDisable()
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	Alias_MainGateInterior.GetReference().Lock(True)
+	Alias_MainGateInterior.GetReference().SetLockLevel(255)
+	Game.EnableFastTravel(FALSE)
+	Alias_DisableFastTravelTrigger.TryToEnable()
+
+; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
+	kmyquest.CWs.CWFinale.SetStage(10)
+
+	;as a safety precaution, disable all the exterior guys
+	Alias_Attacker1General.TryToDisable()
+	Alias_Attacker2.TryToDisable()
+	Alias_Attacker3.TryToDisable()
+	Alias_Attacker4.TryToDisable()
+	Alias_Attacker5.TryToDisable()
+	Alias_Attacker6.TryToDisable()
+	Alias_Attacker7.TryToDisable()
+	Alias_Attacker8.TryToDisable()
+	Alias_Attacker9.TryToDisable()
+	Alias_Attacker10.TryToDisable()
+
+	Alias_Defender1General.TryToDisable()
+	Alias_Defender2.TryToDisable()
+	Alias_Defender3.TryToDisable()
+	Alias_Defender4.TryToDisable()
+	Alias_Defender5.TryToDisable()
+	Alias_Defender6.TryToDisable()
+	Alias_Defender7.TryToDisable()
+	Alias_Defender8.TryToDisable()
+	Alias_Defender9.TryToDisable()
+	Alias_Defender10.TryToDisable()
+
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_25
+Function Fragment_25()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200")	;*** WRITE TO LOG
+
+;Attackers ran out of respawn tickets and too many died
+;-- OLD WAY kmyquest.AttackersHaveWon = False    ;Announces the Defenders as winner, causing the attackers to retreat
+
+kmyquest.DefendersHaveWon = true    ;Announces the Defenders as winner, causing the attackers to retreat
+
+	;kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
+;kmyQuest.WeatherWhiterun.setActive(True)
+
+kmyQuest.CWPrepareCity.SetStage(2)
+Alias_WhiterunIntEnableOnly.GetReference().Enable()
+Alias_WhiterunIntDisableOnly.GetReference().Disable()
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 setting CWBattlePhase to 6");*** WRITE TO LOG
+kmyquest.CWs.CWBattlePhase.SetValue(6)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+;Set Dialog States
+kmyquest.CWStateAttackerOutOfReinforcements.SetValue(1)
+
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Game.GetPlayer().addToFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker1General)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker2)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker3)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker4)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker5)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker6)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker7)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker8)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker9)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker10)
+
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender1General)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender2)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender3)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender4)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender5)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender6)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender7)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender8)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
+kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
+
+
+kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+
+;**CITY SPECIFIC
+Location cityVar = Alias_City.GetLocation()
+if cityVar == kmyquest.CWs.WhiterunLocation
+
+if kmyquest.IsAttack()
+	;Nothing yet
+else
+
+	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
+	if kmyquest.CWs.WhiterunSiegeFinished == False
+		kmyquest.CWs.WhiterunSiegeFinished = True
+	endif
+
+	Alias_DisableFastTravelTrigger.TryToDisable()
+
+	if GetStageDone(20)
+		;Gate was closed in stage 20, so be sure to open it again if the defense wins
+		Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Backward", TRUE)
+		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
+
+	endif
+
+;	debug.messageBox("START SPEECH SCENE")
+
+	kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
+	Alias_Jarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
+	Alias_HouseCarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
+	kmyquest.CWSiegeWhiterunDefendedScene.start()
+
+
+endif
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+
+
+endif
+
+
+;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+;Turn off all the Catapults
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
+
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
+
+if kmyquest.IsAttack()
+	
+	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
+	kmyquest.FailAttackQuest(Alias_City)		;CWSiegeScript
+
+else ;defenders are victorious
+
+; 	;CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200, stopping polling player location")	;*** WRITE TO LOG
+	;((self as quest) as CWSiegePollPlayerLocation).UnregisterForUpdate()
+
+	;ALSO HAPPENS IN STAGE 255 SHUTDOWN
+	kmyquest.StopCombatSoundsLoop()
+	;Removes this music from the stack
+	kmyQuest.MUSCombatCivilWar.Remove()
+
+	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
+	kmyquest.SucceedDefenseQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
+
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_27
+Function Fragment_27()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
+
+Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
+Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
+
+Alias_DisableFastTravelTrigger.TryToDisable()
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePhase to 0");*** WRITE TO LOG
+
+if kmyQuest.CWPrepareCity.IsRunning()
+    kmyQuest.CWPrepareCity.Stop()
+endif
+
+kmyquest.CWs.CWBattlePhase.SetValue(0)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+	kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
+
+;DONE ELSEWHERE, BUT JUST IN CASE:
+;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
+if kmyquest.CWs.WhiterunSiegeFinished == False
+	kmyquest.CWs.WhiterunSiegeFinished = True
+endif
+
+;Unlock the windhelm gate in case it's locked
+Alias_WindhelmDockGate.GetReference().Lock(false)
+
+;CLEAN UP
+kmyquest.DisableAllAliases()		;see CWSiegeScript.psc
+
+;allow player activation of main gate into city
+Alias_MainGateExterior.GetReference().BlockActivation(false)  ;normally happens in the course of the siege, but just in case.
+
+;Disable aliases
+Alias_ThreatTriggersToggle.TryToDisable()
+
+Alias_NonRespawningDefenderImperial1.TryToDisable()
+Alias_NonRespawningDefenderImperial2.TryToDisable()
+Alias_NonRespawningDefenderImperial3.TryToDisable()
+Alias_NonRespawningDefenderImperial4.TryToDisable()
+Alias_NonRespawningDefenderImperial5.TryToDisable()
+Alias_NonRespawningDefenderImperial6.TryToDisable()
+Alias_NonRespawningDefenderSons1.TryToDisable()
+Alias_NonRespawningDefenderSons2.TryToDisable()
+Alias_NonRespawningDefenderSons3.TryToDisable()
+Alias_NonRespawningDefenderSons4.TryToDisable()
+Alias_NonRespawningDefenderSons5.TryToDisable()
+Alias_NonRespawningDefenderSons6.TryToDisable()
+
+
+;THIS ALSO HAPPENS IN STAGE 200
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Shutdown phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+;Turn off all the Catapults
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
+
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
+kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
+
+Alias_WhiterunDrawbridge.GetReference().Enable()
+
+;Release Weather
+weather.ReleaseOverride()
+
+;Zero out Global State Dialog Stuff
+kmyQuest.CWs.CWStateAttackStarted.SetValue(0)
+kmyQuest.CWs.CWStateAttackerAtGate.SetValue(0)
+kmyQuest.CWs.CWStateAttackerLowReinforcements.SetValue(0)
+kmyQuest.CWs.CWStateAttackerOutOfReinforcements.SetValue(0)
+kmyQuest.CWs.CWStateAttackerBrokeThrough.SetValue(0)
+kmyQuest.CWs.CWStateDefenderFallingBack.SetValue(0)
+kmyQuest.CWs.CWStateDefenderLastStand.SetValue(0)
+kmyQuest.CWs.CWStateDefenderLowReinforcements.SetValue(0)
+kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
+kmyquest.CWs.CWAlliesS.DeactivateAllies()
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
+UnregisterForUpdate()
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: ToggleMapMarkersAndFastTravelEndBattle().")
+kmyquest.ToggleMapMarkersAndFastTravelEndBattle(kmyquest.IsAttack())	;*** CHANGE THIS TO FALSE IF THIS IS A DEFENSE QUEST
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "turning on complex WI interactions")  ;*** WRITE TO LOG
+kmyquest.ToggleOnComplexWIInteractions(Alias_City)
+
+;Doublecheck that all reinforcements are disabled
+(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
+(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
+
+;ALSO HAPPENS IN STAGE 200
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255, stopping sounds and music") ;*** WRITE TO LOG
+kmyquest.StopCombatSoundsLoop()
+;Removes this music from the stack
+kmyQuest.MUSCombatCivilWar.Remove()
+
+;disabled battle center marker
+Alias_BattleCenterMarker.GetReference().Enable()
+
+Alias_WhiterunDefenderRikke.GetReference().Disable()
+Alias_WhiterunAttackerGalmar.GetReference().Disable()
+
+	Alias_WhiterunCaravanActor01.GetReference().Enable()
+	Alias_WhiterunCaravanActor02.GetReference().Enable()
+	Alias_WhiterunCaravanActor03.GetReference().Enable()
+	Alias_WhiterunCaravanActor04.GetReference().Enable()
+
+;*** CITY SPECIFIC SCRIPTING IN HERE ***
+
+;**CITY SPECIFIC
+Location cityVar = Alias_City.GetLocation()
+if cityVar == kmyquest.CWs.WhiterunLocation
+
+;PATCH 1.9 -- #73449
+;turn on random dragons if the MQ doesn't want them off
+if MQ106.getStage() >= 5 && MQ106.getStage() < 160
+	;do nothing, MQ still wants them off
+else
+	MQ106TurnOffRandomDragons.SetValue(0)
+endif
+
+
+if kmyquest.IsAttack()
+	Alias_WhiterunDrawbridge.GetReference().Disable()
+	Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
+	Alias_WhiterunDrawbridgeAfter.GetReference().Enable()
+endif
+
+;if either attack or defense
+
+Alias_WhiterunBridgeLever1.GetReference().Disable()
+Alias_WhiterunBridgeLever2.GetReference().Disable()
+
+sound.StopInstance(kmyQuest.AMBDistantBattleSoundInstance)
+sound.StopInstance(kmyQuest.AMBDistantBattleStartInstance)
+sound.StopInstance(kmyQuest.AMBCloseBattleSoundInstance)
+kmyquest.WhiterunAmbExt01.Disable()
+kmyquest.WhiterunAmbExt02.Disable()
+kmyquest.WhiterunAmbExt03.Disable()
+
+;(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(FALSE) - USKP 2.0.1 - Stop access to this as it's part of the cut portions of DA08.
+
+
+;release reservations
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+;if either attack or defense
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	;THIS PREVENTS THE MURDER SCENE DURING THE SIEGE
+	kmyquest.MS11.CivilWarBattle(false)
+
+endif
+
+Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+
+;under the current paradigm you won't ever be repeating a siege, but just incase:
+Alias_Attacker1General.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker2.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker3.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker4.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker5.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker6.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker7.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker8.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker9.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Attacker10.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+
+Alias_Defender1General.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender2.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender3.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender4.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender5.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender6.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender7.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender8.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender9.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+Alias_Defender10.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+
+;Reset Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(0)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
+kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
+kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
+kmyquest.CWStateAttackStarted.SetValue(0)
+kmyquest.CWStateDefenderFallingBack.SetValue(0)
+kmyquest.CWStateDefenderLastStand.SetValue(0)
+kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
+kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
+Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
+
+;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
+kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+	;USLEEP 3.0.10 Bug #14135
+	alias_CampEnableMarkerSons.GetReference().Disable()
+
+	if kmyQuest.CWs.PlayerAllegiance == 2
+		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+		Alias_WhiterunHeimskrNewHome.GetReference().Enable()
+
+		;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
+		
+		;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
+		RiverwoodStormcloaksMarker.Enable()
+		RiverwoodImperialsMarker.Disable()
+	else
+		;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
+
+		;USKP 2.0.1 - Heimskr goes to Jail :(
+		USLEEPHeimskrPreachJail.Start()
+	EndIf
+EndIf
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_40
+Function Fragment_40()
+;BEGIN CODE
+;Player skipped 40
+SetStage(40)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_38
+Function Fragment_38()
+;BEGIN CODE
+;Make sure that all reinforcements are disabled
+(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
+(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_37
+Function Fragment_37()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Gets called at the end of CWAttackerStartingScene, sets Phase 1, then sets stage 10.
+; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+	;Set BattlePhase
+	kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+	Alias_ThreatTriggersToggle.TryToEnable()
+
+kmyquest.CWAttackerStartingScene.Stop()
+kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+
+kmyQuest.MUSCombatCivilWar.Add()
+
+
+;EVP EVERYONE
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1General.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
+
+
+;**ATTACK/DEFEND SPECIFIC
+if kmyquest.IsAttack()
+
+else
+
+endif
+
+;**CITY SPECIFIC:
+location cityVar = Alias_City.GetLocation()
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+	kmyQuest.WeatherWhiterun.SetActive(True)
+	kmyquest.CWBattlePhase.SetValue(1)
+
+	if kmyquest.IsAttack()
+		kmyquest.WhiterunAmbExt01.Enable()
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+		kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
+		utility.Wait(11)
+		SetStage(10)
+	else
+		SetStage(10)
+	endif
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+	kmyQuest.WeatherMarkarth.SetActive(True)
+
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
+		utility.Wait(8)
+		SetStage(10)
+	else
+
+	endif
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+	kmyQuest.WeatherRiften.SetActive(True)
+
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+		SetStage(10)
+	else
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+	kmyQuest.WeatherSolitude.SetActive(True)
+
+	if kmyquest.IsAttack()
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+		kmyquest.CWAttackerStartingScene.Stop()
+		SetStage(50)
+	else
+		;Currently no defense planned
+
+	endif
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+	kmyQuest.WeatherWindhelm.SetActive(True)
+
+	if kmyquest.IsAttack()
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+		kmyquest.CWAttackerStartingScene.Stop()
+		SetStage(50)
+	else
+		;Currently no defense planned
+
+	endif
+
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -2745,7 +3079,7 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	(Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference()).Disable()
 	(Alias_WhiterunDisableNearbyGarrisonEnableMarker7.GetReference()).Disable()
 	(Alias_WhiterunDisableNearbyGarrisonEnableMarker8.GetReference()).Disable()
-	(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(TRUE)
+	;(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(TRUE) - USKP 2.0.1 - Stop access to this as it's part of the cut portions of DA08.
 
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
@@ -2965,501 +3299,22 @@ kmyquest.CWs.AddEnemyFortsToBackToWar()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_34
-Function Fragment_34()
+;BEGIN FRAGMENT Fragment_13
+Function Fragment_13()
 ;BEGIN AUTOCAST TYPE CWSiegeScript
 Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-;Attack only - triggered by walking out of the Tent
-
-Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
-Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
-Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
-
-
-;**CITY SPECIFIC:
-location cityVar = Alias_City.GetLocation()
-
-if cityVar == kmyquest.CWs.WhiterunLocation
-	kmyQuest.WeatherWhiterun.setActive(True)
-	;Set Global Dialog Stuff
-	;Attack has started
-	kmyQuest.CWs.CWStateAttackStarted.SetValue(1)
-
-	;Adds this music to stack, at highest priority
-	kmyQuest.MUSCombatCivilWar.Add()
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-	kmyQuest.WeatherMarkarth.setActive(True)
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-	kmyQuest.WeatherRiften.setActive(True)
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-	kmyQuest.WeatherSolitude.setActive(True)
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-	kmyQuest.WeatherWindhelm.setActive(True)
-
-endif
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_18
-Function Fragment_18()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;Third Objective is complete
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 10")	;*** WRITE TO LOG
 
 ;**ATTACK/DEFEND SPECIFIC
 if kmyquest.IsAttack()
-
-
-else
-
-
-endif
-
-;**CITY SPECIFIC:
-location cityVar = Alias_City.GetLocation()
-
-if cityVar == kmyquest.CWs.WhiterunLocation
-	
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1030, 1); COMPLETED - Drawbridge
-		setStage(50)	; whiterun doesn't have a phase 5, so skip ahead.
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateAttackStarted.SetValue(0)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(2040, 1); FAIL - Drawbridge
-		setStage(50)	; whiterun doesn't have a phase 5, so skip ahead.
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-	if kmyquest.IsAttack()
-		;no new objectives
-
-	else
-		;no new objectives
-
-	endif
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - final barricade
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-	else
-		;no new objectives, already displayed the defend finale barricade
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - barricade
-		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-
-	else
-		;Currently no defense planned
-
-	endif
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-	if kmyquest.IsAttack()
-		if GetStageDone(41)
-			Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
-		else
-			;Do nothing since the player didn't hit the skip trigger.
-		endif
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
-		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-
-	else
-		;Currently no defense planned
-
-	endif
-
-endif
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 40")	;*** WRITE TO LOG
-
-;Set BattlePhase
-kmyquest.CWs.CWBattlePhase.SetValue(5)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-;Reset Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(0)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
-kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
-kmyquest.CWStateAttackStarted.SetValue(0)
-kmyquest.CWStateDefenderFallingBack.SetValue(0)
-kmyquest.CWStateDefenderLastStand.SetValue(0)
-kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
-kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
-CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
-;Registers initial spawn points
-CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase5A, Alias_RespawnAttackerPhase5B, Alias_RespawnAttackerPhase5C, Alias_RespawnAttackerPhase5D, Alias_RespawnAttackerPhase5FailSafe)
-CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase5A, Alias_RespawnDefenderPhase5B, Alias_RespawnDefenderPhase5C, Alias_RespawnDefenderPhase5D, Alias_RespawnDefenderPhase5FailSafe)
-
-
-;EVP EVERYONE
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Alias_Defender1General.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-Alias_WhiterunDrawbridge.GetReference().Enable()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_11
-Function Fragment_11()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;First Objective is complete
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 20")	;*** WRITE TO LOG
-
-;Set BattlePhase
-kmyquest.CWs.CWBattlePhase.SetValue(3)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-;Reset Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(0)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
-kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
-kmyquest.CWStateAttackStarted.SetValue(0)
-kmyquest.CWStateDefenderFallingBack.SetValue(0)
-kmyquest.CWStateDefenderLastStand.SetValue(0)
-kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
-kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
-CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
-;Registers initial spawn points
-CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase3A, Alias_RespawnAttackerPhase3B, Alias_RespawnAttackerPhase3C, Alias_RespawnAttackerPhase3D, Alias_RespawnAttackerPhase3FailSafe)
-CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase3A, Alias_RespawnDefenderPhase3B, Alias_RespawnDefenderPhase3C, Alias_RespawnDefenderPhase3D, Alias_RespawnDefenderPhase3FailSafe)
-
-;EVP EVERYONE
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Alias_Defender1General.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-
-;Make sure that all reinforcements are disabled
-(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
-(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
-
-
-;**ATTACK/DEFEND SPECIFIC
-if kmyquest.IsAttack()
-
+	kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+	;kmyquest.CWAttackerStartingScene.Stop()
 
 else
-
-
-endif
-
-;**CITY SPECIFIC:
-location cityVar = Alias_City.GetLocation()
-
-if cityVar == kmyquest.CWs.WhiterunLocation
-	Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
-	Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-			kmyquest.WhiterunAmbExt01.Disable()
-			kmyquest.WhiterunAmbExt02.Enable()
-		endif
-
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2040, 1); DISPLAY - Drawbridge
-		(Alias_Defender1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2060, 1); DISPLAY - Exterior gate
-		(Alias_Defender1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
-		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Close the Gate
-
-	endif
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-
-	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1070, 1); DISPLAY - barricade
-
-
-
-	else
-		Alias_Barricade3A.GetReference().Enable(); Enable Barricades that may not have been enabled in 10
-		Alias_Barricade2A.GetReference().Enable()
-
-		kmyquest.CWSiegeObj.SetObjectiveFailed(2065, 1); FAILED  - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2070, 1); DISPLAY - barricade
-
-	endif
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
-
-	else
-		;Currently no defense planned
-
-	endif
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().DamageObject(1000)
-		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(3010, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3020, 1); DISPLAYED - First Gate
-
-	else
-		;Currently no defense planned
-
-	endif
-
-endif
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_24
-Function Fragment_24()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;Defenders have run out of respawns and fallen too low - this is not a victory condition, attackers must still take objectives to win
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
-kmyquest.AttackersHaveWon = TRUE    ;Attackers have won causing defenders to retreat
-
-kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-
-;Set Dialog States
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-kmyquest.CWStateDefenderOutOfReinforcements.SetValue(1)
-
-;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
-;Turn off all the Catapults
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
-
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_39
-Function Fragment_39()
-;BEGIN CODE
-;Player skipped 30
-SetStage(30)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_37
-Function Fragment_37()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;Gets called at the end of CWAttackerStartingScene, sets Phase 1, then sets stage 10.
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
-	;Set BattlePhase
-	kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-	Alias_ThreatTriggersToggle.TryToEnable()
-
-kmyquest.CWAttackerStartingScene.Stop()
-kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-
-kmyQuest.MUSCombatCivilWar.Add()
-
-
-;EVP EVERYONE
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Alias_Defender1General.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-
-;**ATTACK/DEFEND SPECIFIC
-if kmyquest.IsAttack()
-
-else
+	kmyquest.CWSiegeObj.SetObjectiveCompleted(2000, 1); COMPLETED - Meet with General
 
 endif
 
@@ -3468,18 +3323,27 @@ location cityVar = Alias_City.GetLocation()
 
 if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyQuest.WeatherWhiterun.SetActive(True)
-	kmyquest.CWBattlePhase.SetValue(1)
 
 	if kmyquest.IsAttack()
-		kmyquest.WhiterunAmbExt01.Enable()
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
+
+	else
 		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
 		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
-		kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
-		utility.Wait(11)
-		SetStage(10)
-	else
-		SetStage(10)
+		;kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2030, 1); DISPLAYED - barricade
+
+		Alias_Attacker1General.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker2.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker3.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker4.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker5.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker6.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker7.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker8.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker9.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+		Alias_Attacker10.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
+
 	endif
 
 
@@ -3487,10 +3351,10 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	kmyQuest.WeatherMarkarth.SetActive(True)
 
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
-		utility.Wait(8)
-		SetStage(10)
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
+
 	else
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2030, 1); DISPLAYED - barricade
 
 	endif
 
@@ -3499,8 +3363,12 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	if kmyquest.IsAttack()
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-		SetStage(10)
+
+		Alias_Barricade3A.GetReference().Enable(); Enable Barricades that were disabled in 5
+		Alias_Barricade2A.GetReference().Enable()
+
 	else
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2065, 1); DISPLAYED - barricade
 
 	endif
 
@@ -3510,9 +3378,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	if kmyquest.IsAttack()
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		kmyquest.CWAttackerStartingScene.Stop()
-		SetStage(50)
+
 	else
 		;Currently no defense planned
 
@@ -3522,195 +3388,18 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		kmyquest.CWAttackerStartingScene.Stop()
-		SetStage(50)
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+
 	else
 		;Currently no defense planned
 
 	endif
 
 endif
-;END CODE
-EndFunction
-;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_38
-Function Fragment_38()
-;BEGIN CODE
-;Make sure that all reinforcements are disabled
-(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
-(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_25
-Function Fragment_25()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200")	;*** WRITE TO LOG
-
-;Attackers ran out of respawn tickets and too many died
-;-- OLD WAY kmyquest.AttackersHaveWon = False    ;Announces the Defenders as winner, causing the attackers to retreat
-
-kmyquest.DefendersHaveWon = true    ;Announces the Defenders as winner, causing the attackers to retreat
-
-	;kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
-;kmyQuest.WeatherWhiterun.setActive(True)
-
-kmyQuest.CWPrepareCity.SetStage(2)
-Alias_WhiterunIntEnableOnly.GetReference().Enable()
-Alias_WhiterunIntDisableOnly.GetReference().Disable()
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 setting CWBattlePhase to 6");*** WRITE TO LOG
-kmyquest.CWs.CWBattlePhase.SetValue(6)
-kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-;Set Dialog States
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(1)
-
-Alias_Attacker1General.TryToEvaluatePackage()
-Alias_Attacker2.TryToEvaluatePackage()
-Alias_Attacker3.TryToEvaluatePackage()
-Alias_Attacker4.TryToEvaluatePackage()
-Alias_Attacker5.TryToEvaluatePackage()
-Alias_Attacker6.TryToEvaluatePackage()
-Alias_Attacker7.TryToEvaluatePackage()
-Alias_Attacker8.TryToEvaluatePackage()
-Alias_Attacker9.TryToEvaluatePackage()
-Alias_Attacker10.TryToEvaluatePackage()
-
-Game.GetPlayer().addToFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker1General)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker2)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker3)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker4)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker5)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker6)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker7)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker8)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker9)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Attacker10)
-
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender1General)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender2)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender3)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender4)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender5)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender6)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender7)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender8)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
-kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
-
-
-kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-
-;**CITY SPECIFIC
-Location cityVar = Alias_City.GetLocation()
-if cityVar == kmyquest.CWs.WhiterunLocation
-
-if kmyquest.IsAttack()
-	;Nothing yet
-else
-
-	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-	if kmyquest.CWs.WhiterunSiegeFinished == False
-		kmyquest.CWs.WhiterunSiegeFinished = True
-	endif
-
-	Alias_DisableFastTravelTrigger.TryToDisable()
-
-	if GetStageDone(20)
-		;Gate was closed in stage 20, so be sure to open it again if the defense wins
-		Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Backward", TRUE)
-		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
-
-	endif
-
-;	debug.messageBox("START SPEECH SCENE")
-
-	kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
-	Alias_Jarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
-	Alias_HouseCarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
-	kmyquest.CWSiegeWhiterunDefendedScene.start()
-
-
-endif
-
-
-elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-
-elseif cityVar == kmyquest.CWs.RiftenLocation
-
-
-
-elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-
-
-endif
-
-
-;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
-;Turn off all the Catapults
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker4)
-
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender1)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
-kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
-
-if kmyquest.IsAttack()
-	
-	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
-	kmyquest.FailAttackQuest(Alias_City)		;CWSiegeScript
-
-else ;defenders are victorious
-
-; 	;CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200, stopping polling player location")	;*** WRITE TO LOG
-	;((self as quest) as CWSiegePollPlayerLocation).UnregisterForUpdate()
-
-	;ALSO HAPPENS IN STAGE 255 SHUTDOWN
-	kmyquest.StopCombatSoundsLoop()
-	;Removes this music from the stack
-	kmyQuest.MUSCombatCivilWar.Remove()
-
-	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
-	kmyquest.SucceedDefenseQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
-
-endif
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_17
-Function Fragment_17()
-;BEGIN AUTOCAST TYPE CWSiegeScript
-Quest __temp = self as Quest
-CWSiegeScript kmyQuest = __temp as CWSiegeScript
-;END AUTOCAST
-;BEGIN CODE
-;Second Objective is complete
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 30")	;*** WRITE TO LOG
 
 ;Set BattlePhase
-kmyquest.CWs.CWBattlePhase.SetValue(4)
+kmyquest.CWs.CWBattlePhase.SetValue(2)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;Reset Dialog States
@@ -3724,11 +3413,14 @@ kmyquest.CWStateDefenderLastStand.SetValue(0)
 kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
+;Set Dialog States
+kmyquest.CWStateAttackStarted.SetValue(1) ;Setting this here since it will be the same for all attacks
+
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
 CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
 ;Registers initial spawn points
-CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase4A, Alias_RespawnAttackerPhase4B, Alias_RespawnAttackerPhase4C, Alias_RespawnAttackerPhase4D, Alias_RespawnAttackerPhase4FailSafe)
-CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase4A, Alias_RespawnDefenderPhase4B, Alias_RespawnDefenderPhase4C, Alias_RespawnDefenderPhase4D, Alias_RespawnDefenderPhase4FailSafe)
+CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase2A, Alias_RespawnAttackerPhase2B, Alias_RespawnAttackerPhase2C, Alias_RespawnAttackerPhase2D, Alias_RespawnAttackerPhase2FailSafe)
+CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase2A, Alias_RespawnDefenderPhase2B, Alias_RespawnDefenderPhase2C, Alias_RespawnDefenderPhase2D, Alias_RespawnDefenderPhase2FailSafe)
 
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
@@ -3753,118 +3445,57 @@ Alias_Defender8.TryToEvaluatePackage()
 Alias_Defender9.TryToEvaluatePackage()
 Alias_Defender10.TryToEvaluatePackage()
 
+;used for failing if player leaves
+((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
+
+;TEMP AMBIENT SOUND TRACK
+;kmyquest.StartCombatSoundsLoop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_6
+Function Fragment_6()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Defense only - triggered by walking out of the HQ
 
 
-
-;**ATTACK/DEFEND SPECIFIC
-if kmyquest.IsAttack()
-
-
-else
-
-
-endif
 
 ;**CITY SPECIFIC:
 location cityVar = Alias_City.GetLocation()
 
 if cityVar == kmyquest.CWs.WhiterunLocation
+	;Adds this music to stack, at highest priority
+	kmyQuest.MUSCombatCivilWar.Add()
 
-	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-
-	else
-		;fighting with general - we already have the defend drawbridge objective from stage 20
-
-	endif
-
+	kmyQuest.WeatherWhiterun.SetActive(True)
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
-
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - Exterior gate
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-	else
-		;fighting with general - we already have the defend exterior gate
-
-	endif
+	kmyQuest.WeatherMarkarth.SetActive(True)
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
+	kmyQuest.WeatherRiften.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade2A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade2B.GetReference().GetCurrentDestructionStage() < 4)
-		    Alias_Barricade2A.GetReference().DamageObject(1000)
-		    Alias_Barricade2A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-		endif
 
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
+		;Nothing Special
 
+		else
 
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1070, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
-
-
-
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(2070, 1); FAILED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2080, 1); DISPLAY - barricade
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
+		Alias_Barricade3A.GetReference().Disable(); Disable barricades so the player can get from city to general
+		Alias_Barricade2A.GetReference().Disable()
 
 	endif
-
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
-
-	if kmyquest.IsAttack()
-		if GetStageDone(31)
-			Alias_SolitudeGateLever1.GetReference().Activate(Alias_SolitudeGateLever1.GetReference())
-		else
-			;Do nothing since the player didn't hit the skip trigger.
-		endif
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-	else
-		;Currently no defense planned
-
-	endif
+	kmyQuest.WeatherSolitude.setActive(True)
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
-
-	if kmyquest.IsAttack()
-		if GetStageDone(31)
-			Alias_WindhelmGateLever1.GetReference().Activate(Alias_WindhelmGateLever1.GetReference())
-		else
-			;Do nothing since the player didn't hit the skip trigger.
-		endif
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(3020, 1); COMPLETED - First Gate
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAYED - Last Gate
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-	else
-		;Currently no defense planned
-
-	endif
+	kmyQuest.WeatherWindhelm.setActive(True)
 
 endif
 ;END CODE
@@ -4132,42 +3763,254 @@ endif
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_6
-Function Fragment_6()
+;BEGIN FRAGMENT Fragment_39
+Function Fragment_39()
+;BEGIN CODE
+;Player skipped 30
+SetStage(30)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_11
+Function Fragment_11()
 ;BEGIN AUTOCAST TYPE CWSiegeScript
 Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-;Defense only - triggered by walking out of the HQ
+;First Objective is complete
 
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 20")	;*** WRITE TO LOG
+
+;Set BattlePhase
+kmyquest.CWs.CWBattlePhase.SetValue(3)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+;Reset Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(0)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
+kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
+kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
+kmyquest.CWStateAttackStarted.SetValue(0)
+kmyquest.CWStateDefenderFallingBack.SetValue(0)
+kmyquest.CWStateDefenderLastStand.SetValue(0)
+kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
+kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
+;Registers initial spawn points
+CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase3A, Alias_RespawnAttackerPhase3B, Alias_RespawnAttackerPhase3C, Alias_RespawnAttackerPhase3D, Alias_RespawnAttackerPhase3FailSafe)
+CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase3A, Alias_RespawnDefenderPhase3B, Alias_RespawnDefenderPhase3C, Alias_RespawnDefenderPhase3D, Alias_RespawnDefenderPhase3FailSafe)
+
+;EVP EVERYONE
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1General.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
+
+
+;Make sure that all reinforcements are disabled
+(Alias_AttackerImperialReinforceEnabler.GetReference()).Disable()
+(Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
+
+
+;**ATTACK/DEFEND SPECIFIC
+if kmyquest.IsAttack()
+
+
+else
+
+
+endif
+
+;**CITY SPECIFIC:
+location cityVar = Alias_City.GetLocation()
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+	Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
+	Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+			kmyquest.WhiterunAmbExt01.Disable()
+			kmyquest.WhiterunAmbExt02.Enable()
+		endif
+
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+
+	else
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2040, 1); DISPLAY - Drawbridge
+		(Alias_Defender1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+
+	else
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2060, 1); DISPLAY - Exterior gate
+		(Alias_Defender1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Close the Gate
+
+	endif
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1070, 1); DISPLAY - barricade
+
+
+
+	else
+		Alias_Barricade3A.GetReference().Enable(); Enable Barricades that may not have been enabled in 10
+		Alias_Barricade2A.GetReference().Enable()
+
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2065, 1); FAILED  - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2070, 1); DISPLAY - barricade
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
+
+	else
+		;Currently no defense planned
+
+	endif
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(3010, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3020, 1); DISPLAYED - First Gate
+
+	else
+		;Currently no defense planned
+
+	endif
+
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_34
+Function Fragment_34()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Attack only - triggered by walking out of the Tent
+
+Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
+Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
 
 
 ;**CITY SPECIFIC:
 location cityVar = Alias_City.GetLocation()
 
 if cityVar == kmyquest.CWs.WhiterunLocation
+	kmyQuest.WeatherWhiterun.setActive(True)
+	;Set Global Dialog Stuff
+	;Attack has started
+	kmyQuest.CWs.CWStateAttackStarted.SetValue(1)
+
 	;Adds this music to stack, at highest priority
 	kmyQuest.MUSCombatCivilWar.Add()
 
-	kmyQuest.WeatherWhiterun.SetActive(True)
-
 elseif cityVar == kmyquest.CWs.MarkarthLocation
-	kmyQuest.WeatherMarkarth.SetActive(True)
+	kmyQuest.WeatherMarkarth.setActive(True)
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
-	kmyQuest.WeatherRiften.SetActive(True)
-
-	if kmyquest.IsAttack()
-
-		;Nothing Special
-
-		else
-
-		Alias_Barricade3A.GetReference().Disable(); Disable barricades so the player can get from city to general
-		Alias_Barricade2A.GetReference().Disable()
-
-	endif
+	kmyQuest.WeatherRiften.setActive(True)
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyQuest.WeatherSolitude.setActive(True)
@@ -4180,7 +4023,184 @@ endif
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_17
+Function Fragment_17()
+;BEGIN AUTOCAST TYPE CWSiegeScript
+Quest __temp = self as Quest
+CWSiegeScript kmyQuest = __temp as CWSiegeScript
+;END AUTOCAST
+;BEGIN CODE
+;Second Objective is complete
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 30")	;*** WRITE TO LOG
+
+;Set BattlePhase
+kmyquest.CWs.CWBattlePhase.SetValue(4)
+kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+;Reset Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(0)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(0)
+kmyquest.CWStateAttackerLowReinforcements.SetValue(0)
+kmyquest.CWStateAttackerOutOfReinforcements.SetValue(0)
+kmyquest.CWStateAttackStarted.SetValue(0)
+kmyquest.CWStateDefenderFallingBack.SetValue(0)
+kmyquest.CWStateDefenderLastStand.SetValue(0)
+kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
+kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
+
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
+;Registers initial spawn points
+CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase4A, Alias_RespawnAttackerPhase4B, Alias_RespawnAttackerPhase4C, Alias_RespawnAttackerPhase4D, Alias_RespawnAttackerPhase4FailSafe)
+CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase4A, Alias_RespawnDefenderPhase4B, Alias_RespawnDefenderPhase4C, Alias_RespawnDefenderPhase4D, Alias_RespawnDefenderPhase4FailSafe)
+
+;EVP EVERYONE
+Alias_Attacker1General.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1General.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
+
+
+
+
+;**ATTACK/DEFEND SPECIFIC
+if kmyquest.IsAttack()
+
+
+else
+
+
+endif
+
+;**CITY SPECIFIC:
+location cityVar = Alias_City.GetLocation()
+
+if cityVar == kmyquest.CWs.WhiterunLocation
+
+	if kmyquest.IsAttack()
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+
+	else
+		;fighting with general - we already have the defend drawbridge objective from stage 20
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.MarkarthLocation
+
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - Exterior gate
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+
+	else
+		;fighting with general - we already have the defend exterior gate
+
+	endif
+
+elseif cityVar == kmyquest.CWs.RiftenLocation
+
+	if kmyquest.IsAttack()
+		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
+		if (Alias_Barricade2A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade2B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade2A.GetReference().DamageObject(1000)
+		    Alias_Barricade2A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+
+;Set Dialog States
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1070, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
+
+
+
+	else
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2070, 1); FAILED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2080, 1); DISPLAY - barricade
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
+
+	endif
+
+
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+	if kmyquest.IsAttack()
+		if GetStageDone(31)
+			Alias_SolitudeGateLever1.GetReference().Activate(Alias_SolitudeGateLever1.GetReference())
+		else
+			;Do nothing since the player didn't hit the skip trigger.
+		endif
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+
+	else
+		;Currently no defense planned
+
+	endif
+
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	if kmyquest.IsAttack()
+		if GetStageDone(31)
+			Alias_WindhelmGateLever1.GetReference().Activate(Alias_WindhelmGateLever1.GetReference())
+		else
+			;Do nothing since the player didn't hit the skip trigger.
+		endif
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(3020, 1); COMPLETED - First Gate
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAYED - Last Gate
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
+
+	else
+		;Currently no defense planned
+
+	endif
+
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 GlobalVariable Property MQ106TurnOffRandomDragons  Auto  
 Quest Property MQ106  Auto  
+
+Quest Property USLEEPHeimskrPreachJail Auto ; USKP 2.0.1 - For sending Heimskr to jail.
+ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate Riverwood Stormcloaks if they win Whiterun.
+ObjectReference Property RiverwoodImperialsMarker Auto

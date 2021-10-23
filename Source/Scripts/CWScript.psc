@@ -1796,11 +1796,14 @@ function pacifyAliasForSurrender(ReferenceAlias RefAliasToPacify)
 	log("CWScript", "pacifyAliasForSurrender(" + RefAliasToPacify + ")")
 	
 	Actor ActorRef = RefAliasToPacify.GetActorReference()
-	ClearActorsEnemyFlagOnCrimeFactions(ActorRef)
-	ActorRef.AddToFaction(CWSurrenderTemporaryAllies)
-	ActorRef.StopCombatAlarm()
-	Game.GetPlayer().StopCombatAlarm()
-	ActorRef.StopCombat()
+	;USKP 2.0.2 - Sanity check against bad actor alias.
+	if( ActorRef != None )
+		ClearActorsEnemyFlagOnCrimeFactions(ActorRef)
+		ActorRef.AddToFaction(CWSurrenderTemporaryAllies)
+		ActorRef.StopCombatAlarm()
+		Game.GetPlayer().StopCombatAlarm()
+		ActorRef.StopCombat()
+	EndIf
 	
 EndFunction
 
@@ -1902,8 +1905,8 @@ EndFunction
 
 Location Function GetMyEditorLocationHoldLocation(ObjectReference RefToGetEditorLocHoldFor)
 {Returns a location corresponding to the location of the hold the actor's editor location currently in}
-
-	Location EditorLocation = RefToGetEditorLocHoldFor.GetEditorLocation()
+	;USKP 2.0.5 - Previously used GetEditorLocation() but that has bugs and sometimes returns NONE when it shouldn't be.
+	Location EditorLocation = RefToGetEditorLocHoldFor.GetCurrentLocation()
 	Location returnLocation
 
 	If HaafingarHoldLocation.IsChild(EditorLocation)
@@ -1940,7 +1943,6 @@ Location Function GetMyEditorLocationHoldLocation(ObjectReference RefToGetEditor
 	EndIf
 
 	log("CWScript", "GetMyEditorLocationHoldLocation(" + RefToGetEditorLocHoldFor + ") RETURNING: " + returnLocation)
-	
 	return returnLocation
 	
 	
@@ -2039,15 +2041,14 @@ EndFunction
 function DetermineAndSetCrimeFactionForSoldierActor(Actor ActorRef)
 
 	log("CWScript", "DetermineAndSetCrimeFactionForSoldierActor(" + ActorRef + ") will determine my hold.")
-	
 	Location myHold = GetMyEditorLocationHoldLocation(ActorRef)
-
 	log("CWScript", "DetermineAndSetCrimeFactionForSoldierActor(" + ActorRef + ") myHold = " + myHold + " now will determine if I am a defender or attacker and get my crime faction.")
 	
 	faction myCrimeFaction
 	
 	;DON'T SET CRIME FACTION FOR FORT SOLDIERS ANY MORE
-	location ActorLocation = ActorRef.GetEditorLocation()
+	;USKP 2.0.5 - Previously used GetEditorLocation() but that has bugs and sometimes returns NONE when it shouldn't be.
+	location ActorLocation = ActorRef.GetCurrentLocation()
 	if ActorLocation.HasKeyword(CWFort)
 		log("CWScript", "DetermineAndSetCrimeFactionForSoldierActor(" + ActorRef + ") location is a CWFort, NOT CHANGING CRIME FACTION. Location: " + ActorLocation)
 		RETURN
@@ -2066,7 +2067,6 @@ function DetermineAndSetCrimeFactionForSoldierActor(Actor ActorRef)
 	EndIf
 
 	log("CWScript", "DetermineAndSetCrimeFactionForSoldierActor(" + ActorRef + ") will set crime faction to: " + myCrimeFaction)
-	
 	ActorRef.SetCrimeFaction(myCrimeFaction)
 		
 	log("CWScript", "DetermineAndSetCrimeFactionForSoldierActor(" + ActorRef + ") double checking GetCrimeFaction():" + ActorRef.GetCrimeFaction())

@@ -62,7 +62,7 @@ EVENT onActivate(objectReference triggerRef)
 					
 					Location myCity = myQuestScript.City.GetLocation()
 					
-					if CWs.WhiterunLocation
+					if( myCity == CWs.WhiterunLocation ) ;USLEEP 3.0.6 Bug #21161
 ; 						CWScript.Log("CWSiegeCityDoorScript", self + "OnActivate() city is Whiterun, so force Friend alias and set CWAttackCity stage to 10, as soon as CWAttackCity is running.")
 					
 						while CWAttackCity.IsRunning() == False && waitedFor < 60

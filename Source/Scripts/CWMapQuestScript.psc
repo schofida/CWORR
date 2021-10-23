@@ -14,7 +14,7 @@ Function SetFlagAlias(ObjectReference FlagReference, Location LocationToSetFlagA
 EndFunction
 
 function AddToMapForLocation(Location LocationToToggleMapMarkerOnFor)
-	debug.Notification("AddToMap() is not popping a message telling you this location has been added to your map.")
+	;debug.Notification("AddToMap() is not popping a message telling you this location has been added to your map.")
 	GetMapMarkerForLocation(LocationToToggleMapMarkerOnFor).AddToMap()
 EndFunction
 

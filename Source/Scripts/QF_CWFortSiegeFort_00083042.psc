@@ -1175,10 +1175,19 @@ kmyquest.CWBattlePhase.SetValue(4)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;ADDED 9/1 fixes #71203 - jduvall
-Alias_Barricade1.GetReference().DamageObject(9999)
-Alias_Barricade2.GetReference().DamageObject(9999)
-Alias_Barricade3.GetReference().DamageObject(9999)
-Alias_Barricade4.GetReference().DamageObject(9999)
+;USKP 2.0.1 - Sanity checks people! This is spam central!
+if( Alias_Barricade1.GetReference() )
+  Alias_Barricade1.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade2.GetReference() )
+ Alias_Barricade2.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade3.GetReference() )
+ Alias_Barricade3.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade4.GetReference() )
+ Alias_Barricade4.GetReference().DamageObject(9999)
+EndIf
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1234,10 +1243,19 @@ kmyquest.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;ADDED 9/1 fixes #71203 - jduvall
-Alias_Barricade1.GetReference().DamageObject(9999)
-Alias_Barricade2.GetReference().DamageObject(9999)
-Alias_Barricade3.GetReference().DamageObject(9999)
-Alias_Barricade4.GetReference().DamageObject(9999)
+;USKP 2.0.1 - Sanity checks people! This is spam central!
+if( Alias_Barricade1.GetReference() )
+  Alias_Barricade1.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade2.GetReference() )
+ Alias_Barricade2.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade3.GetReference() )
+ Alias_Barricade3.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade4.GetReference() )
+ Alias_Barricade4.GetReference().DamageObject(9999)
+EndIf
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1531,7 +1549,10 @@ kmyquest.CWs.UnregisterEventHappening(Alias_Fort.GetLocation())
 ;remove them from enemy faction
 Actor JarlActor = Alias_Jarl.GetActorReference()
 Actor HousecarlActor = Alias_Housecarl.GetActorReference()
-JarlActor.RemoveFromFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
+;USKP 2.0.6 - Jarl can be NONE for Solitude.
+if( JarlActor )
+	JarlActor.RemoveFromFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
+EndIf
 HousecarlActor.RemoveFromFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
 ;unmod their aggression
 (Alias_Jarl as DefaultAliasModAggression).ResetAggression()				;values set in properties of scrip attached to alias
@@ -1649,10 +1670,19 @@ kmyquest.CWBattlePhase.SetValue(5)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;ADDED 9/1 fixes #71203 - jduvall
-Alias_Barricade1.GetReference().DamageObject(9999)
-Alias_Barricade2.GetReference().DamageObject(9999)
-Alias_Barricade3.GetReference().DamageObject(9999)
-Alias_Barricade4.GetReference().DamageObject(9999)
+;USKP 2.0.1 - Sanity checks people! This is spam central!
+if( Alias_Barricade1.GetReference() )
+  Alias_Barricade1.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade2.GetReference() )
+ Alias_Barricade2.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade3.GetReference() )
+ Alias_Barricade3.GetReference().DamageObject(9999)
+EndIf
+if( Alias_Barricade4.GetReference() )
+ Alias_Barricade4.GetReference().DamageObject(9999)
+EndIf
 ;END CODE
 EndFunction
 ;END FRAGMENT

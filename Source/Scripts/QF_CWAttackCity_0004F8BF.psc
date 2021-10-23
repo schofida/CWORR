@@ -929,7 +929,10 @@ Alias_BodyGuard1.GetActorReference().setAV("Aggression", 0)
 Alias_BodyGuard2.GetActorReference().setAV("Aggression", 0)
 Alias_BodyGuard3.GetActorReference().setAV("Aggression", 0)
 
-Alias_Justiciar.GetActorReference().setAV("Aggression", 0)
+;USKP 2.0.1 - Sanity check since this alias is usually empty anyway.
+if( Alias_Justiciar.GetActorReference() != None )
+  Alias_Justiciar.GetActorReference().setAV("Aggression", 0)
+endif
 
 Alias_Jarl.RegisterForUpdate(5)
 
@@ -999,15 +1002,16 @@ Alias_BodyGuard1.GetActorReference().setAV("Aggression", 1)
 Alias_BodyGuard2.GetActorReference().setAV("Aggression", 1)
 Alias_BodyGuard3.GetActorReference().setAV("Aggression", 1)
 
-Alias_Justiciar.GetActorReference().setAV("Aggression", 1)
+if( Alias_Justiciar.GetActorReference() != None )
+	Alias_Justiciar.GetActorReference().setAV("Aggression", 1)
+	Alias_Justiciar.GetActorReference().EvaluatePackage()
+EndIf
 
 Alias_Jarl.GetActorReference().EvaluatePackage()
 Alias_HouseCarl.GetActorReference().EvaluatePackage()
 Alias_BodyGuard1.GetActorReference().EvaluatePackage()
 Alias_BodyGuard2.GetActorReference().EvaluatePackage()
 Alias_BodyGuard3.GetActorReference().EvaluatePackage()
-
-Alias_Justiciar.GetActorReference().EvaluatePackage()
 
 Alias_Jarl.GetActorReference().startCombat(Game.GetPlayer())
 Alias_HouseCarl.GetActorReference().startCombat(Alias_FieldCO.GetActorReference())

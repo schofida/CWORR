@@ -35,12 +35,15 @@ Event OnTriggerEnter(ObjectReference akActionRef)
 	
 ; 	CWScript.Log("CWDisableHoldPositionMarkerTrigger", self + "OnTriggerEnter([" + akActionRef + "])")
 	
-	if CWs.IsActorAttacker(actorRef, GetEditorLocation())
-		DisableIfSet(HoldPosMarker1, actorRef)
-		DisableIfSet(HoldPosMarker2, actorRef)
-		DisableIfSet(HoldPosMarker3, actorRef)
-		DisableIfSet(HoldPosMarker4, actorRef)
-		DisableIfSet(HoldPosMarker5, actorRef)
+	;USLEEP 3.0.8 Bug #14559 - This function chain can't process NONEs anyway so no sense in passing them through.
+	if( actorRef != None )
+		if CWs.IsActorAttacker(actorRef, GetEditorLocation())
+			DisableIfSet(HoldPosMarker1, actorRef)
+			DisableIfSet(HoldPosMarker2, actorRef)
+			DisableIfSet(HoldPosMarker3, actorRef)
+			DisableIfSet(HoldPosMarker4, actorRef)
+			DisableIfSet(HoldPosMarker5, actorRef)
+		endif
 	endif
 
 

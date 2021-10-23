@@ -397,7 +397,6 @@ elseif GarrisonLoc.HasKeyword(kmyquest.CWs.CWFort) && GarrisonLoc.GetKeywordData
 ; ; 	debug.traceConditional(self + " stage 0. Garrison Location has CWFort Keyword Data of -1, this means DO NOT reset this place ", kmyquest.CWs.debugOn.value)
 
 else
-
 	kmyquest.ToggleEnableMarkers(Alias_EnableMarkerImperial, Alias_EnableMarkerSons, Alias_EnableMarkerImperialExterior, Alias_EnableMarkerSonsExterior, Alias_EnableMarkerMonster)
 	kmyquest.ProcessIfCamp(Alias_EnableMarkerImperial, Alias_EnableMarkerSons)
 

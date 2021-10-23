@@ -691,6 +691,16 @@ else		;assume windhelm
 	kmyquest.CWs.WindhelmLocation.SetKeywordData(kmyquest.CWs.CWOwner, 1)
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.EastmarchHoldLocation, true, false)
 	Alias_NewJarlWindhelm.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
+	
+	; USKP 2.0.4 - So he'll stop giving the bandit clearance quest.
+	;USLEEP 3.0.0 - This fix was non-functional due to the alias not being filled. Ever. ugh. Changed to a property.
+	Brunwulf.RemoveFromFaction(Favor104QuestGiverFaction)
+	if( Favor104.IsRunning() && Favor104.GetStage() == 0 )
+		if( Questgiver.GetReference() == Brunwulf )
+			Favor104.Stop()
+		EndIf
+	EndIf
+
 	kmyquest.CWFinaleWindhelmSceneD.Start()
 
 
@@ -787,3 +797,8 @@ EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
+
+Faction Property Favor104QuestGiverFaction Auto ; USKP 2.0.4
+Quest Property Favor104 Auto ; USKP 2.0.4
+ReferenceAlias Property Questgiver Auto ; USKP 2.0.4
+Actor Property Brunwulf Auto ; USLEEP 3.0.0

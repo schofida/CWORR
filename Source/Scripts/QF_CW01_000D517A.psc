@@ -207,7 +207,10 @@ kmyquest.CWs.setStage(11)
 kmyquest.CWs.PlayerTookOath(1)   ;turns off introductory quests and fails the joining the other faction quest
 
 ;in case the Jagged Crown Scene is hadn't finished playing:
-(kmyquest.CW01SolitudeMapTableScene as CWMapTableSceneScript).StartMyScene(WaitUntilSceneCompletes = true)
+;USKP 2.0.4 - Added check, if the quest stopped, the scene is done. Don't try to short circuit it back to life.
+if( kmyquest.CW01SolitudeMapTableScene.IsRunning() )
+	(kmyquest.CW01SolitudeMapTableScene as CWMapTableSceneScript).StartMyScene(WaitUntilSceneCompletes = true)
+EndIf
 
 kmyquest.CWs.CWAlliesS.MakeHadvarAndRalofPotentialAllies()
 
