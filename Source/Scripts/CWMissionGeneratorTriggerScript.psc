@@ -19,7 +19,7 @@ ObjectReference Property myEnableMarker Auto
 
 Event OnCellAttach()
 
-; 	CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach()")
+ 	CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach()")
 	
 	Location myLocation = GetEditorLocation()
 	Location myHoldLocation = CW.GetMyCurrentHoldLocation(self)
@@ -28,15 +28,15 @@ Event OnCellAttach()
 	Actor RikkeOrGalmar
 	
 	if myLocation.HasKeyword(CWCampImperial)
-; 		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampImperial trying to starting Imperial missions")
+ 		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampImperial trying to starting Imperial missions")
 		RikkeOrGalmar = RikkeRef
 
 	ElseIf myLocation.HasKeyword(CWCampSons)
-; 		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampSons trying to starting Sons missions")
+ 		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampSons trying to starting Sons missions")
 		RikkeOrGalmar = GalmarRef
 	
 	Else
-; 		CWScript.Log("CWMissionGeneratorTriggerScript", self + " WARNING: OnCellAttach() in location with NEITHER CWCampImperial nor CWCampSons!", 2, True, True)
+ 		CWScript.Log("CWMissionGeneratorTriggerScript", self + " WARNING: OnCellAttach() in location with NEITHER CWCampImperial nor CWCampSons!", 2, True, True)
 		
 	EndIf
 
@@ -51,7 +51,13 @@ Event OnCellAttach()
 		EndIf
 		
 		CW.SetFieldCOAlias(RikkeOrGalmar)	;for dialogue purposes
-		CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
+		;CWO If campaign running use campaign to start missions
+		if CW.CWCampaign.IsRunning()
+			CW.CWCampaignS.StartMissions()
+		Else
+			;In theory, this should only be hit in the last player attacking stage
+			CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
+		endif
 	
 
 	

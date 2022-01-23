@@ -764,7 +764,7 @@ Quest __temp = self as Quest
 CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("AttackCity", "Stage 0: Quest Started in " + Alias_City.GetLocation())
+CWScript.Log("AttackCity", "Stage 0: Quest Started in " + Alias_City.GetLocation())
 
 ObjectReference SpawnAttacker1 =  Alias_SpawnAttacker1.GetReference()
 ObjectReference SpawnAttacker2 =  Alias_SpawnAttacker1.GetReference()
@@ -778,7 +778,7 @@ kmyquest.CWSiegeObjJarl.ForceRefTo(Alias_Jarl.GetReference())
 kmyquest.CWSiegeObj.setObjectiveCompleted(1050)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1200)
 
-; CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers")
+CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers")
 Alias_ImperialEnable.getReference().disable()
 Alias_SonsEnable.getReference().disable()
 
@@ -787,11 +787,11 @@ Actor JarlActor = Alias_Jarl.GetActorReference()
 Actor HouseCarlActor = Alias_HouseCarl.GetActorReference()
 Actor PlayerActor = Game.GetPlayer()
 
-; CWScript.Log("AttackCity", "Stage 0: moving Jarl and Housecarl aliases")
+CWScript.Log("AttackCity", "Stage 0: moving Jarl and Housecarl aliases")
 JarlActor.moveto(Alias_ResolutionJarlMarker.GetReference())
 HouseCarlActor.moveto(Alias_ResolutionHouseCarlMarker.GetReference())
 
-; CWScript.Log("AttackCity", "Stage 0: setting player relationship rank to 0 if greater than for Jarl and Housecarl aliases")
+CWScript.Log("AttackCity", "Stage 0: setting player relationship rank to 0 if greater than for Jarl and Housecarl aliases")
 
 if JarlActor.GetRelationshipRank(PlayerActor) >0
 	JarlActor.SetRelationshipRank(PlayerActor, 0)
@@ -801,7 +801,7 @@ if HouseCarlActor.GetRelationshipRank(PlayerActor) >0
 	HouseCarlActor.SetRelationshipRank(PlayerActor, 0)
 endif
 
-; CWScript.Log("AttackCity", "Stage 0: creating Jarl body guards")
+CWScript.Log("AttackCity", "Stage 0: creating Jarl body guards")
 
 ObjectReference ResolutionJarlGuardMarker1Ref = Alias_ResolutionJarlGuardMarker1.GetReference()
 ObjectReference ResolutionJarlGuardMarker2Ref = Alias_ResolutionJarlGuardMarker2.GetReference()
@@ -812,14 +812,63 @@ ObjectReference ResolutionJarlGuardMarker6Ref = Alias_ResolutionJarlGuardMarker6
 
 ;NOTE: the other cities only have a single ref type for the ResolutionJarlGuardMarkers, I made the 6 specific types after we cut the other cities from the war
 ;so if we need to add them back in, i'll need to change the location ref types of the markers in the other castles
-
-if Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
+;CWO - see above note. Already taken care compadre :)
+if Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation && kmyQuest.CWs.Playerallegiance == 1 ; schofida - assumed to be sons so added a check in case Imperials are reclaiming Whiterun
+	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+elseif Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
 	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
+
+;	Alias_BodyGuard1.GetActorReference().setAlert()
+;	Alias_BodyGuard2.GetActorReference().setAlert()
+;	Alias_BodyGuard3.GetActorReference().setAlert()
+;	Alias_BodyGuard4.GetActorReference().setAlert()
+;	Alias_BodyGuard5.GetActorReference().setAlert()
+;	Alias_BodyGuard6.GetActorReference().setAlert()
+elseif Alias_City.GetLocation() == kmyquest.CWs.MarkarthLocation && kmyQuest.CWs.Playerallegiance == 1
+	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier as form, 1, false, false))
+elseif Alias_City.GetLocation() == kmyquest.CWs.MarkarthLocation
+	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+
+;	Alias_BodyGuard1.GetActorReference().setAlert()
+;	Alias_BodyGuard2.GetActorReference().setAlert()
+;	Alias_BodyGuard3.GetActorReference().setAlert()
+;	Alias_BodyGuard4.GetActorReference().setAlert()
+;	Alias_BodyGuard5.GetActorReference().setAlert()
+;	Alias_BodyGuard6.GetActorReference().setAlert()
+elseif Alias_City.GetLocation() == kmyquest.CWs.RiftenLocation && kmyQuest.CWs.Playerallegiance == 2 ; schofida - assumed to be sons so added a check in case Imperials are reclaiming Whiterun
+	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier as form, 1, false, false))
+elseif Alias_City.GetLocation() == kmyquest.CWs.RiftenLocation
+	Alias_BodyGuard1.ForceRefTo(ResolutionJarlGuardMarker1Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+	Alias_BodyGuard2.ForceRefTo(ResolutionJarlGuardMarker2Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+	Alias_BodyGuard3.ForceRefTo(ResolutionJarlGuardMarker3Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+	Alias_BodyGuard4.ForceRefTo(ResolutionJarlGuardMarker4Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+	Alias_BodyGuard5.ForceRefTo(ResolutionJarlGuardMarker5Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+	Alias_BodyGuard6.ForceRefTo(ResolutionJarlGuardMarker6Ref.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
 
 ;	Alias_BodyGuard1.GetActorReference().setAlert()
 ;	Alias_BodyGuard2.GetActorReference().setAlert()
@@ -837,10 +886,14 @@ else
 endif
 
 
-; CWScript.Log("AttackCity", "Stage 0: moving FieldCO inside city gate")
+CWScript.Log("AttackCity", "Stage 0: moving FieldCO inside city gate")
 Alias_FieldCO.GetReference().moveto(SpawnAttacker1)
 
-; CWScript.Log("AttackCity", "Stage 0: enabling DefenderMarkers")
+;CWO Stuff
+Alias_FieldCO.GetActorReference().EvaluatePackage()
+;CWO Stuff
+
+CWScript.Log("AttackCity", "Stage 0: enabling DefenderMarkers")
 ObjectReference ResolutionDefenderMarkerRef1 = Alias_ResolutionDefenderMarker1.GetReference()
 ObjectReference ResolutionDefenderMarkerRef2 = Alias_ResolutionDefenderMarker2.GetReference()
 ObjectReference ResolutionDefenderMarkerRef3 = Alias_ResolutionDefenderMarker3.GetReference()
@@ -862,7 +915,7 @@ ResolutionDefenderMarkerRef3.Enable()
 ResolutionDefenderMarkerRef4.Enable()
 ResolutionDefenderMarkerRef5.Enable()
 
-; CWScript.Log("AttackCity", "Stage 0: creating player enemy soldiers")
+CWScript.Log("AttackCity", "Stage 0: creating player enemy soldiers")
 
 if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
 
@@ -898,7 +951,7 @@ kmyquest.CreateAliasedSoldierEnemy(Alias_EnemySoldier12, Alias_ResolutionDefende
 
 endif
 
-; CWScript.Log("AttackCity", "Stage 0: creating player ally soldiers")
+CWScript.Log("AttackCity", "Stage 0: creating player ally soldiers")
 
 ;*** !!! *** !!! THESE SHOULD BE SET UP TO SPAWN INFINITE REINFORCEMENTS *** !!! *** !!! 
 
@@ -943,7 +996,7 @@ Alias_Jarl.RegisterForUpdate(5)
 ;RegisterForUpdate(1)		;Needed for checking if the player has left the battle
 ;((self as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_BattleCenterMarker.GetReference(), Alias_City.GetLocation())
 
-; CWScript.Log("AttackCity", self + "Stage 0: Giving Jarl Steel plate and storing his current outfit to retrieve later")
+CWScript.Log("AttackCity", self + "Stage 0: Giving Jarl Steel plate and storing his current outfit to retrieve later")
 ;WE DONT YET HAVE FUNCTIONALITY TO GET OUTFIT
 ;if we get that function I should change this to store the outfit the jarl is currently wearing
 ;for now assume this is Balgruuf, because we only do sieges at whiterun now
@@ -960,9 +1013,10 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;A CONDITION ON FRIEND PACKAGES... SET BY DOOR INTO WORLD SPACE
-; CWScript.Log("AttackCity", "Stage 10: moving friend into city.")
+CWScript.Log("AttackCity", "Stage 10: moving friend into city.")
 Alias_Friend.GetReference().MoveTo(Alias_SpawnAttacker1.GetReference())
 kmyQuest.SkyrimOvercastWar.ForceActive(1)
+Alias_Friend.GetActorReference().EvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -979,6 +1033,13 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;player left the area (see CWPlayerScript attached to Player alias)
 ;so close out this quest and advance it as if he got the jarl to surrender (it was an optional objective anyway)
 if GetStageDone(9000) == false
+	;CWO - Stop Player Essential quest
+	kmyQuest.CWCampaignS.StopMonitors()
+	;CWO - Fire up disguise quest since this siege is done
+	kmyQuest.CWCampaignS.StartDisguiseQuest()
+	;CWO - Set contested hold winner for campagin
+	kmyQuest.CWs.contestedHoldWinner = kmyQuest.CWs.PlayerAllegiance
+
 	kmyquest.jarlHasSurrendered = 1
 	kmyquest.CWSiegeObj.setObjectiveFailed(1210)
 	kmyquest.CWSiegeObj.setStage(9000)
@@ -995,7 +1056,7 @@ Quest __temp = self as Quest
 CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("AttackCity", "Stage 31: making Jarl, Housecarl, body guards aggressive")
+CWScript.Log("AttackCity", "Stage 31: making Jarl, Housecarl, body guards aggressive")
 Alias_Jarl.GetActorReference().setAV("Aggression", 1)
 Alias_HouseCarl.GetActorReference().setAV("Aggression", 1)
 Alias_BodyGuard1.GetActorReference().setAV("Aggression", 1)
@@ -1081,22 +1142,32 @@ Quest __temp = self as Quest
 CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("AttackCity", "Stage 40: Jarl surrender scene will start up")
+CWScript.Log("AttackCity", "Stage 40: Jarl surrender scene will start up")
 
 kmyquest.jarlWillSurrender = 1
+
+;schofida - When next campaign starts, player won, so keep attacking
+kmyQuest.CWs.CWDebugForceAttacker.SetValueInt(kmyQuest.CWs.PlayerAllegiance)
 
 ;Removing Combat Music
 kmyQuest.MUSCombatCivilWar.Remove()
 
 ;SURRENDER SCENE
-; CWScript.Log("AttackCity", "Stage 40: moving New Jarl and FieldCO into position and starting scene")
+CWScript.Log("AttackCity", "Stage 40: moving New Jarl and FieldCO into position and starting scene")
 Alias_NewJarl.GetReference().moveto(Alias_ResolutionNewJarlMarker.GetReference())
+;CWO - Evaluate to be safe
+Alias_NewJarl.GetActorReference().EvaluatePackage()
+
 Actor Jarl = Alias_Jarl.GetActorReference()
 Jarl.SetNoBleedoutRecovery(false) 
 Jarl.restoreAv("Health", 1000)
 Alias_HouseCarl.GetActorReference().restoreAv("Health", 1000)
 Alias_FieldCO.GetActorReference().restoreAv("Health", 1000)
 Alias_Friend.GetActorReference().restoreAv("Health", 1000)
+;CWO - Stop combat alarm to be safe
+Alias_FieldCO.GetActorReference().StopCombatAlarm()
+Alias_Friend.GetActorReference().StopCombatAlarm()
+
 kmyquest.CWAttackCitySurrenderScene.Start()
 
 Game.EnablePlayerControls()
@@ -1144,9 +1215,25 @@ Quest __temp = self as Quest
 CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("AttackCity", "Stage 30: Allowing confrontation scene to progress")
-Alias_FieldCO.GetReference().Moveto(Game.GetPlayer())
+CWScript.Log("AttackCity", "Stage 30: Allowing confrontation scene to progress")
+
+;CWO Bunch of stuff to move actors into place and calm everything down to allow scene to happen
+if Alias_FieldCO.GetReference().GetDistance(game.GetPlayer() as objectreference) < 4000 as Float
+	
+else
+	Alias_FieldCO.GetReference().MoveTo(game.GetPlayer() as objectreference, 0.000000, 0.000000, 0.000000, true)
+endIf
+Alias_FieldCO.GetActorReference().RemoveFromFaction(kmyQuest.CWSoldierPlayerEnemy)
+Alias_FieldCO.GetActorReference().StopCombat()
+Alias_FieldCO.GetReference().Enable(false)
+
 Alias_Friend.GetReference().Moveto(Game.GetPlayer())
+
+;CWO Stuff
+Alias_FieldCO.GetActorReference().EvaluatePackage()
+Alias_Friend.GetActorReference().EvaluatePackage()
+;CWO Stuff
+
 sound.StopInstance(kmyQuest.CWSiegeS.AMBDistantBattleSoundInstance)
 
 ;Alias_BodyGuard1.GetActorReference().startCombat(Game.GetPlayer())
@@ -1165,6 +1252,9 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 ;THIS IS SIMILAR TO STAGE 200
 
+kmyQuest.CWCampaignS.StopMonitors()
+kmyQuest.CWCampaignS.StartDisguiseQuest()
+
 kmyquest.jarlHasSurrendered = 1
 
 kmyquest.CWSiegeObj.setObjectiveCompleted(1210)
@@ -1182,7 +1272,7 @@ Quest __temp = self as Quest
 CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("AttackCity", "Stage 9999: Shut down stage, removing everyone from CWSurrenderTemporaryAllies")
+CWScript.Log("AttackCity", "Stage 9999: Shut down stage, removing everyone from CWSurrenderTemporaryAllies")
 
 Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
 
@@ -1232,7 +1322,7 @@ Alias_Soldier4.GetActorReference().DeleteWhenAble()
 Alias_Soldier5.GetActorReference().DeleteWhenAble()
 Alias_Soldier6.GetActorReference().DeleteWhenAble()
 
-; CWScript.Log("AttackCity", self + "Stage 9999: Shutdown stage, Giving Jarl his normal outfit")
+CWScript.Log("AttackCity", self + "Stage 9999: Shutdown stage, Giving Jarl his normal outfit")
 ;WE DONT YET HAVE FUNCTIONALITY TO GET OUTFIT
 ;if we get that function I should change this to store the outfit the jarl is currently wearing
 ;for now assume this is Balgruuf, because we only do sieges at whiterun now

@@ -8,11 +8,6 @@ int Property DiscoverDistance = 1000 auto Hidden
 
 ;#### Pointers to things in master file
 
-;## Aliases
-ReferenceAlias Property ResourceObject1 Auto
-
-
-
 Event OnInit()
 	CWMission02S = GetOwningQuest() as CWMission02Script
 	
@@ -44,27 +39,12 @@ EndEvent
 
 
 Event OnUpdate()
-; 	CWScript.Log("CWMission02ResourceObjectScript", self + " OnUpdate()")
+	CWScript.Log("CWMission02ResourceObjectScript", self + " OnUpdate()")
 
-;	if myType == 0
-;		myType = CWMission02S.CWCampaignS.GetResourceType(self)
-;		primaryResourceType = CWMission02S.CWCampaignS.GetResourceType(ResourceObject1)
-;	EndIf
-
-	If myType == 0
 	
-		primaryResourceType = (ResourceObject1.GetReference() as ResourceObjectScript).GetResourceType() 
-		myType = (GetReference() as ResourceObjectScript).GetResourceType() 
-	
-	EndIf
-	
-	;If the player gets close enought to have "discovered" the primary resource, advance the Quest
-	if self == ResourceObject1 	;if I'm the primary resource
-	
-		if GetOwningQuest().GetStageDone(20) == False && Game.GetPlayer().GetDistance(self.GetReference()) < DiscoverDistance	;if the player is close to me
+	if GetOwningQuest().GetStageDone(20) == False && Game.GetPlayer().GetDistance(self.GetReference()) < DiscoverDistance	;if the player is close to me
 ; 			CWScript.Log("CWMission02ResourceObjectScript", self + " OnUpdate(): PlayerDistance to" + Self + " < DiscoverDistance, advancing quest")
-			GetOwningQuest().SetStage(20)
-		EndIf
+		GetOwningQuest().SetStage(20)
 	EndIf
 	
 	;regardless if i'm the primary resource or not, if I'm the correct type, and i'm destroyed consider the objective completed

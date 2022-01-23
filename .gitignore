@@ -1,1 +1,8 @@
-Civil War Overhaul - New.esp
+meshes
+textures
+*workspace
+*.ppj
+.vscode
+*.pex
+*.txt
+CWScript.psc

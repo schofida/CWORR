@@ -61,8 +61,8 @@ EVENT onActivate(objectReference triggerRef)
 					CWSiegeScript myQuestScript = (GetOwningQuest() as CWSiegeScript)
 					
 					Location myCity = myQuestScript.City.GetLocation()
-					
-					if( myCity == CWs.WhiterunLocation ) ;USLEEP 3.0.6 Bug #21161
+					;CWO - Support for Riften and Markarth doors
+					if( myCity == CWs.WhiterunLocation || myCity == CWs.MarkarthLocation || myCity == CWs.RiftenLocation ) ;USLEEP 3.0.6 Bug #21161
 ; 						CWScript.Log("CWSiegeCityDoorScript", self + "OnActivate() city is Whiterun, so force Friend alias and set CWAttackCity stage to 10, as soon as CWAttackCity is running.")
 					
 						while CWAttackCity.IsRunning() == False && waitedFor < 60

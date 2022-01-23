@@ -929,11 +929,15 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 	
 	if infinitePool == False
 	
-		;int AttackDelta = CWCampaignS.GetCurrentAttackDelta() 
+		int AttackDelta = 0
+		if CWCampaignS.IsRunning()
+			AttackDelta = CWCampaignS.GetCurrentAttackDelta() 
+		endif
 		;ATTACK DELTA IS NO LONGER BEING USED - IT WAS THE RELATIVE STRENGTH OF THE ATTACKER BASED ON THE SURROUNDING HOLDS HE OWNS ADJACENT TO THE CONTESTED HOLD. THERE IS NO CURRENT CAMPAIGN WITH CONTESTED HOLD ANYMORE
 		;To make life easier for me, I'm just setting attack delta to 0 rather than restructuring all the logic
 		
-		int AttackDelta = 0
+		;int AttackDelta = 0
+		;schofida - Ignore the comments above. LETS ATTACK THAT DELTA!
 			
 		if AttackDelta > 0
 			
@@ -972,12 +976,15 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 	
 	if infinitePool == False
 	
-		;int AttackDelta = CWCampaignS.GetCurrentAttackDelta() 
+		int AttackDelta = 0
+		if CWCampaignS.IsRunning()
+			AttackDelta = CWCampaignS.GetCurrentAttackDelta() 
+		endif
 		;ATTACK DELTA IS NO LONGER BEING USED - IT WAS THE RELATIVE STRENGTH OF THE ATTACKER BASE ON THE SURROUNDING HOLDS HE OWNS ADJACENT TO THE CONTESTED HOLD. THERE IS NO CURRENT CAMPAIGN WITH CONTESTED HOLD ANYMORE
 		;To make life easier for me, I'm just setting attack delta to 0 rather than restructuring all the logic
 
-		int AttackDelta = 0
-		
+		;int AttackDelta = 0
+		;schofida - Ignore the comments above. LETS ATTACK THAT DELTA!
 		if AttackDelta < 0
 
 			pool = (BasePool + (Math.ABS(AttackDelta) * AttackDeltaMult)) * scaleMult

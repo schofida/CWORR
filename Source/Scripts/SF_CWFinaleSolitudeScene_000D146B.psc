@@ -5,7 +5,7 @@ Scriptname SF_CWFinaleSolitudeScene_000D146B Extends Scene Hidden
 ;BEGIN FRAGMENT Fragment_2
 Function Fragment_2()
 ;BEGIN CODE
-game.disablePlayerControls()
+;game.disablePlayerControls()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -23,7 +23,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_4
 Function Fragment_4()
 ;BEGIN CODE
-game.enablePlayerControls()
+;game.enablePlayerControls()
 ;END CODE
 EndFunction
 ;END FRAGMENT

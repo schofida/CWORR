@@ -233,15 +233,65 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 ;## Activators ##
 
 ;*** !! *** !! *** !! these are now just forms, and will be set with Game.GetForm(HEX ID) function rather than being pointed at in the editor. As soon as we get Activator objects in Papyrus, this need to change to point directly at the activators
-Form Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Form Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Form Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+;CWO - Sorry to the Bethesda deb's who had to work on this while the engine was still incomplete :( 
+Activator Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Furniture Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Furniture Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 
 
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
 CWScript Property CWs Auto hidden
 
+;## CWO! LET'S FUCKING GO!! ##
+CWOStillABetterEndingMonitorScript Property CWOStillABetterEndingMonitor Auto
+Quest Property CWOArmorDisguise Auto
+GlobalVariable Property CWODisguiseGlobal Auto
+GlobalVariable Property CWOCapitalReinforcements Auto
+GlobalVariable Property CWOFortReinforcements Auto
+GlobalVariable Property CWOSiegeReinforcements Auto
+GlobalVariable Property CWOGarrisonReinforcements Auto
+GlobalVariable Property CWOStillABetterEndingGlobal Auto
+Quest Property CWOSendForPlayerQuest Auto
+Keyword Property CWODefendingStart Auto
+Scene Property CWSiegeGeneralChargeScene Auto
+GlobalVariable Property CWOPCChance Auto
+Quest Property CWMission01 Auto
+Quest Property CWMission02 Auto
+Quest Property CWMission05 Auto
+Quest Property CWMission06 Auto
+Quest Property CWMission08Quest Auto
+Quest Property CWMission09 Auto
+KeyWord Property cwopartycrasher Auto
+Package Property CWGalmarAtCampWhiterun Auto
+Package Property CWRikkeAtCampWhiterun Auto
+Keyword Property CWOMissionStart2 Auto
+GlobalVariable Property CWOWarBegun Auto
+LocationAlias Property EnemyCamp Auto
+Int Property CanDoCWMission03 Auto Conditional
+Int Property CanDoCWMission04 Auto Conditional
+Int Property CanDoCWMission07 Auto Conditional
+ReferenceAlias Property Garrison1EnableImperial Auto
+ReferenceAlias Property Garrison2EnableImperial Auto
+ReferenceAlias Property Garrison3EnableImperial Auto
+ReferenceAlias Property Garrison4EnableImperial Auto
+ReferenceAlias Property Garrison1EnableSons Auto
+ReferenceAlias Property Garrison2EnableSons Auto
+ReferenceAlias Property Garrison3EnableSons Auto
+ReferenceAlias Property Garrison4EnableSons Auto
+GlobalVariable Property CWOPlayerAttackerScaleMult Auto
+GlobalVariable Property CWOPlayerDefenderScaleMult Auto
+GlobalVariable Property CWOEnemyAttackerScaleMult Auto
+GlobalVariable Property CWOEnemyDefenderScaleMult Auto
+ActorBase Property CWBattleRikke Auto
+ActorBase Property CWBattleGalmar Auto
+ActorBase Property CWBattleTullius Auto
+ActorBase Property CWBattleUlfric Auto
+Bool Property CWFortSiegeFortDone Auto Hidden Conditional
+Bool Property CWMission01Or02Done Auto Hidden Conditional
+Bool Property CWMission06Done Auto Hidden Conditional
+Bool Property CWMission08Done Auto Hidden Conditional
+Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
 
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
@@ -297,36 +347,50 @@ Location PurchasedLocationBothFactions6
 Location PurchasedLocationBothFactions7
 Location PurchasedLocationBothFactions8
 
-
+bool StartMissionsRunning = false
 
 Event OnInit()
 	CWs = CW as CWScript
+
+	CWScript.Log("CWCampaignScript", " OnInit() setting default property values.", 0, True, True)
 	
-; 	CWScript.Log("CWCampaignScript", " OnInit() setting default property values.", 0, True, True)
+	;CWO - No Tutorial Mission
+	CWs.TutorialMissionComplete = 1
 
 	AcceptDays = 5
 	MissionDays = 2
-	ResolutionPhase = 4
+	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
+	ResolutionPhase = 3
 	
 	MissionAcceptancePollWait = 5	;wait this many seconds inside the while loop in PollForMissionAcceptance() function
 	
 	AttackDeltaBonusForKillingCapitalGarrison = 2
 	AttackDeltaGarrisonValueModifierForDestroyingResource = 0.50	;destroying the resource object at a garrison halves it value
 	
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission03Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iPale) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iHjaalmarch))
+		candocwmission03 = 1
+	Else
+		candocwmission03 = 0
+	endif
 
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission04Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iWinterhold) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iFalkreath))
+		candocwmission04 = 1
+	Else
+		candocwmission04 = 0
+	endif
 
-	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
-	ResourceObjectFarm = Game.GetForm(0X0001DA07)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
-	ResourceObjectMill = Game.GetForm(0X0001DA0C)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
-	ResourceObjectMine = Game.GetForm(0X0001DA0D)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
-	;*** !!! *** !!! 
-	
-EndEvent
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission07Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iRift) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iReach))
+		candocwmission07 = 1
+	Else
+		candocwmission07 = 0
+	endif
+
+ EndEvent
 
 
 Function ResetCampaign()
 
-; 	CWScript.Log("CWCampaignScript", " ResetCampaign() resetting property values.")
+ 	CWScript.Log("CWCampaignScript", " ResetCampaign() resetting property values.")
 	Mission1Type = 0
 	Mission2Type = 0
 	Mission3Type = 0
@@ -336,13 +400,13 @@ Function ResetCampaign()
 	
 	completedMission = 0	
 	failedMission = 0		
-	
+
 	ownerPatrol1 = 0
 	ownerPatrol2 = 0
 	ownerPatrol3 = 0
 	ownerPatrol4 = 0
 	ownerPatrol5 = 0
-
+	
 	unsetPurchasedLocations()
 	
 	attackDeltaMissionBonus = 0
@@ -351,7 +415,14 @@ Function ResetCampaign()
 
 	CWCampaignPhase.value = 0							;reset global (note this is immediately incremented to 1 by stage 150)
 	resolveOffscreen = 0						;reset variable
-		
+	
+	;Re-intialize CWO stuff
+	SpanishInquisitionCompleted = false
+	CWMission01Or02Done = false
+	CWMission06Done = false
+	CWMission08Done = false
+	CWFortSiegeFortDone = false
+
 EndFunction
 
 Function PurchaseGarrisons()
@@ -359,7 +430,7 @@ Function PurchaseGarrisons()
 
 	;If PurchaseDelta is > 0 it means the attackers have the advantage and can purchase additional garrisons and patrols, if the PurchaseDelta < 0 it means the defenders have the advantage and have all the garrisons and can purchase additional patrols
 
-; 	CWScript.Log("CWCampaignScript", " PurchaseGarrisons() begining to purchase garrisons. Starting PurchaseDelta = " + CWs.PurchaseDelta)
+ 	CWScript.Log("CWCampaignScript", " PurchaseGarrisons() begining to purchase garrisons. Starting PurchaseDelta = " + CWs.PurchaseDelta)
 
 	if CWDebugSkipPurchase.value == 1
 ; 		CWScript.Log("CWCampaignScript", ": CWDebugSkipPurchase == 1, we are skipping call to PurchaseGarrison()", 1)
@@ -395,11 +466,12 @@ Function PurchaseGarrisons()
 	PurchaseGarrisonLocationAlias(Fort)
 	
 	;Purchase additional patrols if there is any AttackDelta left:   see EnablePatrols() call below
-	ownerPatrol1 = PurchasePatrolAndReturnNewOwner(1)
-	ownerPatrol2 = PurchasePatrolAndReturnNewOwner(2)
-	ownerPatrol3 = PurchasePatrolAndReturnNewOwner(3)
-	ownerPatrol4 = PurchasePatrolAndReturnNewOwner(4)
-	ownerPatrol5 = PurchasePatrolAndReturnNewOwner(5)
+	;CWO - Always award patrols to the defenders
+	ownerPatrol1 = CWs.Defender;PurchasePatrolAndReturnNewOwner(1)
+	ownerPatrol2 = CWs.Defender;PurchasePatrolAndReturnNewOwner(2)
+	ownerPatrol3 = CWs.Defender;PurchasePatrolAndReturnNewOwner(3)
+	ownerPatrol4 = CWs.Defender;PurchasePatrolAndReturnNewOwner(4)
+	ownerPatrol5 = CWs.Defender;PurchasePatrolAndReturnNewOwner(5)
 	
 	;ENABLE THE PURCHASED PATROLS -- not these don't get passed into to SetOwner() via a PurchasedLocationXXXn variable, because these patrols are just turned on/off by toggling xmarkers, see the EnablePatrols() function below.
 	;Enable patrols that have been purchased by enabling the proper enable markers
@@ -426,19 +498,20 @@ Function PurchaseGarrisonLocation(Location GarrisonLocation)
 	int cost = GarrisonLocation.GetKeywordData(CWCost) as int
 	int newOwner		;1 = Imperials, 2 = Sons -- will correspond to Attacker and Defender property on CWScript attached to CW quest
 
-	If CWs.PurchaseDelta >= Cost	;award to attacker
-		newOwner = CWs.Attacker
-		CWs.PurchaseDelta = (CWs.PurchaseDelta - cost)
-		GarrisonLocation.SetKeywordData(CWPurchasedByAttacker, 1)
+	;CWO - Always award garrisons to the defenders
+	;If CWs.PurchaseDelta >= Cost	;award to attacker
+	;	newOwner = CWs.Attacker
+	;	CWs.PurchaseDelta = (CWs.PurchaseDelta - cost)
+	;	GarrisonLocation.SetKeywordData(CWPurchasedByAttacker, 1)
 ; 		CWScript.Log("CWCampaignScript", " PurchaseGarrison() purchasing " + GarrisonLocation + " for attacker(" + CWs.FactionName(newOwner) + ") and flagged for reset")
 		
-	Else	;award to defender
+	;Else	;award to defender
 		newOwner = CWs.Defender
 ; 		CWScript.Log("CWCampaignScript", " PurchaseGarrison() purchasing " + GarrisonLocation + " for defender(" + CWs.FactionName(newOwner) + ") and flagged for reset")
 		GarrisonLocation.SetKeywordData(CWPurchasedByAttacker, 0)
 		;There is no cost for the defender to purchase a garrison... he owns it by default
 		
-	EndIf
+	;EndIf
 
 	SetPurchasedLocation(GarrisonLocation, NewOwner)
 	
@@ -917,67 +990,67 @@ EndFunction
 
 
 Function SetCWCampaignFieldCOAliases()
-{Forces named field COs into FieldCO and generic enemy field COs into EnemyFieldCO, enables the EnemyFieldCO and disables the other non-used generic field CO}
-
-	if CWs.playerAllegiance == CWs.iImperials
-
-		if CWs.playerInvolved == 0
-; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() Player Allegience == 1 and PlayerInvolved == 0, so we are Forcing GenericFieldCOImperial into FieldCo, GenericFieldCOSons into EnemyFieldCO, and enabling them both.")
-			
-			FieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
-			EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
-
-			GenericFieldCOImperial.GetReference().Enable()
-			EnemyFieldCO.GetReference().Enable()
-
-		Elseif CWs.playerInvolved == 1
+	{Forces named field COs into FieldCO and generic enemy field COs into EnemyFieldCO, enables the EnemyFieldCO and disables the other non-used generic field CO}
 	
-; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Rikke into FieldCo, GenericFieldCOSons into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOImperial.")
-
-			FieldCO.ForceRefTo(Rikke.GetReference())
-			EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
-
-			EnemyFieldCO.GetReference().Enable()
-			GenericFieldCOImperial.GetReference().Disable()
-			
-		Else
-; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
-
-			
-		EndIf
-
-	Elseif CWs.playerAllegiance == CWs.iSons
+		if CWs.playerAllegiance == CWs.iImperials
+	
+			if CWs.playerInvolved == 0
+	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() Player Allegience == 1 and PlayerInvolved == 0, so we are Forcing GenericFieldCOImperial into FieldCo, GenericFieldCOSons into EnemyFieldCO, and enabling them both.")
+				
+				FieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
+				EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+	
+				GenericFieldCOImperial.GetReference().Enable()
+				EnemyFieldCO.GetReference().Enable()
+	
+			Elseif CWs.playerInvolved == 1
 		
-		if CWs.playerInvolved == 0
-; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() playerAllegiance == 2 and PlayerInvolved == 0, so we are Forcing GenericFieldCOSons into FieldCo, GenericFieldCOImperial into EnemyFieldCO, and enabling them both.")
-			
-			FieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
-			EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
-
-			GenericFieldCOImperial.GetReference().Enable()
-			EnemyFieldCO.GetReference().Enable()
-
-		Elseif CWs.playerInvolved == 1
-
-; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Galmar into FieldCo, GenericFieldCOImperial into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOSons.")
-
-			FieldCO.ForceRefTo(Galmar.GetReference())
-			EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
-
-			EnemyFieldCO.GetReference().Enable()
-			GenericFieldCOSons.GetReference().Disable()
-
-		Else
-; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
-			
-		EndIf
-			
-	Else
-; 		CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases expected playerAllegience to be 1 or 2, got " + CWs.playerAllegiance, 2)
-
-	EndIf
+	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Rikke into FieldCo, GenericFieldCOSons into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOImperial.")
 	
-EndFunction
+				FieldCO.ForceRefTo(Rikke.GetReference())
+				EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+	
+				EnemyFieldCO.GetReference().Enable()
+				GenericFieldCOImperial.GetReference().Disable()
+				
+			Else
+	; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
+	
+				
+			EndIf
+	
+		Elseif CWs.playerAllegiance == CWs.iSons
+			
+			if CWs.playerInvolved == 0
+	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() playerAllegiance == 2 and PlayerInvolved == 0, so we are Forcing GenericFieldCOSons into FieldCo, GenericFieldCOImperial into EnemyFieldCO, and enabling them both.")
+				
+				FieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+				EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
+	
+				GenericFieldCOImperial.GetReference().Enable()
+				EnemyFieldCO.GetReference().Enable()
+	
+			Elseif CWs.playerInvolved == 1
+	
+	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Galmar into FieldCo, GenericFieldCOImperial into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOSons.")
+	
+				FieldCO.ForceRefTo(Galmar.GetReference())
+				EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
+	
+				EnemyFieldCO.GetReference().Enable()
+				GenericFieldCOSons.GetReference().Disable()
+	
+			Else
+	; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
+				
+			EndIf
+				
+		Else
+	; 		CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases expected playerAllegience to be 1 or 2, got " + CWs.playerAllegiance, 2)
+	
+		EndIf
+		
+	EndFunction
 
 Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 {Called when needing to advance the campaign to the next phase, and start new missions}
@@ -993,27 +1066,27 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	;* See rationale for this above
 	if CWCampaignPhase.value != 0 && OptionalPhaseToSetTo == -1	;ie the default call, not when it's called in dialogue with the faction leader the first time the player is joining a campaign in the civil war
 		while CWs.AliasFactionLeader.GetReference().getCurrentLocation().IsSameLocation(Game.GetPlayer().getCurrentLocation(), LocTypeHabitation)
-; 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() WAITING -PLAYER NEARBY: in a while loop wait until after player and Faction leader aren't in the same LocTypeHabitation location.", 1)
+ 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() WAITING -PLAYER NEARBY: in a while loop wait until after player and Faction leader aren't in the same LocTypeHabitation location.", 1)
 ;*** !!! *** IF WE EVER GET A WAIT MENU, THEN WE NEED TO NOT CARE IF THE PLAYER IS IN THE SAME LOCATION IF HE IS ALSO WAITING			
 			utility.wait(10)
 		
 		EndWhile
 	EndIf
 	
-; 	CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() running.")
+ 	CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() running.")
 	
 	if OptionalPhaseToSetTo > 0
 		CWCampaignPhase.value = OptionalPhaseToSetTo
-; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() forced CWCampaignPhase global to " + CWCampaignPhase.value )
+ 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() forced CWCampaignPhase global to " + CWCampaignPhase.value )
 	Else
 		;Increment the phase
 		CWCampaignPhase.value += 1
-; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() incremented CWCampaignPhase global to " + CWCampaignPhase.value )
+ 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() incremented CWCampaignPhase global to " + CWCampaignPhase.value )
 	EndIf
 	
 	if CWs.debugStartingCampaignPhase != 0 && CWCampaignPhase.value < CWs.debugStartingCampaignPhase
 		CWCampaignPhase.value = CWs.debugStartingCampaignPhase
-; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() forcing CWCampaignPhase to debugStartingCampaignPhase " + CWCampaignPhase.value )
+ 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() forcing CWCampaignPhase to debugStartingCampaignPhase " + CWCampaignPhase.value )
 	EndIf
 	
 	if DebugOn.value == 1
@@ -1022,7 +1095,7 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	
 	;Increment the NextPhaseDay
 	NextPhaseDay = GameDaysPassed.value + AcceptDays
-; 	CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() set CWCampaignPhase NextPhaseDay to " + NextPhaseDay + " ( = GameDaysPassed(" + GameDaysPassed.value + ") AcceptDays(" + AcceptDays + ")." )
+ 	CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() set CWCampaignPhase NextPhaseDay to " + NextPhaseDay + " ( = GameDaysPassed(" + GameDaysPassed.value + ") AcceptDays(" + AcceptDays + ")." )
 	
 	;Reset Mission tracking properties
 	Mission1Type = 0
@@ -1035,7 +1108,8 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	SetCurrentAttackDelta()
 	
 	;Start missions:
-	StartMissions()
+	;CWO - Missions either start on a CWOMonitor or in CWMissionGeneratorTriggerScript
+	;StartMissions()
 	
 	if DebugOn.value == 1
 		debug.MessageBox("CWCampaignScript: Ready to start campaign.")
@@ -1056,8 +1130,8 @@ Function StartResolutionMission()
 	;createEvent CWResolution02Start  zBogusLocation FieldCO CampaignStartMarker 
 
 	If Capital.GetLocation().HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
-	
-		CWSiegeStart.SendStoryEvent(Capital.GetLocation())	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
+		;CWO - This might not have worked before. Added FieldCO
+		CWSiegeStart.SendStoryEvent(Capital.GetLocation(), CWs.FieldCO.GetReference())	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
 	
 	;	if Capital.GetLocation() == CWs.WhiterunLocation 	;ADD || OTHER CITY HERE
 ; 	;		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting attack on Whiterun.")
@@ -1070,18 +1144,11 @@ Function StartResolutionMission()
 	;			
 	;	EndIf
 
-	Else	;capital is not a city
-		if CWs.playerAllegiance == CWs.Attacker
-			;start an Attack the Capital Settlement resolution quest
-; 			CWScript.Log("CWCampaignScript", " StartResolutionMission() starting Resolution01 for " + Capital.Getlocation())
-			CWResolution01Start.SendStoryEvent(Capital.Getlocation(), FieldCO.GetReference(), CampaignStartMarker.GetReference()) 
-		
-		Else
-			;start an Defend the Capital Settlement resolution quest
-; 			CWScript.Log("CWCampaignScript", " StartResolutionMission() starting Resolution02 for " + Capital.Getlocation())
-			CWResolution02Start.SendStoryEvent(Capital.Getlocation(), FieldCO.GetReference(), CampaignStartMarker.GetReference()) 
-			
-		EndIf
+	Else
+		; code	;start an Attack the Capital Settlement resolution quest
+		;CWO - Resolution Quests do not really work so kicking off the CWFortSiegeMinorCapitalStart
+ 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + Capital.Getlocation())
+		CWs.CWFortSiegeMinorCapitalStart.SendStoryEvent(Capital.Getlocation(), CWs.FieldCO.GetReference(), CampaignStartMarker.GetReference()) 
 	
 	EndIf
 
@@ -1100,7 +1167,7 @@ int Function GetCurrentAttackDelta()
 
 	float myCurrentAttackDelta
 	
-; 	CWScript.Log("CWCampaignScript", " GetmyCurrentAttackDelta() is running.")
+ 	CWScript.Log("CWCampaignScript", " GetmyCurrentAttackDelta() is running.")
 	
 	;Get points for capital garrison
 	myCurrentAttackDelta += GetAttackDeltaPointsForCapital(Capital.GetLocation())
@@ -1123,7 +1190,7 @@ int Function GetCurrentAttackDelta()
 	;Get points for mission bonueses
 	myCurrentAttackDelta += GetAttackDeltaMissionBonus()
 	
-; 	CWScript.Log("CWCampaignScript", " GetmyCurrentAttackDelta() is returning myCurrentAttackDelta " + myCurrentAttackDelta + " rounded as int (" + (myCurrentAttackDelta as int) + ") compared to original campaign AttackDelta of " + CWs.AttackDelta)
+ 	CWScript.Log("CWCampaignScript", " GetmyCurrentAttackDelta() is returning myCurrentAttackDelta " + myCurrentAttackDelta + " rounded as int (" + (myCurrentAttackDelta as int) + ") compared to original campaign AttackDelta of " + CWs.AttackDelta)
 	
 	return myCurrentAttackDelta as int
 	
@@ -1137,12 +1204,12 @@ int Function GetAttackDeltaPointsForCapital(Location CapitalLocation)
 	;However, if the player killed all the guards there, then we want to give the attacker some bonus points so the player can feel like his actions have had an effect
 
 	If CapitalLocation.GetRefTypeAliveCount(CWSoldier) == 0
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForCapital() is returning " + AttackDeltaBonusForKillingCapitalGarrison + " points for the CurrentAttackDelta because all the soldiers in the garrison are dead.")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForCapital() is returning " + AttackDeltaBonusForKillingCapitalGarrison + " points for the CurrentAttackDelta because all the soldiers in the garrison are dead.")
 	
 		return AttackDeltaBonusForKillingCapitalGarrison		;set in OnInit()
 	
 	else
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForCapital() is returning 0 points for the CurrentAttackDelta because the garrison is intact:" + CapitalLocation )
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForCapital() is returning 0 points for the CurrentAttackDelta because the garrison is intact:" + CapitalLocation )
 		return 0	;There are soldiers alive in the capital, so the attacker is awarded no points
 		
 	EndIf
@@ -1166,12 +1233,12 @@ float Function GetAttackDeltaPointsForDefenderOnlyGarrison(Location Garrison, Ob
 	GarrisonValue = BaseGarrisonValue
 	
 	if BaseGarrisonValue == CWs.iCostNonContestable
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning 0 points for the CurrentAttackDelta because Garrison(" + Garrison + ") is Non-Contestable, ie has a CWCost value of:" + BaseGarrisonValue )
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning 0 points for the CurrentAttackDelta because Garrison(" + Garrison + ") is Non-Contestable, ie has a CWCost value of:" + BaseGarrisonValue )
 	
 		return 0
 	
 	ElseIf Garrison.GetRefTypeAliveCount(CWSoldier) == 0
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning " + BaseGarrisonValue + " points for the CurrentAttackDelta because all the soldiers are dead in Garrison(" + Garrison + ")")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning " + BaseGarrisonValue + " points for the CurrentAttackDelta because all the soldiers are dead in Garrison(" + Garrison + ")")
 	
 		return BaseGarrisonValue
 	
@@ -1180,14 +1247,14 @@ float Function GetAttackDeltaPointsForDefenderOnlyGarrison(Location Garrison, Ob
 
 		GarrisonValue *= AttackDeltaGarrisonValueModifierForDestroyingResource
 		
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta because the resource object is destroyed in the Garrison(" + Garrison + ")")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta because the resource object is destroyed in the Garrison(" + Garrison + ")")
 	
 		return GarrisonValue		
 
 	
 	Else
 	
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning 0 points for the CurrentAttackDelta because the garrison is intact:"  + Garrison + ")")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForDefenderOnlyGarrison() is returning 0 points for the CurrentAttackDelta because the garrison is intact:"  + Garrison + ")")
 		return 0
 
 	EndIf
@@ -1199,7 +1266,7 @@ float Function GetAttackDeltaPointsForGarrison(Location Garrison, ObjectReferenc
 	;Note:
 	;Whoever owns the Garrison gets points for it based on if the resource object is destroyed or not, and if the guards there are alive or not.s so the player can feel like his actions have had an effect
 
-; 	CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison(Garrison[" + Garrison + "], ResourceObject[" + ResourceObject + "])")
+ 	CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison(Garrison[" + Garrison + "], ResourceObject[" + ResourceObject + "])")
 
 	
 	int BaseGarrisonValue 
@@ -1213,12 +1280,12 @@ float Function GetAttackDeltaPointsForGarrison(Location Garrison, ObjectReferenc
 	GarrisonValue = BaseGarrisonValue
 	
 	if BaseGarrisonValue == CWs.iCostNonContestable	;Note this shouldn't be the case unless an error has occured setting the cost in the first place, only defender only garrisons should have a CWCost == iCostNonContestable
-; 		CWScript.Log("CWCampaignScript", "WARNING: GetAttackDeltaPointsForGarrison() is returning 0 points for the CurrentAttackDelta because Garrison(" + Garrison + ") UNEXPECTEDLY is Non-Contestable, ie has a CWCost value of:" + BaseGarrisonValue, 2)
+ 		CWScript.Log("CWCampaignScript", "WARNING: GetAttackDeltaPointsForGarrison() is returning 0 points for the CurrentAttackDelta because Garrison(" + Garrison + ") UNEXPECTEDLY is Non-Contestable, ie has a CWCost value of:" + BaseGarrisonValue, 2)
 	
 		return 0
 	
 	ElseIf Garrison.GetRefTypeAliveCount(CWSoldier) == 0
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning 0 points for the CurrentAttackDelta because all the soldiers are dead in Garrison(" + Garrison + ")")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning 0 points for the CurrentAttackDelta because all the soldiers are dead in Garrison(" + Garrison + ")")
 	
 		return 0
 	
@@ -1227,29 +1294,30 @@ float Function GetAttackDeltaPointsForGarrison(Location Garrison, ObjectReferenc
 
 		GarrisonValue *= AttackDeltaGarrisonValueModifierForDestroyingResource
 		
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta because the resource object is destroyed in the Garrison(" + Garrison + ")")
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta because the resource object is destroyed in the Garrison(" + Garrison + ")")
 
 		;DON'T RETURN, to give chance to process the attacker/defender below
 		
 	EndIf
 	
 	if Math.ABS(Garrison.GetKeywordData(CWOwner) as Int) == CWs.Attacker
-; 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta (ie positive value for the Attacker). Garrison:"  + Garrison)
+ 		CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + GarrisonValue + " points for the CurrentAttackDelta (ie positive value for the Attacker). Garrison:"  + Garrison)
 
 		return GarrisonValue
 	
 	Else	;owned by Defender
 		;only award points if the Defender won it back from the Attacker who purchased it
-		if Garrison.GetKeywordData(CWPurchasedByAttacker) as Int == 1
-; 			CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + -(GarrisonValue) + " points for the CurrentAttackDelta (ie negative value for the Defender) because he won it back from the Attacker who purchased it. Garrison:"  + Garrison)
+		;CWO - I don't like this. Defender should have the value regardless
+;		if Garrison.GetKeywordData(CWPurchasedByAttacker) as Int == 1
+ 			CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning " + -(GarrisonValue) + " points for the CurrentAttackDelta (ie negative value for the Defender) because he won it back from the Attacker who purchased it. Garrison:"  + Garrison)
 
 			return -(GarrisonValue)	;Negative value means in the defender's favor
-		Else
+;		Else
 ; 			CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForGarrison() is returning 0 points for the CurrentAttackDelta because it is owned by the Defender who did not have to purchase it. Garrison:"  + Garrison)
 
-			return 0
+;			return 0
 		
-		EndIf
+;		EndIf
 		
 
 		
@@ -1267,6 +1335,10 @@ int Function GetAttackDeltaPointsForPatrols()
 	int PatrolsAttackDeltaPoints = 0
 	
 	Location PatrolsLoc = Patrols.GetLocation()
+	;CWO - Check for nulls
+	if PatrolsLoc == none
+		return 0
+	endif
 	
 	int Attacker = CWs.Attacker
 	int Defender = CWs.Defender
@@ -1311,7 +1383,7 @@ int Function GetAttackDeltaPointsForPatrols()
 		EndIf
 	EndIf
 
-; 	CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForPatrols() is returning " + (PatrolsAttackDeltaPoints) + " points for the patrols. If positive it means the Attacker has more living patrols, if negative it means the defender has more living patrols.).")
+ 	CWScript.Log("CWCampaignScript", " GetAttackDeltaPointsForPatrols() is returning " + (PatrolsAttackDeltaPoints) + " points for the patrols. If positive it means the Attacker has more living patrols, if negative it means the defender has more living patrols.).")
 
 	return PatrolsAttackDeltaPoints
 	
@@ -1319,18 +1391,18 @@ EndFunction
 
 function addAttackDeltaMissionBonus(int valueToAdd)
 	attackDeltaMissionBonus += valueToAdd
-; 	CWScript.Log("CWCampaignScript", " addAttackDeltaMissionBonus() adding " + valueToAdd + " making AttackDeltaMissionBonus = " + attackDeltaMissionBonus)
+ 	CWScript.Log("CWCampaignScript", " addAttackDeltaMissionBonus() adding " + valueToAdd + " making AttackDeltaMissionBonus = " + attackDeltaMissionBonus)
 	
 EndFunction
 
 function subtractAttackDeltaMissionBonus(int valueToSubtract)
-	attackDeltaMissionBonus += valueToSubtract
-; 	CWScript.Log("CWCampaignScript", " asubtractAttackDeltaMissionBonus() subtracting " + valueToSubtract + " making AttackDeltaMissionBonus = " + attackDeltaMissionBonus)
+	attackDeltaMissionBonus -= valueToSubtract
+ 	CWScript.Log("CWCampaignScript", " subtractAttackDeltaMissionBonus() subtracting " + valueToSubtract + " making AttackDeltaMissionBonus = " + attackDeltaMissionBonus)
 	
 EndFunction
 
 int Function getAttackDeltaMissionBonus()
-; 	CWScript.Log("CWCampaignScript", " getAttackDeltaMissionBonus() returning AttackDeltaMissionBonus: " + attackDeltaMissionBonus)
+ 	CWScript.Log("CWCampaignScript", " getAttackDeltaMissionBonus() returning AttackDeltaMissionBonus: " + attackDeltaMissionBonus)
 	return attackDeltaMissionBonus
 
 EndFunction
@@ -1405,11 +1477,11 @@ int function GetResourceType(ReferenceAlias ResourceObject)
 	int type = ResourceObjectS.GetResourceType()
 	
 	if type < 1 || type > 3
-; 		CWScript.Log("CWCampaignScript", " GetResourceType() doesn't know what type to return for ResourceObject, will return 4")
+ 		CWScript.Log("CWCampaignScript", " GetResourceType() doesn't know what type to return for ResourceObject, will return 4")
 		type = 4
 	EndIf
 
-; 	CWScript.Log("CWCampaignScript", " GetResourceType(" + ResourceObject +") which is objectReference[" + ResourceObject.GetReference() + "]returning type =" + type)
+ 	CWScript.Log("CWCampaignScript", " GetResourceType(" + ResourceObject +") which is objectReference[" + ResourceObject.GetReference() + "]returning type =" + type)
 
 	return type
 	
@@ -1432,12 +1504,16 @@ function ForceFieldHQAliases()
 		;make the enemy camp as the EnemyFieldHQ
 		If playerAllegiance == iImperials 	;enemy is Sons
 			EnemyFieldHQ.ForceLocationTo(CampSons.GetLocation())
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampSons.GetLocation())
 		
 		Elseif playerAllegiance == iSons ;enemy is Imperials
 			EnemyFieldHQ.ForceLocationTo(CampImperial.GetLocation())
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampImperial.GetLocation())
 		
 		Else	;unexpected allegiance
-; 			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
+ 			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
 		
 		EndIf
 		
@@ -1448,19 +1524,23 @@ function ForceFieldHQAliases()
 		;make the player's faction camp as the FieldHQ
 		If playerAllegiance == iImperials 	;player is Sons
 			FieldHQ.ForceLocationTo(CampImperial.GetLocation())
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampSons.GetLocation())
 		
 		Elseif playerAllegiance == iSons ;player is Imperials
 			FieldHQ.ForceLocationTo(CampSons.GetLocation())
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampImperial.GetLocation())
 		
 		Else	;unexpected allegiance
-; 			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
+ 			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
 		
 		EndIf		
 	
 	EndIf
 	
-; 	CWScript.Log("CWCampaignScript", " ForceFieldHQAliases(): PlayerAllegiance ==" + PlayerAllegiance + ", ownerContestedHold ==" + ownerContestedHold + ", Attacker ==" + Attacker)
-; 	CWScript.Log("CWCampaignScript", " ForceFieldHQAliases(): Set FieldHQ to " + FieldHQ.GetLocation() + ", Set EnemyFieldHQ to " + EnemyFieldHQ.GetLocation())
+ 	CWScript.Log("CWCampaignScript", " ForceFieldHQAliases(): PlayerAllegiance ==" + PlayerAllegiance + ", ownerContestedHold ==" + ownerContestedHold + ", Attacker ==" + Attacker)
+ 	CWScript.Log("CWCampaignScript", " ForceFieldHQAliases(): Set FieldHQ to " + FieldHQ.GetLocation() + ", Set EnemyFieldHQ to " + EnemyFieldHQ.GetLocation())
 
 EndFunction
 
@@ -1473,14 +1553,15 @@ Function PlayerJoinsActiveCampaign()
 	UpdateCWCampaignObjAliases()
 	AdvanceCampaignPhase(1) ;forces the campaign to "start over" with phase 1
 	startTutorialMission()
-	
+
 EndFunction
 
 function UpdateCWCampaignObjAliases()
 {Forces the aliases in CWCampaignObj quest to have the current references/locations of the related aliases in CWCampaign}
-; 	CWScript.Log("CWCampaignScript", " UpdateCWCampaignObjAliases() forcing CWCampaignObj aliases to match. ")
-
-	CWCampaignObjFieldCO.ForceRefTo(FieldCO.GetReference())
+ 	CWScript.Log("CWCampaignScript", " UpdateCWCampaignObjAliases() forcing CWCampaignObj aliases to match. ")
+	;CWO - Set to CWs.FieldCO. CWCampaign FieldCO getting filled in conflicts with dialogue and quests so leaving it empty and optional
+	;I dont think CWCampaignObjFieldCO does anything but leave it just in case
+	CWCampaignObjFieldCO.ForceRefTo(CWs.FieldCO.GetReference())
 	CWCampaignObjFactionLeader.ForceRefTo(CWs.AliasFactionLeader.GetReference())
 	CWCampaignObjCampaignStartMarker.ForceRefTo(CampaignStartMarker.GetReference())
 	CWCampaignObjCampaignHold.ForceLocationTo(Hold.GetLocation())
@@ -1496,6 +1577,9 @@ Function startTutorialMission()
 EndFunction
 
 Function stopTutorialMission()
+
+	;CWO - Not doing tutorial missions
+	return
 
 	int secondsWaiting = 0
 
@@ -1539,7 +1623,7 @@ EndFunction
 ObjectReference function GetCapitalHQMarker()
 	ObjectReference markerRef = CapitalHQMarker.GetReference()
 
-; 	CWScript.Log("CWCampaignScript", " GetCapitalHQMarker() returning " + MarkerRef)
+ 	CWScript.Log("CWCampaignScript", " GetCapitalHQMarker() returning " + MarkerRef)
 
 	Return MarkerRef
 	
@@ -1547,7 +1631,7 @@ EndFunction
 
 
 ObjectReference  function GetFieldHQMarker()
-; 	CWScript.Log("CWCampaignScript", " GetFieldHQCenterMarker()")
+ 	CWScript.Log("CWCampaignScript", " GetFieldHQCenterMarker()")
 	
 	ObjectReference MarkerRef
 	
@@ -1559,7 +1643,7 @@ ObjectReference  function GetFieldHQMarker()
 		
 	EndIf
 
-; 	CWScript.Log("CWCampaignScript", " GetFieldHQMarker() is returning " + MarkerRef)
+ 	CWScript.Log("CWCampaignScript", " GetFieldHQMarker() is returning " + MarkerRef)
 	
 	Return MarkerRef
 	
@@ -1567,7 +1651,7 @@ EndFunction
 
 
 ObjectReference  function GetEnemyFieldHQMarker()
-; 	CWScript.Log("CWCampaignScript", " GetEnemyFieldHQMarker()")
+ 	CWScript.Log("CWCampaignScript", " GetEnemyFieldHQMarker()")
 	
 	ObjectReference MarkerRef
 	
@@ -1579,7 +1663,7 @@ ObjectReference  function GetEnemyFieldHQMarker()
 		
 	EndIf
 
-; 	CWScript.Log("CWCampaignScript", " GetEnemyFieldHQMarker() is returning " + MarkerRef)
+ 	CWScript.Log("CWCampaignScript", " GetEnemyFieldHQMarker() is returning " + MarkerRef)
 	
 	Return MarkerRef
 	
@@ -1592,20 +1676,40 @@ EndFunction
 ;*******************************************************************************************************************
 
 Function StartMissions()
+	;CWO - Mostly a rewrite of this function. If we have not yet reached the resolution phase
+	;phase try to start 2 CWMissions... If reached or we could not start any CWMissions, start
+	;final siege for the hold.
+	;*******************************************************************
+	;Do not do anything if missions are already running.
+	CWScript.Log("CWCampaignScript", " StartMissions()")
+	if StartMissionsRunning || isCWMissionsOrSiegesRunning()
+		CWScript.Log("CWCampaignScript", "StartMissions() Missions already running. Bailing out")
+		return
+	endif
 
+	StartMissionsRunning = true
+		
 	If CWCampaignPhase.value < ResolutionPhase		;then start normal missions
 	
-; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
+ 		CWScript.Log("CWCampaignScript", " StartMissions() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
 		
-		CWMissionStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission1Ref)
-		CWMissionStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission2Ref)
+		bool cwMission1Started = CWMissionStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
+		utility.wait(2.0)
+		bool cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
+		if !cwMission1Started && !cwMission2Started
+			Debug.Notification("Warning! Could not start any radient missions. Commencing with city siege.")
+			AdvanceCampaignPhase(ResolutionPhase)
+			StartResolutionMission()
+		elseif !cwMission1Started || !cwMission2Started
+			AdvanceCampaignPhase()
+		endif
 		
 		;we used to offer three missiosn, now we are only offering two at a time
 		;CWMissionStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission3Ref)
 		
-		((Self as Quest) as CWCampaignPollForMissionAcceptScript).StartPolling()
+;		((Self as Quest) as CWCampaignPollForMissionAcceptScript).StartPolling()
 	
-	ElseIf CWCampaignPhase.value == ResolutionPhase	;then start the resolution Quest
+	Else	;then start the resolution Quest
 		if CWs.TutorialMissionComplete == 0
 ; 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() CWCampaignPhase(" + CWCampaignPhase.value + ") == ResolutionPhase(" + ResolutionPhase + "). Tutorial mission not completed, resolving offscreen.")
 			CWs.ResolveOffscreen(GetCurrentAttackDelta())
@@ -1613,15 +1717,489 @@ Function StartMissions()
 		Else
 ; 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() CWCampaignPhase(" + CWCampaignPhase.value + ") == ResolutionPhase(" + ResolutionPhase + "). Starting Resolution Mission.")
 			StartResolutionMission()
-			((Self as Quest) as CWCampaignPollForMissionAcceptScript).StartPolling()
+;			((Self as Quest) as CWCampaignPollForMissionAcceptScript).StartPolling()
 		
 		EndIf
 			
-	Else	; We are trying to advance into a phase after the resolution phase, which means we should resolve the resolution mission off screen
-; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() CWCampaignPhase(" + CWCampaignPhase.value + ") > ResolutionPhase(" + ResolutionPhase + "). Resolving Resolution Mission OFFSCREEN.")
-		((Self as Quest) as CWCampaignPollForMissionAcceptScript).StopPolling()
-		CWs.ResolveOffscreen(GetCurrentAttackDelta())
+;	Else	; We are trying to advance into a phase after the resolution phase, which means we should resolve the resolution mission off screen
+;; 		CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() CWCampaignPhase(" + CWCampaignPhase.value + ") > ResolutionPhase(" + ResolutionPhase + "). Resolving Resolution Mission OFFSCREEN.")
+;		((Self as Quest) as CWCampaignPollForMissionAcceptScript).StopPolling()
+;		CWs.ResolveOffscreen(GetCurrentAttackDelta())
 	
 	EndIf
 
+	StartMissionsRunning = false
+
 EndFunction
+
+;*******************************************************************************************************************
+;***	NEW CWO FUNCTIONS BELOW	***
+;*******************************************************************************************************************
+
+function SetReinforcementsMajorCity(CWSiegeScript kmyQuest)
+	CWScript.Log("CWCampaignScript", " SetReinforcementsMajorCity()") 
+	;schofida - Set pools for whiterun, windhelm, rift, markath and solitude
+	CWReinforcementControllerScript CWReinforcementControllerS = (kmyQuest as quest ) as CWReinforcementControllerScript
+	CWReinforcementControllerS.PoolRemainingAttackerObjective = 2999
+	if kmyQuest.IsAttack()
+		kmyQuest.SetPoolAttackerOnCWReinforcementScript(CWOSiegeReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
+		kmyQuest.SetPoolDefenderOnCWReinforcementScript(999, 1.0, 1.0, false)
+		CWReinforcementControllerS.PoolRemainingDefenderObjective = 9999
+	else
+		kmyQuest.SetPoolAttackerOnCWReinforcementScript(CWOSiegeReinforcements.GetValueInt(), 1.0, CWOEnemyAttackerScaleMult.GetValue(), false)
+		kmyQuest.SetPoolDefenderOnCWReinforcementScript(CWOSiegeReinforcements.GetValueInt(), 1.0, CWOPlayerDefenderScaleMult.GetValue(), false)
+		CWReinforcementControllerS.PoolRemainingDefenderObjective = 2998
+	endIf
+endfunction
+
+function SetReinforcementsFort(Quest kmyQuest)
+	CWScript.Log("CWCampaignScript", " SetReinforcementsFort()") 
+	;schofida - Set pools for whiterun, windhelm, rift, markath and solitude
+	if (kmyQuest as CWFortSiegeScript).IsPlayerAttacking()
+		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
+		(kmyQuest as CWFortSiegeScript).SetPoolDefenderOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOEnemyDefenderScaleMult.GetValue(), false)
+	else
+		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOEnemyAttackerScaleMult.GetValue(), false)
+		(kmyQuest as CWFortSiegeScript).SetPoolDefenderOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOPlayerDefenderScaleMult.GetValue(), false)
+	endIf
+endfunction
+
+function SetReinforcementsMinorCity(Quest kmyQuest)
+	CWScript.Log("CWCampaignScript", " SetReinforcementsMinorCity()") 
+	;schofida - Set pools for whiterun, windhelm, rift, markath and solitude
+	if (kmyQuest as CWFortSiegeScript).IsPlayerAttacking()
+		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOCapitalReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
+		(kmyQuest as CWFortSiegeScript).SetPoolDefenderOnCWReinforcementScript(CWOCapitalReinforcements.GetValueInt(), 1.0, CWOEnemyDefenderScaleMult.GetValue(), false)
+	else
+		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOCapitalReinforcements.GetValueInt(), 1.0, CWOEnemyAttackerScaleMult.GetValue(), false)
+		(kmyQuest as CWFortSiegeScript).SetPoolDefenderOnCWReinforcementScript(CWOCapitalReinforcements.GetValueInt(), 1.0, CWOPlayerDefenderScaleMult.GetValue(), false)
+	endIf
+endfunction
+
+function StartMonitors(Quest kmyQuest)
+	CWScript.Log("CWCampaignScript", " StartMonitors()") 
+	;CWO - This quest marks the player as essential and auto/resolves the battle if he/she falls
+	CWOStillABetterEndingMonitor.start()
+	CWOStillABetterEndingMonitor.triggerQuest = kmyQuest
+
+endfunction
+
+function StopMonitors()
+	CWScript.Log("CWCampaignScript", " StopMonitors()") 
+	;CWO - Stops monitor quest, so player can die again :)
+	CWOStillABetterEndingMonitor.Stop()
+endfunction
+
+function StopDisguiseQuest()
+	CWScript.Log("CWCampaignScript", " StopDisguiseQuest()") 
+	;schofida - revert Disguise changes
+	CWOArmorDisguise.Stop()
+	CWs.PlayerFaction.SetEnemy(CWs.getPlayerAllegianceEnemyFaction(true), false, false)
+	CWODisguiseGlobal.SetValueInt(0)
+endfunction
+
+function StartDisguiseQuest()
+	CWScript.Log("CWCampaignScript", " StartDisguiseQuest()") 
+	;schofida - restart disguises quest
+	CWOArmorDisguise.Start()
+endfunction
+
+function cwResetCrime()
+	CWScript.Log("CWCampaignScript", " cwResetCrime()") 
+	;schofida - reset crime on Stormcloaks/imperials so you are not attacked by soldiers when you are back at tent
+	CWs.CrimeFactionImperial.SetCrimeGold(0)
+	CWs.CrimeFactionImperial.SetCrimeGoldViolent(0)
+	CWs.CrimeFactionSons.SetCrimeGold(0)
+	CWs.CrimeFactionSons.SetCrimeGoldViolent(0)
+endfunction
+
+function StartDefense(Location CityFortOrGarrison)
+	CWScript.Log("CWCampaignScript", " StartDefense()") 
+	;This function is called at start up stage for CWMission01, CWFortSiegeFort, CWFortSiegeCapital, CWSiege
+	;If player is on the defense for this campaign, start the courier quest.
+	if CWS.CWAttacker.GetValueInt() != CWs.PlayerAllegiance && CWS.WhiterunSiegeFinished
+		CWScript.Log("CWCampaignScript", "StartDefense() - Player on defense. Starting Defender Quest") 
+		CWODefendingStart.sendstoryeventandwait(CityFortOrGarrison, CWs.FieldCO.GetActorRef(), none, 0, 0)
+	endIf
+endfunction
+
+bool function PlayerAllegianceLastStand()
+	CWScript.Log("CWCampaignScript", " PlayerAllegianceLastStand() + " + CWOStillABetterEndingGlobal.GetValueInt())
+	;This will be 1 when the player is on the defense for the final hold Windhelm/Solitude
+	if CWOStillABetterEndingGlobal.GetValueInt() == 1
+		return true 
+	endif
+	return false
+endfunction
+
+function SetLastStand(bool Flag)
+	CWScript.Log("CWCampaignScript", " SetLastStand() + " + Flag)
+	;This will be 1 when the player is on the defense for the final hold Windhelm/Solitude
+	if Flag
+		CWOStillABetterEndingGlobal.SetValueInt(1)
+	Else
+		CWOStillABetterEndingGlobal.SetValueInt(0)
+	endif
+endfunction
+
+function DragonTime()
+	CWScript.Log("CWCampaignScript", " DragonTime()") 
+	;CWO - Dragon Time!
+	if CWOPCChance.GetValueInt() > utility.randomint(0, 100)
+		CWScript.Log("CWCampaignScript", " DragonTime() Starting Dragon Quest") 
+		cwopartycrasher.SendStoryEvent(Capital.GetLocation() )
+	endIf
+endfunction
+
+function CWOImperialsWin()
+
+	CWs.SetOwnerHaafingar(CWs.iImperials, false)
+	CWs.SetOwnerHjaalmarch(CWs.iImperials, false)
+	CWs.SetOwnerReach(CWs.iImperials, false)
+	CWs.SetOwnerFalkreath(CWs.iImperials, false)
+	CWs.SetOwnerWhiterun(CWs.iImperials, false)
+	CWs.SetOwnerPale(CWs.iImperials, false)
+	CWs.SetOwnerWinterhold(CWs.iImperials, false)
+	CWs.SetOwnerEastmarch(CWs.iImperials, false)
+endFunction
+
+function CWOStormcloaksWin()
+
+	CWs.SetOwnerHaafingar(CWs.iSons, false)
+	CWs.SetOwnerHjaalmarch(CWs.iSons, false)
+	CWs.SetOwnerReach(CWs.iSons, false)
+	CWs.SetOwnerFalkreath(CWs.iSons, false)
+	CWs.SetOwnerWhiterun(CWs.iSons, false)
+	CWs.SetOwnerPale(CWs.iSons, false)
+	CWs.SetOwnerWinterhold(CWs.iSons, false)
+	CWs.SetOwnerEastmarch(CWs.iSons, false)
+endFunction
+
+function CWOTotalReset()
+
+	CWSiege.stop()
+	CWS.CWFortSiegeCapital.stop()
+	CWS.CWFortSiegeFort.stop()
+	CWs.SetInitialOwners()
+endFunction
+
+function CompleteCWMissions(bool failMission = false)
+	int stageToSet = 200
+	int stageToSetFort = 9000 
+	if failMission
+		stageToSet = 205
+		stageToSetFort = 9200
+	endif
+	if CWMission01.IsRunning()
+		CWMission01.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission02.IsRunning()
+		CWMission02.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission03.IsRunning()
+		CWs.CWMission03.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission04.IsRunning()
+		CWs.CWMission04.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission05.IsRunning()
+		CWMission05.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission06.IsRunning()
+		CWMission06.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission07.IsRunning()
+		CWs.CWMission07.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission08Quest.IsRunning()
+		CWMission08Quest.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission09.IsRunning()
+		CWMission09.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWFortSiegeFort.IsRunning()
+		CWs.CWFortSiegeFort.SetStage(stageToSetFort)
+	endIf
+endFunction
+
+bool function isCWMissionsOrSiegesRunning()
+	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning()")
+	bool ret = CWMission01.IsRunning() || \
+		CWMission02.IsRunning() || \
+		CWs.CWMission03.IsRunning()  || \
+		CWs.CWMission04.IsRunning()  || \
+		CWMission05.IsRunning() || \
+		CWMission06.IsRunning() || \
+		CWs.CWMission07.IsRunning()  || \
+		CWMission08Quest.IsRunning() || \
+		CWMission09.IsRunning() || \
+		CWs.CWFortSiegeFort.IsRunning() || \
+		CWs.CWFortSiegeCapital.IsRunning() || \
+		CWSiege.IsRunning()
+	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
+	return ret
+endFunction
+
+function ResolveCivilWarFailOffscreen()
+
+	CWS.CWSiegeS.Stop()
+	if CWs.PlayerAllegiance == CWs.iImperials
+		CWS.Rikke.GetActorReference().KillEssential(CWS.Galmar.GetActorReference())
+		Utility.Wait(5.0)
+		CWS.GeneralTulliusRef.KillEssential(CWS.UlfricRef)
+	Else
+		CWS.Galmar.GetActorReference().KillEssential(CWS.Rikke.GetActorReference())
+		Utility.Wait(5.0)
+		CWS.UlfricRef.KillEssential(CWS.GeneralTulliusRef)
+	endif
+	CWS.CWSiegeObj.SetStage(8999)
+endfunction
+
+function AcceptRadiantMissions()
+	int stageToSet = 10
+	if CWMission01.IsRunning()
+		CWMission01.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission02.IsRunning()
+		CWMission02.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission03.IsRunning()
+		CWs.CWMission03.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission04.IsRunning()
+		CWs.CWMission04.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission05.IsRunning()
+		CWMission05.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission06.IsRunning()
+		CWMission06.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWMission07.IsRunning()
+		CWs.CWMission07.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission08Quest.IsRunning()
+		CWMission08Quest.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWMission09.IsRunning()
+		CWMission09.SetStage(stageToSet)
+		Utility.wait(3)
+	endIf
+	if CWs.CWFortSiegeFort.IsRunning()
+		CWs.CWFortSiegeFort.SetStage(stageToSet)
+	endIf
+endfunction
+
+Function StartSpanishInquisition(LocationAlias holdToStart)
+
+	CWScript.Log("CWCampaignScript", " StartSpanishInquisition() starting CWSiegeStart for " + holdToStart.Getlocation())
+	Location SAHoldLoc = CWs.GetMyCurrentHoldLocation(Game.GetPlayer())
+	ObjectReference SAFieldCO = CWs.GetReferenceHQFieldCOForHold(SAHoldLoc, CWs.playerAllegiance)
+	ObjectReference SACampaignStartMarker =  CWs.getCampaignStartMarker(CWs.getIntForHoldLocation(SAHoldLoc))
+
+	If Capital.GetLocation().HasKeyword(LocTypeCity) && CWs.debugTreatCityCapitalsAsTowns == 0 && CWSiegeStart.SendStoryEventAndWait(holdToStart.GetLocation(), SAFieldCO);capital is a city (note the debugTreatCityCapitalsAsTowns)
+	
+		while CWSiege.GetStageDone(0) == False
+
+		EndWhile
+		SetStage(200)
+
+	Elseif CWs.CWFortSiegeMinorCapitalStart.SendStoryEventAndWait(holdToStart.GetLocation(), SAFieldCO, SACampaignStartMarker)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
+	
+		while CWs.CWFortSiegeCapital.GetStageDone(0) == False
+
+		EndWhile
+		SetStage(200)
+	EndIf
+
+endfunction
+
+function DisplayHoldObjective()
+;THIS HANDLES THE NEW NON-LINEAR STYLE CAMPAIGN OBJECTIVES
+
+	CWScript.log("CWCampaignScript", "DisplayHoldObjective()")
+
+	CWs.CWObj.SetObjectiveDisplayed(100 * CWs.CWContestedHold.GetValueInt() + CWs.PlayerAllegiance, abDisplayed = true, abForce = true)
+	;***THIS LOGIC MUST BE IDENTICAL TO THE STACK OF DIALOGUE IN THE CW DIALOGUE WHERE Tullis/Ulfric TELL YOU WHERE TO GO NEXT ***
+
+	
+	CWs.CWObj.SetActive()
+	
+EndFunction
+
+function registerMissionSuccess(Location HoldLocation, bool isFortBattle = False)
+	CWs.CountMissionSuccess += 1
+	
+	CWScript.log("CWScript", "registerMissionSuccess(HoldLocation:" + HoldLocation + ", isFortBattle:" + isFortBattle + ") CountMissionSuccess = " + CWs.CountMissionSuccess + ". Calling DisplayHoldObjective() if isFortBattle == false")
+	
+	;NOTE:
+	;If isFortBattle is true, then we should skip displaying the Hold Objective, UNLESS we decide put reimplement the final battles at the capitals
+	
+	if isFortBattle == False
+		DisplayHoldObjective()
+	EndIf
+	
+EndFunction
+
+function StartNewCampaign()
+	CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Setting up new campaign. ")
+
+	;Initialize a new Campaign
+	;CWO moved from qf_cwcampaign to here. Called at qf_cw (stage 4)
+	CWs.CampaignRunning = 1 ;busy setting up
+
+	UpdateCWCampaignObjAliases()
+	PurchaseGarrisons()
+	ShuffleGarrisons()
+	ForceFieldHQAliases()
+	if PlayerAllegianceLastStand()
+		AdvanceCampaignPhase(ResolutionPhase)
+	Else
+		AdvanceCampaignPhase()
+	endif
+	CWs.CampaignRunning = 2 ;done setting up
+	
+	CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Done setting up new campaign. Calling StartTraveling()  on FieldCO and EnemyFieldCO to have them moveTo if the player isn't around")
+	
+endfunction
+
+Function MoveRikkeGalmarToCampIfNeeded(bool CheckIfUnloaded = False)
+	{Moves them to the proper camp if not already there and, if not in the same location as the player.}
+	;When called by Rikke/Galmar's OnUnload block, CheckIfUnloaded == false, when called by their OnPackageChange block it is True
+	;CWO Clone of CWScript version but also includes the Whiterun camp
+	CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded()")
+	
+	if CWs.WarIsActive == 1 && CWs.GetStageDone(4)
+
+		if CWs.PlayerAllegiance == CWs.iImperials
+			CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded() player is Imperial, checking Rikke")
+
+			Actor RikkeActor = CWs.Rikke.GetActorReference()
+			Package CurrentPackage =	RikkeActor.GetCurrentPackage()
+			
+			if CheckIfUnloaded
+				If RikkeActor.Is3DLoaded()
+					CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded() CheckIfUnloaded == true, and Rikke has 3D so skip this.")
+					return
+				EndIf
+			EndIf
+			
+			if CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampPale, CWs.MilitaryCampPaleImperialLocation, CWs.CWFieldCOMapTableMarkerPaleCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampRift, CWs.MilitaryCampRiftImperialLocation, CWs.CWFieldCOMapTableMarkerRiftCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampWinterhold, CWs.MilitaryCampWinterholdImperialLocation, CWs.CWFieldCOMapTableMarkerWinterholdCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampHjaalmarch, CWs.MilitaryCampHjaalmarchImperialLocation, CWs.CWFieldCOMapTableMarkerHjaalmarchCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampFalkreath, CWs.MilitaryCampFalkreathImperialLocation, CWs.CWFieldCOMapTableMarkerFalkreathCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampReach, CWs.MilitaryCampReachImperialLocation, CWs.CWFieldCOMapTableMarkerReachCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWs.CWRikkeAtCampEastmarch, CWs.MilitaryCampEastmarchImperialLocation, CWs.CWFieldCOMapTableMarkerEastmarchCampImperial)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(RikkeActor, CWRikkeAtCampWhiterun, CWs.MilitaryCampWhiterunImperialLocation, CWs.CWFieldCOMapTableMarkerWhiterunCampImperial)
+			EndIf
+			
+			
+		elseif CWs.PlayerAllegiance == CWs.iSons
+			CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded() player is Sons, checking Galmar")
+		
+			Actor GalmarActor = CWs.Galmar.GetActorReference()
+			Package CurrentPackage =	GalmarActor.GetCurrentPackage()
+		
+			if CheckIfUnloaded
+				If GalmarActor.Is3DLoaded()
+					CWScript.Log("CWScript", "MoveGalmarGalmarToCampIfNeeded() CheckIfUnloaded == true, and Galmar has 3D so skip this.")
+					return
+				EndIf
+			EndIf
+		
+			CWScript.Log("CWScript", "MoveGalmarGalmarToCampIfNeeded() calling EvaluatePackage() on Galmar")
+			GalmarActor.EvaluatePackage()
+		
+			if CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampFalkreath, CWs.MilitaryCampFalkreathSonsLocation, CWs.CWFieldCOMapTableMarkerFalkreathCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampReach, CWs.MilitaryCampReachSonsLocation, CWs.CWFieldCOMapTableMarkerReachCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampHjaalmarch, CWs.MilitaryCampHjaalmarchSonsLocation, CWs.CWFieldCOMapTableMarkerHjaalmarchCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampPale, CWs.MilitaryCampPaleSonsLocation, CWs.CWFieldCOMapTableMarkerPaleCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampWinterhold, CWs.MilitaryCampWinterholdSonsLocation, CWs.CWFieldCOMapTableMarkerWinterholdCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampRift, CWs.MilitaryCampRiftSonsLocation, CWs.CWFieldCOMapTableMarkerRiftCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWs.CWGalmarAtCampHaafingar, CWs.MilitaryCampHaafingarSonsLocation, CWs.CWFieldCOMapTableMarkerHaafingarCampSons)
+			elseif CWs.CheckRikkeGalmarNotAtCampPackageLocationAndMoveIfNeeded(GalmarActor, CWGalmarAtCampWhiterun, CWs.MilitaryCampWhiterunSonsLocation, CWs.CWFieldCOMapTableMarkerWhiterunCampSons)
+			EndIf
+				
+		Else
+			CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded() player is Neither Imperial nor Sons, not checking Rikke or Galmar")
+		
+		EndIf
+
+	Else
+	
+		CWScript.Log("CWScript", "MoveRikkeGalmarToCampIfNeeded() WarIsActive == false or GetStageDone(4) == false, not checking.")
+		
+	EndIf
+
+
+
+EndFunction
+
+function ShuffleGarrisons()
+	Location[] Garrisons = new Location[4]
+	ObjectReference[] GarrisonsEnableImperial = new ObjectReference[4]
+	ObjectReference[] GarrisonsEnableSons = new ObjectReference[4]
+	ObjectReference[] GarrisonsResourceObjects = new ObjectReference[4]
+
+	Garrisons[1] = Garrison1.GetLocation()
+	Garrisons[2] = Garrison2.GetLocation()
+	Garrisons[3] = Garrison3.GetLocation()
+	Garrisons[4] = Garrison4.GetLocation()	
+	GarrisonsEnableImperial[1] = Garrison1EnableImperial.GetReference()
+	GarrisonsEnableImperial[2] = Garrison2EnableImperial.GetReference()
+	GarrisonsEnableImperial[3] = Garrison3EnableImperial.GetReference()
+	GarrisonsEnableImperial[4] = Garrison4EnableImperial.GetReference()	
+	GarrisonsEnableSons[1] = Garrison1EnableSons.GetReference()
+	GarrisonsEnableSons[2] = Garrison2EnableSons.GetReference()
+	GarrisonsEnableSons[3] = Garrison3EnableSons.GetReference()
+	GarrisonsEnableSons[4] = Garrison4EnableSons.GetReference()	
+	GarrisonsResourceObjects[1] = Garrison1ResourceObject.GetReference()
+	GarrisonsResourceObjects[2] = Garrison2ResourceObject.GetReference()
+	GarrisonsResourceObjects[3] = Garrison3ResourceObject.GetReference()
+	GarrisonsResourceObjects[4] = Garrison4ResourceObject.GetReference()	
+
+	int ascOrDesc = Utility.randomint(0, 1)
+	if ascOrDesc == 0
+		int i = 1
+		while i <= 4
+			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
+				Garrison1.ForceLocationTo(Garrisons[i])
+				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
+				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
+				Garrison1ResourceObject.ForceRefTo(GarrisonsResourceObjects[i])
+				i = 4
+			endif
+			i = i + 1
+		EndWhile
+	else
+		int i = 4
+		while i > 0
+			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
+				Garrison1.ForceLocationTo(Garrisons[i])
+				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
+				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
+				Garrison1ResourceObject.ForceRefTo(GarrisonsResourceObjects[i])
+				i = 1
+			endif
+			i = i - 1
+		EndWhile
+	endif
+endfunction

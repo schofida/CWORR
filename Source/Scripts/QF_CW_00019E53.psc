@@ -406,7 +406,7 @@ CWScript kmyQuest = __temp as CWScript
 ;BEGIN CODE
 ;player has returned after talking to faction leader after a siege
 
-; debug.trace("CW Stage 4 started")
+debug.trace("CW Stage 4 started")
 
 
 kmyquest.WarIsActive = 1
@@ -447,7 +447,7 @@ else		;player is a Stormcloak
 
 endif
 
-kmyquest.DisplayHoldObjective()
+kmyquest.CWCampaignS.DisplayHoldObjective()
 
 ; debug.trace("CW Stage 4 , calling AddEnemyFortsBackToWar()")
 
@@ -456,7 +456,10 @@ kmyquest.DisplayHoldObjective()
 
 ; debug.trace("CW Stage 4 , DONE calling AddEnemyFortsBackToWar()")
 
-; debug.trace("CW Stage 4 ended")
+;CWO Setup started campaign 
+kmyQuest.CWCampaignS.StartNewCampaign()
+
+debug.trace("CW Stage 4 ended")
 ;END CODE
 EndFunction
 ;END FRAGMENT

@@ -19,8 +19,11 @@ int property jarlHasSurrendered Auto hidden Conditional
 LocationAlias Property City Auto
 
 ActorBase Property CWSiegeWhiterunImperialSoldier  Auto  
+ActorBase Property CWSiegeRiftenSonsSoldier   Auto  
+ActorBase Property CWSiegeMarkarthImperialSoldier   Auto  
 
 ActorBase Property CWSiegeSonsSoldier Auto
+ActorBase Property CWSiegeImperialSoldier Auto
 
 MusicType Property MUSCombatCivilWar  Auto  
 
@@ -30,6 +33,8 @@ Outfit Property JarlClothesBalgruuf Auto
 CWSiegeScript Property CWSiegeS Auto
 
 Weather Property SkyrimOvercastWar  Auto  
+
+Faction Property CWSoldierPlayerEnemy Auto
 
 
 

@@ -11,16 +11,16 @@ int Property SpecialCapitalResolutionFortSiege Auto hidden Conditional
 
 Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akRef1, ObjectReference akRef2, int aiValue1, int aiValue2)
  
-; 	CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() Calling Parent's (CWMissionScript) OnStoryScript() event so we make sure we run that as well.")
+ 	CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() Calling Parent's (CWMissionScript) OnStoryScript() event so we make sure we run that as well.")
 
 	Parent.OnStoryScript(akKeyword, akLocation, akRef1, akRef2, aiValue1, aiValue2)
  
 	if akKeyword == CWFortSiegeSpecialStart
-; 		CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() sees akKeyword == CWFortSiegeSpecialStart which means this is a special non-fort siege. Setting SpecialNonFortSiege to 1.")
+ 		CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() sees akKeyword == CWFortSiegeSpecialStart which means this is a special non-fort siege. Setting SpecialNonFortSiege to 1.")
 		SpecialNonFortSiege = 1
 		
 	Elseif akKeyword == CWFortSiegeMinorCapitalStart
-; 		CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() sees akKeyword == CWFortSiegeMinorCapitalStart which means this is a special non-fort siege. Setting SpecialCapitalResolutionFortSiege to 1.")
+ 		CWScript.Log("CWFortSiegeMissionScript", "OnStoryScript() sees akKeyword == CWFortSiegeMinorCapitalStart which means this is a special non-fort siege. Setting SpecialCapitalResolutionFortSiege to 1.")
 		SpecialCapitalResolutionFortSiege = 1
 	
 	EndIf

@@ -1016,16 +1016,22 @@ Alias_Catapult8.TryToEnable()
 
 ; CWScript.Log("CWPrepareCity", "Stage 1: moving CitzenXCityCenter aliases to town center")
 objectReference CenterMarker = Alias_CenterMarker.GetReference()
-Alias_Citizen1CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen2CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen3CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen4CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen5CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen6CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen7CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen8CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen9CityCenter.TryToMoveTo(CenterMarker)
-Alias_Citizen10CityCenter.TryToMoveTo(CenterMarker)
+;CWO TODO - Commenting out the below to make it like vanilla. Not quite sure if this new code is necessary
+;Actor player = game.getplayer()
+;if player.getdistance(Alias_Citizen1CityCenter.GetActorReference() as objectreference) < 1500 as Float
+;    if player.getdistance(Alias_Citizen3CityCenter.GetActorReference() as objectreference) < 1500 as Float
+        Alias_Citizen1CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen2CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen3CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen4CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen5CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen6CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen7CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen8CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen9CityCenter.TryToMoveTo(CenterMarker)
+        Alias_Citizen10CityCenter.TryToMoveTo(CenterMarker)
+;    endIf
+;endIf
 
 ; CWScript.Log("CWPrepareCity", "Stage 1: processing guards and shoving them into GuardInterior/exterior aliases")
 kmyquest.ProcessGuardAliasIntoInteriorExteriorAlias(Alias_Guard1)

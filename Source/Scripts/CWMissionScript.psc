@@ -64,16 +64,16 @@ Event OnInit()
 	CWs = CW as CWScript
 	CWCampaignS = CWCampaign as CWCampaignScript
 	
-; 	CWScript.Log("CWMissionScript", self + ": OnInit()")
+ 	CWScript.Log("CWMissionScript", self + ": OnInit()")
 	
 EndEvent
 
 Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akRef1, ObjectReference akRef2, int aiValue1, int aiValue2)
  
-; 	CWScript.Log("CWMissionScript", self + ": OnStoryScript() setting MissionNumber = aiValue1: " + aiValue1)
-	MissionNumber = aiValue1
+ 	CWScript.Log("CWMissionScript", self + ": OnStoryScript() setting MissionNumber = aiValue1: " + aiValue1)
+	 MissionNumber = aiValue1
  
- 
+
  EndEvent
 
 
@@ -103,10 +103,10 @@ Function TryToResetSoldierAlias(ReferenceAlias AliasToReset)
 	Actor actorRef = AliasToReset.GetActorReference()
 	
 	if actorRef
-; 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToReset + "]) resetting " + actorRef + ".")
+ 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToReset + "]) resetting " + actorRef + ".")
 		ActorRef.Reset()
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToReset + "]) is empty, not resetting.")
+ 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToReset + "]) is empty, not resetting.")
 	
 	EndIf
 
@@ -118,11 +118,11 @@ function TryToResetEnemySoldierAlias(ReferenceAlias AliasToTry)
 	Actor actorRef = AliasToTry.GetActorReference()
 	
 	if ActorRef && CWs.IsPlayerInMyFaction(ActorRef) == false
-; 		CWScript.Log("CWMissionScript", self + ": TryToResetEnemySoldierAlias([" +AliasToTry + "]) resetting " + actorRef + ".")
+ 		CWScript.Log("CWMissionScript", self + ": TryToResetEnemySoldierAlias([" +AliasToTry + "]) resetting " + actorRef + ".")
 		actorRef.reset()
 	
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToTry + "]) is empty, or is in player ally faction, not resetting.")
+ 		CWScript.Log("CWMissionScript", self + ": TryToResetSoldierAlias([" +AliasToTry + "]) is empty, or is in player ally faction, not resetting.")
 		
 	EndIf
 	
@@ -138,7 +138,7 @@ function EnableMapMarkerAlias(ReferenceAlias MapMarkerAlias)
 	if mapMarkerRef
 		mapMarkerRef.AddToMap(False)
 	Else
-; 		CWScript.Log("CWMissionScript", self + "WARNING: EnableMapMarkerAlias([" + MapMarkerAlias + "]) is empty.", 2)
+ 		CWScript.Log("CWMissionScript", self + "WARNING: EnableMapMarkerAlias([" + MapMarkerAlias + "]) is empty.", 2)
 	
 	EndIf
 
@@ -154,7 +154,7 @@ Function CreateAliasedSoldierAttacker(Location HoldLocation, ReferenceAlias Alia
 		CreateAliasedSoldierSons(AliasToFill, ReferenceToPlaceAt, CreateDisabled, IsGuard, startInFactionNPC, aiLevelMod, akZone)		;create a sons
 	
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierAttacker() expected CWScript Attacker to be 1 or 2, instead got: " + CWs.GetAttacker(HoldLocation), 2, true, true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierAttacker() expected CWScript Attacker to be 1 or 2, instead got: " + CWs.GetAttacker(HoldLocation), 2, true, true)
 	EndIf
 
 EndFunction
@@ -185,7 +185,7 @@ Function CreateAliasedSoldierAlly(ReferenceAlias AliasToFill, ObjectReference Re
 		CreateAliasedSoldierSons(AliasToFill, ReferenceToPlaceAt, CreateDisabled, IsGuard, startInFactionNPC, aiLevelMod, akZone)		;create a sons
 	
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
 	EndIf
 	
 
@@ -201,7 +201,7 @@ Function CreateAliasedSoldierEnemy(ReferenceAlias AliasToFill, ObjectReference R
 		CreateAliasedSoldierImperial(AliasToFill, ReferenceToPlaceAt, CreateDisabled, IsGuard, startInFactionNPC, aiLevelMod, akZone)	;create an imperial (ie enemy of sons)
 		
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2,  true, true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedSoldierEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2,  true, true)
 	EndIf
 	
 
@@ -217,7 +217,7 @@ Function CreateAliasedCourierAlly(ReferenceAlias AliasToFill, ObjectReference Re
 		CreateAliasedCourierSons(AliasToFill, ReferenceToPlaceAt, CreateDisabled, aiLevelMod, akZone)		;create a sons
 	
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedCourierAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true,true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedCourierAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true,true)
 	EndIf
 	
 EndFunction
@@ -232,7 +232,7 @@ Function CreateAliasedCourierEnemy(ReferenceAlias AliasToFill, ObjectReference R
 		CreateAliasedCourierImperial(AliasToFill, ReferenceToPlaceAt, CreateDisabled, aiLevelMod, akZone)	;create an imperial (ie enemy of sons)
 		
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedCourierEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedCourierEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
 	EndIf
 
 EndFunction
@@ -247,7 +247,7 @@ Function CreateAliasedPrisonerAlly(ReferenceAlias AliasToFill, ObjectReference R
 		CreateAliasedPrisonerSons(AliasToFill, ReferenceToPlaceAt, CreateDisabled, aiLevelMod, akZone)		;create a sons
 	
 	Else
-; 	CWScript.Log("CWMissionScript", self + ": CreateAliasedPrisonerAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
+ 	CWScript.Log("CWMissionScript", self + ": CreateAliasedPrisonerAlly() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
 	EndIf
 	
 EndFunction
@@ -262,7 +262,7 @@ Function CreateAliasedPrisonerEnemy(ReferenceAlias AliasToFill, ObjectReference 
 		CreateAliasedPrisonerImperial(AliasToFill, ReferenceToPlaceAt, CreateDisabled, aiLevelMod, akZone)	;create an imperial (ie enemy of sons)
 		
 	Else
-; 		CWScript.Log("CWMissionScript", self + ": CreateAliasedPrisonerEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
+ 		CWScript.Log("CWMissionScript", self + ": CreateAliasedPrisonerEnemy() expected CWScript PlayerAllegience to be 1 or 2, instead got: " + CWs.PlayerAllegiance, 2, true, true)
 	EndIf
 
 EndFunction
@@ -333,11 +333,11 @@ EndFunction
 Function CreateMissionAliasedActor(ReferenceAlias AliasToFill,  ActorBase ActorToPlace, ObjectReference ReferenceToPlaceAt, bool CreateDisabled = false, int aiLevelMod = 4, EncounterZone akZone = None)
 {Calls the PlaceActorAtMe() function on ReferenceToPlaceAt, afterword calling ForceRefTo on AliasToFill passing in the actor returned by PlaceAtMe()}
 
-; 	CWScript.Log("CWMissionScript", self + ": CreateMissionAliasedActor() Filling alias: " + AliasToFill + " at reference " + ReferenceToPlaceAt + " by calling PlaceActorAtMe(" + ActorToPlace + ", " + aiLevelMod + ", " + akZone + ")" )
+ 	CWScript.Log("CWMissionScript", self + ": CreateMissionAliasedActor() Filling alias: " + AliasToFill + " at reference " + ReferenceToPlaceAt + " by calling PlaceActorAtMe(" + ActorToPlace + ", " + aiLevelMod + ", " + akZone + ")" )
 	
 	ObjectReference myRef = ReferenceToPlaceAt.PlaceActorAtMe(ActorToPlace, aiLevelMod, akZone)
 
-; 	CWScript.Log("CWMissionScript", self + "CreateMissionAliasedActor() created reference " + myRef + " Will now try to force it into alias " + AliasToFill  )
+ 	CWScript.Log("CWMissionScript", self + "CreateMissionAliasedActor() created reference " + myRef + " Will now try to force it into alias " + AliasToFill  )
 	
 	AliasToFill.ForceRefTo(myRef)
 	
@@ -362,15 +362,15 @@ Function addAliasToNPCFaction(ReferenceAlias AliasToAdd)
 	Actor ActorRef = AliasToAdd.GetActorReference()
 	
 	if ActorRef.IsInFaction(CWs.CWImperialFaction)
-; 		CWScript.Log("CWMissionScript", self + ": addAliasToNPCFaction(" + AliasToAdd + ") to CWImperialFactionNPC." )
+ 		CWScript.Log("CWMissionScript", self + ": addAliasToNPCFaction(" + AliasToAdd + ") to CWImperialFactionNPC." )
 		ActorRef.AddToFaction(CWs.CWImperialFactionNPC)
 		
 	ElseIf ActorRef.IsInFaction(CWs.CWSonsFaction)
-; 		CWScript.Log("CWMissionScript", self + ": addAliasToNPCFaction(" + AliasToAdd + ") to CWSonsFaction." )
+ 		CWScript.Log("CWMissionScript", self + ": addAliasToNPCFaction(" + AliasToAdd + ") to CWSonsFaction." )
 		ActorRef.AddToFaction(CWs.CWSonsFactionNPC)	
 	
 	Else
-; 		CWScript.Log("CWMissionScript", self + "WARNING: addAliasToNPCFaction(" + AliasToAdd + ") is not in either CWImperialFaction nor CWSonsFaction so we can't add it to CWImperialFactionNPC nor CWSonsFactionNPC.", 2, true, true)
+ 		CWScript.Log("CWMissionScript", self + "WARNING: addAliasToNPCFaction(" + AliasToAdd + ") is not in either CWImperialFaction nor CWSonsFaction so we can't add it to CWImperialFactionNPC nor CWSonsFactionNPC.", 2, true, true)
 	
 	EndIf
 	
@@ -385,7 +385,7 @@ Function ResetCommonMissionProperties()
 
 	;When the scripting system handles resetting properties on quest start, this might not be needed anymore.
 
-; 	CWScript.Log("CWMissionScript", self + ": ResetCommonMissionProperties() resetting properties.")
+ 	CWScript.Log("CWMissionScript", self + ": ResetCommonMissionProperties() resetting properties.")
 	acceptedMission = 0
 	foundRendezvous = 0
 	objectiveCompleted = 0
@@ -400,7 +400,7 @@ Function SetMissionFailDay()	;usually called by Stage 10 and as a safety in CWMi
 	failDay = CWs.GameDaysPassed.value + CWCampaignS.missionDays
 	CWs.CWMissionFailDay.value = failDay
 	UpdateCurrentInstanceGlobal(CWs.CWMissionFailDay)
-; 	CWScript.Log("CWMissionScript", self + ": setting FailDay to " + failDay)
+ 	CWScript.Log("CWMissionScript", self + ": setting FailDay to " + failDay)
 EndFunction
 
 ;***OBSOLETE***
@@ -410,18 +410,18 @@ Function RegisterMissionTypeWithCampaign(int Type, int ResolutionType = 0)
 	if ResolutionType == 0	;this is non-zero when called by a CWResolutionXX quest
 	
 		if MissionNumber == 1
-; 			CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + Type + " for CWCampaignScript.Mission1Type.")
+ 			CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + Type + " for CWCampaignScript.Mission1Type.")
 			CWCampaignS.Mission1Type = Type
 		
 		ElseIf MissionNumber == 2
-; 			CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + Type + " for CWCampaignScript.Mission2Type.")
+ 			CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + Type + " for CWCampaignScript.Mission2Type.")
 			CWCampaignS.Mission2Type = Type
 			
 		EndIf
 		
 
 	Else	;we are a Resolution Mission
-; 		CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + ResolutionType + " for CWCampaignScript.ResolutionMissionType.")
+ 		CWScript.Log("CWMissionScript", self + ": RegisterMissionTypeWithCampaign() registering type " + ResolutionType + " for CWCampaignScript.ResolutionMissionType.")
 		CWCampaignS.ResolutionMissionType = ResolutionType
 	
 	EndIf
@@ -435,7 +435,7 @@ EndFunction
 
 function FlagFieldCOWithPotentialMissionFactions(int MissionType = -1, Bool ShouldRemoveFromFactions = False, int ForceMissionNumber = 0)
 	
-; 	CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions()")
+ 	CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions()")
 	
 	Actor FieldCOActor = FieldCo.GetActorReference()
 	
@@ -445,29 +445,29 @@ function FlagFieldCOWithPotentialMissionFactions(int MissionType = -1, Bool Shou
 	
 	if ShouldRemoveFromFactions == False ;called when quest is starting up
 		if MissionNumber == 1
-; 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() found MissionNumber = 1, will add FieldCO " + FieldCOActor + " to CWFieldCOPotentialMission1Faction with rank meaning mission type = " + MissionType)
+ 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() found MissionNumber = 1, will add FieldCO " + FieldCOActor + " to CWFieldCOPotentialMission1Faction with rank meaning mission type = " + MissionType)
 			FieldCOActor.SetFactionRank(CWs.CWFieldCOPotentialMission1Faction, MissionType)
 		
 		elseif MissionNumber == 2
-; 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() found MissionNumber = 2, will add FieldCO " + FieldCOActor + " to CWFieldCOPotentialMission2Faction with rank meaning mission type = " + MissionType)
+ 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() found MissionNumber = 2, will add FieldCO " + FieldCOActor + " to CWFieldCOPotentialMission2Faction with rank meaning mission type = " + MissionType)
 			FieldCOActor.SetFactionRank(CWs.CWFieldCOPotentialMission2Faction, MissionType)
 		
 		Else
-; 			CWScript.Log("CWMissionScript", self + " WARNING: FlagFieldCOWithPotentialMissionFactions() found unexpected mission number. Expected 1 or 2, found: " + MissionNumber, 2, true, true)
+ 			CWScript.Log("CWMissionScript", self + " WARNING: FlagFieldCOWithPotentialMissionFactions() found unexpected mission number. Expected 1 or 2, found: " + MissionNumber, 2, true, true)
 			
 		EndIf
 
 	Else	;ShouldRemoveFromFactions == true; called when quest is shutting down
 		if MissionNumber == 1
-; 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 1, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOPotentialMission1Faction")
+ 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 1, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOPotentialMission1Faction")
 			FieldCOActor.RemoveFromFaction(CWs.CWFieldCOPotentialMission1Faction)
 		
 		elseif MissionNumber == 2
-; 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 2, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOPotentialMission2Faction")
+ 			CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithPotentialMissionFactions() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 2, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOPotentialMission2Faction")
 			FieldCOActor.RemoveFromFaction(CWs.CWFieldCOPotentialMission2Faction)
 		
 		Else
-; 			CWScript.Log("CWMissionScript", self + "WARNING: FlagFieldCOWithPotentialMissionFactions() found unexpected mission number. Expected 1 or 2, found: " + MissionNumber, 2, true, true)
+ 			CWScript.Log("CWMissionScript", self + "WARNING: FlagFieldCOWithPotentialMissionFactions() found unexpected mission number. Expected 1 or 2, found: " + MissionNumber, 2, true, true)
 			
 		EndIf
 	
@@ -482,15 +482,15 @@ Function FlagFieldCOWithActiveQuestFaction(int MissionType = -1, Bool ShouldRemo
 	Actor FieldCOActor = FieldCo.GetActorReference()
 	
 	if ShouldRemoveFromFactions == False ;called when quest is accepted up
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOActiveMissionFaction with rank meaning mission type = " + MissionType + ", and will remove from CWFieldCO Potential Mission Factions")
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOActiveMissionFaction with rank meaning mission type = " + MissionType + ", and will remove from CWFieldCO Potential Mission Factions")
 		FieldCOActor.SetFactionRank(CWs.CWFieldCOActiveMissionFaction, MissionType)
 		FlagFieldCOWithPotentialMissionFactions(ShouldRemoveFromFactions = True)
 		
 	Else	;ShouldRemoveFromFactions == true; called when quest is shutting down
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 1, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOActiveMissionFaction")
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() (called with ShouldRemoveFromFactions param == true) found MissionNumber = 1, will REMOVE FieldCO " + FieldCOActor + " from CWFieldCOActiveMissionFaction")
 		FieldCOActor.RemoveFromFaction(CWs.CWFieldCOActiveMissionFaction)
 
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() (called with ShouldRemoveFromFactions param == true) now calling RemoveFieldCOFromHooksAcceptedFaction()")
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithActiveQuestFaction() (called with ShouldRemoveFromFactions param == true) now calling RemoveFieldCOFromHooksAcceptedFaction()")
 
 	EndIf
 		
@@ -498,23 +498,23 @@ Function FlagFieldCOWithActiveQuestFaction(int MissionType = -1, Bool ShouldRemo
 EndFunction
 
 Function FlagFieldCOWithMissionResultFaction(int MissionType = -1, Bool MissionFailure = False)
-; 	CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction()")
+ 	CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction()")
 	
 	Actor FieldCOActor = FieldCo.GetActorReference()
 	
 	if MissionFailure == False ;called when quest is succeeded
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOSuccessfulMissionFaction with rank meaning mission type = " + MissionType)
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOSuccessfulMissionFaction with rank meaning mission type = " + MissionType)
 		FieldCOActor.SetFactionRank(CWs.CWFieldCOSuccessfulMissionFaction, MissionType)
 
 		;incrementing new tracking variable:
 		float newCount = CWs.CWCountMissionsDone.GetValue() + 1
 		
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() setting CWCountMissionsDone global to:" + newCount)
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() setting CWCountMissionsDone global to:" + newCount)
 		CWs.CWCountMissionsDone.SetValue(newCount)
 		
 		
 	Else	;MissionFailure == true; called when quest is failed
-; 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOFailedMissionFaction with rank meaning mission type = " + MissionType)
+ 		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOFailedMissionFaction with rank meaning mission type = " + MissionType)
 		FieldCOActor.SetFactionRank(CWs.CWFieldCOFailedMissionFaction, MissionType)
 		
 	EndIf
@@ -524,19 +524,19 @@ EndFunction
 Function RemoveFieldCOFromHooksAcceptedFaction()
 		Actor FieldCOActor = FieldCo.GetActorReference()
 
-; 		CWScript.Log("CWMissionScript", self + ": RemoveFieldCOFromAcceptedHooksFaction() will remove " + FieldCOActor + "from CWFieldCOHooksAcceptedFaction")
+ 		CWScript.Log("CWMissionScript", self + ": RemoveFieldCOFromAcceptedHooksFaction() will remove " + FieldCOActor + "from CWFieldCOHooksAcceptedFaction")
 		FieldCOActor.RemoveFromFaction(CWs.CWFieldCOHooksAcceptedFaction)
 		
 EndFunction
 
 function ProcessFieldCOFactionsOnQuestShutDown()
 
-; 	CWScript.Log("CWMissionScript", self + ": ProcessFieldCOFactionsOnQuestShutDown()")
+ 	CWScript.Log("CWMissionScript", self + ": ProcessFieldCOFactionsOnQuestShutDown()")
 	
 	
 	;only remove him from active quest faction if the mission was attempted and succeeded or failed
 	if GetStageDone(200) || GetStageDone(205) || GetStageDone(9000)
-; 		CWScript.Log("CWMissionScript", self + ": ProcessFieldCOFactionsOnQuestShutDown() calling FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True) AND RemoveFieldCOFromHooksAcceptedFaction()")
+ 		CWScript.Log("CWMissionScript", self + ": ProcessFieldCOFactionsOnQuestShutDown() calling FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True) AND RemoveFieldCOFromHooksAcceptedFaction()")
 		FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True)
 		RemoveFieldCOFromHooksAcceptedFaction()
 	EndIf
@@ -553,7 +553,7 @@ Function SetResourceCountProperties(ReferenceAlias ResourceObject1, ReferenceAli
 
 	resource1Type = CWCampaignS.GetResourceType(ResourceObject1)
 	
-; 	CWScript.Log("CWMissionScript", self + ": SetResourceCountProperties() CountFarms =" + CountFarms + ", CountMills =" + CountMills + ", CountMines = " + CountMines + "; CountResources = " + CountResources + "; Resource1Type =" + Resource1Type)
+ 	CWScript.Log("CWMissionScript", self + ": SetResourceCountProperties() CountFarms =" + CountFarms + ", CountMills =" + CountMills + ", CountMines = " + CountMines + "; CountResources = " + CountResources + "; Resource1Type =" + Resource1Type)
 	
 EndFunction
 
@@ -586,19 +586,19 @@ EndFunction
 
 Function RegisterLocationAttacked(Location HoldLocation, location AttackedLocation, int iFaction = 0)
 {Called by any mission where a settlement is attacked violently in such a way that people *could* condemn the action. Default iFaction doing the attacking is the CW.Attacker}
-; 	CWScript.Log("CWMissionScript", self + "RegisterLocationAttacked()")
+ 	CWScript.Log("CWMissionScript", self + "RegisterLocationAttacked()")
 	CWs.RegisterLocationAttacked(HoldLocation, AttackedLocation, iFaction)
 	
 EndFunction
 
 function ToggleOffComplexWIInteractions(LocationAlias LocationAliasToToggle)
-; 	CWScript.Log("CWMissionScript", self + "ToggleOffComplexWIInteractions(" + LocationAliasToToggle + ") calling function on CWScript")
+ 	CWScript.Log("CWMissionScript", self + "ToggleOffComplexWIInteractions(" + LocationAliasToToggle + ") calling function on CWScript")
 	CWs.ToggleOffComplexWIInteractions(LocationAliasToToggle)
 
 EndFunction
 
 function ToggleOnComplexWIInteractions(LocationAlias LocationAliasToToggle)
-; 	CWScript.Log("CWMissionScript", self + "ToggleOnComplexWIInteractions(" + LocationAliasToToggle + ") calling function on CWScript")
+ 	CWScript.Log("CWMissionScript", self + "ToggleOnComplexWIInteractions(" + LocationAliasToToggle + ") calling function on CWScript")
 	CWs.ToggleOnComplexWIInteractions(LocationAliasToToggle)
 
 EndFunction

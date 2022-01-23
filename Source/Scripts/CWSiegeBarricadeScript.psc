@@ -34,8 +34,10 @@ int Property StageToSetWhenDestroyed Auto
 {What stage in CWSiege should I set when I'm destroyed}
 
 Event OnDestructionStageChanged(int aiOldStage, int aiCurrentStage)
-	if (aiOldStage == OldStage) && (aiCurrentStage == NewStage)
-	
+	; OCW 2.5.7 fix
+	; if (aiOldStage == OldStage) && (aiCurrentStage == NewStage)
+	if (aiCurrentStage == NewStage)
+
 		GetOwningQuest().SetStage(StageToSetWhenDestroyed)
 
 

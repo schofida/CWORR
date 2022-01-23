@@ -1,4 +1,4 @@
-Scriptname CWMission01SquadMemberScript extends ReferenceAlias  
+Scriptname CWMission01SquadMemberScript extends CWGarrisonObserverSoldierScript  
 
 Event OnLoad()
 	RegisterForUpdate(2)
@@ -16,13 +16,5 @@ Event OnUpdate()
 		UnRegisterForUpdate() 
 		
 	EndIf
-
-EndEvent
-
-
-Event OnActivate(ObjectReference akActionRef)
-	if (GetOwningQuest() as CWMission01Script).foundRendezvous == 0
-		GetOwningQuest().setStage(11)
-	endif
 
 EndEvent

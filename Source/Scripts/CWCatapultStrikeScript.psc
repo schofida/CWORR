@@ -31,6 +31,8 @@ Event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	
 	if asEventName == "end"
 		PlaceAtMe(ExplosionObject)
+		;CWO - Add some rumble
+		self.RampRumble(0.600000, 0.350000, 1600.00)
 		UnregisterForAnimationEvent(self, "end")
 		deleteMe()
 	EndIf

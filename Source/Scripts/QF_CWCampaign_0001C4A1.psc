@@ -327,6 +327,11 @@ ReferenceAlias Property Alias_GarrisonDefenderOnly4EnableImperial Auto
 LocationAlias Property Alias_CampImperial Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY EnemyCamp
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_EnemyCamp Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_6
 Function Fragment_6()
 ;BEGIN AUTOCAST TYPE CWCampaignScript
@@ -335,8 +340,12 @@ CWCampaignScript kmyQuest = __temp as CWCampaignScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;TURN ON EVERYTHING IN THE SIEGE QUEST
-
-kmyquest.CWSiege.setStage(1)
+;Stage 200... This stage will be set when a CWO 'Spanish Inquisition' occurs
+if kmyQuest.CWsiege.IsRunning()
+    kmyQuest.CWsiege.SetStage(1)
+elseIf kmyQuest.CWs.CWFortSiegeCapital.IsRunning()
+    kmyQuest.CWs.CWFortSiegeCapital.SetStage(10)
+endIf
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -375,22 +384,15 @@ Quest __temp = self as Quest
 CWCampaignScript kmyQuest = __temp as CWCampaignScript
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWCampaign Stage 0. Setting up new campaign. ", kmyquest.CWs.debugon.value)
+CWScript.log("CWCampaignFragment", "CWCampaign Stage 0. ")
 
-;Initialize a new Campaign
-kmyquest.CWs.CampaignRunning = 1 ;busy setting up
-kmyquest.ForceFieldHQAliases()
-kmyquest.SetCWCampaignFieldCOAliases()
-kmyquest.ResetCampaign()
-kmyquest.PurchaseGarrisons()
-kmyquest.AdvanceCampaignPhase()
-kmyquest.CWs.CampaignRunning = 2 ;done setting up
+kmyQuest.ResetCampaign()
 
-; ; debug.traceConditional("CWCampaign Stage 0. Done setting up new campaign. Calling StartTraveling()  on FieldCO and EnemyFieldCO to have them moveTo if the player isn't around", kmyquest.CWs.debugon.value)
-; ; debug.traceConditional("CWCampaign Stage 0. FieldCO = Ref" +Alias_FieldCO.GetReference(), kmyquest.CWs.debugon.value)
-; ; debug.traceConditional("CWCampaign Stage 0. EnemyFieldCO = Ref" +Alias_EnemyFieldCO.GetReference(), kmyquest.CWs.debugon.value)
-(Alias_FieldCO as CWCampaignFieldCOScript).StartTraveling(kmyquest.GetFieldHQMarker())
-(Alias_EnemyFieldCO as CWCampaignFieldCOScript).StartTraveling(kmyquest.GetEnemyFieldHQMarker())
+if !kmyquest.CWs.IsPlayerAttacking(kmyquest.Hold.Getlocation())
+    CWScript.log("CWCampaignFragment", "Player is defending. Go to Stage 10 automatically")
+    kmyQuest.StartNewCampaign()
+    kmyQuest.StartMissions()
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

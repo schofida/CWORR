@@ -250,4 +250,36 @@ CompleteAllObjectives()
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_2
+function Fragment_2()
+;BEGIN CODE
+    self.FailAllObjectives()
+    ;utility.wait(10 as Float)
+    ;game.enableplayercontrols(true, true, true, true, true, true, true, true, 0)
+    ;game.disableplayercontrols(true, true, false, false, false, true, true, false, 0)
+    ;game.GetPlayer().SetUnconscious(false)
+    ;game.GetPlayer().RestoreAv("health", 9999 as Float)
+    ;game.GetPlayer().PlayIdle(Getup)
+    ;utility.wait(5 as Float)
+    ;game.enableplayercontrols(true, true, true, true, true, true, true, true, 0)
+;END CODE
+endFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_3
+function Fragment_3()
+;BEGIN CODE
+    self.FailAllObjectives()
+    ;utility.wait(10 as Float)
+    ;game.enableplayercontrols(true, true, true, true, true, true, true, true, 0)
+    ;game.disableplayercontrols(true, true, false, false, false, true, true, false, 0)
+    ;game.GetPlayer().SetUnconscious(false)
+    ;game.GetPlayer().RestoreAv("health", 9999 as Float)
+    ;game.GetPlayer().PlayIdle(Getup)
+    ;utility.wait(5 as Float)
+    ;game.enableplayercontrols(true, true, true, true, true, true, true, true, 0)
+;END CODE
+endFunction
+;END FRAGMENT
+
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment

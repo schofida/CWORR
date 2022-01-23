@@ -59,13 +59,12 @@ function playerLeftLocation()
 	if Game.GetPlayer().IsInLocation(GarrisonLocation) == False
 	
 		if countSoldiers <= 0 && \
-			GarrisonLocation.GetKeywordData(CWs.CWOwner) != CWs.PlayerAllegiance && \
 			GarrisonLocation.HasKeyword(CWs.CWCapital) == False && \
 			GarrisonLocation.HasKeyword(CWs.CWGarrisonDefenderOnly) == False && \
 			GarrisonLocation.HasKeyword(CWs.CWFort) == False
 			
 ; 				CWScript.Log("CWGarrisonObserverScript", self + "playerLeftLocation() and countSoldiers <= 0, calling CWScript setOwner(" + GarrisonLocation + ", [" + CWs.PlayerAllegiance + "])")
-				CWs.SetOwner(GarrisonLocation, CWs.PlayerAllegiance, SetKeywordDataImmediately = true)
+				SetStage(205)
 				
 		else
 

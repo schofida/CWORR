@@ -7,13 +7,16 @@ LocationAlias Property ShutDownQuestWhenPlayerLeavesThisLocationAlias Auto
 Int Property StageAfterWhichShutDownQuestWhenPlayerLeaves Auto
 {After this or later quest stage, shut down quest after player leaves ShutDownQuestWhenPlayerLeavesThisLocationAlias}
 
+LocationAlias Property SetStageWhenPlayerLeavesThisOtherLocationAliasAlso Auto
+{If this is set, set stage to StageToSetWhenPlayerLeaves if the player leaves this location}
+
 LocationAlias Property SetStageWhenPlayerLeavesThisLocationAlias Auto
 {If this is set, set stage to StageToSetWhenPlayerLeaves if the player leaves this location}
 
-LocationAlias Property SetStageWhenPlayerArrivesAtThisLocationAlias Auto
+LocationAlias Property SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso Auto
 {If this is set, set stage to StageToSetWhenPlayerArrives if the player arrives at this location}
 
-LocationAlias Property SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso Auto
+LocationAlias Property SetStageWhenPlayerArrivesAtThisLocationAlias Auto
 {If this is set, set stage to StageToSetWhenPlayerArrives if the player arrives at this location}
 
 Int Property StageToSetWhenPlayerArrives Auto
@@ -21,6 +24,12 @@ Int Property StageToSetWhenPlayerArrives Auto
 
 Int Property StageToSetWhenPlayerLeaves Auto
 {set this quest stage, when the player arrives at SetStageWhenPlayerLeavesThisLocationAlias}
+
+Int Property StageAfterWhichSetStageWhenPlayerLeaves Auto
+{After this or later quest stage, set quest stage to StageToSetWhenPlayerLeaves after player leaves SetStageWhenPlayerLeavesThisLocationAlias}
+
+Int Property StageAfterWhichSetStageWhenPlayerArrives Auto
+{After this or later quest stage, set quest stage to StageToSetWhenPlayerArrives after player arrives SetStageWhenPlayerArrivesAtThisLocationAlias or SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso}
 
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
@@ -48,10 +57,12 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	if StageToSetWhenPlayerLeaves && SetStageWhenPlayerLeavesThisLocationAlias
 	
 		LocToCheck = SetStageWhenPlayerLeavesThisLocationAlias.GetLocation()
+		;CWO Add additional location for when the player leaves (similiar to enters)
+		LocToCheck2 = SetStageWhenPlayerLeavesThisOtherLocationAliasAlso.GetLocation()
 	
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerLeaves) == False 
-		
-			if (LocToCheck && Game.GetPlayer().IsInLocation(LocToCheck) == false)
+			;CWO - Add Stage condition
+			if OwningQuest.GetStage() >= StageAfterWhichSetStageWhenPlayerLeaves && (!LocToCheck || Game.GetPlayer().IsInLocation(LocToCheck) == false) && (!LocToCheck2 || Game.GetPlayer().IsInLocation(LocToCheck2) == false)
 ; 				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerLeaves +  ") on owning quest because player left location " + LocToCheck)
 
 				OwningQuest.setStage(StageToSetWhenPlayerLeaves)
@@ -68,8 +79,8 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 		LocToCheck2 = SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso.GetLocation()
 	
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerArrives) == False 
-		
-			if (LocToCheck && Game.GetPlayer().IsInLocation(LocToCheck)) || (LocToCheck2 && Game.GetPlayer().IsInLocation(LocToCheck2))
+			;CWO - Add Stage condition
+			if OwningQuest.GetStage() >= StageAfterWhichSetStageWhenPlayerArrives && ((LocToCheck && Game.GetPlayer().IsInLocation(LocToCheck)) || (LocToCheck2 && Game.GetPlayer().IsInLocation(LocToCheck2)))
 ; 				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerArrives +  ") on owning quest because player arrived at either location " + LocToCheck + " or the other optional location" + LocToCheck2)
 
 				OwningQuest.setStage(StageToSetWhenPlayerArrives)

@@ -5,7 +5,7 @@ Scriptname SF_CWFinaleWindhelmSceneA_000659E5 Extends Scene Hidden
 ;BEGIN FRAGMENT Fragment_2
 Function Fragment_2()
 ;BEGIN CODE
-game.disablePlayerControls()
+;game.disablePlayerControls()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -31,7 +31,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
 ;BEGIN CODE
-game.enablePlayerControls()
+;game.enablePlayerControls()
 ;END CODE
 EndFunction
 ;END FRAGMENT

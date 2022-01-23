@@ -13,9 +13,13 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN CODE
-;debug.messagebox(self + "Begin")
+CWOForceWhiterunDefenseSceneEnd.SetValueInt(0)
+Utility.Wait(20.0)
+CWOForceWhiterunDefenseSceneEnd.SetValueInt(1)
 ;END CODE
 EndFunction
 ;END FRAGMENT
+
+GlobalVariable Property CWOForceWhiterunDefenseSceneEnd Auto
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment

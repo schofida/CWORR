@@ -12,8 +12,8 @@ Actor Property Legate Auto
 Event OnCellLoad()
 
 	disable()
-	
-	if( CampEnableMarker.IsEnabled() && Utility.RandomInt(1, 100) <= PercentChanceToAppear )
+	;CWO Check for nulls
+	if( CampEnableMarker != none && CampEnableMarker.IsEnabled() && Utility.RandomInt(1, 100) <= PercentChanceToAppear )
 		if( !Legate.IsDead() )
 			Enable()
 			SetRestrained()

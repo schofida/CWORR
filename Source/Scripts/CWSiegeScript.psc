@@ -1395,19 +1395,36 @@ EndFunction
 
 
 function FailAttackQuest(locationAlias CityAlias)
-; 	CWScript.Log("CWSiegeScript", self + "FailAttackQuest()")
+ 	CWScript.Log("CWSiegeScript", self + "FailAttackQuest()")
 
+	;ALSO HAPPENS IN STAGE 255 SHUTDOWN
+	StopCombatSoundsLoop()
+	;Removes this music from the stack
+	MUSCombatCivilWar.Remove()
+
+	;Set Global Dialog Stuff
+	CWs.CWStateAttackStarted.SetValue(0)
+	CWs.CWStateAttackerBrokeThrough.SetValue(0)
+	CWs.CWStateDefenderFallingBack.SetValue(0)
+	CWs.CWStateDefenderLastStand.SetValue(0)
+	CWs.CWStateAttackerAtGate.SetValue(0)
+	CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 	;fail the siege quest:
 	CWs.CWSiegeObj.setStage(8999)
 
 	CWs.FailCWObj(Hold.GetLocation())
 	
 	;fail the campaign
-	;CWs.CWCampaignS.FailedMission = 1
+	CWs.CWCampaignS.FailedMission = 1
+
+	CWs.CWCampaignS.StopMonitors()
+	CWs.CWCampaignS.StartDisguiseQuest()
 	
 	CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
-	
-	;CWs.CWCampaign.setStage(255)
+
+	;schofida - Player is attacker and attacker lost. Set next campaign attacker to enemy
+	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
+
 
 	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailAttackQuest() Waiting for player to leave City before stoping Siege quest")
@@ -1418,30 +1435,47 @@ function FailAttackQuest(locationAlias CityAlias)
 EndFunction
 
 function FailDefenseQuest(locationAlias CityAlias)
-; 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest()")
+ 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest()")
 
+	;ALSO HAPPENS IN STAGE 255 SHUTDOWN
+	StopCombatSoundsLoop()
+	;Removes this music from the stack
+	MUSCombatCivilWar.Remove()
 	;start the escape through the city quest
 ; 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() CWs.CWEscapeCityStart.SendStoryEvent(" + CityAlias.GetLocation() +")")
 	CWs.CWEscapeCityStart.SendStoryEvent(CityAlias.GetLocation(), CWs.GetRikkeOrGalmar())
 
 
-; 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() failing CWSiegeDefendObj quest and failing the campaign")	
-	
+ 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() failing CWSiegeDefendObj quest and failing the campaign")	
+
+	;Set Global Dialog Stuff
+	CWs.CWStateAttackStarted.SetValue(0)
+	CWs.CWStateAttackerBrokeThrough.SetValue(0)
+	CWs.CWStateDefenderFallingBack.SetValue(0)
+	CWs.CWStateDefenderLastStand.SetValue(0)
+	CWs.CWStateAttackerAtGate.SetValue(0)
+	CWs.CWStateDefenderOutOfReinforcements.SetValue(1)
 	;fail the siege quest:
 	CWs.CWSiegeObj.setStage(8999)
 	
-	CWs.FailCWObj(Hold.GetLocation())
+	if CWs.WhiterunSiegeFinished
+		CWs.FailCWObj(Hold.GetLocation())
+	endif
+
+	CWs.CWCampaignS.StopMonitors()
+	CWs.CWCampaignS.StartDisguiseQuest()
 	
 	
 	;Update the campaign objectives
 	;CWs.CWCampaignObj.setStage(50)		;objective to flee the city with the Jarl
 	
 	;Fail the campaign
-	;CWs.CWCampaignS.FailedMission = 1
+	CWs.CWCampaignS.FailedMission = 1
 	
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
-	
-	;CWs.CWCampaign.setstage(255)
+
+	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
+	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
 	
 	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
@@ -1470,6 +1504,12 @@ CWs.CWStateAttackerAtGate.SetValue(0)
 CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 
 CWs.CWSiegeObj.setStage(9000)
+
+CWs.CWCampaignS.StopMonitors()
+CWs.CWCampaignS.StartDisguiseQuest()
+
+;schofida - Player is defender and defender one. Now the player can attak
+CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
 
 ;obsolete:
 CWs.CompleteCWObj(Hold.GetLocation())

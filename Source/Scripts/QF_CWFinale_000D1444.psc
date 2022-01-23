@@ -477,6 +477,31 @@ ReferenceAlias Property Alias_CrowdMember14 Auto
 ReferenceAlias Property Alias_CrowdMember13 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY Door6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Door6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Door7
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Door7 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Door8
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Door8 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Door9
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Door9 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Door10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Door10 Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_8
 Function Fragment_8()
 ;BEGIN CODE
@@ -520,7 +545,7 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 ;player is now asked to execute the enemy leader
 
-; CWScript.Log("CWFinale", "Stage 210")
+CWScript.Log("CWFinale", "Stage 210")
 
 ;complete the "Force EnemyLeader to surrender" objectives
 kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4001)
@@ -544,7 +569,7 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;SCENE END COMBAT WITH ENEMY SECOND
 ;ALSO SET IF PLAYER HITS EnemyLeader or EnemySecond
 
-; CWScript.Log("CWFinale", "Stage 150")
+CWScript.Log("CWFinale", "Stage 150")
 
 kmyquest.CWFinaleSolitudeSceneA.stop()
 kmyquest.CWFinaleWindhelmSceneA.stop()
@@ -552,24 +577,29 @@ kmyquest.CWFinaleWindhelmSceneA.stop()
 actor EnemySecondActor = Alias_EnemySecond.GetActorReference()
 actor EnemyLeaderActor = Alias_EnemyLeader.GetActorReference()
 
-EnemySecondActor.GetActorBase().setEssential(false)
+;CWO Set up final scene depending on if player won or lost the war
+if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
+	Alias_Leader.GetActorRef().GetActorBase().SetEssential(false)	
+	Alias_Second.GetActorRef().GetActorBase().SetEssential(false)	
+Else
+	Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
+	EnemySecondActor.GetActorBase().setEssential(false)
+	EnemySecondActor.StartCombat(Game.GetPlayer())
+	EnemyLeaderActor.StartCombat(Game.GetPlayer())
+	EnemyLeaderActor.SetNoBleedoutRecovery(true)
+endif
+
 EnemySecondActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 EnemyLeaderActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
 Alias_Leader.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 Alias_Second.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
-Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
-
-EnemySecondActor.StartCombat(Game.GetPlayer())
 EnemySecondActor.StartCombat(Alias_Leader.GetActorReference())
 EnemySecondActor.StartCombat(Alias_Second.GetActorReference())
 
-EnemyLeaderActor.StartCombat(Game.GetPlayer())
 EnemyLeaderActor.StartCombat(Alias_Second.GetActorReference())
 EnemyLeaderActor.StartCombat(Alias_Leader.GetActorReference())
-
-EnemyLeaderActor.SetNoBleedoutRecovery(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -592,9 +622,20 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 ;Enemy Leader is killed -- see CWFinaleEnemyLeaderScript
 
-; CWScript.Log("CWFinale", "Stage 330")
+CWScript.Log("CWFinale", "Stage 330")
+;CWO Lose or win the war
+if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
+	kmyQuest.CWS.CWSiegeObj.SetStage(8999)
+Else
+	kmyquest.CWs.AddCivilWarAchievment(3)
 
-kmyquest.CWs.AddCivilWarAchievment(3)
+	;complete the Execute EnemyLeaderobjectives
+	kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4101)
+	kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4102)
+
+	;COMPLETE THE SIEGE QUEST
+	kmyquest.CWs.CWSiegeObj.setStage(9000)
+endif
 
 if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 
@@ -605,13 +646,6 @@ else		;assume Windhelm
 	kmyquest.CWFinaleWindhelmSceneC.Start()
 
 endif
-
-;complete the Execute EnemyLeaderobjectives
-kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4101)
-kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4102)
-
-;COMPLETE THE SIEGE QUEST
-kmyquest.CWs.CWSiegeObj.setStage(9000)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -623,7 +657,7 @@ Quest __temp = self as Quest
 CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("CWFinale", "Stage 10")
+CWScript.Log("CWFinale", "Stage 10")
 
 Alias_Leader.GetActorReference().IgnoreFriendlyHits()
 Alias_Second.GetActorReference().IgnoreFriendlyHits()
@@ -636,13 +670,18 @@ Alias_EnemySecond.TryToMoveTo(Alias_EnemySecondMarker.GetReference())
 
 Alias_EnemyLeader.GetActorReference().SetCrimeFaction(None)
 Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
-
-if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
-	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
-else
-	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
-
+;CWO TODO I think more setup needs to be done here
+if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
+	Actor PlayerActor = Game.GetPlayer()
+Else
+	if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
+		kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
+	else
+		kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
+	
+	endif	
 endif
+
 ;END CODE
 EndFunction
 ;END FRAGMENT

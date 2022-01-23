@@ -102,13 +102,19 @@ Function StartFiring()
 		int timesToFire = Utility.RandomInt(TimesToFireMin, TimesToFireMax)
 
 		while firing == True 	&& ( (timesFired <= timesToFire) || (TimesToFireMax <= 0) ) 
-				
+
+; OCW 2.5.3 fix -  moved the wait here. Seems that GetValue() executes too fast to robustely yield to Disable() call and the cwsiege cleanup gets 
+; stuck for too long a time. 
+; 				CWScript.Log("CWArrowVolleyParentScript", self + "StartFiring() waiting for " + countDown)
+				Utility.wait(countDown)
+		
 				if (   (CWBattlePhase.GetValue() == 1 && FireInPhase1) || (CWBattlePhase.GetValue() == 2 && FireInPhase2) \
 					|| (CWBattlePhase.GetValue() == 3 && FireInPhase3) || (CWBattlePhase.GetValue() == 4 && FireInPhase4) \
 					|| (CWBattlePhase.GetValue() == 5 && FireInPhase5) )
 
+; OCW 2.5.3 fix - see above
 ; 				CWScript.Log("CWArrowVolleyParentScript", self + "StartFiring() waiting for " + countDown)
-				Utility.wait(countDown)
+;				Utility.wait(countDown)
 
 				If firing == True	;in case we've stopped while waiting
 ; 					CWScript.Log("CWArrowVolleyParentScript", self + "Firing volley.")

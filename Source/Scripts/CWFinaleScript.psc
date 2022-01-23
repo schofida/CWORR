@@ -15,6 +15,11 @@ ReferenceAlias Property Door2 Auto
 ReferenceAlias Property Door3 Auto
 ReferenceAlias Property Door4 Auto
 ReferenceAlias Property Door5 Auto
+ReferenceAlias Property Door6 Auto
+ReferenceAlias Property Door7 Auto
+ReferenceAlias Property Door8 Auto
+ReferenceAlias Property Door9 Auto
+ReferenceAlias Property Door10 Auto
 
 ReferenceAlias Property CrowdMarker1 Auto
 ReferenceAlias Property CrowdMarker2 Auto
@@ -81,18 +86,18 @@ LeveledItem Property CWFinaleFactionLeaderSwordList Auto
 
 Faction Property CWFinaleTemporaryAllies  Auto  
 
+Actor CWFinalLossEnemy1
+Actor CWFinalLossEnemy2
+
 Function PlayerEnteredCastle()
 	setStage(100)
 	
 	Actor PlayerActor = Game.GetPlayer()
 
-; 	CWScript.Log("CWFinaleScript", self + "PlayerEnteredCastle() Moving actors, setting up scene, and locking doors.")
+	CWScript.Log("CWFinaleScript", self + "PlayerEnteredCastle() Moving actors, setting up scene, and locking doors.")
 	
-	lockMe(Door1)
-	lockMe(Door2)
-	lockMe(Door3)
-	lockMe(Door4)
-	lockMe(Door5)
+	;schofida - call helper function instead
+   LockDoors()
 	
 	makeMeStopCombat(Leader)
 	makeMeStopCombat(Second)
@@ -102,8 +107,23 @@ Function PlayerEnteredCastle()
 	PlayerActor.StopCombat()
 	PlayerActor.StopCombatAlarm()
 
-	Leader.TryToMoveTo(PlayerActor)
-	Second.TryToMoveTo(PlayerActor)
+	;CWO Set up finale scene in case player loses the war
+	if cws.cwcampaigns.PlayerAllegianceLastStand() ;CWO
+		Leader.TryToMoveTo(EnemyLeader.GetActorReference() as objectreference)
+		Second.TryToMoveTo(EnemySecond.GetActorReference() as objectreference)
+		PlayerActor.MoveTo(EnemyLeader.GetActorReference())
+		if cws.playerAllegiance == cws.iImperials
+			CWFinalLossEnemy1 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierSons)
+			CWFinalLossEnemy2 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierSons)
+		Else
+			CWFinalLossEnemy1 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierImperial)
+			CWFinalLossEnemy2 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierImperial)			
+		endif
+	else ;CWO
+		Leader.TryToMoveTo(PlayerActor as objectreference) ;CWO
+		Second.TryToMoveTo(PlayerActor as objectreference) ;CWO
+	endIf
+
 	
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionHaafingar)
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionEastmarch)
@@ -115,6 +135,12 @@ Function PlayerEnteredCastle()
 	
 	;wait before scene otherwise you miss the first bit of dialogue about locking the door
 	Game.DisablePlayerControls()
+
+	;CWO - TODO Put player in bleedout while final scene plays
+	if cws.cwcampaigns.PlayerAllegianceLastStand() ;CWO
+		CWFinalLossEnemy1.StartCombat(PlayerActor)
+		CWFinalLossEnemy2.StartCombat(PlayerActor)	
+	endif
 	Utility.Wait(PauseBeforeScene)
 	
 	startSceneA()
@@ -168,12 +194,31 @@ function EnemySecondDied()
 	
 EndFunction
 
+function lockDoors()
+	lockMe(Door1)
+	lockMe(Door2)
+	lockMe(Door3)
+	lockMe(Door4)
+	lockMe(Door5)
+	lockMe(Door6)
+	lockMe(Door7)
+	lockMe(Door8)
+	lockMe(Door9)
+	lockMe(Door10)
+
+EndFunction
+
 function unlockDoors()
 	UnlockMe(Door1)
 	UnlockMe(Door2)
 	UnlockMe(Door3)
 	UnlockMe(Door4)
 	UnlockMe(Door5)
+	UnlockMe(Door6)
+	UnlockMe(Door7)
+	UnlockMe(Door8)
+	UnlockMe(Door9)
+	UnlockMe(Door10)
 
 EndFunction
 

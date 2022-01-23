@@ -1,0 +1,109 @@
+;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
+;NEXT FRAGMENT INDEX 4
+Scriptname qf_cwotestsiegebattles_060366A5 Extends Quest Hidden
+
+;BEGIN FRAGMENT Fragment_3
+Function Fragment_3()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+debug.Notification("CWO Test Siege Battles. Cleaning Up Old Soldiers")
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier10Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier10Instance)
+debug.Notification("CWO Test Siege Battles. Creating new soldiers")
+CWOSiegeImperialSoldier1Instance = kmyQuest.CWOSiegeImperialSoldier1.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier2Instance = kmyQuest.CWOSiegeImperialSoldier2.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier3Instance = kmyQuest.CWOSiegeImperialSoldier3.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier4Instance = kmyQuest.CWOSiegeImperialSoldier4.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier5Instance = kmyQuest.CWOSiegeImperialSoldier5.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier6Instance = kmyQuest.CWOSiegeImperialSoldier6.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier7Instance = kmyQuest.CWOSiegeImperialSoldier7.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier8Instance = kmyQuest.CWOSiegeImperialSoldier8.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier9Instance = kmyQuest.CWOSiegeImperialSoldier9.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeImperialSoldier10Instance = kmyQuest.CWOSiegeImperialSoldier10.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
+CWOSiegeSonsSoldier1Instance = kmyQuest.CWOSiegeSonsSoldier1.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier2Instance = kmyQuest.CWOSiegeSonsSoldier2.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier3Instance = kmyQuest.CWOSiegeSonsSoldier3.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier4Instance = kmyQuest.CWOSiegeSonsSoldier4.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier5Instance = kmyQuest.CWOSiegeSonsSoldier5.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier6Instance = kmyQuest.CWOSiegeSonsSoldier6.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier7Instance = kmyQuest.CWOSiegeSonsSoldier7.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier8Instance = kmyQuest.CWOSiegeSonsSoldier8.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier9Instance = kmyQuest.CWOSiegeSonsSoldier9.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeSonsSoldier10Instance = kmyQuest.CWOSiegeSonsSoldier10.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier10Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier10Instance)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment
+Actor CWOSiegeImperialSoldier1Instance
+Actor CWOSiegeImperialSoldier2Instance
+Actor CWOSiegeImperialSoldier3Instance
+Actor CWOSiegeImperialSoldier4Instance
+Actor CWOSiegeImperialSoldier5Instance
+Actor CWOSiegeImperialSoldier6Instance
+Actor CWOSiegeImperialSoldier7Instance
+Actor CWOSiegeImperialSoldier8Instance
+Actor CWOSiegeImperialSoldier9Instance
+Actor CWOSiegeImperialSoldier10Instance
+Actor CWOSiegeSonsSoldier1Instance
+Actor CWOSiegeSonsSoldier2Instance
+Actor CWOSiegeSonsSoldier3Instance
+Actor CWOSiegeSonsSoldier4Instance
+Actor CWOSiegeSonsSoldier5Instance
+Actor CWOSiegeSonsSoldier6Instance
+Actor CWOSiegeSonsSoldier7Instance
+Actor CWOSiegeSonsSoldier8Instance
+Actor CWOSiegeSonsSoldier9Instance
+Actor CWOSiegeSonsSoldier10Instance

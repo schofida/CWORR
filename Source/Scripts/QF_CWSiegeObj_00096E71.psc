@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 2
+;NEXT FRAGMENT INDEX 7
 Scriptname QF_CWSiegeObj_00096E71 Extends Quest Hidden
 
 ;BEGIN ALIAS PROPERTY Objective3B
@@ -105,6 +105,34 @@ CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
 stop()
 ;END CODE
 EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_3
+function Fragment_3()
+;BEGIN AUTOCAST TYPE CWSiegeObjScript
+Quest __temp = self as Quest
+cwsiegeobjscript kmyQuest = __temp as cwsiegeobjscript
+;END AUTOCAST
+;BEGIN CODE
+	self.CompleteAllObjectives()
+	kmyQuest.CWs.displayFactionLeaderObjective()
+	self.stop()
+;END CODE
+endFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_6
+function Fragment_6()
+;BEGIN AUTOCAST TYPE CWSiegeObjScript
+Quest __temp = self as Quest
+cwsiegeobjscript kmyQuest = __temp as cwsiegeobjscript
+;END AUTOCAST
+;BEGIN CODE
+	self.CompleteAllObjectives()
+	kmyQuest.CWs.displayFactionLeaderObjective()
+	self.stop()
+;END CODE
+endFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment

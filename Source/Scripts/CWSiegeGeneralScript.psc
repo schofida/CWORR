@@ -1,5 +1,6 @@
 Scriptname CWSiegeGeneralScript extends ReferenceAlias  
 
+;-- Properties --------------------------------------
 int DistanceToPlayerNeeded = 500
 int stageToSetWhenPlayerNear = 10
 
@@ -13,21 +14,29 @@ state CheckDistanceToPlayer
 	Event OnUpdate()
 
 		Quest myOwningQuest = GetOwningQuest()
-		ObjectReference SelfRef = GetReference()	
+		CWSiegeScript CWSiegeS = (myOwningQuest as CWSiegeScript)
+		ObjectReference SelfRef = GetReference()
 		
-		if SelfRef.GetDistance(Game.GetPlayer()) <= DistanceToPlayerNeeded
-		; If the player is near the General then set stage 10
-; 			CWScript.Log("CWSiegeGeneralScript", self + "OnUpdate() - player within distance to general, setting stage:" + stageToSetWhenPlayerNear)
-			;myOwningQuest.setStage(stageToSetWhenPlayerNear)
+		ReferenceAlias Tullius = CWSiegeS.CWs.Tullius
+		ReferenceAlias Rikke = CWSiegeS.CWs.Rikke
+		ReferenceAlias Ulfric = CWSiegeS.CWs.Ulfric
+		ReferenceAlias Galmar = CWSiegeS.CWs.Galmar
+		if selfRef == Rikke.getactorreference() || SelfRef == Galmar.getactorreference() || selfRef == Ulfric.GetActorReference() || selfRef == Tullius.GetActorReference() 	; Reddit BugFix #14
+			self.UnregisterForUpdate()
+		else
+			if SelfRef.GetDistance(Game.GetPlayer()) <= DistanceToPlayerNeeded
+			; If the player is near the General then set stage 10
+	; 			CWScript.Log("CWSiegeGeneralScript", self + "OnUpdate() - player within distance to general, setting stage:" + stageToSetWhenPlayerNear)
+				;myOwningQuest.setStage(stageToSetWhenPlayerNear)
+				
+				UnregisterForUpdate()
+			EndIf
 			
-			UnregisterForUpdate()
-		EndIf
-		
-		if myOwningQuest.GetStage() >= stageToSetWhenPlayerNear
-		; If the stage is 10 or higher then just stop updating altogether
-			UnregisterForUpdate()
-		EndIf
-	
+			if myOwningQuest.GetStage() >= stageToSetWhenPlayerNear
+			; If the stage is 10 or higher then just stop updating altogether
+				UnregisterForUpdate()
+			EndIf
+		endif
 	EndEvent
 
 EndState

@@ -22,7 +22,7 @@ Actor GalmarRef
 Event OnLoad()
 	;On load we pass some events into the story manager so we have some quests ready for the player to get from the fieldco
 	
-; 	CWScript.Log("CWFieldCOScript", self + "OnLoad()")
+ 	CWScript.Log("CWFieldCOScript", self + "OnLoad()")
 
 	RikkeRef = CWs.Rikke.GetActorReference()
 	GalmarRef = CWs.Galmar.GetActorReference()
@@ -32,7 +32,7 @@ Event OnLoad()
 	EndIf
 	
 	if CrimeFactionSet == False && GetEditorLocation().HasKeyword(CWs.CWCapital)   ;THIS IS SO WE CAN SET THE GENERIC FIELD COS IN THE CAPTIAL TOWNS AND CITIES
-; 		CWScript.Log("CWFieldCOScript", self + "OnLoad() Editor Location has CWCapital keyword, so I'm setting my crime faction to be the hold's crime faction.")
+ 		CWScript.Log("CWFieldCOScript", self + "OnLoad() Editor Location has CWCapital keyword, so I'm setting my crime faction to be the hold's crime faction.")
 	
 		CWs.setCrimeFactionOnActorForEditorLocationsHold(self)
 	
@@ -46,18 +46,18 @@ Event OnLoad()
 	;		CWs.CreateMissions(CWs.GetMyCurrentHoldLocation(self), self)
 
 		elseif CWs.WarIsActive == 0 && startWhiterunSiege && CWs.CW03.GetStageDone(CW03StageForWhiterunSiege) && CWs.WhiterunSiegeStarted == False ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
-; 			CWScript.Log("CWFieldCOScript", self + "OnLoad() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + CW03StageForWhiterunSiege + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
+ 			CWScript.Log("CWFieldCOScript", self + "OnLoad() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + CW03StageForWhiterunSiege + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
 			CWs.SetFieldCOAlias(self)	;for dialogue purposes
 			CWs.WhiterunSiegeStarted = True
 			CWs.CreateMissions(CWs.GetMyCurrentHoldLocation(self), self, ForceFinalSiege = true)
 		
 		Else
-; 			CWScript.Log("CWFieldCOScript", self + "OnLoad() WarIsActive == false, not generating missions.")
+ 			CWScript.Log("CWFieldCOScript", self + "OnLoad() WarIsActive == false, not generating missions.")
 			
 		EndIf
 	
 	Else
-; 		CWScript.Log("CWFieldCOScript", self + "OnLoad() IsPlayerInMyFaction == false, not generating missions.")
+ 		CWScript.Log("CWFieldCOScript", self + "OnLoad() IsPlayerInMyFaction == false, not generating missions.")
 		
 	EndIf
 	

@@ -1732,12 +1732,12 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;Fourth Objective is complete -- ATTACKERS HAVE WON
 kmyquest.CWs.CWBattlePhase.SetValue(6)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50")	;*** WRITE TO LOG
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, setting CWBattlePhase to 0 IF the player isn't a defender")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, setting CWBattlePhase to 0 IF the player isn't a defender")	;*** WRITE TO LOG
 if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation())
 
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an attacker, go ahead and set CWBattlePhase to 6")	;*** WRITE TO LOG
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an attacker, go ahead and set CWBattlePhase to 6")	;*** WRITE TO LOG
 
 	;Set BattlePhase
 	kmyquest.CWs.CWBattlePhase.SetValue(6)
@@ -1745,15 +1745,22 @@ if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation())
 
 else
 
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an defender, NOT setting CWBattlePhase to 0")	;*** WRITE TO LOG
-
+	; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an defender, NOT setting CWBattlePhase to 0")	;*** WRITE TO LOG
+	;schofida - Player lost so now the enemy gets to attack
+	kmyQuest.CWs.CWDebugForceAttacker.SetValueInt(kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance))
+	;if this was a spanish inquisition, fail any running CW Missions
+	if kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+		kmyQuest.CWs.CWCampaignS.CompleteCWMissions(true)
+	endif
 endif
+;CWO Reset Troop crime in case of friendly fire
+kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
 ;Unlocking Gate
 Alias_MainGateExterior.GetReference().Lock(false)
 
 ;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
 ;Turn off all the Catapults
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
@@ -1765,7 +1772,7 @@ kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender2)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender3)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, EVPing everyone")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, EVPing everyone")	;*** WRITE TO LOG
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
@@ -1792,9 +1799,10 @@ Alias_Defender10.TryToEvaluatePackage()
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, setting AttackersHaveWon = True")	;*** WRITE TO LOG
 
 ;WE DON'T WANT THIS TO HAPPEN IF THE PLAYER IS DEFENDING ANYMORE, I AM MOVING THIS INTO THE IsAttack() conditioned stuff below
-;kmyquest.AttackersHaveWon = True		;Announces the attackers as winner, causing the defenders to retreat
+;schofida - Sorry all caps guy. The enemy would like to know if the attacker has won too
+kmyquest.AttackersHaveWon = True		;Announces the attackers as winner, causing the defenders to retreat
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, checking Attack/Defense and starting follow up quests")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, checking Attack/Defense and starting follow up quests")	;*** WRITE TO LOG
 
 ;**ATTACK/DEFEND SPECIFIC
 
@@ -1816,24 +1824,27 @@ if kmyquest.IsAttack()
 
 	if ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == false	
 		if cityVar != kmyquest.CWs.SolitudeLocation && cityVar != kmyquest.CWs.WindhelmLocation 
-; 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, starting CWAttackCity quest via story manager script event")	;*** WRITE TO LOG
+ 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, starting CWAttackCity quest via story manager script event")	;*** WRITE TO LOG
 			kmyquest.CWs.CWAttackCityStart.SendStoryEvent(Alias_City.GetLocation(), kmyquest.CWs.GetRikkeOrGalmar())
 		endif
 
 	else
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
 		kmyquest.CWSiegeObj.setStage(9000)
 		stop()
 	endif
 
 else
 
+	;Prevent player activation of main gate into city
+	Alias_MainGateExterior.GetReference().BlockActivation(FALSE)
+
 	;!!!!  *** WE ARE NO LONGER EVER FAILING A DEFENSE MISSION BY THEM PULLING THE LEVER. YOU ONLY EVER FAIL BY WALKING AWAY. THIS MEANS WE DON'T NEED TO DO ANYTHING HERE. *** !!!
-
+	;schofida - Oh yes we are
 	;START ESCORT JARL TO SAFETY QUEST (this also happens in stage 100)
-
-; 	;CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
-	;kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
+	;schofida - The jarl safety quest does not happen :( but it sets other needed stuff
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
+	kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
 
 
 
@@ -1881,14 +1892,23 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade
+		;schofida - TODO hope to restore siege on Solitude and Windhelm
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade
 
 	else
 		;no defense planned
-
+		;schofida - defense happens but only within city walls. cwfortsiegecapital will handle
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
+	if kmyquest.IsAttack()
+		;schofida - TODO hope to restore siege on Solitude and Windhelm
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade
+
+	else
+		;no defense planned
+		;schofida - defense happens but only within city walls. cwfortsiegecapital will handle
+	endif
 
 
 endif
@@ -1969,7 +1989,8 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - barricade
+		;schofida - TODO hopefully Solitude will have objectives
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - barricade
 		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
 
 ;Set Dialog States
@@ -2002,7 +2023,7 @@ kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 
 endif
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 40")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 40")	;*** WRITE TO LOG
 
 ;Set BattlePhase
 kmyquest.CWs.CWBattlePhase.SetValue(5)
@@ -2019,7 +2040,7 @@ kmyquest.CWStateDefenderLastStand.SetValue(0)
 kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
 CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase5A, Alias_RespawnAttackerPhase5B, Alias_RespawnAttackerPhase5C, Alias_RespawnAttackerPhase5D, Alias_RespawnAttackerPhase5FailSafe)
@@ -2062,6 +2083,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;DEFENSE ONLY triggered by walking out the main gate
+;CWSiege quest stage 7
 
 ;Set BattlePhase
 kmyquest.CWBattlePhase.SetValue(0)
@@ -2121,7 +2143,9 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	if kmyquest.IsAttack()
 		;Do Nothing
 
-	else
+	;CWO Stuff
+	elseif (Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 1  || Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 2)	; Reddit BugFix #15
+	;CWO Stuff
 		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Open the gate
 		Alias_Defender2.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo1.GetReference())
 		Alias_Defender3.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo2.GetReference())
@@ -2162,7 +2186,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;Defenders have run out of respawns and fallen too low - this is not a victory condition, attackers must still take objectives to win
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
 kmyquest.AttackersHaveWon = TRUE    ;Attackers have won causing defenders to retreat
 
 kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
@@ -2172,7 +2196,7 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(1)
 
 ;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
 ;Turn off all the Catapults
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
@@ -2196,7 +2220,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;*** this stage is called by the CWSiegeCityDoorScript script
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60")	;*** WRITE TO LOG
 
 Alias_WhiterunIntEnableOnly.GetReference().Enable()
 Alias_WhiterunIntDisableOnly.GetReference().Disable()
@@ -2227,35 +2251,6 @@ kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultDefender4)
 Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
 
-	if kmyquest.IsAttack()
-		;If Attack
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
-
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
-
-	else
-		;If defense
-
-	endif
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
@@ -2273,28 +2268,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 ; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
 	kmyquest.CWs.CWFinale.SetStage(10)
 
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
-
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
@@ -2306,28 +2279,36 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 ; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 60, calling CWFinale.SetStage(10)")	;*** WRITE TO LOG
 	kmyquest.CWs.CWFinale.SetStage(10)
 
-	;as a safety precaution, disable all the exterior guys
-	Alias_Attacker1General.TryToDisable()
-	Alias_Attacker2.TryToDisable()
-	Alias_Attacker3.TryToDisable()
-	Alias_Attacker4.TryToDisable()
-	Alias_Attacker5.TryToDisable()
-	Alias_Attacker6.TryToDisable()
-	Alias_Attacker7.TryToDisable()
-	Alias_Attacker8.TryToDisable()
-	Alias_Attacker9.TryToDisable()
-	Alias_Attacker10.TryToDisable()
+endif
 
-	Alias_Defender1General.TryToDisable()
-	Alias_Defender2.TryToDisable()
-	Alias_Defender3.TryToDisable()
-	Alias_Defender4.TryToDisable()
-	Alias_Defender5.TryToDisable()
-	Alias_Defender6.TryToDisable()
-	Alias_Defender7.TryToDisable()
-	Alias_Defender8.TryToDisable()
-	Alias_Defender9.TryToDisable()
-	Alias_Defender10.TryToDisable()
+;schofida - This happens at all locations now. Move down here
+if kmyquest.IsAttack()
+	;If Attack
+;as a safety precaution, disable all the exterior guys
+Alias_Attacker1General.TryToDisable()
+Alias_Attacker2.TryToDisable()
+Alias_Attacker3.TryToDisable()
+Alias_Attacker4.TryToDisable()
+Alias_Attacker5.TryToDisable()
+Alias_Attacker6.TryToDisable()
+Alias_Attacker7.TryToDisable()
+Alias_Attacker8.TryToDisable()
+Alias_Attacker9.TryToDisable()
+Alias_Attacker10.TryToDisable()
+
+Alias_Defender1General.TryToDisable()
+Alias_Defender2.TryToDisable()
+Alias_Defender3.TryToDisable()
+Alias_Defender4.TryToDisable()
+Alias_Defender5.TryToDisable()
+Alias_Defender6.TryToDisable()
+Alias_Defender7.TryToDisable()
+Alias_Defender8.TryToDisable()
+Alias_Defender9.TryToDisable()
+Alias_Defender10.TryToDisable()
+
+else
+	;If defense
 
 endif
 ;END CODE
@@ -2341,7 +2322,7 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200")	;*** WRITE TO LOG
 
 ;Attackers ran out of respawn tickets and too many died
 ;-- OLD WAY kmyquest.AttackersHaveWon = False    ;Announces the Defenders as winner, causing the attackers to retreat
@@ -2358,9 +2339,13 @@ Alias_WhiterunIntDisableOnly.GetReference().Disable()
 kmyquest.CWs.CWBattlePhase.SetValue(6)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
-;Set Dialog States
-kmyquest.CWStateAttackerOutOfReinforcements.SetValue(1)
+kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
+;Set Dialog States
+;schofida - Alot of this routine is assuming that the player is defending Whiterun. Will need to check for otherwise
+if !kmyQuest.isAttack()
+	kmyquest.CWStateAttackerOutOfReinforcements.SetValue(1)
+endif
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
 Alias_Attacker3.TryToEvaluatePackage()
@@ -2396,21 +2381,25 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender8)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 
-
-kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-
+;schofida - Alot of this routine is assuming that the player is defending Whiterun. Will need to check for otherwise
+if !kmyQuest.isAttack()
+	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+endif
 ;**CITY SPECIFIC
 Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
 
+bool scenePlayedBefore = true
+;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
+if kmyquest.CWs.WhiterunSiegeFinished == False
+	kmyquest.CWs.WhiterunSiegeFinished = True
+	;schofida - Defence of Whiterun can happen more than once. Only show Whiterun Jarl scene if defending as an imperial for the first time.
+	scenePlayedBefore = false
+endif
+
 if kmyquest.IsAttack()
 	;Nothing yet
 else
-
-	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-	if kmyquest.CWs.WhiterunSiegeFinished == False
-		kmyquest.CWs.WhiterunSiegeFinished = True
-	endif
 
 	Alias_DisableFastTravelTrigger.TryToDisable()
 
@@ -2420,14 +2409,14 @@ else
 		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
 
 	endif
-
+	if !scenePlayedBefore
 ;	debug.messageBox("START SPEECH SCENE")
 
 	kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
 	Alias_Jarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
 	Alias_HouseCarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
 	kmyquest.CWSiegeWhiterunDefendedScene.start()
-
+	endif
 
 endif
 
@@ -2451,7 +2440,7 @@ endif
 
 
 ;THIS ALSO HAPPENS IN STAGE 255 SHUTDOWN
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200 phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
 ;Turn off all the Catapults
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
@@ -2493,18 +2482,21 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
 
 Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
 
 Alias_DisableFastTravelTrigger.TryToDisable()
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePhase to 0");*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePhase to 0");*** WRITE TO LOG
 
 if kmyQuest.CWPrepareCity.IsRunning()
     kmyQuest.CWPrepareCity.Stop()
 endif
+
+;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
+kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
 
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -2544,7 +2536,7 @@ Alias_NonRespawningDefenderSons6.TryToDisable()
 
 
 ;THIS ALSO HAPPENS IN STAGE 200
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Shutdown phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Shutdown phase calling TryToTurnOffCatapultAlias() on Catapult aliases")	
 ;Turn off all the Catapults
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker1)
 kmyquest.TryToTurnOffCatapultAlias(Alias_CatapultAttacker2)
@@ -2572,16 +2564,16 @@ kmyQuest.CWs.CWStateDefenderLastStand.SetValue(0)
 kmyQuest.CWs.CWStateDefenderLowReinforcements.SetValue(0)
 kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
 kmyquest.CWs.CWAlliesS.DeactivateAllies()
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
 UnregisterForUpdate()
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: ToggleMapMarkersAndFastTravelEndBattle().")
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: ToggleMapMarkersAndFastTravelEndBattle().")
 kmyquest.ToggleMapMarkersAndFastTravelEndBattle(kmyquest.IsAttack())	;*** CHANGE THIS TO FALSE IF THIS IS A DEFENSE QUEST
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "turning on complex WI interactions")  ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "turning on complex WI interactions")  ;*** WRITE TO LOG
 kmyquest.ToggleOnComplexWIInteractions(Alias_City)
 
 ;Doublecheck that all reinforcements are disabled
@@ -2589,7 +2581,7 @@ kmyquest.ToggleOnComplexWIInteractions(Alias_City)
 (Alias_AttackerSonsReinforceEnabler.GetReference()).Disable()
 
 ;ALSO HAPPENS IN STAGE 200
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255, stopping sounds and music") ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255, stopping sounds and music") ;*** WRITE TO LOG
 kmyquest.StopCombatSoundsLoop()
 ;Removes this music from the stack
 kmyQuest.MUSCombatCivilWar.Remove()
@@ -2604,6 +2596,10 @@ Alias_WhiterunAttackerGalmar.GetReference().Disable()
 	Alias_WhiterunCaravanActor02.GetReference().Enable()
 	Alias_WhiterunCaravanActor03.GetReference().Enable()
 	Alias_WhiterunCaravanActor04.GetReference().Enable()
+
+;USLEEP 3.0.10 Bug #14135
+alias_CampEnableMarkerSons.GetReference().Disable()
+Alias_CampEnableMarkerImperial.GetReference().Disable()
 
 ;*** CITY SPECIFIC SCRIPTING IN HERE ***
 
@@ -2643,6 +2639,35 @@ kmyquest.WhiterunAmbExt03.Disable()
 
 ;release reservations
 
+if ((kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials && kmyQuest.CWs.CWCampaignS.failedMission == 1) || (kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iSons && kmyQuest.CWs.CWCampaignS.failedMission == 0))
+	;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+	Alias_WhiterunHeimskrNewHome.GetReference().Enable()
+
+	;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
+	Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
+	
+	;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
+	RiverwoodStormcloaksMarker.Enable()
+	RiverwoodImperialsMarker.Disable()
+	
+	;schofida - Whiterun has repeating sieges
+	;schofida - Heimskr released from Jail :)
+	Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Disable()
+	USLEEPHeimskrPreachJail.SetStage(8)
+else
+	;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+	Alias_WhiterunHeimskrNewHome.GetReference().Disable()
+	;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
+	Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
+	
+	;schofida - Whiterun has repeating sieges
+	Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Disable()
+	RiverwoodStormcloaksMarker.Disable()
+	RiverwoodImperialsMarker.Enable()
+
+	;USKP 2.0.1 - Heimskr goes to Jail :(
+	USLEEPHeimskrPreachJail.SetStage(3)
+EndIf
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
@@ -2702,31 +2727,16 @@ kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 
+;CWO - Shut down campaign if its running
+if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+kmyQuest.CWs.CWCampaign.SetStage(255)
+elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = true
+endif
+
 ;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
 kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
 
-if cityVar == kmyquest.CWs.WhiterunLocation
-	;USLEEP 3.0.10 Bug #14135
-	alias_CampEnableMarkerSons.GetReference().Disable()
-
-	if kmyQuest.CWs.PlayerAllegiance == 2
-		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
-		Alias_WhiterunHeimskrNewHome.GetReference().Enable()
-
-		;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
-		
-		;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
-		RiverwoodStormcloaksMarker.Enable()
-		RiverwoodImperialsMarker.Disable()
-	else
-		;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
-
-		;USKP 2.0.1 - Heimskr goes to Jail :(
-		USLEEPHeimskrPreachJail.Start()
-	EndIf
-EndIf
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -2757,14 +2767,24 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+
+;CWO - Stop Disguise Quest
+kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+
 ;Gets called at the end of CWAttackerStartingScene, sets Phase 1, then sets stage 10.
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 	;Set BattlePhase
 	kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 	Alias_ThreatTriggersToggle.TryToEnable()
 
 kmyquest.CWAttackerStartingScene.Stop()
-kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+
+;schofida - Start charge scene (Tullius doesn't charge in in Vanilla?)
+kmyQuest.CWs.CWCampaignS.CWSiegeGeneralChargeScene.start()
+;schofida - Last stand defense handles starting the quest differently
+if !kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	kmyQuest.CWSiegeObj.SetObjectiveCompleted(1000, 1 as Bool); COMPLETED - Meet with General
+endIf
 
 kmyQuest.MUSCombatCivilWar.Add()
 
@@ -2828,7 +2848,8 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		utility.Wait(8)
 		SetStage(10)
 	else
-
+		;CWO - Markarth Defense
+		SetStage(10)
 	endif
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
@@ -2838,7 +2859,8 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 		SetStage(10)
 	else
-
+		;CWO - Riften Defense
+		SetStage(10)
 	endif
 
 
@@ -2846,10 +2868,11 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyQuest.WeatherSolitude.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		kmyquest.CWAttackerStartingScene.Stop()
-		SetStage(50)
+		;schofida - Nah fuck that. We gotta work for that solitude victory No more waltzing up to the front gate to meet with Ulfric
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+		;kmyquest.CWAttackerStartingScene.Stop()
+		SetStage(10)
 	else
 		;Currently no defense planned
 
@@ -2859,10 +2882,11 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		kmyquest.CWAttackerStartingScene.Stop()
-		SetStage(50)
+		;schofida - Nah fuck that. We gotta work for that windhelm victory No more waltzing up to the front gate to meet with Tullius
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+		;kmyquest.CWAttackerStartingScene.Stop()
+		SetStage(10)
 	else
 		;Currently no defense planned
 
@@ -2881,13 +2905,13 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;Player gets quest from quest giver
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 starting")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 starting")	
 
 Alias_WhiterunCompanionsTrigger01.GetReference().Disable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Disable()
 
 ;<Toggle Map Markers and Fast Travel>
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Toggling map markers and fast travel")
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Toggling map markers and fast travel")
 
 kmyquest.ToggleMapMarkersAndFastTravelStartBattle(kmyquest.IsAttack())	
 
@@ -2896,7 +2920,7 @@ kmyquest.ToggleMapMarkersAndFastTravelStartBattle(kmyquest.IsAttack())
 ;</Toggle Map Markers and Fast Travel>
 
 ;<Turn off exterior guards>
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Disable exterior patrolling guards")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Disable exterior patrolling guards")	
 ;Disable exterior patrolling guards
 Alias_GarrisonEnableMarkerImperialExterior.TryToDisable()
 Alias_GarrisonEnableMarkerSonsExterior.TryToDisable()
@@ -2904,13 +2928,13 @@ Alias_GarrisonEnableMarkerSonsExterior.TryToDisable()
 
 
 ;<TurnOnAliases>------------------
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "TurnOnAliases()")		;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "TurnOnAliases()")		;*** WRITE TO LOG
 kmyquest.TurnOnAliases(kmyquest.IsAttack())	
 
 While kmyquest.DoneTurningOnAliases == false
 ;do nothing
 	utility.wait(1)
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
 endWhile
 
 ;</TurnOnAliases>------------------
@@ -2919,7 +2943,7 @@ endWhile
 kmyquest.CWs.CWAlliesS.EnableActiveAllies()
 
 ;<Setup Camp>
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Enabling attacker camp")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Enabling attacker camp")	
 
 if kmyquest.CWs.ImperialsAreAttacking(Alias_City.GetLocation())
 	Alias_CampEnableMarkerImperial.GetReference().Enable()
@@ -2932,7 +2956,7 @@ endif
 
 
 ;<MISC SET UP>----------------
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Misc Set up")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Misc Set up")	;*** WRITE TO LOG
 
 
 ;**** !!! IF YOU PUT SOMETHING HERE, CONSIDER IF IT NEEDS TO BE UNDONE IN THE SHUT DOWN PHASE 255 !!! ****
@@ -2971,16 +2995,19 @@ endif
 if kmyquest.IsAttack()
 	((self as quest) as CWReinforcementControllerScript).ShowAttackerPoolObjective = false		;we don't want to show Destroy Attackers XX% Remaining
 	((self as quest) as CWReinforcementControllerScript).ShowDefenderPoolObjective = false		;we don't want to show Destroy Defenders XX% Remaining
+	((self as Quest) as cwreinforcementcontrollerscript).StageToSetIfDefenderWipedOut = 100
 
 else ;is Defense
 	((self as quest) as CWReinforcementControllerScript).ShowAttackerPoolObjective = true		;we DO want to show Destroy Attackers XX% Remaining
-	((self as quest) as CWReinforcementControllerScript).ShowDefenderPoolObjective = false		;we don't want to show Destroy Defenders XX% Remaining
-
+	;Reddit Bugfix #2
+	((self as Quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+	;Reddit Bugfix #2
+	((self as Quest) as cwreinforcementcontrollerscript).StageToSetIfDefenderWipedOut = 50
 
 endif
 
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling TryToTurnOnCatapultAlias() on Catapult aliases")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling TryToTurnOnCatapultAlias() on Catapult aliases")	
 ;Turn on all the Catapults
 kmyquest.TryToTurnOnCatapultAlias(Alias_CatapultAttacker1)
 kmyquest.TryToTurnOnCatapultAlias(Alias_CatapultAttacker2)
@@ -3014,8 +3041,10 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	;turn off random dragons
 	MQ106TurnOffRandomDragons.SetValue(1)
 
-	Alias_WhiterunBridgeLever1.GetReference().Enable()
-	Alias_WhiterunBridgeLever2.GetReference().Enable()
+	Alias_WhiterunBridgeLever1.GetReference().Enable(false)
+	(Alias_WhiterunBridgeLever1.GetReference() as WRDrawBridge01SCRIPT).GotoState("ReadyForOpen") ; schofida - Reset state so drawbridge can reopen in the event Imperials try to reclaim Whiterun
+	Alias_WhiterunBridgeLever2.GetReference().Enable(false)
+	(Alias_WhiterunBridgeLever2.GetReference() as WRDrawBridge01SCRIPT).GotoState("ReadyForOpen") ; schofida - Reset state so drawbridge can reopen in the event Imperials try to reclaim Whiterun
 
 	if kmyquest.IsAttack()
 		;If Attack
@@ -3024,7 +3053,7 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 		Alias_WhiterunIntEnableOnly.GetReference().Enable()
 		Alias_WhiterunIntDisableOnly.GetReference().Disable()
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
@@ -3050,10 +3079,10 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	else
 		;If defense
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Enabling DisableFastTravelTrigger")
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Enabling DisableFastTravelTrigger")
 		Alias_DisableFastTravelTrigger.TryToEnable()
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(1)
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -3088,7 +3117,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	if kmyquest.IsAttack()
 		;If Attack
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
@@ -3096,7 +3125,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	else
 		;If defense
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(1)
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -3116,7 +3145,7 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 	if kmyquest.IsAttack()
 		;If Attack
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
@@ -3124,7 +3153,7 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 	else
 		;If defense
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(1)
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -3142,7 +3171,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
 		;If Attack
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
@@ -3165,7 +3194,7 @@ Alias_Defender10.GetReference().Disable()
 	else
 		;If defense
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(1)
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -3184,7 +3213,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	if kmyquest.IsAttack()
 		;If Attack
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
@@ -3209,7 +3238,7 @@ Alias_Defender10.GetReference().Disable()
 	else
 		;If defense
 
-; 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
+ 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(1)
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
@@ -3228,17 +3257,24 @@ endif
 
 ;<MISC SET UP>----------------
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
 RegisterForUpdate(1)		;Needed for checking if the player has left the battle
 ((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_BattleCenterMarker.GetReference(), Alias_City.GetLocation())
 
 
 ;<CWSiegeObj>------------------
-if kmyquest.IsAttack()
-	kmyquest.CWSiegeObj.SetObjectiveDisplayed(1000, 1);DISPLAYED - Meet with General
+;CWO Account for whether player is on final city defense
+if !kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	if kmyquest.IsAttack()
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1000, 1);DISPLAYED - Meet with General
+	else
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2000, 1);DISPLAYED - Meet with General
+	endif
 else
-	kmyquest.CWSiegeObj.SetObjectiveDisplayed(2000, 1);DISPLAYED - Meet with General
-endif
+	kmyQuest.CWSiegeObj.SetObjectiveDisplayed(500, 1 as Bool, false)
+	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
+endIf
+kmyQuest.CWSiegeObj.setStage(1)
 ;</CWSiegeObj>--------------------
 
 
@@ -3260,11 +3296,11 @@ endif
 if kmyquest.IsAttack() == false
 	While kmyquest.CWs.CWPrepareCity.IsRunning() == false
 	utility.wait(1)
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "waiting for CWPrepareCity.IsRunning == true")	;*** WRITE TO LOG
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "waiting for CWPrepareCity.IsRunning == true")	;*** WRITE TO LOG
 
 	endWhile
 
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling setStage(1) on CWPrepareCityStart")	;*** WRITE TO LOG
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling setStage(1) on CWPrepareCityStart")	;*** WRITE TO LOG
 	kmyquest.CWs.CWPrepareCity.SetStage(1)	;puts everyone in packages
 endif
 
@@ -3294,7 +3330,12 @@ kmyquest.CWs.AddEnemyFortsToBackToWar()
 ;Alias_WhiterunSonsSoldierToDisable04.GetReference().Disable()
 
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 done")
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(20)
+endif
+
+
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 done")
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -3307,7 +3348,8 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 10")	;*** WRITE TO LOG
-
+;CWO - Start Player Essential Quest
+kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 ;**ATTACK/DEFEND SPECIFIC
 if kmyquest.IsAttack()
 	kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
@@ -3377,7 +3419,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyQuest.WeatherSolitude.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+		;CWO Set objective
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 
 	else
 		;Currently no defense planned
@@ -3463,14 +3506,13 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;Defense only - triggered by walking out of the HQ
 
-
+;Adds this music to stack, at highest priority
+kmyQuest.MUSCombatCivilWar.Add()
 
 ;**CITY SPECIFIC:
 location cityVar = Alias_City.GetLocation()
 
 if cityVar == kmyquest.CWs.WhiterunLocation
-	;Adds this music to stack, at highest priority
-	kmyQuest.MUSCombatCivilWar.Add()
 
 	kmyQuest.WeatherWhiterun.SetActive(True)
 
@@ -3511,58 +3553,80 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
+;CWO Start Courier Defense Quest
+kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
+
+CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsAttack()
 
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 1")  ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 1")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 1)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "turning off complex WI interactions")  ;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "turning off complex WI interactions")  ;*** WRITE TO LOG
 kmyquest.ToggleOffComplexWIInteractions(Alias_City)
 
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
-
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Imperial Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
+;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
+int getGenerals = utility.randomint(0, 100)
+if kmyQuest.IsAttack() && kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials && getGenerals < 50
+	Alias_AttackerImperial1.ForceRefTo(kmyQuest.CWs.GeneralTulliusRef)
+	Alias_AttackerImperial2.ForceRefTo(kmyQuest.CWs.Rikke.GetActorReference())
+elseif kmyQuest.IsAttack() && kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
+	Alias_AttackerImperial1.ForceRefTo(kmyQuest.CWs.Rikke.GetActorReference())
+elseif kmyQuest.IsAttack() && getGenerals < 50
+	Alias_AttackerSons1.ForceRefTo(kmyQuest.CWs.UlfricRef)
+	if Alias_City.GetLocation() == kmyQuest.CWs.WhiterunLocation
+		Alias_AttackerSons2.ForceRefTo(Alias_WhiterunAttackerGalmar.GetActorRef())
+	else
+		Alias_AttackerSons2.ForceRefTo(kmyQuest.CWs.Galmar.GetActorReference())
+	endif
+elseif kmyQuest.IsAttack()
+	if Alias_City.GetLocation() == kmyQuest.CWs.WhiterunLocation
+		Alias_AttackerSons1.ForceRefTo(Alias_WhiterunAttackerGalmar.GetActorRef())
+	else
+		Alias_AttackerSons1.ForceRefTo(kmyQuest.CWs.Galmar.GetActorReference())
+	endif
+endif
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Imperial Aliases")	;*** WRITE TO LOG
 ;Imperial Aliases pointing to references in world:
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
 kmyquest.RegisterImperialDefenderAliases(Alias_DefenderImperial1, Alias_DefenderImperial2, Alias_DefenderImperial3, Alias_DefenderImperial4, Alias_DefenderImperial5, Alias_DefenderImperial6, Alias_DefenderImperial7, Alias_DefenderImperial8, Alias_DefenderImperial9, Alias_DefenderImperial10)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Sons Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Sons Aliases")	;*** WRITE TO LOG
 ;Sons Aliases pointing to references in world:
 kmyquest.RegisterSonsAttackerAliases(Alias_AttackerSons1, Alias_AttackerSons2, Alias_AttackerSons3, Alias_AttackerSons4, Alias_AttackerSons5, Alias_AttackerSons6, Alias_AttackerSons7, Alias_AttackerSons8, Alias_AttackerSons9, Alias_AttackerSons10)
 kmyquest.RegisterSonsDefenderAliases(Alias_DefenderSons1, Alias_DefenderSons2, Alias_DefenderSons3, Alias_DefenderSons4, Alias_DefenderSons5, Alias_DefenderSons6, Alias_DefenderSons7, Alias_DefenderSons8, Alias_DefenderSons9, Alias_DefenderSons10)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Attacker/Defender Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Attacker/Defender Aliases")	;*** WRITE TO LOG
 ;Attacker/Defender aliases - which have the packages, etc.
 kmyquest.RegisterAttackerAliases( Alias_Attacker1General, Alias_Attacker2, Alias_Attacker3, Alias_Attacker4, Alias_Attacker5, Alias_Attacker6, Alias_Attacker7, Alias_Attacker8, Alias_Attacker9, Alias_Attacker10)
 kmyquest.RegisterDefenderAliases( Alias_Defender1General, Alias_Defender2, Alias_Defender3, Alias_Defender4, Alias_Defender5, Alias_Defender6, Alias_Defender7, Alias_Defender8, Alias_Defender9, Alias_Defender10)
 
 ;*** Currently you can only register 30 things per type... we can change this if we need more. ***
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Generic Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Generic Aliases")	;*** WRITE TO LOG
 ;Generic Aliases - things that exist in both the Attack quest and Defend quest 
 kmyquest.RegisterGenericAliases(Alias_EnableMarker, Alias_Barricade1A, Alias_Barricade1B, Alias_Barricade2A, Alias_Barricade2B, Alias_Barricade3A, Alias_Barricade3B, Alias_BarricadeGeneric1, Alias_BarricadeGeneric2, Alias_CatapultAttacker1,Alias_CatapultAttacker2,Alias_CatapultAttacker3,Alias_CatapultAttacker4,Alias_CatapultDefender1,Alias_CatapultDefender2,Alias_CatapultDefender3,Alias_CatapultDefender4)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Attack Only Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Attack Only Aliases")	;*** WRITE TO LOG
 ;Attack Aliases - things that exist in only the Attack quest
 kmyquest.RegisterGenericAttackAliases(Alias_AttackTrigger1, Alias_AttackTrigger2, Alias_AttackTrigger3, Alias_AttackTrigger4, Alias_AttackTrigger5, Alias_AttackTrigger6, Alias_AttackArrowVolleyParent1, Alias_AttackArrowVolleyParent2, Alias_AttackArrowVolleyParent3, Alias_AttackArrowVolleyParent4, Alias_AttackArrowVolleyParent5, Alias_AttackArrowVolleyParent6, Alias_AttackArrowVolleyParent7, Alias_AttackArrowVolleyParent8)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Defend Only Aliases")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Defend Only Aliases")	;*** WRITE TO LOG
 ;Defend Aliases - things that exist in only the Defend quest
 kmyquest.RegisterGenericDefendAliases(Alias_DefendTrigger1, Alias_DefendTrigger2, Alias_DefendTrigger3, Alias_DefendTrigger4, Alias_DefendArrowVolleyParent1, Alias_DefendArrowVolleyParent2, Alias_DefendArrowVolleyParent3, Alias_DefendArrowVolleyParent4, Alias_DefendArrowVolleyParent5, Alias_DefendArrowVolleyParent6, Alias_DefendArrowVolleyParent7, Alias_DefendArrowVolleyParent8)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registering Map Markers")	
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Registering Map Markers")	
 kmyquest.RegisterMapMarkerAliases(Alias_AttackerSonsCampMapMarker, Alias_AttackerImperialCampMapMarker, Alias_DisableMapMarkerForBattle1, Alias_DisableMapMarkerForBattle2, Alias_DisableMapMarkerForBattle3, Alias_DisableMapMarkerForBattle4, Alias_DisableMapMarkerForBattle5, Alias_DisableMapMarkerForBattle6, Alias_DisableMapMarkerForBattle7, Alias_DisableMapMarkerForBattle8, Alias_DisableMapMarkerForBattle9, Alias_DisableMapMarkerForBattle10, Alias_DisableMapMarkerForBattle11, Alias_DisableMapMarkerForBattle12, Alias_DisableMapMarkerForBattle13, Alias_DisableMapMarkerForBattle14, Alias_DisableMapMarkerForBattle15, Alias_DisableMapMarkerForBattle16)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling SetUpAliases()")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling SetUpAliases()")	;*** WRITE TO LOG
 ;Processes all the aliases as needed to start, including disabling, and reseting and enabling the ones that should be turned on
 kmyquest.SetUpAliases(Alias_City.GetLocation()) 
 
 While kmyquest.DoneSettingUpAliases == false
 ;do nothing
 	utility.wait(1)
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for DoneSettingUpAliases != false, happens in SetUpAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for DoneSettingUpAliases != false, happens in SetUpAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
 endWhile
 
 ;</Aliases> ---------------
@@ -3570,25 +3634,25 @@ endWhile
 
 ;<Special Allies> ---------------
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up Special Allies.")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up Special Allies.")	;*** WRITE TO LOG
 
 ;we are testing for whether player is attacking or defending here so we can simply copy and paste this in all sieges regardless.
 if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation())   ;player is attacking, so register attacker markers for allies
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerAttackerPhaseX markers")	;*** WRITE TO LOG
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerAttackerPhaseX markers")	;*** WRITE TO LOG
 	kmyquest.CWs.CWAlliesS.RegisterAllyPhaseMarkers(Alias_AllyMarkerAttack0.GetReference(), Alias_AllyMarkerAttack1.GetReference(), Alias_AllyMarkerAttack2.GetReference(), Alias_AllyMarkerAttack3.GetReference(), Alias_AllyMarkerAttack4.GetReference(), Alias_AllyMarkerAttack5.GetReference(), Alias_AllyMarkerAttack6.GetReference())
 
 elseif kmyquest.CWs.PlayersFactionIsDefender(Alias_City.GetLocation())   ;player is defending, so register defender markers for allies
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerDefenderPhaseX markers")	;*** WRITE TO LOG
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerDefenderPhaseX markers")	;*** WRITE TO LOG
 	kmyquest.CWs.CWAlliesS.RegisterAllyPhaseMarkers(Alias_AllyMarkerDefend0.GetReference(), Alias_AllyMarkerDefend1.GetReference(), Alias_AllyMarkerDefend2.GetReference(), Alias_AllyMarkerDefend3.GetReference(), Alias_AllyMarkerDefend4.GetReference(), Alias_AllyMarkerDefend5.GetReference(), Alias_AllyMarkerDefend6.GetReference())
 
 else ;something bad happened
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + " WARNING: Expected player allegiance to be attacking or defending but is neither. THIS WILL BREAK ALLIES SHOWING UP FOR THE BATTLE!")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + " WARNING: Expected player allegiance to be attacking or defending but is neither. THIS WILL BREAK ALLIES SHOWING UP FOR THE BATTLE!")	;*** WRITE TO LOG
 
 endif
 
 kmyquest.CWs.CWAlliesS.ProcessAlliesForSiege(Alias_Hold.GetLocation())
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allies.")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allies.")	;*** WRITE TO LOG
 
 ;</Special Allies> ---------------
 
@@ -3597,50 +3661,82 @@ kmyquest.CWs.CWAlliesS.ProcessAlliesForSiege(Alias_Hold.GetLocation())
 
 ; ;CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling Reset() on advanced soldiers that aren't meant to respawn")	
 ;Aiases I will be enabling through the course of the attack.  Should be taken care of in 255.
+;schofida - uncommenting these just in case. Since battles can now happen multiple times
+Alias_NonRespawningDefenderImperial1.TryToReset()
+Alias_NonRespawningDefenderImperial2.TryToReset()
+Alias_NonRespawningDefenderImperial3.TryToReset()
+Alias_NonRespawningDefenderImperial4.TryToReset()
+Alias_NonRespawningDefenderImperial5.TryToReset()
+Alias_NonRespawningDefenderImperial6.TryToReset()
 
-;Alias_NonRespawningDefenderImperial1.TryToReset()
-;Alias_NonRespawningDefenderImperial2.TryToReset()
-;Alias_NonRespawningDefenderImperial3.TryToReset()
-;Alias_NonRespawningDefenderImperial4.TryToReset()
-;Alias_NonRespawningDefenderImperial5.TryToReset()
-;Alias_NonRespawningDefenderImperial6.TryToReset()
+Alias_NonRespawningDefenderSons1.TryToReset()
+Alias_NonRespawningDefenderSons2.TryToReset()
+Alias_NonRespawningDefenderSons3.TryToReset()
+Alias_NonRespawningDefenderSons4.TryToReset()
+Alias_NonRespawningDefenderSons5.TryToReset()
+Alias_NonRespawningDefenderSons6.TryToReset()
 
-;Alias_NonRespawningDefenderSons1.TryToReset()
-;Alias_NonRespawningDefenderSons2.TryToReset()
-;Alias_NonRespawningDefenderSons3.TryToReset()
-;Alias_NonRespawningDefenderSons4.TryToReset()
-;Alias_NonRespawningDefenderSons5.TryToReset()
-;Alias_NonRespawningDefenderSons6.TryToReset()
+Alias_NonRespawningDefenderImperial1.TryToDisable()
+Alias_NonRespawningDefenderImperial2.TryToDisable()
+Alias_NonRespawningDefenderImperial3.TryToDisable()
+Alias_NonRespawningDefenderImperial4.TryToDisable()
+Alias_NonRespawningDefenderImperial5.TryToDisable()
+Alias_NonRespawningDefenderImperial6.TryToDisable()
 
-;Alias_NonRespawningDefenderImperial1.TryToDisable()
-;Alias_NonRespawningDefenderImperial2.TryToDisable()
-;Alias_NonRespawningDefenderImperial3.TryToDisable()
-;Alias_NonRespawningDefenderImperial4.TryToDisable()
-;Alias_NonRespawningDefenderImperial5.TryToDisable()
-;Alias_NonRespawningDefenderImperial6.TryToDisable()
+Alias_NonRespawningDefenderSons1.TryToDisable()
+Alias_NonRespawningDefenderSons2.TryToDisable()
+Alias_NonRespawningDefenderSons3.TryToDisable()
+Alias_NonRespawningDefenderSons4.TryToDisable()
+Alias_NonRespawningDefenderSons5.TryToDisable()
+Alias_NonRespawningDefenderSons6.TryToDisable()
 
-;Alias_NonRespawningDefenderSons1.TryToDisable()
-;Alias_NonRespawningDefenderSons2.TryToDisable()
-;Alias_NonRespawningDefenderSons3.TryToDisable()
-;Alias_NonRespawningDefenderSons4.TryToDisable()
-;Alias_NonRespawningDefenderSons5.TryToDisable()
-;Alias_NonRespawningDefenderSons6.TryToDisable()
+Alias_Barricade1A.TryToReset()
+if Alias_Barricade1A.GetReference() != none
+	Alias_Barricade1A.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade1B.TryToReset()
+if Alias_Barricade1B.GetReference() != none
+	Alias_Barricade1B.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade2A.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade2A.GetReference() != none
+	Alias_Barricade2A.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade2B.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade2B.GetReference() != none
+	Alias_Barricade2B.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade3A.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade3A.GetReference() != none
+	Alias_Barricade3A.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade3B.TryToReset()  ;Reddit bugfix #15
+if Alias_Barricade3B.GetReference() != none
+	Alias_Barricade3B.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_BarricadeGeneric1.TryToReset() ;Reddit bugfix #15
+if Alias_BarricadeGeneric1.GetReference() != none
+	Alias_BarricadeGeneric1.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_BarricadeGeneric2.TryToReset() ;Reddit bugfix #15
+if Alias_BarricadeGeneric2.GetReference() != none
+	Alias_BarricadeGeneric2.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
 
 ;<Respawn set up>-----------------------
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up Reinforcement Controller Script")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up Reinforcement Controller Script")	;*** WRITE TO LOG
 
 CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting Attacker/Defender Pools")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting Attacker/Defender Pools")	;*** WRITE TO LOG
 ;Sets starting respawn pool
-CWReinforcementControllerS.SetPoolAttacker(30, InfinitePool = kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation()))
-CWReinforcementControllerS.SetPoolDefender(30, InfinitePool = kmyquest.CWs.PlayersFactionIsDefender(Alias_City.GetLocation()))
+kmyQuest.CWs.CWCampaignS.SetReinforcementsMajorCity(kmyQuest)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAliasesWithCWReinforcementScript()")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling RegisterAliasesWithCWReinforcementScript()")	;*** WRITE TO LOG
 kmyquest.RegisterAliasesWithCWReinforcementScript(Alias_City.GetLocation())	 ;Note: this is the CWSiegeScript.psc calling RegisterAlias on CWReinforcementControllerScript for each attacker and defender alias
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers initial spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers initial spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase1A, Alias_RespawnAttackerPhase1B, Alias_RespawnAttackerPhase1C, Alias_RespawnAttackerPhase1D, Alias_RespawnAttackerPhase1FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase1A, Alias_RespawnDefenderPhase1B, Alias_RespawnDefenderPhase1C, Alias_RespawnDefenderPhase1D, Alias_RespawnDefenderPhase1FailSafe)
@@ -3652,12 +3748,12 @@ CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPha
 
 ;<CWSiegeObj quest setup>------------
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up CWSiegeObj quest")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up CWSiegeObj quest")	;*** WRITE TO LOG
 
 kmyquest.CWSiegeObj.start()
 	
 While kmyquest.CWSiegeObj.IsRunning() == 0
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for CWSiegeObjquest.IsRunning() != 0")	;*** WRITE TO LOG
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for CWSiegeObjquest.IsRunning() != 0")	;*** WRITE TO LOG
 	;do nothing
 endwhile
 
@@ -3689,11 +3785,7 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_Objective2A.GetReference())  ;Bridge lever1
 	kmyquest.CWSiegeObjObjective2B.ForceRefTo(Alias_Objective2B.GetReference())   ;Bridge lever2
 
-	if kmyquest.IsAttack()
-		(Alias_AttackerSons1.GetReference()).Disable()
-		(Alias_Attacker1General).ForceRefTo(Alias_WhiterunAttackerGalmar.GetReference())
-		kmyquest.CWSiegeObjGeneral.ForceRefTo(Alias_Attacker1General.GetReference())
-	else
+	if !kmyquest.IsAttack() && kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials
 		(Alias_DefenderImperial1.GetReference()).Disable()
 		(Alias_Defender1General).ForceRefTo(Alias_WhiterunDefenderRikke.GetReference())
 		kmyquest.CWSiegeObjGeneral.ForceRefTo(Alias_Defender1General.GetReference())
@@ -3743,7 +3835,7 @@ endif
 
 ;START PREPARE CITY IF DEFENSE
 if kmyquest.IsAttack() == false
-; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Starting CWPrepareCityStart")	;*** WRITE TO LOG
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Starting CWPrepareCityStart")	;*** WRITE TO LOG
 	kmyquest.CWs.CWPrepareCityStart.SendStoryEvent(Alias_City.GetLocation())
 endif
 
@@ -3878,6 +3970,10 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
+	;Set Dialog States
+	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+	kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
 		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
@@ -3886,12 +3982,12 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
+
+		;CWO
+		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
+		;CWO
 		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
 
 	else
@@ -3904,6 +4000,10 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
 
+	;Set Dialog States
+	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+	kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
 		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
@@ -3911,10 +4011,6 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1070, 1); DISPLAY - barricade
@@ -3932,7 +4028,9 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
-
+	;Set Dialog States
+	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+	kmyquest.CWStateDefenderFallingBack.SetValue(1)
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
 		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
@@ -3940,10 +4038,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
@@ -3954,7 +4048,9 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
-
+	;Set Dialog States
+	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+	kmyquest.CWStateDefenderFallingBack.SetValue(1)
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
 		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
@@ -3962,10 +4058,6 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
-
-;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(3010, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3020, 1); DISPLAYED - First Gate
@@ -3976,6 +4068,8 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 	endif
 
 endif
+;CWO Potentially throw dragon(s) into the mix
+kmyQuest.CWs.CWCampaignS.DragonTime()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -4049,7 +4143,7 @@ kmyquest.CWStateDefenderLastStand.SetValue(0)
 kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers new spawn points: RegisterSpawnAttackerAliases() & RegisterSpawnDefenderAliases()")	;*** WRITE TO LOG
 CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase4A, Alias_RespawnAttackerPhase4B, Alias_RespawnAttackerPhase4C, Alias_RespawnAttackerPhase4D, Alias_RespawnAttackerPhase4FailSafe)
@@ -4139,8 +4233,13 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1070, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
-
+				;CWO
+				Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade2A.GetReference(), 0.000000, 0.000000, 0.000000, true)
+				;CWO
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
+		;CWO
+		self.setStage(40)
+		;CWO
 
 
 	else

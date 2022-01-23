@@ -522,29 +522,32 @@ function tryToDeleteWhenAbleAlias(ReferenceAlias AliasToDeleteWhenAble)
 EndFunction
 
 function SetNewOwnerOfFort(int StageThatMeansDefendersLost, int StageThatMeansAttackersLost)
-; 	CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort()")
+	;CWO - This function had a lot of problems. But I think I fixed it. This is called by qf_CWFortSiegeFort
+	;TODO Also Call for CWMission01
+ 	CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort()")
 	int AttackingFaction
 	int DefendingFaction
 	
-	if IsPlayerAttacking() && CWs.PlayerAllegiance == CWs.iImperials
-		AttackingFaction == CWs.iImperials
-		DefendingFaction == CWs.iSons
+	if (IsPlayerAttacking() && CWs.PlayerAllegiance == CWs.iImperials) || (!IsPlayerAttacking() && CWs.PlayerAllegiance == CWs.iSons)
+		AttackingFaction = CWs.iImperials
+		DefendingFaction = CWs.iSons
 	Else
-		AttackingFaction == CWs.iSons
-		DefendingFaction == CWs.iImperials
+		AttackingFaction = CWs.iSons
+		DefendingFaction = CWs.iImperials
 	EndIf
 	
+ 	CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort() AttackingFaction=" + AttackingFaction + " CWs.iImperials="+CWs.iImperials + " CWs.iSons="+CWs.iSons)
 
 	if getStageDone(StageThatMeansDefendersLost)
-; 		CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort() calling SetOwner() to give the fort to the AttackingFaction:" + AttackingFaction)
+ 		CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort() calling SetOwner() to give the fort to the AttackingFaction:" + AttackingFaction)
 		CWs.SetOwner(Fort.GetLocation(), AttackingFaction, SetKeywordDataImmediately = true)		
 	
 	elseif GetStageDone(StageThatMeansAttackersLost)
-; 		CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort() calling SetOwner() to give the fort to the DefendingFaction:" + DefendingFaction)
+ 		CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort() calling SetOwner() to give the fort to the DefendingFaction:" + DefendingFaction)
 		CWs.SetOwner(Fort.GetLocation(), DefendingFaction, SetKeywordDataImmediately = true)
 		
 	Else
-; 		CWScript.Log("CWFortSiegeScript", self + " Warning: SetNewOwnerOfFort() found unexpected GetStageDone() results. Expected either stage " + StageThatMeansDefendersLost + " or stage " + StageThatMeansAttackersLost + " to be done. Neither was. This means no one will be awarded the fort and could break the civil war campaign.", 2, 1, 1)
+ 		CWScript.Log("CWFortSiegeScript", self + " Warning: SetNewOwnerOfFort() found unexpected GetStageDone() results. Expected either stage " + StageThatMeansDefendersLost + " or stage " + StageThatMeansAttackersLost + " to be done. Neither was. This means no one will be awarded the fort and could break the civil war campaign.", 2, 1, 1)
 	EndIf	
 	
 

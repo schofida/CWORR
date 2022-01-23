@@ -22,7 +22,10 @@ Event OnTriggerEnter(ObjectReference akActionRef)
 		GetOwningQuest().setStage(StageToCallToStartConfrontationScene)
 	endif
 	
-	
+	; fix OCW 2.3.3
+	if !(GalmarRef.IsInFaction(CWImperialFaction) || RalofRef.IsInFaction(CWImperialFaction)) || CWs.playerAllegiance == CWs.iImperials
+		return
+	endIf	
 	
 	;***ASSUMES THIS IS WHITERUN BECAUSE THATS THE ONLY PLACE FOR SIEGES NOW***
 	;See - CWAttackCityDragonReachDoor for why we are doing this
