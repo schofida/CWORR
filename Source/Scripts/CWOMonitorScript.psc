@@ -251,21 +251,9 @@ function DoPlayerLoadGameStuff()
 		cws.cwcampaigns.CWMission06.Stop()
 		cws.cwcampaigns.CWMission08Quest.Stop()
 		cws.cwcampaigns.CWMission09.Stop()
+		unregisterforupdate()
 		CWOVersion.SetValueInt(10000)
 		GoToState("WaitingToStartNewCampaign")
-		RegisterForUpdate(30)
-	endif
-	if CWOVersion.GetValueInt() < 10001
-		CWS.CWCampaignS.CWDebugSkipPurchase.SetValueInt(1)
-		CWOVersion.SetValueInt(10001)
-	endif
-	if CWOVersion.GetValueInt() < 10002
-		unregisterforupdate()
-		CWOVersion.SetValueInt(10002)
-	endif
-	if CWOVersion.GetValueInt() < 10003
-		CWs.ContestedHold = 4
-		CWOVersion.SetValueInt(10003)
 	endif
 	registerforsingleupdate(30)
 endfunction
