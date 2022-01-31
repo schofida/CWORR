@@ -27,8 +27,6 @@ globalvariable property CWODisguiseGameType auto
 globalvariable property CWOVersion auto
 globalvariable property CWOTroopPoolGameType auto
 globalvariable property CWOSiChance auto
-globalvariable Property CWOSiegeLeveled Auto
-globalvariable Property CWOSiegeUnLeveled Auto
 quest property CWAttackCity Auto
 globalvariable property CWOGarrisonReinforcements Auto
 GlobalVariable Property CWOPlayerAttackerScaleMult Auto
@@ -60,7 +58,6 @@ Int optionsWinHold
 Int optionsBAChance
 int optionsDisguiseGameType
 int optionsSIChance
-int optionsSiegeUnleveled
 int optionsCourierHoursMin
 int optionsCourierHoursMax
 
@@ -76,7 +73,6 @@ Bool optionWinWarToggle = false
 Bool optionsCWResetToggle = false
 bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
-bool optionsToggleUnleveled = false
 
 String[] gameDisguiseList
 String[] holdsList
@@ -205,15 +201,6 @@ function OnOptionSelect(Int a_option)
 				CWS.CWFortSiegeFort.Setstage(2000)
 			endIf
 		endIf
-	elseif a_option == optionsSiegeUnleveled
-		optionsToggleUnleveled = !optionsToggleUnleveled
-		if cwosiegeunleveled.getValueInt() == 0
-			cwosiegeunleveled.setValueInt(100)
-			CWOSiegeLeveled.SetValueInt(0)
-		Else
-			cwosiegeunleveled.setValueInt(0)
-			CWOSiegeLeveled.SetValueInt(100)
-		endif
 	elseIf a_option == optionsCWReset
 		optionsCWResetToggle = !optionsCWResetToggle
 		self.SetToggleOptionValue(a_option, optionsCWResetToggle, false)
@@ -443,7 +430,6 @@ function OnPageReset(String a_page)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseGarrison = self.AddSlideroption("Garrison Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
-		optionsSiegeUnleveled =  self.AddToggleOption("Siege Troops Unleveled",  optionsToggleUnleveled, 0)
 		optionsPlayerAttackerScaleMult = self.AddSlideroption("Player Attacking Scale Mult", CWOPlayerAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
@@ -490,7 +476,6 @@ function OnConfigInit()
 	gameDisguiseList[1] = "Realistic"
 	gameDisguiseList[2] = "Disabled"
 
-	optionsToggleUnleveled = (CWOSiegeUnLeveled.GetValueInt() == 0)
 endFunction
 
 function OnOptionColorAccept(Int a_option, Int a_color)
@@ -566,8 +551,6 @@ function OnOptionHighlight(Int a_option)
 	elseIf a_option == optionsEnemyAttackerScaleMult
 		self.SetInfoText("TODO")
 	elseIf a_option == optionsEnemyDefenderScaleMult
-		self.SetInfoText("TODO")
-	elseIf a_option == optionsSiegeUnleveled
 		self.SetInfoText("TODO")
 	elseIf a_option == optionsPartyCrashersChance
 		self.SetInfoText("Chance for dragon attacks during major capital sieges.")
