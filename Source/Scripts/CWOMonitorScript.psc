@@ -8,6 +8,7 @@ perk property Perk3 auto
 perk property Perk1 auto
 perk property Perk4 auto
 perk property Perk2 auto
+perk property Perk6 auto
 GlobalVariable property CWOVersion auto
 GlobalVariable property CWOCurrentHold auto
 
@@ -246,6 +247,7 @@ function DoPlayerLoadGameStuff()
 		player.RemovePerk(perk3)
 		player.RemovePerk(perk4)
 		player.RemovePerk(perk5)
+		player.RemovePerk(perk6)
 		cws.cwcampaigns.CWMission01.Stop()
 		cws.cwcampaigns.CWMission02.Stop()
 		cws.cwcampaigns.CWMission06.Stop()
