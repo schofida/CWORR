@@ -1290,7 +1290,7 @@ float Function GetAttackDeltaPointsForGarrison(Location Garrison, ObjectReferenc
 		return 0
 	
 	;*** !!! THIS IS SIMILAR BUT NOT IDENTICAL TO ELSEIF IN GetAttackDeltaPointsForDefenderOnlyGarrison() ABOVE	
-	ElseIf (ResourceObject as ResourceObjectScript).IsSabotaged()
+	ElseIf (ResourceObject as ResourceObjectScript) != none && (ResourceObject as ResourceObjectScript).IsSabotaged()
 
 		GarrisonValue *= AttackDeltaGarrisonValueModifierForDestroyingResource
 		
@@ -1333,6 +1333,10 @@ int Function GetAttackDeltaPointsForPatrols()
 	
 	int PatrolValue = CWs.iCostPatrol
 	int PatrolsAttackDeltaPoints = 0
+
+	if Patrols == none
+		return 0
+	endif
 	
 	Location PatrolsLoc = Patrols.GetLocation()
 	;CWO - Check for nulls
@@ -2159,45 +2163,45 @@ function ShuffleGarrisons()
 	ObjectReference[] GarrisonsEnableSons = new ObjectReference[4]
 	ObjectReference[] GarrisonsResourceObjects = new ObjectReference[4]
 
-	Garrisons[1] = Garrison1.GetLocation()
-	Garrisons[2] = Garrison2.GetLocation()
-	Garrisons[3] = Garrison3.GetLocation()
-	Garrisons[4] = Garrison4.GetLocation()	
-	GarrisonsEnableImperial[1] = Garrison1EnableImperial.GetReference()
-	GarrisonsEnableImperial[2] = Garrison2EnableImperial.GetReference()
-	GarrisonsEnableImperial[3] = Garrison3EnableImperial.GetReference()
-	GarrisonsEnableImperial[4] = Garrison4EnableImperial.GetReference()	
-	GarrisonsEnableSons[1] = Garrison1EnableSons.GetReference()
-	GarrisonsEnableSons[2] = Garrison2EnableSons.GetReference()
-	GarrisonsEnableSons[3] = Garrison3EnableSons.GetReference()
-	GarrisonsEnableSons[4] = Garrison4EnableSons.GetReference()	
-	GarrisonsResourceObjects[1] = Garrison1ResourceObject.GetReference()
-	GarrisonsResourceObjects[2] = Garrison2ResourceObject.GetReference()
-	GarrisonsResourceObjects[3] = Garrison3ResourceObject.GetReference()
-	GarrisonsResourceObjects[4] = Garrison4ResourceObject.GetReference()	
+	Garrisons[0] = Garrison1.GetLocation()
+	Garrisons[1] = Garrison2.GetLocation()
+	Garrisons[2] = Garrison3.GetLocation()
+	Garrisons[3] = Garrison4.GetLocation()	
+	GarrisonsEnableImperial[0] = Garrison1EnableImperial.GetReference()
+	GarrisonsEnableImperial[1] = Garrison2EnableImperial.GetReference()
+	GarrisonsEnableImperial[2] = Garrison3EnableImperial.GetReference()
+	GarrisonsEnableImperial[3] = Garrison4EnableImperial.GetReference()	
+	GarrisonsEnableSons[0] = Garrison1EnableSons.GetReference()
+	GarrisonsEnableSons[1] = Garrison2EnableSons.GetReference()
+	GarrisonsEnableSons[2] = Garrison3EnableSons.GetReference()
+	GarrisonsEnableSons[3] = Garrison4EnableSons.GetReference()	
+	GarrisonsResourceObjects[0] = Garrison1ResourceObject.GetReference()
+	GarrisonsResourceObjects[1] = Garrison2ResourceObject.GetReference()
+	GarrisonsResourceObjects[2] = Garrison3ResourceObject.GetReference()
+	GarrisonsResourceObjects[3] = Garrison4ResourceObject.GetReference()	
 
 	int ascOrDesc = Utility.randomint(0, 1)
 	if ascOrDesc == 0
-		int i = 1
-		while i <= 4
+		int i = 0
+		while i <= 3
 			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
 				Garrison1.ForceLocationTo(Garrisons[i])
 				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
 				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
 				Garrison1ResourceObject.ForceRefTo(GarrisonsResourceObjects[i])
-				i = 4
+				i = 3
 			endif
 			i = i + 1
 		EndWhile
 	else
-		int i = 4
-		while i > 0
+		int i = 3
+		while i >= 0
 			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
 				Garrison1.ForceLocationTo(Garrisons[i])
 				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
 				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
 				Garrison1ResourceObject.ForceRefTo(GarrisonsResourceObjects[i])
-				i = 1
+				i = 0
 			endif
 			i = i - 1
 		EndWhile
