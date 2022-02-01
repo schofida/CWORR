@@ -149,6 +149,8 @@ kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_Garrison)
 
+kmyQuest.CWs.CwCampaignS.StartDefense(Alias_Garrison.GetLocation())
+
 kmyQuest.RegisterImperialAliases(Alias_ImperialSoldier1, Alias_ImperialSoldier2, Alias_ImperialSoldier3, Alias_ImperialSoldier4)
 kmyQuest.RegisterSonsAliases(Alias_SonsSoldier1, Alias_SonsSoldier2, Alias_SonsSoldier3, Alias_SonsSoldier4)
 kmyQuest.RegisterAllyAliases(Alias_Ally1, Alias_Ally2, Alias_Ally3, Alias_Ally4)
