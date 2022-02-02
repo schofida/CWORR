@@ -2495,9 +2495,6 @@ if kmyQuest.CWPrepareCity.IsRunning()
     kmyQuest.CWPrepareCity.Stop()
 endif
 
-;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
-kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
-
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -2729,13 +2726,16 @@ Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 
 ;CWO - Shut down campaign if its running
 if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
-kmyQuest.CWs.CWCampaign.SetStage(255)
+	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
 	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = true
 endif
 
 ;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
 kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+
+;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
+kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
 
 ;END CODE
 EndFunction
