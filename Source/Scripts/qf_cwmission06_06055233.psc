@@ -2,69 +2,14 @@ Scriptname qf_cwmission06_06055233 extends Quest Hidden
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
 ;NEXT FRAGMENT INDEX 14
 
-;BEGIN ALIAS PROPERTY MapMarkerCampEnemy
+;BEGIN ALIAS PROPERTY DissaffectedSoldier01
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MapMarkerCampEnemy Auto
+ReferenceAlias Property Alias_DissaffectedSoldier01 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CWCampEnemyMapMarker
+;BEGIN ALIAS PROPERTY LoyalistSoldier06
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWCampEnemyMapMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Hold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_Hold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier09
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier09 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCO Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier01
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier01 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Player
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY GarrisonEnableMarkerEnemy
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_GarrisonEnableMarkerEnemy Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier07
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier07 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DissaffectedSoldier03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DissaffectedSoldier03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWCampEnemy
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_CWCampEnemy Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY GarrisonEnableMarkerSons
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_GarrisonEnableMarkerSons Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWCampSons
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_CWCampSons Auto
+ReferenceAlias Property Alias_LoyalistSoldier06 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY CampaignStartMarker
@@ -72,14 +17,24 @@ LocationAlias Property Alias_CWCampSons Auto
 ReferenceAlias Property Alias_CampaignStartMarker Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY GarrisonEnableMarkerImperial
+;BEGIN ALIAS PROPERTY FieldCO
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_GarrisonEnableMarkerImperial Auto
+ReferenceAlias Property Alias_FieldCO Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier04
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_LoyalistSoldier04 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MissionNumberRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MissionNumberRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier09
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier09 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DissaffectedSoldier02
@@ -92,9 +47,19 @@ ReferenceAlias Property Alias_DissaffectedSoldier02 Auto
 ReferenceAlias Property Alias_LoyalistSoldier03 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY LoyalistSoldier02
+;BEGIN ALIAS PROPERTY DissaffectedSoldier03
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier02 Auto
+ReferenceAlias Property Alias_DissaffectedSoldier03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Hold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_Hold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier05
@@ -102,29 +67,54 @@ ReferenceAlias Property Alias_LoyalistSoldier02 Auto
 ReferenceAlias Property Alias_LoyalistSoldier05 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CWCampImperial
+;BEGIN ALIAS PROPERTY CWCampEnemy
 ;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_CWCampImperial Auto
+LocationAlias Property Alias_CWCampEnemy Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DissaffectedSoldier01
+;BEGIN ALIAS PROPERTY LoyalistSoldier01
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DissaffectedSoldier01 Auto
+ReferenceAlias Property Alias_LoyalistSoldier01 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MissionNumberRef
+;BEGIN ALIAS PROPERTY CWCampEnemyMapMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MissionNumberRef Auto
+ReferenceAlias Property Alias_CWCampEnemyMapMarker Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY LoyalistSoldier06
+;BEGIN ALIAS PROPERTY LoyalistSoldier07
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier06 Auto
+ReferenceAlias Property Alias_LoyalistSoldier07 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier08
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_LoyalistSoldier08 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier02
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier02 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier11
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier11 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier12
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier12 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWCampEnemyLocationCenterMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWCampEnemyLocationCenterMarker Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN FRAGMENT Fragment_10
@@ -134,7 +124,6 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
-
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(6, MissionFailure = true)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
@@ -147,7 +136,32 @@ endwhile
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 stop()  ;if unsuccessful, stop quest... quest is also stopped in CWMission04PrisonerScript if successful and he unloads
+;END CODE
+EndFunction
+;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_0
+Function Fragment_0()
+;BEGIN AUTOCAST TYPE cwmission06script
+Quest __temp = self as Quest
+cwmission06script kmyQuest = __temp as cwmission06script
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.ResetCommonMissionProperties()
+
+kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
+
+if kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
+    Alias_DissaffectedSoldier01.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons1, 1, false, true))
+    Alias_DissaffectedSoldier02.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons2, 1, false, true))
+    Alias_DissaffectedSoldier03.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons3, 1, false, true))
+else
+    Alias_DissaffectedSoldier01.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial1, 1, false, true))
+    Alias_DissaffectedSoldier02.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial2, 1, false, true))
+    Alias_DissaffectedSoldier03.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial3, 1, false, true))
+endif
+
+kmyquest.ToggleOnComplexWIInteractions(Alias_CWCampEnemy)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -169,6 +183,8 @@ endif
 
 kmyquest.CWs.RegisterEventHappening(Alias_CWCampEnemy.GetLocation())
 
+SetObjectiveDisplayed(10)
+
 Alias_LoyalistSoldier01.TryToEnable()
 Alias_LoyalistSoldier02.TryToEnable()
 Alias_LoyalistSoldier03.TryToEnable()
@@ -178,6 +194,9 @@ Alias_LoyalistSoldier06.TryToEnable()
 Alias_LoyalistSoldier07.TryToEnable()
 Alias_LoyalistSoldier08.TryToEnable()
 Alias_LoyalistSoldier09.TryToEnable()
+Alias_LoyalistSoldier10.TryToEnable()
+Alias_LoyalistSoldier11.TryToEnable()
+Alias_LoyalistSoldier12.TryToEnable()
 
 Alias_LoyalistSoldier01.TryToReset()
 Alias_LoyalistSoldier02.TryToReset()
@@ -188,6 +207,9 @@ Alias_LoyalistSoldier06.TryToReset()
 Alias_LoyalistSoldier07.TryToReset()
 Alias_LoyalistSoldier08.TryToReset()
 Alias_LoyalistSoldier09.TryToReset()
+Alias_LoyalistSoldier10.TryToReset()
+Alias_LoyalistSoldier11.TryToReset()
+Alias_LoyalistSoldier12.TryToReset()
 
 Alias_DissaffectedSoldier01.TryToEnable()
 Alias_DissaffectedSoldier02.TryToEnable()
@@ -197,76 +219,32 @@ Alias_DissaffectedSoldier01.TryToReset()
 Alias_DissaffectedSoldier02.TryToReset()
 Alias_DissaffectedSoldier03.TryToReset()
 
+Alias_LoyalistSoldier01.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier02.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier03.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier04.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier05.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier06.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier07.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier08.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier09.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier10.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier11.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier12.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+
+Alias_DissaffectedSoldier01.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_DissaffectedSoldier02.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+Alias_DissaffectedSoldier03.TryToAddToFaction(kmyQuest.CWPlayerAlly)
+
 kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToDisable()
 
 kmyQuest.TurncoatLeader = Alias_DissaffectedSoldier01
-(kmyQuest.TurncoatLeader as CWMission06TurncoatScript).PollForPlayer()
+kmyQuest.RegisterForUpdate(2)
 kmyQuest.processPreRevoltFactions(Alias_DissaffectedSoldier01)
 kmyQuest.processPreRevoltFactions(Alias_DissaffectedSoldier02)
 kmyQuest.processPreRevoltFactions(Alias_DissaffectedSoldier03)
 
-kmyQuest.SetInitialLoyalistAliveCount(Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, None, None, None, None)
-
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_8
-Function Fragment_8()
-;BEGIN AUTOCAST TYPE cwmission06script
-Quest __temp = self as Quest
-cwmission06script kmyQuest = __temp as cwmission06script
-;END AUTOCAST
-;BEGIN CODE
-kmyQuest.FlagFieldCOWithMissionResultFaction(6)
-
-kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
-
-kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier01)
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
-
-if Alias_DissaffectedSoldier01.GetActorReference() != none
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
-endif
-
-if Alias_DissaffectedSoldier02.GetActorReference() != none
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
-endif
-
-if Alias_DissaffectedSoldier03.GetActorReference() != none
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
-endif
-
-while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
- 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
-    utility.wait(5)
-endwhile
-
-kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
-
-stop()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_0
-Function Fragment_0()
-;BEGIN AUTOCAST TYPE cwmission06script
-Quest __temp = self as Quest
-cwmission06script kmyQuest = __temp as cwmission06script
-;END AUTOCAST
-;BEGIN CODE
-kmyQuest.ResetCommonMissionProperties()
-
-kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
-
-kmyquest.ToggleOnComplexWIInteractions(Alias_CWCampEnemy)
+kmyQuest.SetInitialLoyalistAliveCount(Alias_LoyalistSoldier01, Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, Alias_LoyalistSoldier10, Alias_LoyalistSoldier11, Alias_LoyalistSoldier12)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -294,10 +272,28 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveCompleted(10)
-setObjectiveDisplayed(20)
+SetObjectiveCompleted(10)
+SetObjectiveDisplayed(20)
 
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+
+Alias_LoyalistSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier03.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier04.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier05.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier06.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier07.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier08.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier09.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier10.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier11.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_LoyalistSoldier12.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+
+Alias_DissaffectedSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_DissaffectedSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+Alias_DissaffectedSoldier03.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+
 
 kmyQuest.KillLoyalists = 1
 Alias_LoyalistSoldier01.TryToEvaluatePackage()
@@ -351,7 +347,50 @@ Alias_DissaffectedSoldier02.TryToDisable()
 Alias_DissaffectedSoldier03.TryToDisable()
 
 kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToEnable()
+;END CODE
+EndFunction
+;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_8
+Function Fragment_8()
+;BEGIN AUTOCAST TYPE cwmission06script
+Quest __temp = self as Quest
+cwmission06script kmyQuest = __temp as cwmission06script
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.FlagFieldCOWithMissionResultFaction(6)
+
+kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+
+kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+
+kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier01)
+kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
+kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
+
+if Alias_DissaffectedSoldier01.GetActorReference() != none
+    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+endif
+
+if Alias_DissaffectedSoldier02.GetActorReference() != none
+    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+endif
+
+if Alias_DissaffectedSoldier03.GetActorReference() != none
+    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+endif
+
+while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
+ 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
+    utility.wait(5)
+endwhile
+
+kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
+
+stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT

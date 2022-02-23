@@ -1,14 +1,56 @@
 Scriptname CWMission06Script extends CWMissionScript  Conditional
 {Extends CWMissionScript which extends Quest}
 
+Scene Property CWMission06ImperialScene  Auto  
+
+Scene Property CWMission06SonsScene  Auto  
+
 int Property KillLoyalists  Auto hidden Conditional
 {1 = player suggested they kill the loyalists}
 
 ReferenceAlias Property TurncoatLeader Auto
 
+Keyword Property LocTypeHabitation Auto
+
+Faction Property CWPlayerAlly Auto
+
 int property TurncoatAliveCount auto Conditional hidden ;set in stage 0
 
 int Property LoyalistAliveCount auto Conditional hidden ;set in stage 0 by calling getLoyalistAliveCount() Function
+
+ActorBase Property CWMission06LoyalistLeaderImperial auto
+ActorBase Property CWMission06DissaffectSoldierImperial1 auto
+ActorBase Property CWMission06DissaffectSoldierImperial2 auto
+ActorBase Property CWMission06DissaffectSoldierImperial3 auto
+
+ActorBase Property CWMission06LoyalistLeaderSons auto
+ActorBase Property CWMission06DissaffectSoldierSons1 auto
+ActorBase Property CWMission06DissaffectSoldierSons2 auto
+ActorBase Property CWMission06DissaffectSoldierSons3 auto
+
+Event OnUpdate()
+
+; ;	debug.trace("TurncoatLeader.GetReference():" + TurncoatLeader.GetReference())
+; ;	debug.trace("TurncoatLeader.GetReference().GetParentCell():"+ TurncoatLeader.GetReference().GetParentCell())
+; ;	debug.trace("TurncoatLeader.GetReference().GetParentCell().IsInterior():"+ TurncoatLeader.GetReference().GetParentCell().IsInterior())
+	
+
+	;if we are at the correct stage, the TurncoatLeader is outside, and the player is in the same location, then start the scene.
+	if GetStage() == 10
+		if TurncoatLeader.GetReference().IsInInterior() == false && Game.GetPlayer().IsInInterior() == False
+			if TurncoatLeader.GetReference().GetCurrentLocation().IsSameLocation(Game.GetPlayer().GetCurrentLocation(), LocTypeHabitation)
+				if CWs.PlayerAllegiance == CWs.iImperials
+					CWMission06ImperialScene.start()
+				Else
+					CWMission06SonsScene.start()
+				endif
+				UnregisterForUpdate()
+			endif
+		
+		EndIf
+	EndIf
+
+EndEvent
 
 Function SetInitialLoyalistAliveCount( \
 	ReferenceAlias LoyalistLeader, \
