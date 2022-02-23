@@ -1086,6 +1086,10 @@ CWScript.Log("CWFortSiege", "Stage 1000: Defender wiped out, determined success 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
+;CWO Stop battle sounds and music
+kmyquest.StopCombatSoundsLoop()
+kmyQuest.MUSCombatCivilWar.Remove()
+
 If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 ; 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
 	
@@ -1153,6 +1157,10 @@ CWScript.Log("CWFortSiege", "Stage 2000: Attacker wiped out, determined success 
 ;CWO Battle is over stop essential player quest and start disguise quest
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+
+;CWO Stop battle sounds and music
+kmyquest.StopCombatSoundsLoop()
+kmyQuest.MUSCombatCivilWar.Remove()
 
 if kmyquest.IsPlayerAttacking()
 	SetObjectiveFailed(100)
@@ -1744,6 +1752,10 @@ kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAtta
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase2A, Alias_RespawnDefenderPhase2B, Alias_RespawnDefenderPhase2C, Alias_RespawnDefenderPhase2D, Alias_RespawnDefenderPhase2FailSafe)
 kmyquest.CWBattlePhase.SetValue(2)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+kmyquest.StartCombatSoundsLoop()
+
+kmyQuest.MUSCombatCivilWar.Add()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1804,7 +1816,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 
 endif
 
-
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(20)
+endif
 
 CWScript.Log("CWFortSiege", "Stage 10: turning off complex WI interactions")
 ((self as quest) as CWFortSiegeMissionScript).ToggleOffComplexWIInteractions(Alias_Fort)
