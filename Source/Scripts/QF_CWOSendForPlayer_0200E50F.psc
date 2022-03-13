@@ -78,9 +78,14 @@ function Fragment_7()
 endFunction
 
 function Fragment_0()
+	Quest __temp = self as Quest
+	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
-	utility.waitgametime(utility.randomfloat(24 as Float, 124 as Float))
+	kmyQuest.registerforsingleupdate(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue())
+endFunction
+
+function Fragment_3()
 	if !CWS.CWCampaignS.PlayerAllegianceLastStand()
 		If CWS.CWSiegeS.isrunning()
 			CourierS.AddAliasToContainer(Alias_Note)
@@ -92,14 +97,14 @@ function Fragment_0()
 		;CourierS.AddAliasToContainer(Alias_NoteFinalSons)
 		Alias_FieldCO.ForceRefTo(CWS.Rikke.getreference())
 		CourierS.AddAliasToContainer(Alias_NoteFinalImperial)
-	elseIf CWS.PlayerAllegiance == CWS.iSons
+	else
 		;Alias_FieldCO.ForceRefTo(CWS.Rikke.getreference())
 		;CourierS.AddAliasToContainer(Alias_NoteFinalImperial)
 		Alias_FieldCO.ForceRefTo(CWS.Galmar.getreference())
 		CourierS.AddAliasToContainer(Alias_NoteFinalSons)
 	endIf
 	CWOCourierSentGlobal.SetValueInt(1)
-endFunction
+endfunction
 
 function Fragment_10()
 	; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)

@@ -32,9 +32,8 @@ referencealias property Alias_ImperialSpy10 auto
 
 ; Skipped compiler generated GotoState
 
-function Fragment_0()
+function Fragment_1()
 
-	utility.wait(QuestLength.GetValue())
 	(Alias_StormcloakSpy11 as cwobascript2).RevertFactions()
 	(Alias_StormcloakSpy10 as cwobascript2).RevertFactions()
 	(Alias_StormcloakSpy09 as cwobascript2).RevertFactions()
@@ -56,5 +55,11 @@ function Fragment_0()
 	(Alias_ImperialSpy03 as cwobascript2).RevertFactions()
 	(Alias_ImperialSpy02 as cwobascript2).RevertFactions()
 	(Alias_ImperialSpy01 as cwobascript2).RevertFactions()
-	self.Stop()
+endFunction
+
+function Fragment_0()
+	Quest __temp = self as Quest
+	CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
+
+	kmyQuest.registerforsingleupdate(QuestLength.GetValue())
 endFunction

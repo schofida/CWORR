@@ -31,7 +31,7 @@ endFunction
 function OnInit()
 
 	while !WaitForHelgen.IsCompleted()
-		utility.wait(10 as Float)
+		utility.wait(60 as Float)
 	endWhile
 	self.registerforsingleupdate(utility.randomfloat(CWOBALower.GetValue(), CWOBAUpper.GetValue()))
 endFunction
