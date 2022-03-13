@@ -35,6 +35,12 @@ GlobalVariable Property CWOEnemyAttackerScaleMult Auto
 GlobalVariable Property CWOEnemyDefenderScaleMult Auto
 GlobalVariable Property CWOCourierHoursMin Auto
 GlobalVariable Property CWOCourierHoursMax Auto
+GlobalVariable Property CWOCampaignPhaseMax Auto
+Quest Property CWOSpanishInquisitionImperials Auto
+Quest Property CWOSpanishInquisitionSons Auto
+Quest Property CWOBAController Auto
+Quest Property CWOBAQuest Auto
+Quest Property CWOQuestMonitor Auto
 
 ;-- Variables ---------------------------------------
 Int _color = 16777215
@@ -48,7 +54,8 @@ Int optionsWinSiege
 Int optionsReinforcementsBaseFort
 Int optionsReinforcementsBaseCapital
 Int optionsReinforcementsBaseGarrison
-Int optionsCWReset
+Int optionsCWOHelp
+Int optionsCWOUninstall
 Int optionsPlayerAttackerScaleMult
 Int optionsPlayerDefenderScaleMult
 Int optionsEnemyAttackerScaleMult
@@ -60,6 +67,7 @@ int optionsDisguiseGameType
 int optionsSIChance
 int optionsCourierHoursMin
 int optionsCourierHoursMax
+int optionsCampaignPhaseMax
 
 Float DramaMamaSecondaryPercent
 Float DramaMamaDragonSecondaryPercent
@@ -103,6 +111,11 @@ function OnOptionSliderAccept(Int a_option, Float a_value)
 		_sliderPercent = a_value
 		self.SetSliderOptionValue(a_option, a_value, "{0}", false)
 		CWOCapitalReinforcements.SetValue(a_value)
+		SetReinforcements()
+	elseif a_option == optionsReinforcementsBaseCapital
+		_sliderPercent = a_value
+		self.SetSliderOptionValue(a_option, a_value, "{0}", false)
+		CWOCampaignPhaseMax.SetValue(a_value)
 		SetReinforcements()
 	elseIf a_option == optionsReinforcementsBaseFort
 		_sliderPercent = a_value
@@ -231,6 +244,11 @@ function OnOptionSliderOpen(Int a_option)
 		self.SetSliderDialogDefaultValue(10 as Float)
 		self.SetSliderDialogRange(0 as Float, 20 as Float)
 		self.SetSliderDialogInterval(1 as Float)
+	elseIf a_option == optionsCampaignPhaseMax
+		self.SetSliderDialogStartValue(CWOCampaignPhaseMax.GetValueInt() as Float)
+		self.SetSliderDialogDefaultValue(3 as Float)
+		self.SetSliderDialogRange(1 as Float, 5 as Float)
+		self.SetSliderDialogInterval(2 as Float)
 	elseIf a_option == optionsPlayerAttackerScaleMult
 		self.SetSliderDialogStartValue(CWOPlayerAttackerScaleMult.GetValue() as Float)
 		self.SetSliderDialogDefaultValue(0.8 as Float)
@@ -308,6 +326,9 @@ function OnPageReset(String a_page)
 			self.AddtextOption("We are", "In the Imperial Faction", 0)
 		else
 			self.AddtextOption("We are", "Not Yet Hostile", 0)
+		endIf
+		if CWs.CWCampaign.IsRunning()
+			self.AddtextOption("CWCampaign Quest", "Is On Stage " + CWs.CWCampaign.Getstage() as String, 0)
 		endIf
 		if CWOArmorDisguise.IsRunning()
 			self.AddtextOption("CWOArmorDisguise", "Is On", 0)
@@ -434,6 +455,7 @@ function OnPageReset(String a_page)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyDefenderScaleMult = self.AddSlideroption("Enemy Defending Scale Mult", CWOEnemyDefenderScaleMult.GetValue() as Float, "{1}", 0)
+		optionsCampaignPhaseMax = self.AddSlideroption("Campaign Phase Max", CWOCampaignPhaseMax.GetValue() as Float, "{0}", 0)
 		optionsPartyCrashersChance = self.AddSlideroption("PARTY CRASHERS chance", CWOPCChance.GetValueInt() as Float, "{0}%", 0)
 		optionsBAChance = self.AddSlideroption("Benedict Arnold Spies Chance", CWOBAChance.GetValueInt() as Float, "{0}%", 0)
 		optionsSiChance = self.AddSlideroption("Spanish Inquisition Chance", CWOSiChance.GetValueInt() as Float, "{0}%", 0)
@@ -444,7 +466,7 @@ function OnPageReset(String a_page)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
 		optionsWinHold = self.AddMenuOption("Win hold here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
-		optionsCWReset = self.AddToggleOption("Reset major initial variables", optionsCWResetToggle, OPTION_FLAG_DISABLED)
+		optionsCWHelp = self.AddToggleOption("Reset major initial variables", optionsCWResetToggle, 0)
 
 		self.AddEmptyOption()
 	endIf
@@ -551,6 +573,8 @@ function OnOptionHighlight(Int a_option)
 	elseIf a_option == optionsEnemyAttackerScaleMult
 		self.SetInfoText("TODO")
 	elseIf a_option == optionsEnemyDefenderScaleMult
+		self.SetInfoText("TODO")
+	elseIf a_option == optionsCampaignPhaseMax
 		self.SetInfoText("TODO")
 	elseIf a_option == optionsPartyCrashersChance
 		self.SetInfoText("Chance for dragon attacks during major capital sieges.")
