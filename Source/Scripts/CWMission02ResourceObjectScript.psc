@@ -47,14 +47,11 @@ Event OnUpdate()
 		GetOwningQuest().SetStage(20)
 	EndIf
 	
-	;regardless if i'm the primary resource or not, if I'm the correct type, and i'm destroyed consider the objective completed
-	if myType == primaryResourceType
 ; 		CWScript.Log("CWMission02ResourceObjectScript", self + " OnUpdate(): myType == primaryResourceType, checking IsSabotaged()")
 		
 		if GetOwningQuest().GetStagedone(100) == False && (GetReference() as ResourceObjectScript).IsSabotaged()
 			GetOwningQuest().setStage(100)
 		EndIf
-	EndIf
 	
 EndEvent
 

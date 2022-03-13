@@ -169,6 +169,8 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(2)
 
+kmyQuest.SetObjectiveDisplayed(10)
+
 (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
 
 (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
