@@ -390,9 +390,37 @@ kmyQuest.ResetCampaign()
 
 if !kmyquest.CWs.IsPlayerAttacking(kmyquest.Hold.Getlocation())
     CWScript.log("CWCampaignFragment", "Player is defending. Go to Stage 10 automatically")
-    kmyQuest.StartNewCampaign()
-    kmyQuest.StartMissions()
+    SetStage(10)
 endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_1
+function Fragment_1()
+;BEGIN AUTOCAST TYPE CWCampaignScript
+Quest __temp = self as Quest
+CWCampaignScript kmyQuest = __temp as CWCampaignScript
+;END AUTOCAST
+;BEGIN CODE
+CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Setting up new campaign. ")
+
+;Initialize a new Campaign
+;CWO moved from qf_cwcampaign to here. Called at qf_cw (stage 4)
+kmyQuest.CWs.CampaignRunning = 1 ;busy setting up
+
+kmyQuest.UpdateCWCampaignObjAliases()
+kmyQuest.PurchaseGarrisons()
+kmyQuest.ShuffleGarrisons()
+kmyQuest.ForceFieldHQAliases()
+if kmyQuest.PlayerAllegianceLastStand()
+    kmyQuest.AdvanceCampaignPhase(kmyQuest.ResolutionPhase)
+Else
+    kmyQuest.AdvanceCampaignPhase()
+endif
+kmyQuest.CWs.CampaignRunning = 2 ;done setting up
+
+CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Done setting up new campaign. Calling StartTraveling()  on FieldCO and EnemyFieldCO to have them moveTo if the player isn't around")
 ;END CODE
 EndFunction
 ;END FRAGMENT

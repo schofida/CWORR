@@ -283,6 +283,7 @@ GlobalVariable Property CWOPlayerAttackerScaleMult Auto
 GlobalVariable Property CWOPlayerDefenderScaleMult Auto
 GlobalVariable Property CWOEnemyAttackerScaleMult Auto
 GlobalVariable Property CWOEnemyDefenderScaleMult Auto
+GlobalVariable Property CWOCampaignPhaseMax Auto
 ActorBase Property CWBattleRikke Auto
 ActorBase Property CWBattleGalmar Auto
 ActorBase Property CWBattleTullius Auto
@@ -360,7 +361,7 @@ Event OnInit()
 	AcceptDays = 5
 	MissionDays = 2
 	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
-	ResolutionPhase = 3
+	ResolutionPhase = CWOCampaignPhaseMax.GetValueInt()
 	
 	MissionAcceptancePollWait = 5	;wait this many seconds inside the while loop in PollForMissionAcceptance() function
 	
@@ -1055,6 +1056,7 @@ Function SetCWCampaignFieldCOAliases()
 Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 {Called when needing to advance the campaign to the next phase, and start new missions}
 	
+;CWO - I dont think that we need this anymore, CW does not advance to next phase after certain days pass anymore
 	;* The reason for this weird if / while loop below...
 	;Phases advance 'automatically': mission accept timers and mission fail timers expire setting mission quest stages that call AdvanceCampaignPhase() and then shut down.
 	;However, this function is also called in dialogue with the FactionLeader the first time the player is joining a campaign to reset the campaign to the first phase (via passing a "1" in for the optional param)
@@ -1064,14 +1066,14 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	;If the campaign is starting fresh (ie the CWCampaignPhase is 0) we don't care if the player is standing right in front of the FactionLeader, otherwise we'd never get start the campaign if the player hangs out in the same town with FactionLeader
 	
 	;* See rationale for this above
-	if CWCampaignPhase.value != 0 && OptionalPhaseToSetTo == -1	;ie the default call, not when it's called in dialogue with the faction leader the first time the player is joining a campaign in the civil war
-		while CWs.AliasFactionLeader.GetReference().getCurrentLocation().IsSameLocation(Game.GetPlayer().getCurrentLocation(), LocTypeHabitation)
- 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() WAITING -PLAYER NEARBY: in a while loop wait until after player and Faction leader aren't in the same LocTypeHabitation location.", 1)
+;	if CWCampaignPhase.value != 0 && OptionalPhaseToSetTo == -1	;ie the default call, not when it's called in dialogue with the faction leader the first time the player is joining a campaign in the civil war
+;		while CWs.AliasFactionLeader.GetReference().getCurrentLocation().IsSameLocation(Game.GetPlayer().getCurrentLocation(), LocTypeHabitation)
+; 			CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() WAITING -PLAYER NEARBY: in a while loop wait until after player and Faction leader aren't in the same LocTypeHabitation location.", 1)
 ;*** !!! *** IF WE EVER GET A WAIT MENU, THEN WE NEED TO NOT CARE IF THE PLAYER IS IN THE SAME LOCATION IF HE IS ALSO WAITING			
-			utility.wait(10)
-		
-		EndWhile
-	EndIf
+;			utility.wait(10)
+;		
+;		EndWhile
+;	EndIf
 	
  	CWScript.Log("CWCampaignScript", " AdvanceCampaignPhase() running.")
 	
@@ -2061,28 +2063,6 @@ function registerMissionSuccess(Location HoldLocation, bool isFortBattle = False
 	EndIf
 	
 EndFunction
-
-function StartNewCampaign()
-	CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Setting up new campaign. ")
-
-	;Initialize a new Campaign
-	;CWO moved from qf_cwcampaign to here. Called at qf_cw (stage 4)
-	CWs.CampaignRunning = 1 ;busy setting up
-
-	UpdateCWCampaignObjAliases()
-	PurchaseGarrisons()
-	ShuffleGarrisons()
-	ForceFieldHQAliases()
-	if PlayerAllegianceLastStand()
-		AdvanceCampaignPhase(ResolutionPhase)
-	Else
-		AdvanceCampaignPhase()
-	endif
-	CWs.CampaignRunning = 2 ;done setting up
-	
-	CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Done setting up new campaign. Calling StartTraveling()  on FieldCO and EnemyFieldCO to have them moveTo if the player isn't around")
-	
-endfunction
 
 Function MoveRikkeGalmarToCampIfNeeded(bool CheckIfUnloaded = False)
 	{Moves them to the proper camp if not already there and, if not in the same location as the player.}
