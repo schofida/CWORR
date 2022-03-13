@@ -457,7 +457,7 @@ kmyquest.CWCampaignS.DisplayHoldObjective()
 ; debug.trace("CW Stage 4 , DONE calling AddEnemyFortsBackToWar()")
 
 ;CWO Setup started campaign 
-kmyQuest.CWCampaignS.StartNewCampaign()
+kmyQuest.CWCampaignS.SetStage(10)
 
 debug.trace("CW Stage 4 ended")
 ;END CODE
