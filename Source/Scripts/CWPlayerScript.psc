@@ -58,7 +58,9 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	
 		LocToCheck = SetStageWhenPlayerLeavesThisLocationAlias.GetLocation()
 		;CWO Add additional location for when the player leaves (similiar to enters)
-		LocToCheck2 = SetStageWhenPlayerLeavesThisOtherLocationAliasAlso.GetLocation()
+		if SetStageWhenPlayerLeavesThisOtherLocationAliasAlso != none
+			LocToCheck2 = SetStageWhenPlayerLeavesThisOtherLocationAliasAlso.GetLocation()
+		endif
 	
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerLeaves) == False 
 			;CWO - Add Stage condition
@@ -76,8 +78,9 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	if StageToSetWhenPlayerArrives && ( SetStageWhenPlayerArrivesAtThisLocationAlias || SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso)
 	
 		LocToCheck = SetStageWhenPlayerArrivesAtThisLocationAlias.GetLocation()
-		LocToCheck2 = SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso.GetLocation()
-	
+		if SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso != none
+			LocToCheck2 = SetStageWhenPlayerArrivesAtThisOtherLocationAliasAlso.GetLocation()
+		endif
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerArrives) == False 
 			;CWO - Add Stage condition
 			if OwningQuest.GetStage() >= StageAfterWhichSetStageWhenPlayerArrives && ((LocToCheck && Game.GetPlayer().IsInLocation(LocToCheck)) || (LocToCheck2 && Game.GetPlayer().IsInLocation(LocToCheck2)))
