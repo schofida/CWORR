@@ -11,6 +11,8 @@ LocationAlias Property Garrison Auto
 
 GlobalVariable Property CWOGarrisonReinforcements Auto
 
+ObjectReference Property EnemySpawnMarker Auto
+
 ;"Array" of aliases
 ;rather than declaring these again on all siege scripts, we will create a function that the quest fragment can pass in the Alias_XXX aliases and put them in the "array"
 
@@ -105,17 +107,17 @@ EndFunction
 
 ;Register Attacker Aliases
 Function SetupAlias(ReferenceAlias Source, ReferenceAlias Destination )
- 	CWScript.Log("CWSiegeScript", self + "calling RegisterAllyAlias()" + Source )
+ 	CWScript.Log("CWSiegeScript", self + "calling SetupAlias()" + Source )
 	Destination.ForceRefTo(Source.GetActorRef())
 EndFunction
 
 Function RegisterAliasesWithCWReinforcementScript(Location SiegeLocationAttackPoint)
- 	CWScript.Log("CWSiegeScript", self + "calling RegisterAliasesWithCWReinforcementScript()")
+	CWScript.Log("CWSiegeScript", self + "calling RegisterAliasesWithCWReinforcementScript()")
 
 	CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
 
 	CWReinforcementControllerS.RegisterAttackPoint(SiegeLocationAttackPoint)
-
+	
 	CWReinforcementControllerS.RegisterAlias(Enemy1)
 	CWReinforcementControllerS.RegisterAlias(Enemy2)
 	CWReinforcementControllerS.RegisterAlias(Enemy3)
@@ -144,13 +146,25 @@ Function SetUpAliases(Location garrisonLocation)
 	
 EndFunction
 
-function TurnOnAliases(bool IsAttackQuest)
+function TurnOnAllyAliases()
 	DoneTurningOnAliases = false
 
  	CWScript.Log("CWSiegeScript", self + "calling TurnOnAliases()")
 	
-	EnableAttackerDefenderAliases()		;Enables the Attacker/Defender aliases
-	ResetAttackerDefenderAliases()		;Resets the Attacker/Defender aliases
+	EnableAllyAliases()		;Enables the Attacker/Defender aliases
+	ResetAllyAliases()		;Resets the Attacker/Defender aliases
+	
+	DoneTurningOnAliases = true
+	
+EndFunction
+
+function TurnOnEnemyAliases()
+	DoneTurningOnAliases = false
+
+ 	CWScript.Log("CWSiegeScript", self + "calling TurnOnAliases()")
+	
+	EnableEnemyAliases()		;Enables the Attacker/Defender aliases
+	ResetEnemyAliases()		;Resets the Attacker/Defender aliases
 	
 	DoneTurningOnAliases = true
 	
@@ -189,28 +203,38 @@ Function DisableImperialSonsAliases()
 EndFunction
 
 
-function EnableAttackerDefenderAliases()
- 	CWScript.Log("CWSiegeScript", self + "calling EnableAttackerDefenderAliases()")
+function EnableAllyAliases()
+ 	CWScript.Log("CWSiegeScript", self + "calling EnableAllyAliases()")
 
 	TryToEnableAlias(Ally1)
 	TryToEnableAlias(Ally2)
 	TryToEnableAlias(Ally3)
 	TryToEnableAlias(Ally4)
+	
+EndFunction
+
+function EnableEnemyAliases()
+	CWScript.Log("CWSiegeScript", self + "calling EnableEnemyAliases()")
 
 	TryToEnableAlias(Enemy1)
 	TryToEnableAlias(Enemy2)
 	TryToEnableAlias(Enemy3)
 	TryToEnableAlias(Enemy4)
-	
-EndFunction
 
-Function ResetAttackerDefenderAliases()
- 	CWScript.Log("CWSiegeScript", self + "calling ResetAttackerDefenderAliases()")
+endfunction
+
+Function ResetAllyAliases()
+ 	CWScript.Log("CWSiegeScript", self + "calling ResetAllyAliases()")
 
 	TryToResetAlias(Ally1)
 	TryToResetAlias(Ally2)
 	TryToResetAlias(Ally3)
 	TryToResetAlias(Ally4)
+
+EndFunction
+
+Function ResetEnemyAliases()
+	CWScript.Log("CWSiegeScript", self + "calling ResetEnemyAliases()")
 
 	TryToResetAlias(Enemy1)
 	TryToResetAlias(Enemy2)
@@ -222,7 +246,9 @@ EndFunction
 function SetEnemyPools()
 	if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance
 		SetPoolDefenderOnCWReinforcementScript(CWOGarrisonReinforcements.GetValueInt())
+		SetPoolAttackerOnCWReinforcementScript(10, 1.0, 1.0, true)
 	else
 		SetPoolAttackerOnCWReinforcementScript(CWOGarrisonReinforcements.GetValueInt())
+		SetPoolDefenderOnCWReinforcementScript(10, 1.0, 1.0, true)
 	endif
 endfunction

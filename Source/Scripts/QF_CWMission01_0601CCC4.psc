@@ -139,6 +139,7 @@ Quest __temp = self as Quest
 cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWMission01QuestFragment", self + "Stage 0" )
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 ((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
 
@@ -158,8 +159,11 @@ kmyQuest.RegisterEnemyAliases(Alias_Enemy1, Alias_Enemy2, Alias_Enemy3, Alias_En
 
 if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
     Alias_MapMarkerGarrison.ForceRefTo(Alias_CWGarrisonEnableMarkerImperial.GetRef())
+    kmyQuest.EnemySpawnMarker = Alias_CWGarrisonEnableMarkerSons.GetRef()
+
 Else
     Alias_MapMarkerGarrison.ForceRefTo(Alias_CWGarrisonEnableMarkerSons.GetRef())
+    kmyQuest.EnemySpawnMarker = Alias_CWGarrisonEnableMarkerImperial.GetRef()
 endif
 
 Utility.Wait(1)
@@ -171,6 +175,19 @@ while !kmyQuest.DoneSettingUpAliases
 endwhile
 
 kmyQuest.RegisterAliasesWithCWReinforcementScript(Alias_Garrison.GetLocation())
+
+CWScript.Log("CWMission01QuestFragment", "Stage 0: Calling RegisterSpawnDefenderAliasesWithCWReinforcementScript()")
+if kmyQuest.cws.CWAttacker.GetValueInt() == kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
+elseif kmyQuest.cws.CWAttacker.GetValueInt() == kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
+    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
+elseif kmyQuest.cws.CWAttacker.GetValueInt() != kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
+else
+    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
+endif
+
+;CWO Move P
 
 Utility.Wait(1)
 
@@ -193,6 +210,8 @@ Quest __temp = self as Quest
 cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWMission01QuestFragment", self + "Stage 10" )
+
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(1)
 
 kmyquest.CWs.CWBattlePhase.SetValue(1)
@@ -206,7 +225,20 @@ Alias_CWGarrisonEnableMarkerSons.TryToDisable()
 
 setObjectiveDisplayed(10)
 
-kmyQuest.TurnOnAliases(True)
+;<TurnOnAliases>------------------
+kmyQuest.TurnOnAllyAliases()
+
+While kmyquest.DoneTurningOnAliases == false
+;do nothing
+	utility.wait(1)
+ 	CWScript.Log("CWMission01QuestFragment", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
+endWhile
+;</TurnOnAliases>-----------------
+
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.setStage(20)
+endIf
 
 ;END CODE
 EndFunction
@@ -219,6 +251,8 @@ Quest __temp = self as Quest
 cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWMission01QuestFragment", self + "Stage 11" )
+
 kmyquest.CWs.CWBattlePhase.SetValue(2)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -230,6 +264,16 @@ kmyQuest.MUSCombatCivilWar.Add()
 
 kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+
+;<TurnOnAliases>------------------
+kmyQuest.TurnOnEnemyAliases()
+
+While kmyquest.DoneTurningOnAliases == false
+;do nothing
+	utility.wait(1)
+ 	CWScript.Log("CWMission01", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
+endWhile
+;</TurnOnAliases>-----------------
 
 kmyQuest.FriendlyShouldAttack = 1
 Alias_Ally1.TryToEvaluatePackage()
@@ -251,6 +295,8 @@ Quest __temp = self as Quest
 cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWMission01QuestFragment", self + "Stage 51" )
+
 kmyquest.CWs.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -291,8 +337,8 @@ CWMission01Script kmyQuest = __temp as CWMission01Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;Successfully complete quest
+CWScript.Log("CWMission01QuestFragment", self + "Stage 200" )
 
-; ; debug.traceConditional("CWMission04 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 kmyQuest.MUSCombatCivilWar.Remove()
 
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
@@ -343,8 +389,8 @@ CWMission01Script kmyQuest = __temp as CWMission01Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;Fail quest
+CWScript.Log("CWMission01QuestFragment", self + "Stage 205" )
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 kmyQuest.MUSCombatCivilWar.Remove()
 
 int WinningFaction = kmyQuest.CwS.getOppositeFactionInt(kmyQuest.CwS.playerAllegiance)
@@ -394,6 +440,8 @@ CWMission01Script kmyQuest = __temp as CWMission01Script
 ;BEGIN CODE
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
+CWScript.Log("CWMission01QuestFragment", self + "Stage 255" )
+
 kmyQuest.CWS.StopCWCitizensFlee()
 kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
 ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
