@@ -252,3 +252,7 @@ function SetEnemyPools()
 		SetPoolDefenderOnCWReinforcementScript(10, 1.0, 1.0, true)
 	endif
 endfunction
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission01 quest")
+endfunction

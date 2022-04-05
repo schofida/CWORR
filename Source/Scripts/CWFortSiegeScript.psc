@@ -676,3 +676,7 @@ function StartFinalCityInteriorBattle()
 	
 	
 EndFunction
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission08 quest")
+endfunction

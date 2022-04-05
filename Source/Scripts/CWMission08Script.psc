@@ -14,3 +14,7 @@ int Property playerAtAttackPoint auto conditional hidden	;0 = unset, 1 = player 
 
 
 CWAlliesScript Property CWAlliesS Auto	;pointer to script on CWAllies Quest
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission08 quest")
+endfunction

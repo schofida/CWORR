@@ -188,3 +188,6 @@ function giveNewOutfit(Actor ActorRef)
 
 EndFunction
 
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission06 quest")
+endfunction

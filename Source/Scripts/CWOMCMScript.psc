@@ -69,16 +69,11 @@ int optionsCourierHoursMin
 int optionsCourierHoursMax
 int optionsCampaignPhaseMax
 
-Float DramaMamaSecondaryPercent
-Float DramaMamaDragonSecondaryPercent
-Float DramaMamaSneakPercent
-Float DramaMamaBasePercent
-Float DramaMamaMagicPercent
 Float _sliderPercent = 100.000
-Float DramaMamaMagicNoCombatPercent
 
 Bool optionWinWarToggle = false
-Bool optionsCWResetToggle = false
+Bool optionsCWOHelpToggle = false
+Bool optionsCWOUninstallToggle = false
 bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
 
@@ -194,30 +189,15 @@ function OnOptionSelect(Int a_option)
 		optionsToggleCWWinBattle = !optionsToggleCWWinBattle
 		self.SetToggleOptionValue(a_option, optionsToggleCWWinBattle, false)
 		CWs.CWCampaignS.CompleteCWMissions()
-		if CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 && CWS.CWCampaignS.PlayerAllegianceLastStand() ;schofida - siege and capital are both running in final siege. Have capital take care of it
-			if CWS.IsPlayerAttacking(CWS.CWSiegeS.City.GetLocation())
-				CWS.CWSiegeS.Setstage(50)
-				CWAttackCity.Setstage(50)
-			else
-				CWS.CWSiegeS.Setstage(200)
-			endIf
-		elseIf CWS.CWFortSiegeCapital.IsRunning() && CWS.CWFortSiegeCapital.GetStage() < 1000
-			if CWS.IsPlayerAttacking((CWS.CWFortSiegeCapital as CWFortSiegeScript).Fort.GetLocation())
-				CWS.CWFortSiegeCapital.Setstage(1000)
-			else
-				CWS.CWFortSiegeCapital.Setstage(2000)
-			endIf
-		elseIf CWS.CWFortSiegeFort.IsRunning() && CWS.CWFortSiegeFort.GetStage() < 950
-			if CWS.IsPlayerAttacking((CWS.CWFortSiegeFort as CWFortSiegeScript).Fort.GetLocation())
-				CWS.CWFortSiegeFort.Setstage(1000)
-			else
-				CWS.CWFortSiegeFort.Setstage(2000)
-			endIf
-		endIf
-	elseIf a_option == optionsCWReset
-		optionsCWResetToggle = !optionsCWResetToggle
-		self.SetToggleOptionValue(a_option, optionsCWResetToggle, false)
-		CWs.CWCampaignS.CWOTotalReset()
+		CWs.CWCampaignS.CompleteCWSieges()
+	elseIf a_option == optionsCWOHelp
+		optionsCWOHelpToggle = !optionsCWOHelpToggle
+		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle, false)
+		CWs.CWCampaignS.GetCWOUnstuck()
+	elseIf a_option == optionsCWOHelp
+		optionsCWOUninstallToggle = true
+		self.SetToggleOptionValue(a_option, true, false)
+		UninstallCWO()
 	endIf
 endFunction
 
@@ -308,13 +288,15 @@ endFunction
 
 event OnConfigClose()
 	optionWinWarToggle = false
-	optionsCWResetToggle = false
+	optionsCWOHelpToggle = false
 	SetReinforcementsBusy = False
 	optionsToggleCWWinBattle = false
+	optionsCWOHelpToggle = false
 endevent
 
 function OnPageReset(String a_page)
 {Called when a new page is selected, including the initial empty page}
+	optionsCWOUninstallToggle = !CWOQuestMonitor.IsRunning()
 	if a_page == "CWO Debug"
 		SetCursorFillMode(self.LEFT_TO_RIGHT)
 		if CW.IsRunning()
@@ -466,7 +448,8 @@ function OnPageReset(String a_page)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
 		optionsWinHold = self.AddMenuOption("Win hold here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
-		optionsCWHelp = self.AddToggleOption("Reset major initial variables", optionsCWResetToggle, 0)
+		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
+		optionsCWOUninstall = self.AddToggleOption("Uninstall CWO", optionsCWOUninstallToggle, 0)
 
 		self.AddEmptyOption()
 	endIf
@@ -592,7 +575,72 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("Wins a fort or major/minor capital siege already in progress. Use this if the siege did not finish for some reason. Please do not use this at the battle of Solitude or Windhelm. Please close MCM after selecting.")
 	elseif a_option == optionsWinHold
 		self.SetInfoText("EXPERIMENTAL: Wins a hold of your choice. Use this if the commander is not giving you the quest for the next hold. The dialogue conditions are pretty strict and sometimes (mod conflict maybe?) you are not gaining the hold in the proper order. Check the holds on the debug page to see the orders of hold conquests. Imperials go down; Stormcloaks go up. Please close MCM after selecting.")
+	elseif a_option == optionsCWOHelp
+		self.SetInfoText("TODO")
+	elseif a_option == optionsCWOUninstall
+		self.SetInfoText("TODO")
 	endIf
 endFunction
+
+function UninstallCWO()
+	CWOQuestMonitor.Stop()
+	CWOBAController.Stop()
+	CWOBAQuest.Stop()
+	CWs.CWCampaignS.CompleteCWMissions()
+	Utility.Wait(10)
+	CWs.CWCampaignS.CompleteCWSieges()
+	Utility.Wait(10)
+	if CWS.PlayerAllegiance == cws.iImperials
+		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.haafingarholdlocation, CWs.GetOwner(cws.haafingarholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.haafingarholdlocation) == cws.playerAllegiance)
+		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.Hjaalmarchholdlocation, CWs.GetOwner(cws.Hjaalmarchholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.Hjaalmarchholdlocation) == cws.playerAllegiance)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, CWs.GetOwner(cws.ReachHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.ReachHoldLocation) == cws.playerAllegiance)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WhiterunHoldLocation, CWs.GetOwner(cws.WhiterunHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.WhiterunHoldLocation) == cws.playerAllegiance)
+		if CWs.GetOwner(CWs.PaleHoldLocation) == cws.iImperials
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, false, true)
+			Cws.CWMission07Done = true
+		endif
+		if CWs.GetOwner(CWs.RiftHoldLocation) == cws.iImperials
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, CWs.GetOwner(cws.PaleHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.PaleHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.RiftHoldLocation, false, true)
+			CWs.CWMission03Done = true
+			Cws.CWMission07Done = true
+		endif
+		if CWs.GetOwner(CWs.WinterholdHoldLocation) == cws.iImperials
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, CWs.GetOwner(cws.PaleHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.PaleHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.RiftHoldLocation, CWs.GetOwner(cws.RiftHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.RiftHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WinterholdHoldLocation, false, true)
+			CWs.CWMission04Done = true
+			CWs.CWMission03Done = true
+			Cws.CWMission07Done = true
+		endif
+	elseif cws.playerAllegiance == cws.iSons
+		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.eastmarchholdlocation, CWs.GetOwner(cws.eastmarchholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.eastmarchholdlocation) == cws.playerAllegiance)
+		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WinterholdHoldLocation, CWs.GetOwner(cws.WinterholdHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.WinterholdHoldLocation) == cws.playerAllegiance)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.RiftHoldLocation, CWs.GetOwner(cws.RiftHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.RiftHoldLocation) == cws.playerAllegiance)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, CWs.GetOwner(cws.PaleHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.PaleHoldLocation) == cws.playerAllegiance)
+		if CWs.GetOwner(CWs.WhiterunHoldLocation) == cws.iSons
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WhiterunHoldLocation, false, true)
+		endif
+		if CWs.GetOwner(CWs.FalkreathHoldLocation) == cws.iSons
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, false, true)
+			Cws.CWMission04Done = true
+		endif
+		if CWs.GetOwner(CWs.ReachHoldLocation)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, false, true)
+			Cws.CWMission04Done = true
+			CWs.CWMission03Done = true
+		endif
+		if CWs.GetOwner(CWs.Hjaalmarchholdlocation)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, CWs.GetOwner(cws.ReachHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.ReachHoldLocation) == cws.playerAllegiance)
+			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.Hjaalmarchholdlocation, false, true)
+			CWs.CWMission04Done = true
+			Cws.CWMission07Done = true
+			CWs.CWMission03Done = true
+		endif
+	endif	
+endfunction
 
 ; Skipped compiler generated GetState

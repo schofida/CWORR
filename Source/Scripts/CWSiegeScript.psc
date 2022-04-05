@@ -1636,3 +1636,7 @@ int Property AMBCloseBattleSoundInstance Auto
 ObjectReference Property WhiterunAmbExt03  Auto  
 
 GlobalVariable Property CWDistantCatapultsAMB  Auto  
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission08 quest")
+endfunction

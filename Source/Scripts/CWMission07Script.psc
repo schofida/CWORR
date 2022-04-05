@@ -21,3 +21,7 @@ function checkForVictory()
 	EndIf
 
 EndFunction
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission07 quest")
+endfunction

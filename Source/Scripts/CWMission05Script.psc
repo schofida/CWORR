@@ -20,3 +20,8 @@ objectreference property CWGarrisonEnableMarkerImperialCampFalkreath auto
 objectreference property CWGarrisonEnableMarkerImperialCampWhiterun auto
 objectreference property CWGarrisonEnableMarkerImperialCampHjaalmarch auto
 objectreference property CWGarrisonEnableMarkerImperialCampReach auto
+
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission05 quest")
+endfunction
