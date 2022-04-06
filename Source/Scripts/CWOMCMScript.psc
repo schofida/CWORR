@@ -311,6 +311,7 @@ function OnPageReset(String a_page)
 		endIf
 		if CWs.CWCampaign.IsRunning()
 			self.AddtextOption("CWCampaign Quest", "Is On Stage " + CWs.CWCampaign.Getstage() as String, 0)
+			AddtextOption("CWCampaignPhase Is", CWs.CWCampaignS.CWCampaignPhase.GetValueInt(), 0)
 		endIf
 		if CWOArmorDisguise.IsRunning()
 			self.AddtextOption("CWOArmorDisguise", "Is On", 0)
@@ -519,6 +520,8 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		if !CWs.CWCampaign.IsRunning()
 			CWs.CWDebugForceHold.SetValueInt(a_index + 1)
 			CWs.StartNewCampaign()
+		else
+
 		endif
 	elseIf a_option == optionsWinHold
 		if CWs.GetHoldOwner(a_index + 1) != CWs.PlayerAllegiance
@@ -598,21 +601,21 @@ function UninstallCWO()
 		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WhiterunHoldLocation, CWs.GetOwner(cws.WhiterunHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.WhiterunHoldLocation) == cws.playerAllegiance)
 		if CWs.GetOwner(CWs.PaleHoldLocation) == cws.iImperials
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, false, true)
-			Cws.CWMission07Done = true
+			Cws.CWMission07Done = 1
 		endif
 		if CWs.GetOwner(CWs.RiftHoldLocation) == cws.iImperials
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, CWs.GetOwner(cws.PaleHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.PaleHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.RiftHoldLocation, false, true)
-			CWs.CWMission03Done = true
-			Cws.CWMission07Done = true
+			CWs.CWMission03Done = 1
+			Cws.CWMission07Done = 1
 		endif
 		if CWs.GetOwner(CWs.WinterholdHoldLocation) == cws.iImperials
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.PaleHoldLocation, CWs.GetOwner(cws.PaleHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.PaleHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.RiftHoldLocation, CWs.GetOwner(cws.RiftHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.RiftHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.WinterholdHoldLocation, false, true)
-			CWs.CWMission04Done = true
-			CWs.CWMission03Done = true
-			Cws.CWMission07Done = true
+			CWs.CWMission04Done = 1
+			CWs.CWMission03Done = 1
+			Cws.CWMission07Done = 1
 		endif
 	elseif cws.playerAllegiance == cws.iSons
 		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.eastmarchholdlocation, CWs.GetOwner(cws.eastmarchholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.eastmarchholdlocation) == cws.playerAllegiance)
@@ -624,21 +627,21 @@ function UninstallCWO()
 		endif
 		if CWs.GetOwner(CWs.FalkreathHoldLocation) == cws.iSons
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, false, true)
-			Cws.CWMission04Done = true
+			Cws.CWMission04Done = 1
 		endif
 		if CWs.GetOwner(CWs.ReachHoldLocation)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, false, true)
-			Cws.CWMission04Done = true
-			CWs.CWMission03Done = true
+			Cws.CWMission04Done = 1
+			CWs.CWMission03Done = 1
 		endif
 		if CWs.GetOwner(CWs.Hjaalmarchholdlocation)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, CWs.GetOwner(cws.ReachHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.ReachHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.Hjaalmarchholdlocation, false, true)
-			CWs.CWMission04Done = true
-			Cws.CWMission07Done = true
-			CWs.CWMission03Done = true
+			CWs.CWMission04Done = 1
+			Cws.CWMission07Done = 1
+			CWs.CWMission03Done = 1
 		endif
 	endif	
 endfunction

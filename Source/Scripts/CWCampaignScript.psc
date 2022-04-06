@@ -288,6 +288,7 @@ ActorBase Property CWBattleRikke Auto
 ActorBase Property CWBattleGalmar Auto
 ActorBase Property CWBattleTullius Auto
 ActorBase Property CWBattleUlfric Auto
+Quest Property CWAttackCity Auto
 Bool Property CWFortSiegeFortDone Auto Hidden Conditional
 Bool Property CWMission01Or02Done Auto Hidden Conditional
 Bool Property CWMission06Done Auto Hidden Conditional
@@ -2220,7 +2221,7 @@ endfunction
 
 function GetCWOUnstuck()
 	CWScript.Log("CWScript", "GetCWOUnstuck()")
-	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && CWs.CW03.GetStageDone(100) && !CWs.CWSiege.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
+	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
 		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
 		debug.notification("Trying to start Whiterun Siege")
 	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
@@ -2231,24 +2232,24 @@ function GetCWOUnstuck()
 		CWs.SetStage(4)
 		return
 	endif
-	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.CWCampaignS.FactionOwnsAll(cws.playerAllegiance)
+	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
 		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.EastmarchFortBattleComplete
 			debug.notification("Trying to start Final Fort Siege")
-			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.RikkeActor, false)
+			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), false)
 			return
-		elseif !CWs.CWSiege.IsRunning() && CWS.EastmarchFortBattleComplete
+		elseif !CWs.CWSiegeS.IsRunning() && CWS.EastmarchFortBattleComplete
 			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.RikkeActor, true)
+			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), true)
 			return
 		endif
-	elseif CWs.PlayerAllegiance == CWs.iSons && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.CWCampaignS.FactionOwnsAll(cws.playerAllegiance)
+	elseif CWs.PlayerAllegiance == CWs.iSons && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
 		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.HaafingarFortBattleComplete
 			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.GalmarActor, false)
+			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), false)
 			return
-		elseif !CWs.CWSiege.IsRunning() && CWS.HaafingarFortBattleComplete
+		elseif !CWs.CWSiegeS.IsRunning() && CWS.HaafingarFortBattleComplete
 			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.GalmarActor, true)
+			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), true)
 			return
 		endif
 	endif
@@ -2272,8 +2273,8 @@ function GetCWOUnstuck()
 		(CWs.CWMission07 as CWMission07Script).TryToFixQuest()
 		return
 	endif
-	if CWMission08.IsRunning()
-		(CWMission08 as CWMission08Script).TryToFixQuest()
+	if CWMission08Quest.IsRunning()
+		(CWMission08Quest as CWMission08Script).TryToFixQuest()
 		return
 	endif
 	if CWMission09.IsRunning()
@@ -2284,8 +2285,8 @@ function GetCWOUnstuck()
 		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
 		return
 	endif
-	if CWs.CWSiege.IsRunning()
-		(CWs.CWSiege as CWSiegeScript).TryToFixQuest()
+	if CWs.CWSiegeS.IsRunning()
+		(CWs.CWSiegeS).TryToFixQuest()
 		return
 	endif
 	debug.notification("Nothing to fix....")
