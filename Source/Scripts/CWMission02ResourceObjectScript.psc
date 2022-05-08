@@ -23,14 +23,14 @@ Event OnActivate(ObjectReference akActionRef)
 	if akActionRef == Game.GetPlayer()
 	
 		int RType = (GetReference() as ResourceObjectScript).GetResourceType() 
+
+		CWMission02Script CWMission02 = GetOwningQuest() as CWMission02Script
 		
 		if RType == 1 || RType == 3		;1 = Wheat Mill(Farm), 2 = Saw Mill, 3 = Smelter(Mine)
 			
 			;TEMP HACK TO MAKE IT SABOTAGED WHEN YOU ACTIVATE IT
-			debug.MessageBox("CWMission02ResourceObjectScript: SABOTAGED!!!")
-			(GetReference() as ResourceObjectScript).sabotaged = true
 			GetReference().DamageObject(9999)
-		
+			CWMission02.CWs.GetFaction(CWMission02.CWs.getOppositeFactionInt(CWMission02.CWs.PlayerAllegiance), false).SendAssaultAlarm()
 		EndIf
 	
 	EndIf
@@ -55,23 +55,20 @@ Event OnUpdate()
 	
 EndEvent
 
-;Event OnHit(ObjectReference akAggressor, Form akWeapon, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-;	
-;	;if player hits me and i'm the primary object, consider me "discovered"
-;	
-;	if myType == 0
-;		myType = CWMission02S.CWCampaignS.GetResourceType(self)
-;		primaryResourceType = CWMission02S.CWCampaignS.GetResourceType(ResourceObject1)
-;	EndIf
-;	
-;	if self == ResourceObject1 	;if I'm the primary resource
-;		if akAggressor == Game.GetPlayer()	;and the player has hit me
-;			if 	GetOwningQuest().GetStageDone(20) == False
-; ; ;				debug.traceConditional(self + " OnHit(): Player hit me (" + Self + ") advancing quest.", CWMission02S.CWs.debugOn.value)
-;				GetOwningQuest().SetStage(20)
-;			EndIf
-;		EndIf
-;	EndIf
-;
-;EndEvent
+Event OnHit(ObjectReference akAggressor, Form akWeapon, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
+	
+	;if player hits me and i'm the primary object, consider me "discovered"
+	
+	if akAggressor == Game.GetPlayer()	;and the player has hit me
+		CWMission02Script CWMission02 = GetOwningQuest() as CWMission02Script
+		CWMission02.CWs.GetFaction(CWMission02.CWs.getOppositeFactionInt(CWMission02.CWs.PlayerAllegiance), false).SendAssaultAlarm()
+	EndIf
 
+EndEvent
+
+Event OnDestructionStageChanged(int aiOldStage, int aiCurrentStage)
+	if aiCurrentStage > aiOldStage && (GetReference() as ResourceObjectScript).sabotaged == false
+		debug.MessageBox("CWMission02ResourceObjectScript: SABOTAGED!!!")
+		(GetReference() as ResourceObjectScript).sabotaged = true
+	endif
+endevent

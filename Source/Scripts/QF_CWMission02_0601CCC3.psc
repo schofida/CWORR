@@ -42,6 +42,48 @@ ReferenceAlias Property Alias_CampaignStartMarker Auto
 ReferenceAlias Property Alias_ResourceObject1 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial3 Auto
+;END ALIAS PROPERTY
+
+    
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons2 Auto
+;END ALIAS PROPERTY
+
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons4 Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_11
 Function Fragment_11()
 ;BEGIN AUTOCAST TYPE CWMission02Script
@@ -83,11 +125,13 @@ kmyquest.objectiveCompleted = 1
 
 kmyQuest.CWCampaignS.StopMonitors()
 
+kmyQuest.CWCampaignS.StartDisguiseQuest()
+
 kmyquest.FlagFieldCOWithMissionResultFaction(2)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
-kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_ResourceLocation.GetLocation())
+kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), kmyQuest.CwS.playerAllegiance)
 
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(2, True)
 
@@ -108,7 +152,7 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 
 
 setObjectiveCompleted(10)
-setObjectiveDisplayed(100)
+setObjectiveDisplayed(20)
 
 ;END CODE
 EndFunction
@@ -121,10 +165,9 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
-;Fail quest
-
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 kmyQuest.CWCampaignS.StopMonitors()
+
+kmyQuest.CWCampaignS.StartDisguiseQuest()
 
 kmyquest.FlagFieldCOWithMissionResultFaction(2, MissionFailure = true)
 
@@ -142,9 +185,6 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
-;Fail quest
-
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithPotentialMissionFactions(2)
 
@@ -163,9 +203,6 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
-;Fail quest
-
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(2)
 
@@ -190,7 +227,26 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyQuest.CWCampaignS.StartMonitors(kmyQuest)
-
+if kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+    Alias_CWFortSiegeSons1.TryToEnableNoWait()
+    Alias_CWFortSiegeSons2.TryToEnableNoWait()
+    Alias_CWFortSiegeSons3.TryToEnableNoWait()
+    Alias_CWFortSiegeSons4.TryToEnableNoWait()
+    Alias_CWFortSiegeSons1.TryToEvaluatePackage()
+    Alias_CWFortSiegeSons2.TryToEvaluatePackage()
+    Alias_CWFortSiegeSons3.TryToEvaluatePackage()
+    Alias_CWFortSiegeSons4.TryToEvaluatePackage()
+else
+    Alias_CWFortSiegeImperial1.TryToEnableNoWait()
+    Alias_CWFortSiegeImperial2.TryToEnableNoWait()
+    Alias_CWFortSiegeImperial3.TryToEnableNoWait()
+    Alias_CWFortSiegeImperial4.TryToEnableNoWait()
+    Alias_CWFortSiegeImperial1.TryToEvaluatePackage()
+    Alias_CWFortSiegeImperial2.TryToEvaluatePackage()
+    Alias_CWFortSiegeImperial3.TryToEvaluatePackage()
+    Alias_CWFortSiegeImperial4.TryToEvaluatePackage()
+endif
+kmyQuest.CWCampaignS.StopDisguiseQuest()
 
 ;END CODE
 EndFunction
