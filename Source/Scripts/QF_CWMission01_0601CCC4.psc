@@ -367,7 +367,7 @@ while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
 endwhile
 
 if PlayerIsAttacking
-    kmyquest.CWS.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Garrison.GetLocation())
+    kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
     if WinningFaction == kmyQuest.CWs.iImperials
         Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
     Else
@@ -416,7 +416,7 @@ while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
 endwhile
 
 if !PlayerIsAttacking
-    kmyquest.CWS.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Garrison.GetLocation())
+    kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
     if WinningFaction == kmyQuest.CWs.iImperials
         Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
     Else
