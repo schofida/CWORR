@@ -82,7 +82,7 @@ function Fragment_0()
 	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
-	kmyQuest.registerforsingleupdate(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue())
+	kmyQuest.registerforsingleupdate(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue()))
 endFunction
 
 function Fragment_3()
