@@ -120,6 +120,7 @@ function OnInit()
 
 	PlayerRef = game.GetPlayer()
 	PeaceTreaty = false
+	EquipmentUpdate()
 	; self.RegisterforSingleUpdate(10 as Float) ; Reddit BugFix #8
 endFunction
 
