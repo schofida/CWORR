@@ -2169,10 +2169,24 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyQuest.WeatherSolitude.ForceActive(True)
+	if kmyquest.IsAttack()
+		;CWO Stuff
+	else
 
+	endif
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.ForceActive(True)
-
+	Alias_WindhelmGateLever2a.GetReference().BlockActivation(true)
+	Alias_WindhelmGateLever2b.GetReference().BlockActivation(true)
+	if kmyquest.IsAttack()
+		;CWO Stuff
+	else
+		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 2)	; Reddit BugFix #15
+		;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02); Open the gate
+	
+		endif
+	endif
 endif
 ;END CODE
 EndFunction
@@ -2484,6 +2498,12 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
 
+if CWBattleCommanderTemp != none
+	CWBattleCommanderTemp.DisableNoWait()
+	CWBattleCommanderTemp.Delete()
+	CWBattleCommanderTemp = none
+endif
+
 Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
 
@@ -2514,6 +2534,14 @@ kmyquest.DisableAllAliases()		;see CWSiegeScript.psc
 
 ;allow player activation of main gate into city
 Alias_MainGateExterior.GetReference().BlockActivation(false)  ;normally happens in the course of the siege, but just in case.
+
+Alias_WindhelmGateLever1.TryToDisable()
+Alias_WindhelmGateLever2a.TryToDisable()
+Alias_WindhelmGateLever2b.TryToDisable()
+kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Disable()
+kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Disable()
+Alias_SolitudeGateLever1.TryToDisable()
+kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Disable()
 
 ;Disable aliases
 Alias_ThreatTriggersToggle.TryToDisable()
@@ -3168,6 +3196,12 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
+
+	Alias_SolitudeGateLever1.TryToEnable()
+	Alias_SolitudeGateLever1.TryToReset()
+	kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Enable()
+	kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Reset()
+	
 	if kmyquest.IsAttack()
 		;If Attack
 
@@ -3175,17 +3209,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
-
-Alias_Defender1General.GetReference().Disable()
-Alias_Defender2.GetReference().Disable()
-Alias_Defender3.GetReference().Disable()
-Alias_Defender4.GetReference().Disable()
-Alias_Defender5.GetReference().Disable()
-Alias_Defender6.GetReference().Disable()
-Alias_Defender7.GetReference().Disable()
-Alias_Defender8.GetReference().Disable()
-Alias_Defender9.GetReference().Disable()
-Alias_Defender10.GetReference().Disable()
 
 		;MOVED THIS TO STAGE 1 TO SOLVE BUGS WITH NOT WANTING TO START THIS IF DOING Dark Brotherhood AND WE NEED TO PREVENT THE SIEGE FROM DOING ALL THIS SETUP
 		kmyquest.SolitudeOpening.setStage(200)	;stops the execution scene
@@ -3210,9 +3233,20 @@ Alias_Defender10.GetReference().Disable()
 
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
+
+	Alias_WindhelmGateLever1.TryToEnable()
+	Alias_WindhelmGateLever1.TryToReset()
+	Alias_WindhelmGateLever2A.TryToEnable()
+	Alias_WindhelmGateLever2A.TryToReset()
+	Alias_WindhelmGateLever2B.TryToEnable()
+	Alias_WindhelmGateLever2B.TryToReset()
+	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Enable()
+	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Enable()
+	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Reset()
+	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Reset()
+
 	if kmyquest.IsAttack()
 		;If Attack
-
  		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
@@ -3220,17 +3254,6 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 		;THIS PREVENTS THE MURDER SCENE DURING THE SIEGE
 		kmyquest.MS11.CivilWarBattle(true)
-
-Alias_Defender1General.GetReference().Disable()
-Alias_Defender2.GetReference().Disable()
-Alias_Defender3.GetReference().Disable()
-Alias_Defender4.GetReference().Disable()
-Alias_Defender5.GetReference().Disable()
-Alias_Defender6.GetReference().Disable()
-Alias_Defender7.GetReference().Disable()
-Alias_Defender8.GetReference().Disable()
-Alias_Defender9.GetReference().Disable()
-Alias_Defender10.GetReference().Disable()
 
 		;MOVED THIS TO STAGE 1 TO SOLVE BUGS WITH NOT WANTING TO START THIS IF DOING Dark Brotherhood AND WE NEED TO PREVENT THE SIEGE FROM DOING ALL THIS SETUP	
 		kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
@@ -3556,6 +3579,8 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;CWO Start Courier Defense Quest
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
 
+Location cityVar = Alias_City.GetLocation()
+
 CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsAttack()
 
@@ -3568,26 +3593,27 @@ kmyquest.ToggleOffComplexWIInteractions(Alias_City)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
-int getGenerals = utility.randomint(0, 100)
-if kmyQuest.IsAttack() && kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials && getGenerals < 50
-	Alias_AttackerImperial1.ForceRefTo(kmyQuest.CWs.GeneralTulliusRef)
-	Alias_AttackerImperial2.ForceRefTo(kmyQuest.CWs.Rikke.GetActorReference())
-elseif kmyQuest.IsAttack() && kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
-	Alias_AttackerImperial1.ForceRefTo(kmyQuest.CWs.Rikke.GetActorReference())
-elseif kmyQuest.IsAttack() && getGenerals < 50
-	Alias_AttackerSons1.ForceRefTo(kmyQuest.CWs.UlfricRef)
-	if Alias_City.GetLocation() == kmyQuest.CWs.WhiterunLocation
-		Alias_AttackerSons2.ForceRefTo(Alias_WhiterunAttackerGalmar.GetActorRef())
+if kmyQuest.IsAttack() && (cityVar == kmyquest.CWs.WhiterunLocation || cityVar == kmyquest.CWs.WhiterunLocation || cityVar == kmyquest.CWs.WhiterunLocation) && utility.randomint(0, 100) < 50
+	Actor OldGeneral
+	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
+		OldGeneral = Alias_AttackerImperial1.GetActorRef()
+		if OldGeneral != none
+			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBAttleTullius, 1, false, true) as Actor
+			OldGeneral.MoveTo(Alias_AttackerImperial2.GetActorRef())
+			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
+			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
+		endif
 	else
-		Alias_AttackerSons2.ForceRefTo(kmyQuest.CWs.Galmar.GetActorReference())
-	endif
-elseif kmyQuest.IsAttack()
-	if Alias_City.GetLocation() == kmyQuest.CWs.WhiterunLocation
-		Alias_AttackerSons1.ForceRefTo(Alias_WhiterunAttackerGalmar.GetActorRef())
-	else
-		Alias_AttackerSons1.ForceRefTo(kmyQuest.CWs.Galmar.GetActorReference())
+		OldGeneral = Alias_AttackerSons1.GetActorRef()
+		if OldGeneral != none
+			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBattleUlfric, 1, false, true) as Actor
+			OldGeneral.MoveTo(Alias_AttackerSons2.GetActorRef())
+			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
+			Alias_AttackerSons2.ForceRefTo(OldGeneral)
+		endif
 	endif
 endif
+
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Imperial Aliases")	;*** WRITE TO LOG
 ;Imperial Aliases pointing to references in world:
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
@@ -3690,6 +3716,11 @@ Alias_NonRespawningDefenderSons4.TryToDisable()
 Alias_NonRespawningDefenderSons5.TryToDisable()
 Alias_NonRespawningDefenderSons6.TryToDisable()
 
+if cityVar == kmyQuest.CWs.WindhelmLocation
+	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
+	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
+endif
+
 Alias_Barricade1A.TryToReset()
 if Alias_Barricade1A.GetReference() != none
 	Alias_Barricade1A.GetReference().ClearDestruction() ;Reddit bugfix #15
@@ -3778,7 +3809,6 @@ kmyquest.CWSiegeObj.setStage(1)
 ;*** CITY SPECIFIC SCRIPTING IN HERE ***
 
 ;**CITY SPECIFIC
-Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyquest.CurrentCity = 4
 	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference())  ;Barricade
@@ -3822,8 +3852,8 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	;kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
 
 	kmyquest.CurrentCity = 8
-	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Barricade1A.GetReference()) ;First Barricade A
-	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Barricade1B.GetReference()) ;First Barricade B
+	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference()) ;First Barricade
+	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Objective1B.GetReference()) ;Second Barricade
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_Objective2A.GetReference()) ;First Gate Lever
 	kmyquest.CWSiegeObjObjective3A.ForceRefTo(Alias_Objective3A.GetReference()) ;Second Gate Lever A
 	kmyquest.CWSiegeObjObjective3B.ForceRefTo(Alias_Objective3B.GetReference()) ;Second Gate Lever B
@@ -4126,7 +4156,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;Second Objective is complete
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 30")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 30")	;*** WRITE TO LOG
 
 ;Set BattlePhase
 kmyquest.CWs.CWBattlePhase.SetValue(4)
@@ -4252,6 +4282,7 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
+	Alias_SolitudeGateLever1.GetReference().BlockActivation(true)
 	if kmyquest.IsAttack()
 		if GetStageDone(31)
 			Alias_SolitudeGateLever1.GetReference().Activate(Alias_SolitudeGateLever1.GetReference())
@@ -4267,11 +4298,16 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 
 	else
 		;Currently no defense planned
-
+		if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
+		;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
+	
+		endif
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
+	Alias_WindhelmGateLever1.GetReference().BlockActivation(true)
 	if kmyquest.IsAttack()
 		if GetStageDone(31)
 			Alias_WindhelmGateLever1.GetReference().Activate(Alias_WindhelmGateLever1.GetReference())
@@ -4287,7 +4323,11 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 
 	else
 		;Currently no defense planned
-
+		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
+		;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01); Open the gate
+	
+		endif
 	endif
 
 endif
@@ -4303,3 +4343,5 @@ Quest Property MQ106  Auto
 Quest Property USLEEPHeimskrPreachJail Auto ; USKP 2.0.1 - For sending Heimskr to jail.
 ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate Riverwood Stormcloaks if they win Whiterun.
 ObjectReference Property RiverwoodImperialsMarker Auto
+
+Actor CWBattleCommanderTemp

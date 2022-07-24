@@ -294,6 +294,12 @@ Bool Property CWMission01Or02Done Auto Hidden Conditional
 Bool Property CWMission06Done Auto Hidden Conditional
 Bool Property CWMission08Done Auto Hidden Conditional
 Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
+ObjectReference Property CWSiegeBarricadeWindhelmA Auto
+ObjectReference Property CWSiegeBarricadeWindhelmB Auto
+Faction Property CWSoldierPlayerEnemyFaction Auto
+ObjectReference Property WindhelmExteriorGate01 Auto
+ObjectReference Property WindhelmExteriorGate02 Auto
+ObjectReference Property SolitudeExteriorGate01 Auto
 
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
