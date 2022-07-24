@@ -160,10 +160,8 @@ State WaitingForCampaignToFinish
 			GoToState("WaitingToStartNewCampaign")
 
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == False, going to state WaitingToStartNewCampaign.")
-
-
 			
-		Elseif Game.GetPlayer().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation()) || CWs.CWDefender.GetValueInt() == CWs.playerAllegiance
+		Elseif (Cws.CwCampaignS.FieldHQ.GetLocation() != none && Game.GetPlayer().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())) || CWs.CWDefender.GetValueInt() == CWs.playerAllegiance
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
 			CWs.CWCampaignS.StartMissions()
 		Else
