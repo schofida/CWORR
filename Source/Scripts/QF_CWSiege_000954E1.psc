@@ -3852,8 +3852,8 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	;kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
 
 	kmyquest.CurrentCity = 8
-	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference()) ;First Barricade
-	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Objective1B.GetReference()) ;Second Barricade
+	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Barricade1A.GetReference()) ;First Barricade A
+	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Barricade1B.GetReference()) ;First Barricade B
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_Objective2A.GetReference()) ;First Gate Lever
 	kmyquest.CWSiegeObjObjective3A.ForceRefTo(Alias_Objective3A.GetReference()) ;Second Gate Lever A
 	kmyquest.CWSiegeObjObjective3B.ForceRefTo(Alias_Objective3B.GetReference()) ;Second Gate Lever B
