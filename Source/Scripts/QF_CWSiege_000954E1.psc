@@ -2012,10 +2012,6 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
 		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
 
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
-
 	else
 		;Currently no defense planned
 
@@ -3719,6 +3715,8 @@ Alias_NonRespawningDefenderSons6.TryToDisable()
 if cityVar == kmyQuest.CWs.WindhelmLocation
 	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
 	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
+	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
+	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
 endif
 
 Alias_Barricade1A.TryToReset()
@@ -3843,6 +3841,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	kmyquest.CurrentCity = 1
 	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference())  ;First Barricade
+	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Objective1B.GetReference())  ;First Barricade
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_SolitudeGateLever1.GetReference())  ;Exterior Gate
 	kmyquest.CWSiegeObjObjective3A.ForceRefTo(Alias_Objective3A.GetReference())  ;Final Barricade
 
@@ -4061,6 +4060,10 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	;Set Dialog States
 	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 	kmyquest.CWStateDefenderFallingBack.SetValue(1)
+
+	;Set Dialog States
+	kmyquest.CWStateAttackerAtGate.SetValue(1)
+	kmyquest.CWStateDefenderLastStand.SetValue(1)
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
 		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
@@ -4291,10 +4294,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		endif
 		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
-
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
+		SetStage(50)
 
 	else
 		;Currently no defense planned
