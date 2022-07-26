@@ -1152,17 +1152,17 @@ function log(string fileName, string stringToPrint, int severity = 0, bool Alway
 	if debugMode == 1 || AlwaysPrintLog 
 		debug.OpenUserLog(fileName) 
 	
-; 		success = debug.traceUser(fileName, " " + stringToPrint, severity)
+ 		success = debug.traceUser(fileName, " " + stringToPrint, severity)
 	
 		if success == False
-; 			debug.trace("CWScript  WARNING: log() Failed to print to " + FileName + ": " + stringToPrint, 2)
+ 			debug.trace("CWScript  WARNING: log() Failed to print to " + FileName + ": " + stringToPrint, 2)
 		EndIf
 		
 	EndIf
 	
 	;print to main log
 	if debugMode == 1 || AlwaysPrintToMainLog
-; 		debug.trace(fileName + "-> " + stringToPrint, severity)
+ 		debug.trace(fileName + "-> " + stringToPrint, severity)
 	EndIf
 	
 EndFunction
