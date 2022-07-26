@@ -577,17 +577,7 @@ kmyquest.CWFinaleWindhelmSceneA.stop()
 actor EnemySecondActor = Alias_EnemySecond.GetActorReference()
 actor EnemyLeaderActor = Alias_EnemyLeader.GetActorReference()
 
-;CWO Set up final scene depending on if player won or lost the war
-if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
-	Alias_Leader.GetActorRef().GetActorBase().SetEssential(false)	
-	Alias_Second.GetActorRef().GetActorBase().SetEssential(false)	
-Else
-	Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
-	EnemySecondActor.GetActorBase().setEssential(false)
-	EnemySecondActor.StartCombat(Game.GetPlayer())
-	EnemyLeaderActor.StartCombat(Game.GetPlayer())
-	EnemyLeaderActor.SetNoBleedoutRecovery(true)
-endif
+EnemySecondActor.GetActorBase().setEssential(false)
 
 EnemySecondActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 EnemyLeaderActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
@@ -595,11 +585,17 @@ EnemyLeaderActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 Alias_Leader.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 Alias_Second.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
+Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
+
+EnemySecondActor.StartCombat(Game.GetPlayer())
 EnemySecondActor.StartCombat(Alias_Leader.GetActorReference())
 EnemySecondActor.StartCombat(Alias_Second.GetActorReference())
 
+EnemyLeaderActor.StartCombat(Game.GetPlayer())
 EnemyLeaderActor.StartCombat(Alias_Second.GetActorReference())
 EnemyLeaderActor.StartCombat(Alias_Leader.GetActorReference())
+
+EnemyLeaderActor.SetNoBleedoutRecovery(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -670,17 +666,13 @@ Alias_EnemySecond.TryToMoveTo(Alias_EnemySecondMarker.GetReference())
 
 Alias_EnemyLeader.GetActorReference().SetCrimeFaction(None)
 Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
-;CWO TODO I think more setup needs to be done here
-if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
-	Actor PlayerActor = Game.GetPlayer()
-Else
-	if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
-		kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
-	else
-		kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
-	
-	endif	
-endif
+
+if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
+	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
+else
+	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
+
+endif	
 
 ;END CODE
 EndFunction

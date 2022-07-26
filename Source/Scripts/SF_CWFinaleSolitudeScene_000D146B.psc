@@ -23,7 +23,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_4
 Function Fragment_4()
 ;BEGIN CODE
-;game.enablePlayerControls()
+game.enablePlayerControls(true, false)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -31,7 +31,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN CODE
-; debug.trace(self + "Begin")
+debug.trace(self + "Begin")
 ;END CODE
 EndFunction
 ;END FRAGMENT

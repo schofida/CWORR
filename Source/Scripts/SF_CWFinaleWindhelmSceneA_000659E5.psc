@@ -31,7 +31,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
 ;BEGIN CODE
-;game.enablePlayerControls()
+game.enablePlayerControls(true, false)
 ;END CODE
 EndFunction
 ;END FRAGMENT

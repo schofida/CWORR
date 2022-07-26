@@ -86,9 +86,6 @@ LeveledItem Property CWFinaleFactionLeaderSwordList Auto
 
 Faction Property CWFinaleTemporaryAllies  Auto  
 
-Actor CWFinalLossEnemy1
-Actor CWFinalLossEnemy2
-
 Function PlayerEnteredCastle()
 	setStage(100)
 	
@@ -107,23 +104,8 @@ Function PlayerEnteredCastle()
 	PlayerActor.StopCombat()
 	PlayerActor.StopCombatAlarm()
 
-	;CWO Set up finale scene in case player loses the war
-	if cws.cwcampaigns.PlayerAllegianceLastStand() ;CWO
-		Leader.TryToMoveTo(EnemyLeader.GetActorReference() as objectreference)
-		Second.TryToMoveTo(EnemySecond.GetActorReference() as objectreference)
-		PlayerActor.MoveTo(EnemyLeader.GetActorReference())
-		if cws.playerAllegiance == cws.iImperials
-			CWFinalLossEnemy1 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierSons)
-			CWFinalLossEnemy2 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierSons)
-		Else
-			CWFinalLossEnemy1 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierImperial)
-			CWFinalLossEnemy2 = PlayerActor.PlaceActorAtMe(CWFinaleSoldierImperial)			
-		endif
-	else ;CWO
-		Leader.TryToMoveTo(PlayerActor as objectreference) ;CWO
-		Second.TryToMoveTo(PlayerActor as objectreference) ;CWO
-	endIf
-
+	Leader.TryToMoveTo(PlayerActor)
+	Second.TryToMoveTo(PlayerActor)
 	
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionHaafingar)
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionEastmarch)
@@ -136,16 +118,13 @@ Function PlayerEnteredCastle()
 	;wait before scene otherwise you miss the first bit of dialogue about locking the door
 	Game.DisablePlayerControls()
 
-	;CWO - TODO Put player in bleedout while final scene plays
-	if cws.cwcampaigns.PlayerAllegianceLastStand() ;CWO
-		CWFinalLossEnemy1.StartCombat(PlayerActor)
-		CWFinalLossEnemy2.StartCombat(PlayerActor)	
-	endif
 	Utility.Wait(PauseBeforeScene)
 	
 	startSceneA()
 	
 	;TURN OFF THE FORT SIEGE
+	CWFortSiegeS.AttackersHaveWon = true
+	CWFortSiegeS.DefendersHaveWon = false
 	CWFortSiegeS.DisableAllAliases()
 	
 ; 	CWScript.Log("CWFinaleScript", "PlayerEnteredCastle() calling stop() on CWFortSiege")
