@@ -1996,7 +1996,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 ;Set Dialog States
 kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 
-	else
+    else
 		;Currently no defense planned
 
 	endif
@@ -4294,7 +4294,9 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		endif
 		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
-		SetStage(50)
+		;Set Dialog States
+		kmyquest.CWStateAttackerAtGate.SetValue(1)
+		kmyquest.CWStateDefenderLastStand.SetValue(1)
 
 	else
 		;Currently no defense planned

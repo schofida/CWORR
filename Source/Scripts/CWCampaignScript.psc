@@ -393,6 +393,10 @@ Event OnInit()
 		candocwmission07 = 0
 	endif
 
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath
+		CWFortSiegeFortDone = 1
+	endif
+
  EndEvent
 
 
@@ -1958,20 +1962,34 @@ endFunction
 
 bool function isCWMissionsOrSiegesRunning()
 	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning()")
-	bool ret = CWMission01.IsRunning() || \
-		CWMission02.IsRunning() || \
-		CWs.CWMission03.IsRunning()  || \
-		CWs.CWMission04.IsRunning()  || \
-		CWMission05.IsRunning() || \
-		CWMission06.IsRunning() || \
-		CWs.CWMission07.IsRunning()  || \
-		CWMission08Quest.IsRunning() || \
-		CWMission09.IsRunning() || \
-		CWs.CWFortSiegeFort.IsRunning() || \
-		CWs.CWFortSiegeCapital.IsRunning() || \
-		CWSiege.IsRunning()
+	string ret = ""
+	if CWMission01.IsRunning()
+		ret = "CWMission01"
+	elseif CWMission02.IsRunning()
+		ret = "CWMission02"
+	elseif CWs.CWMission03.IsRunning()
+		ret = "CWMission03"
+	elseif CWs.CWMission04.IsRunning()
+		ret = "CWMission04"
+	elseif CWMission05.IsRunning()
+		ret = "CWMission05"
+	elseif CWMission06.IsRunning()
+		ret = "CWMission06"
+	elseif CWs.CWMission07.IsRunning()
+		ret = "CWMission07"
+	elseif CWMission08Quest.IsRunning()
+		ret = "CWMission08Quest"
+	elseif CWMission09.IsRunning()
+		ret = "CWMission09"
+	elseif CWs.CWFortSiegeFort.IsRunning()
+		ret = "CWFortSiegeFort"
+	elseif CWs.CWFortSiegeCapital.IsRunning()
+		ret = "CWFortSiegeCapital"
+	elseif CWSiege.IsRunning()
+		ret = "CWSiege"
+	endif
 	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
-	return ret
+	return StringUtil.GetLength(ret) > 0
 endFunction
 
 function ResolveCivilWarFailOffscreen()
