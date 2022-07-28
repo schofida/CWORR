@@ -2518,8 +2518,11 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;DONE ELSEWHERE, BUT JUST IN CASE:
 ;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-if kmyquest.CWs.WhiterunSiegeFinished == False
-	kmyquest.CWs.WhiterunSiegeFinished = True
+
+if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
+	if kmyquest.CWs.WhiterunSiegeFinished == False
+		kmyquest.CWs.WhiterunSiegeFinished = True
+	endif
 endif
 
 ;Unlock the windhelm gate in case it's locked
@@ -2659,37 +2662,37 @@ kmyquest.WhiterunAmbExt03.Disable()
 
 
 ;release reservations
+if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
+	if ((kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials && kmyQuest.CWs.CWCampaignS.failedMission == 1) || (kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iSons && kmyQuest.CWs.CWCampaignS.failedMission == 0))
+		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+		Alias_WhiterunHeimskrNewHome.GetReference().Enable()
 
-if ((kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials && kmyQuest.CWs.CWCampaignS.failedMission == 1) || (kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iSons && kmyQuest.CWs.CWCampaignS.failedMission == 0))
-	;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
-	Alias_WhiterunHeimskrNewHome.GetReference().Enable()
+		;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
+		
+		;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
+		RiverwoodStormcloaksMarker.Enable()
+		RiverwoodImperialsMarker.Disable()
+		
+		;schofida - Whiterun has repeating sieges
+		;schofida - Heimskr released from Jail :)
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Disable()
+		USLEEPHeimskrPreachJail.SetStage(8)
+	else
+		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+		Alias_WhiterunHeimskrNewHome.GetReference().Disable()
+		;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
+		
+		;schofida - Whiterun has repeating sieges
+		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Disable()
+		RiverwoodStormcloaksMarker.Disable()
+		RiverwoodImperialsMarker.Enable()
 
-	;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
-	Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
-	
-	;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
-	RiverwoodStormcloaksMarker.Enable()
-	RiverwoodImperialsMarker.Disable()
-	
-	;schofida - Whiterun has repeating sieges
-	;schofida - Heimskr released from Jail :)
-	Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Disable()
-	USLEEPHeimskrPreachJail.SetStage(8)
-else
-	;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
-	Alias_WhiterunHeimskrNewHome.GetReference().Disable()
-	;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
-	Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
-	
-	;schofida - Whiterun has repeating sieges
-	Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Disable()
-	RiverwoodStormcloaksMarker.Disable()
-	RiverwoodImperialsMarker.Enable()
-
-	;USKP 2.0.1 - Heimskr goes to Jail :(
-	USLEEPHeimskrPreachJail.SetStage(3)
-EndIf
-
+		;USKP 2.0.1 - Heimskr goes to Jail :(
+		USLEEPHeimskrPreachJail.SetStage(3)
+	EndIf
+endif
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
 ;if either attack or defense
@@ -2756,10 +2759,11 @@ elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage()
 endif
 
 ;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
+if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
 kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-
 ;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
 kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
+endif
 
 ;END CODE
 EndFunction
@@ -3589,13 +3593,13 @@ kmyquest.ToggleOffComplexWIInteractions(Alias_City)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
-if kmyQuest.IsAttack() && (cityVar == kmyquest.CWs.WhiterunLocation || cityVar == kmyquest.CWs.WhiterunLocation || cityVar == kmyquest.CWs.WhiterunLocation) && utility.randomint(0, 100) < 50
+if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
 	Actor OldGeneral
 	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
 		if OldGeneral != none
 			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBAttleTullius, 1, false, true) as Actor
-			OldGeneral.MoveTo(Alias_AttackerImperial2.GetActorRef())
+			OldGeneral.MoveTo(Alias_AttackerImperial1.GetActorRef())
 			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
 		endif
@@ -3603,7 +3607,7 @@ if kmyQuest.IsAttack() && (cityVar == kmyquest.CWs.WhiterunLocation || cityVar =
 		OldGeneral = Alias_AttackerSons1.GetActorRef()
 		if OldGeneral != none
 			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBattleUlfric, 1, false, true) as Actor
-			OldGeneral.MoveTo(Alias_AttackerSons2.GetActorRef())
+			OldGeneral.MoveTo(Alias_AttackerSons1.GetActorRef())
 			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerSons2.ForceRefTo(OldGeneral)
 		endif
@@ -3715,8 +3719,6 @@ Alias_NonRespawningDefenderSons6.TryToDisable()
 if cityVar == kmyQuest.CWs.WindhelmLocation
 	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
 	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
-	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
-	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
 endif
 
 Alias_Barricade1A.TryToReset()
@@ -3813,7 +3815,11 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_Objective2A.GetReference())  ;Bridge lever1
 	kmyquest.CWSiegeObjObjective2B.ForceRefTo(Alias_Objective2B.GetReference())   ;Bridge lever2
 
-	if !kmyquest.IsAttack() && kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials
+	if kmyquest.IsAttack() && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iSons
+		(Alias_AttackerSons1.GetReference()).Disable()
+		(Alias_Attacker1General).ForceRefTo(Alias_WhiterunAttackerGalmar.GetReference())
+		kmyquest.CWSiegeObjGeneral.ForceRefTo(Alias_Attacker1General.GetReference())
+	elseif !kmyquest.IsAttack() && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
 		(Alias_DefenderImperial1.GetReference()).Disable()
 		(Alias_Defender1General).ForceRefTo(Alias_WhiterunDefenderRikke.GetReference())
 		kmyquest.CWSiegeObjGeneral.ForceRefTo(Alias_Defender1General.GetReference())
