@@ -1,30 +1,15 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 7
+;NEXT FRAGMENT INDEX 9
 Scriptname QF_CWSiegeObj_00096E71 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY Objective3B
+;BEGIN ALIAS PROPERTY General
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective3B Auto
+ReferenceAlias Property Alias_General Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Objective2B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective2B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Objective1B
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective1B Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CityGate
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CityGate Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Ulfric
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Ulfric Auto
+;BEGIN ALIAS PROPERTY City
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_City Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Jarl
@@ -32,14 +17,39 @@ ReferenceAlias Property Alias_Ulfric Auto
 ReferenceAlias Property Alias_Jarl Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Objective4B
+;BEGIN ALIAS PROPERTY Objective1B
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective4B Auto
+ReferenceAlias Property Alias_Objective1B Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Objective1A
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_Objective1A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CityGate
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CityGate Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Objective2A
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective2A Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Objective2B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective2B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Objective3B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective3B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Tullius
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Tullius Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Objective4A
@@ -52,43 +62,47 @@ ReferenceAlias Property Alias_Objective4A Auto
 ReferenceAlias Property Alias_Objective3A Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Objective2A
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Objective2A Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY City
-;ALIAS PROPERTY TYPE locationalias
-locationalias Property Alias_City Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Tullius
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Tullius Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY General
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_General Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY TextReplaceAttackDefend
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_TextReplaceAttackDefend Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
+;BEGIN ALIAS PROPERTY Objective4B
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Objective4B Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Ulfric
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Ulfric Auto
+;END ALIAS PROPERTY
+
+;BEGIN FRAGMENT Fragment_7
+Function Fragment_7()
+;BEGIN CODE
+stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_8
+Function Fragment_8()
+;BEGIN CODE
+stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_3
+Function Fragment_3()
 ;BEGIN AUTOCAST TYPE CWSiegeObjScript
 Quest __temp = self as Quest
 CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-;SUCCESS
-; debug.trace("CWSiegeObj Stage 9000")
-CompleteAllObjectives()
-kmyquest.CWs.displayFactionLeaderObjective()
-stop()
+self.CompleteAllObjectives()
+	kmyQuest.CWs.displayFactionLeaderObjective()
+	self.stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -101,38 +115,24 @@ CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;FAILED
-; debug.trace("CWSiegeObj Stage 8999")
+debug.trace("CWSiegeObj Stage 8999")
 stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_3
-function Fragment_3()
-;BEGIN AUTOCAST TYPE CWSiegeObjScript
-Quest __temp = self as Quest
-cwsiegeobjscript kmyQuest = __temp as cwsiegeobjscript
-;END AUTOCAST
-;BEGIN CODE
-	self.CompleteAllObjectives()
-	kmyQuest.CWs.displayFactionLeaderObjective()
-	self.stop()
-;END CODE
-endFunction
-;END FRAGMENT
-
 ;BEGIN FRAGMENT Fragment_6
-function Fragment_6()
+Function Fragment_6()
 ;BEGIN AUTOCAST TYPE CWSiegeObjScript
 Quest __temp = self as Quest
-cwsiegeobjscript kmyQuest = __temp as cwsiegeobjscript
+CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-	self.CompleteAllObjectives()
+self.CompleteAllObjectives()
 	kmyQuest.CWs.displayFactionLeaderObjective()
 	self.stop()
 ;END CODE
-endFunction
+EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
