@@ -1480,10 +1480,35 @@ CWReinforcementControllerScript kmyQuest = __temp as CWReinforcementControllerSc
 ;FAILURE!
 CWScript.Log("CWFortSiege", "Stage 9200: FAILURE!!! Calling Stop() on quest.")
 
-((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(99, MissionFailure = true)
-
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
 	((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(99, MissionFailure = true)
+
+
+	location FortLocation = Alias_Fort.GetLocation()
+
+	if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+
+		kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
+
+		;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
+		;CWO - Do not set hold owner from a Fort
+		;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation())
+
+	else		;it's one of the final hold forts, so we need to generate a siege mission:
+		if fortLocation == kmyquest.CWs.FortAmolLocation
+			kmyquest.CWs.EastmarchFortBattleComplete = true
+
+		elseif fortLocation == kmyquest.CWs.FortHraggstadLocation 
+			kmyquest.CWs.HaafingarFortBattleComplete = true
+
+		endif
+
+
+	endif
+
+
+;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
+
 endif
 
 ;CWO Advance campaign
@@ -1790,12 +1815,16 @@ CWScript.Log("CWFortSiege", "Stage 10: Disabling normal garrison markers")
 Alias_GarrisonEnableMarkerImperial.GetReference().Disable()
 Alias_GarrisonEnableMarkerSons.GetReference().Disable()
 
-
+;<TurnOnAliases>------------------
 CWScript.Log("CWFortSiege", "Stage 10: Enabling siege aliases")
-kmyquest.EnableAttackerDefenderAliases()
-kmyquest.EnableGenericAliases()
-kmyquest.EnableInteriorDefenders()
-kmyquest.EnableBarricadesIfIsPlayerAttacking()
+kmyquest.TurnOnAliases(kmyquest.IsPlayerAttacking())	
+
+While kmyquest.DoneTurningOnAliases == false
+;do nothing
+	utility.wait(1)
+ 	CWScript.Log("CWFortSiege", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
+endWhile
+;</TurnOnAliases>-----------------
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
  	CWScript.Log("CWFortSiege", "Stage 10: setting objective displayed based on if the player is attacking or defending")

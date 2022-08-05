@@ -199,6 +199,7 @@ state Rolling
 
 	function OnUpdate()
 		;obselete
+		registerforsingleupdate(30)
 	endFunction
 endState
 

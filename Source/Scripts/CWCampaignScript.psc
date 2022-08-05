@@ -296,10 +296,13 @@ Bool Property CWMission08Done Auto Hidden Conditional
 Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
 ObjectReference Property CWSiegeBarricadeWindhelmA Auto
 ObjectReference Property CWSiegeBarricadeWindhelmB Auto
+ObjectReference Property CWSiegeBarricadeSolitudeA Auto
+ObjectReference Property CWSiegeBarricadeSolitudeB Auto
 Faction Property CWSoldierPlayerEnemyFaction Auto
 ObjectReference Property WindhelmExteriorGate01 Auto
 ObjectReference Property WindhelmExteriorGate02 Auto
 ObjectReference Property SolitudeExteriorGate01 Auto
+Faction Property CWODefensiveFaction Auto
 
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
@@ -1699,12 +1702,18 @@ Function StartMissions()
 	;*******************************************************************
 	;Do not do anything if missions are already running.
 	CWScript.Log("CWCampaignScript", " StartMissions()")
-	if StartMissionsRunning || isCWMissionsOrSiegesRunning()
-		CWScript.Log("CWCampaignScript", "StartMissions() Missions already running. Bailing out")
+	if StartMissionsRunning
+		CWScript.Log("CWCampaignScript", "StartMissions() in progress...")
 		return
 	endif
 
 	StartMissionsRunning = true
+
+	if isCWMissionsOrSiegesRunning()
+		CWScript.Log("CWCampaignScript", "StartMissions() Missions already running. Bailing out")
+		StartMissionsRunning = false
+		return
+	endif
 		
 	If CWCampaignPhase.value < ResolutionPhase		;then start normal missions
 	
@@ -1985,7 +1994,7 @@ bool function isCWMissionsOrSiegesRunning()
 		ret = "CWFortSiegeFort"
 	elseif CWs.CWFortSiegeCapital.IsRunning()
 		ret = "CWFortSiegeCapital"
-	elseif CWSiege.IsRunning()
+	elseif (CWSiege as CWSiegeScript).GetQuestStillRunning()
 		ret = "CWSiege"
 	endif
 	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
@@ -2058,17 +2067,10 @@ Function StartSpanishInquisition(LocationAlias holdToStart)
 	ObjectReference SACampaignStartMarker =  CWs.getCampaignStartMarker(CWs.getIntForHoldLocation(SAHoldLoc))
 
 	If Capital.GetLocation().HasKeyword(LocTypeCity) && CWs.debugTreatCityCapitalsAsTowns == 0 && CWSiegeStart.SendStoryEventAndWait(holdToStart.GetLocation(), SAFieldCO);capital is a city (note the debugTreatCityCapitalsAsTowns)
-	
 		while CWSiege.GetStageDone(0) == False
-
+			Utility.Wait(1)
 		EndWhile
-		SetStage(200)
-
-	Elseif CWs.CWFortSiegeMinorCapitalStart.SendStoryEventAndWait(holdToStart.GetLocation(), SAFieldCO, SACampaignStartMarker)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
-	
-		while CWs.CWFortSiegeCapital.GetStageDone(0) == False
-
-		EndWhile
+		(SAFieldCO As Actor).AddToFaction(CWODefensiveFaction)
 		SetStage(200)
 	EndIf
 

@@ -27,11 +27,11 @@ Event OnCellAttach()
 	
 	Actor RikkeOrGalmar
 	
-	if myLocation.HasKeyword(CWCampImperial)
+	if myLocation.HasKeyword(CWCampImperial) && CW.PlayerAllegiance == CW.iImperials
  		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampImperial trying to starting Imperial missions")
 		RikkeOrGalmar = RikkeRef
 
-	ElseIf myLocation.HasKeyword(CWCampSons)
+	ElseIf myLocation.HasKeyword(CWCampSons) && CW.PlayerAllegiance == CW.iSons
  		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampSons trying to starting Sons missions")
 		RikkeOrGalmar = GalmarRef
 	

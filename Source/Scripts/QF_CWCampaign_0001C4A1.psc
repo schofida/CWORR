@@ -343,8 +343,6 @@ CWCampaignScript kmyQuest = __temp as CWCampaignScript
 ;Stage 200... This stage will be set when a CWO 'Spanish Inquisition' occurs
 if kmyQuest.CWsiege.IsRunning()
     kmyQuest.CWsiege.SetStage(1)
-elseIf kmyQuest.CWs.CWFortSiegeCapital.IsRunning()
-    kmyQuest.CWs.CWFortSiegeCapital.SetStage(10)
 endIf
 ;END CODE
 EndFunction

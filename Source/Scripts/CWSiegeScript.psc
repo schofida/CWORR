@@ -1640,3 +1640,7 @@ GlobalVariable Property CWDistantCatapultsAMB  Auto
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission08 quest")
 endfunction
+
+bool function GetQuestStillRunning()
+	return City.GetLocation().GetKeywordData(CWs.CWSiegeRunning) as int == 1
+endfunction
