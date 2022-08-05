@@ -2493,6 +2493,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
+Debug.Notification("Siege is getting cleaned up. This can take some time, Please wait until finished to resume Civil War.")
 
 if CWBattleCommanderTemp != none
 	CWBattleCommanderTemp.DisableNoWait()
@@ -2748,22 +2749,27 @@ kmyquest.CWStateDefenderLastStand.SetValue(0)
 kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
-Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
+
+;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
+if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
+	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+	;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
+	kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
+endif
 
 ;CWO - Shut down campaign if its running
+Debug.Notification("Stopping Campaign")
 if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+	Debug.Notification("In condition.. Setting Campaign Stage to 255")
 	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
 	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = true
 endif
 
-;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
-if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
-kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
-kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
-endif
+; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
+Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
+
+Debug.Notification("Siege has finished cleaning up. If you are attacking, you may now speak to the commander to get the next quest.")
 
 ;END CODE
 EndFunction
@@ -2920,6 +2926,10 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 	endif
 
+endif
+
+if kmyQuest.CWs.CWCampaign.GetStage() == 200
+	Alias_FieldCO.GetActorRef().RemoveFromFaction(kmyQuest.CWs.CWCampaignS.CWODefensiveFaction)
 endif
 ;END CODE
 EndFunction
@@ -3575,7 +3585,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
-
+Debug.Notification("Siege is getting ready behind the scenes. This can take some time. Please wait before speaking to Officer.")
 ;CWO Start Courier Defense Quest
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
 
@@ -3719,6 +3729,9 @@ Alias_NonRespawningDefenderSons6.TryToDisable()
 if cityVar == kmyQuest.CWs.WindhelmLocation
 	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
 	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
+elseif cityVar == kmyQuest.CWs.SolitudeLocation 
+	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeA)
+	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeB)
 endif
 
 Alias_Barricade1A.TryToReset()
@@ -3785,6 +3798,7 @@ kmyquest.CWSiegeObj.start()
 	
 While kmyquest.CWSiegeObj.IsRunning() == 0
 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Waiting for CWSiegeObjquest.IsRunning() != 0")	;*** WRITE TO LOG
+	Utility.Wait(1)
 	;do nothing
 endwhile
 
@@ -3847,7 +3861,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	kmyquest.CurrentCity = 1
 	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference())  ;First Barricade
-	kmyquest.CWSiegeObjObjective1B.ForceRefTo(Alias_Objective1B.GetReference())  ;First Barricade
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_SolitudeGateLever1.GetReference())  ;Exterior Gate
 	kmyquest.CWSiegeObjObjective3A.ForceRefTo(Alias_Objective3A.GetReference())  ;Final Barricade
 
@@ -3874,7 +3887,7 @@ if kmyquest.IsAttack() == false
 	kmyquest.CWs.CWPrepareCityStart.SendStoryEvent(Alias_City.GetLocation())
 endif
 
-
+Debug.Notification("Seige is done setting up. You may now speak to the CO.")
 
 
 
@@ -4078,8 +4091,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
 
 	else
 		;Currently no defense planned
@@ -4298,8 +4311,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		else
 			;Do nothing since the player didn't hit the skip trigger.
 		endif
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
 		;Set Dialog States
 		kmyquest.CWStateAttackerAtGate.SetValue(1)
 		kmyquest.CWStateDefenderLastStand.SetValue(1)
