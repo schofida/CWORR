@@ -1426,11 +1426,12 @@ function FailAttackQuest(locationAlias CityAlias)
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
 
 
-	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
+	;while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailAttackQuest() Waiting for player to leave City before stoping Siege quest")
-		utility.wait(5)
-	endwhile
-	stop()
+	;	utility.wait(5)
+	;endwhile
+	;stop()
+	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 
 EndFunction
 
@@ -1477,11 +1478,12 @@ function FailDefenseQuest(locationAlias CityAlias)
 	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
 	
-	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
+;	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
-		utility.wait(5)
-	endwhile
-	stop()
+;		utility.wait(5)
+;	endwhile
+;	stop()
+	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 
 EndFunction
 
@@ -1520,12 +1522,13 @@ CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
 ;CWs.CWCampaign.setStage(255) -- OBSOLETE
 
-while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
+;while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 	CWScript.Log("CWSiegeScript", self + "SucceedDefenseQuest(): Waiting for player to leave City before stoping Siege quest")
-	utility.wait(5)
-endwhile
-stop()
+;	utility.wait(5)
+;endwhile
+;stop()
 
+CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 
 EndFunction
 
@@ -1642,5 +1645,10 @@ function TryToFixQuest()
 endfunction
 
 bool function GetQuestStillRunning()
-	return City.GetLocation().GetKeywordData(CWs.CWSiegeRunning) as int == 1
+	Location cityLoc = City.GetLocation() 
+	return cityLoc != None && cityLoc.GetKeywordData(CWs.CWSiegeRunning) as int == 1
+endfunction
+
+bool function PlayerInMajorCity(Actor PlayerRef)
+	return PlayerRef.IsInLocation(City.GetLocation())
 endfunction

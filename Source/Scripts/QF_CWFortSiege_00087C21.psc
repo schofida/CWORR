@@ -1106,7 +1106,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 ;Defender at 25% reinforcements remaining
 
-if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1 && kmyquest.IsPlayerAttacking()
 
  	CWScript.Log("CWFortSiege", "Stage 920: Moving Jarl and Housecarl and adding them to civil war faction to make them enemies of player faction")
 
@@ -1114,24 +1114,30 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 	Actor HousecarlActor = Alias_Housecarl.GetActorReference()
 
 	;CWO Null check, bail out if
-	if JarlActor == none
+	if JarlActor == none || JarlActor.GetActorBase() == kmyQuest.CWs.CWCampaignS.JarlIdgrodRavencrone as ActorBase || JarlActor.GetActorBase() == kmyQuest.CWs.CWCampaignS.JarlSiddgeir as ActorBase
 		return
 	endif
 
+	JarlActor.Enable()
+	HousecarlActor.Enable()
 	;move them into position
 	JarlActor.moveTo(Alias_JarlMarker.GetReference())
 	HousecarlActor.moveTo(JarlActor)
 
 	;CWO Set objective based off player attacking/defending
 	if kmyquest.IsPlayerAttacking()
-		SetObjectiveDisplayed(110)
+	SetObjectiveDisplayed(110)
 
-		;add them to enemy faction
-		JarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
-		HousecarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
-	Else
-		SetObjectiveDisplayed(210)
-	endif
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = false
+
+	;add them to enemy faction
+	JarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
+	HousecarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
+	JarlActor.setOutfit(kmyquest.CWS.CWCampaignS.CWArmorBalgruufSteelPlateNoHelmetOutfit)
+Else
+	SetObjectiveDisplayed(210)
+endif
 
 	;mod their aggression
 	(Alias_Jarl as DefaultAliasModAggression).ModAggression()			;values set in properties of scrip attached to alias
@@ -1181,22 +1187,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	((self as Quest) as CWFortSiegeScript).AttackersHaveWon = !((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	((self as Quest) as CWFortSiegeScript).DefendersHaveWon = ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), !((self as Quest) as CWFortSiegeScript).WasThisAnAttack, ((self as Quest) as CWFortSiegeScript).WasThisAnAttack)
-elseif ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 && kmyQuest.CWS.CWCampaignS.PlayerAllegianceLastStand()
-	;CWO - Uh oh! Player lost the defending hold. Unlock door out of city
-	;CWO - TODO. lock/unlock door back into HQ
-	Alias_SpecialCityDoorExterior.GetReference().Lock(false)
-	if Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
-		;CWO This will HOPEFULLY get allies to flee the city and cause enemies to run into the HQ
-		((self as quest) as CWFortSiegeScript).CWBattlePhase.SetValue(6)
-		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-	else
-		;TODO this needs to be called if Player leaves city. This would've
-		;been hit if player was knocked out and we reported failure from camp
-		kmyquest.CWs.CWCampaignS.ResolveCivilWarFailOffscreen()
-	endif
 endif
 
-stop()
+kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1209,7 +1202,10 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;ATTACKER WIPED OUT!
-
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
 CWScript.Log("CWFortSiege", "Stage 2000: Attacker wiped out, determined success or failure")
 ;CWO Stop ambience
 kmyquest.StopCombatSoundsLoop()
@@ -1259,10 +1255,24 @@ CWScript.Log("CWFortSiege", "Stage 950: Jarl Surrenders")
 
 ;CWO Account for player attacking or defending
 if kmyQuest.IsPlayerAttacking()
-	SetObjectiveCompleted(110)
+	Actor JarlActor = Alias_Jarl.GetActorReference()
+	Actor HousecarlActor = Alias_Housecarl.GetActorReference()
+
+	if JarlActor.GetActorBase() == kmyQuest.CWs.CWCampaignS.JarlIdgrodRavencrone as ActorBase || JarlActor.GetActorBase() == kmyQuest.CWs.CWCampaignS.JarlSiddgeir as ActorBase
+		JarlActor.Enable()
+		HousecarlActor.Enable()
+		;move them into position
+		JarlActor.moveTo(Alias_JarlMarker.GetReference())
+		HousecarlActor.moveTo(JarlActor)
+	else
+		SetObjectiveCompleted(110)
+	endif
 Else
 	SetObjectiveFailed(210)	
 endif
+
+;CWO Clear hold crime just like major city sieges
+kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
 
 ;remove them from enemy faction
 ;CWO Account for player attacking or defending
@@ -1307,14 +1317,8 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 
 ((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True)
-location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
+;location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
 ;kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(currentHold, AttackersWon = true, DefendersWon = false)
-;CWO Account for player attacking or defending
-if kmyQuest.WasThisAnAttack
-	kmyquest.CWs.CompleteCWObj(currentHold)
-Else
-	kmyquest.CWs.FailCWObj(currentHold)
-endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1340,15 +1344,20 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;DO NOT MAKE THIS A STARTUP STAGE!!!
+SiegeFinished = false
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
+((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 ;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeCapital
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingDefenderObjective = 100
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 200
 
 ;CWO - Start Courier quest where applicable
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_Fort.GetLocation())
+
+Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 1)
 
 ;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
 CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
@@ -1534,6 +1543,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 ;	debug.messagebox("TEMP: Disabling Map marker, until I can disable fast travel or move heading marker.")
 	Alias_MapMarker.GetReference().disable()
 
+	Alias_Jarl.TryToDisable()
+	Alias_HouseCarl.TryToDisable()
+
 endif
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
@@ -1681,6 +1693,9 @@ kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
+;CWO Account for player attacking or defending
+kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
+
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO Set proper CW flags
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
@@ -1705,7 +1720,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 
 endif
 
-stop()
+kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1736,7 +1751,10 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;DEFENDER WIPED OUT!
-
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
 CWScript.Log("CWFortSiege", "Stage 1000: Defender wiped out, determined success or failure")
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
@@ -1746,61 +1764,55 @@ kmyQuest.CWs.ContestedHoldWinner = kmyQuest.CWs.GetAttacker(Alias_Fort.GetLocati
 ;CWO Test for jarl alias to make sure it exists
 Actor JarlActor = Alias_Jarl.GetActorReference()
 
-If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1 && Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation()) &&  JarlActor != none
+If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1 && Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation()) && kmyquest.IsPlayerAttacking() && JarlActor != none
 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
 	
-	if  kmyquest.IsPlayerAttacking()
+	setObjectiveCompleted(100)
+	setStage(950)
+
+elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+
+	if kmyquest.IsPlayerAttacking()
 		;CWO Clear hold crime just like major city sieges
 		kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
 		setObjectiveCompleted(100)
+		setStage(9000) ;SUCCESS!
+	else 
+		SetObjectiveFailed(200)
+		setStage(9200) ;FAILURE!
 	endif
 
-	setStage(950)
+	Alias_Defender1.TryToEvaluatePackage()
+	Alias_Defender2.TryToEvaluatePackage()
+	Alias_Defender3.TryToEvaluatePackage()
+	Alias_Defender4.TryToEvaluatePackage()
+	Alias_Defender5.TryToEvaluatePackage()
+	Alias_Defender6.TryToEvaluatePackage()
+	Alias_Defender7.TryToEvaluatePackage()
+	Alias_Defender8.TryToEvaluatePackage()
+	Alias_Defender9.TryToEvaluatePackage()
+	Alias_Defender10.TryToEvaluatePackage()
+	
+	Alias_InteriorDefender1.TryToEvaluatePackage()
+	Alias_InteriorDefender2.TryToEvaluatePackage()
+	Alias_InteriorDefender3.TryToEvaluatePackage()
+	Alias_InteriorDefender4.TryToEvaluatePackage()
+	Alias_InteriorDefender5.TryToEvaluatePackage()
+	Alias_InteriorDefender6.TryToEvaluatePackage()
+	Alias_InteriorDefender7.TryToEvaluatePackage()
+	Alias_InteriorDefender8.TryToEvaluatePackage()
+	Alias_InteriorDefender9.TryToEvaluatePackage()
+	Alias_InteriorDefender10.TryToEvaluatePackage()
+	Alias_InteriorDefender11.TryToEvaluatePackage()
+	Alias_InteriorDefender12.TryToEvaluatePackage()
+	Alias_InteriorDefender13.TryToEvaluatePackage()
+	Alias_InteriorDefender14.TryToEvaluatePackage()
+	Alias_InteriorDefender15.TryToEvaluatePackage()
+	Alias_InteriorDefender16.TryToEvaluatePackage()	
 
-else
-
-if kmyquest.IsPlayerAttacking()
-	;CWO Clear hold crime just like major city sieges
-	kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
-	setObjectiveCompleted(100)
-	setStage(9000) ;SUCCESS!
-else 
-	SetObjectiveFailed(200)
-	setStage(9200) ;FAILURE!
 endif
 
 
-
-endif
-
-
-Alias_Defender1.TryToEvaluatePackage()
-Alias_Defender2.TryToEvaluatePackage()
-Alias_Defender3.TryToEvaluatePackage()
-Alias_Defender4.TryToEvaluatePackage()
-Alias_Defender5.TryToEvaluatePackage()
-Alias_Defender6.TryToEvaluatePackage()
-Alias_Defender7.TryToEvaluatePackage()
-Alias_Defender8.TryToEvaluatePackage()
-Alias_Defender9.TryToEvaluatePackage()
-Alias_Defender10.TryToEvaluatePackage()
-
-Alias_InteriorDefender1.TryToEvaluatePackage()
-Alias_InteriorDefender2.TryToEvaluatePackage()
-Alias_InteriorDefender3.TryToEvaluatePackage()
-Alias_InteriorDefender4.TryToEvaluatePackage()
-Alias_InteriorDefender5.TryToEvaluatePackage()
-Alias_InteriorDefender6.TryToEvaluatePackage()
-Alias_InteriorDefender7.TryToEvaluatePackage()
-Alias_InteriorDefender8.TryToEvaluatePackage()
-Alias_InteriorDefender9.TryToEvaluatePackage()
-Alias_InteriorDefender10.TryToEvaluatePackage()
-Alias_InteriorDefender11.TryToEvaluatePackage()
-Alias_InteriorDefender12.TryToEvaluatePackage()
-Alias_InteriorDefender13.TryToEvaluatePackage()
-Alias_InteriorDefender14.TryToEvaluatePackage()
-Alias_InteriorDefender15.TryToEvaluatePackage()
-Alias_InteriorDefender16.TryToEvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1845,10 +1857,10 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 ; debug.trace("TEMP: Enabling Map marker, until I can disable/enable fast travel or move heading marker.")
 Alias_MapMarker.GetReference().enable()
 
-while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
-	utility.wait(5)	
- 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
-endwhile
+;while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
+;	utility.wait(5)	
+; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
+;endwhile
 
 Debug.Notification("Siege is cleaning up behind the scenes. This can take some time. Please wait before continuing CW.")
 
@@ -1881,7 +1893,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 		CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
-		kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+		kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 
 endif
 
@@ -1895,6 +1907,9 @@ endif
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): removing aliases from CWSurrentTemporaryAllies faction")
 ;make them temporarily allies
 Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+
+Alias_Jarl.TryToEnable()
+Alias_HouseCarl.TryToEnable()
 
 Alias_Jarl.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
 Alias_HouseCarl.TryToRemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
@@ -1987,6 +2002,8 @@ if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 
 kmyQuest.CWs.CWCampaign.SetStage(255)
 endif
 
+Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
+
 Debug.Notification("Siege cleanup has completed. You may now speak with the Commander.")
 ;END CODE
 EndFunction
@@ -2005,3 +2022,5 @@ Quest Property SolitudeFreeform01  Auto
 Location Property WindhelmPalaceOfTheKingsLocation  Auto
 
 ReferenceAlias Property Alias_QuestGiver Auto
+
+Bool SiegeFinished = false

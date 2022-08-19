@@ -1364,6 +1364,8 @@ endif
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
+((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 ;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 200
 

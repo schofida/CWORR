@@ -2199,7 +2199,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
 kmyquest.AttackersHaveWon = TRUE    ;Attackers have won causing defenders to retreat
 
-kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+;kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
 
 ;Set Dialog States
 kmyquest.CWStateDefenderLastStand.SetValue(1)
@@ -2392,9 +2392,9 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 
 ;schofida - Alot of this routine is assuming that the player is defending Whiterun. Will need to check for otherwise
-if !kmyQuest.isAttack()
-	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-endif
+;if !kmyQuest.isAttack()
+;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+;endif
 ;**CITY SPECIFIC
 Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
@@ -2493,7 +2493,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
-Debug.Notification("Siege is getting cleaned up. This can take some time, Please wait until finished to resume Civil War.")
+Debug.Notification("Siege cleaning up. This can take some time, Please wait until finished to resume Civil War.")
 
 if CWBattleCommanderTemp != none
 	CWBattleCommanderTemp.DisableNoWait()
@@ -2752,7 +2752,7 @@ kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 ;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
 if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
-	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+	kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
 	;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
 	kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
 endif
@@ -2769,7 +2769,7 @@ endif
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 
-Debug.Notification("Siege has finished cleaning up. If you are attacking, you may now speak to the commander to get the next quest.")
+Debug.Notification("Siege clean up done. If you are attacking, you may now speak to the commander to get the next quest.")
 
 ;END CODE
 EndFunction
@@ -3040,6 +3040,8 @@ else ;is Defense
 	;Reddit Bugfix #2
 	((self as Quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
 	;Reddit Bugfix #2
+	((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
+	((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 	((self as Quest) as cwreinforcementcontrollerscript).StageToSetIfDefenderWipedOut = 50
 
 endif
@@ -3367,6 +3369,7 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(20)
 endif
 
+kmyquest.ToggleMapMarkersAndFastTravelStartBattle(kmyquest.IsAttack())	
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 done")
 ;END CODE

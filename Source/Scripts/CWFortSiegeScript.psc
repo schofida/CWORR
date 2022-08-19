@@ -680,3 +680,12 @@ EndFunction
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission08 quest")
 endfunction
+
+bool function PlayerInMinorCity(Actor PlayerRef)
+	return PlayerRef.IsInLocation(Fort.GetLocation())
+endfunction
+
+bool function GetMinorCityQuestStillRunning()
+	Location fortLoc = Fort.GetLocation()
+	return fortLoc != None && fortLoc.GetKeywordData(CWs.CWSiegeRunning) as int == 1
+endfunction

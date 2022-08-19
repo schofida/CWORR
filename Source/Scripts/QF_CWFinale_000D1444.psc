@@ -711,7 +711,7 @@ Game.EnableFastTravel(True)
 if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 
 	kmyquest.CWs.SolitudeLocation.SetKeywordData(kmyquest.CWs.CWOwner, 2)
-	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.HaafingarHoldLocation, true, false)
+;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.HaafingarHoldLocation, true, false)
 	Alias_JarlSolitude.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
 	kmyquest.CWFinaleSolitudeSceneD.Start()
 
@@ -720,7 +720,7 @@ if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 else		;assume windhelm
 
 	kmyquest.CWs.WindhelmLocation.SetKeywordData(kmyquest.CWs.CWOwner, 1)
-	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.EastmarchHoldLocation, true, false)
+;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.EastmarchHoldLocation, true, false)
 	Alias_NewJarlWindhelm.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
 	
 	; USKP 2.0.4 - So he'll stop giving the bandit clearance quest.

@@ -3,6 +3,7 @@ Scriptname CWOMonitorScript extends ReferenceAlias Conditional
 CWscript property cws auto
 Quest property CWSiegeQuest auto
 Quest property CWSiegeCapitalQuest auto
+Quest property CWAttackCityQuest auto
 perk property Perk5 auto
 perk property Perk3 auto
 perk property Perk1 auto
@@ -31,15 +32,15 @@ auto State WaitingToStartNewCampaign
 			registerforsingleupdate(30)
 			return
 		endif
-	
-		if cws.debugForceOffscreenResult == 1 && !CWSiegeQuest.IsRunning() && !CWSiegeCapitalQuest.IsRunning()
+	 
+		if cws.debugForceOffscreenResult == 1 && !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning()
 			GoToState("StartingNewCampaignOffscreenMode")
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaignOffscreenMode.")
 			
 				;### START NEW CAMPAIGN
 				cws.StartNewCampaign()
 			
-		elseif cws.FactionOwnsAll(cws.PlayerAllegiance) && cws.CWDebugForceAttacker.GetValueInt() == cws.PlayerAllegiance && !CWSiegeQuest.IsRunning() && !CWSiegeCapitalQuest.IsRunning() && CWS.CWCampaign.IsRunning() == False
+		elseif cws.FactionOwnsAll(cws.PlayerAllegiance) && cws.CWDebugForceAttacker.GetValueInt() == cws.PlayerAllegiance && !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && CWS.CWCampaign.IsRunning() == False
 			GoToState("WaitingToFinishWar")
 			if cws.PlayerAllegiance == cws.iImperials
 				cws.CWContestedHold.setValueInt(cws.iEastmarch)
@@ -73,7 +74,7 @@ auto State WaitingToStartNewCampaign
 
 			CWs.startCampaignQuest(ContestedHold)
 			
-		elseif !CWSiegeQuest.IsRunning() && !CWSiegeCapitalQuest.IsRunning() && CWS.CWCampaign.IsRunning() == False
+		elseif !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && CWS.CWCampaign.IsRunning() == False
 				GoToState("StartingNewCampaign")
 				CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaign.")
 				
@@ -155,19 +156,69 @@ State WaitingForCampaignToFinish
 		DoPlayerLoadGameStuff()
 	endfunction
 	Event OnUpdate()
+		Actor player = Game.GetPlayer()
+		if cws.CWCampaign.IsRunning() == False
+			GoToState("WaitingToStartNewCampaign")
+
+			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == False, going to state WaitingToStartNewCampaign.")
+			registerforsingleupdate(5)
+		Elseif (CWs.CWAttacker.GetValueInt() == CWs.playerAllegiance && Cws.CwCampaignS.FieldHQ.GetLocation() != none && player.IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation()) && CWs.FieldCO.GetActorRef() != none && CWs.FieldCO.GetActorRef().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())) || CWs.CWDefender.GetValueInt() == CWs.playerAllegiance
+			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
+			CWs.CWCampaignS.StartMissions()
+			registerforsingleupdate(10)
+		Else
+			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, waiting for CWCampaign quest to stop.")
+			registerforsingleupdate(30)
+		endif
+	EndEvent
+EndState
+
+State WaitingForPlayerToBeOutOfMajorCity
+
+	function OnPlayerLoadGame()
+		DoPlayerLoadGameStuff()
+	endfunction
+	Event OnUpdate()
+	
+		if !CWs.CWSiegeS.PlayerInMajorCity(self.GetActorRef())
+			GoToState("WaitingForSiegeToStop")
+			CWSiegeQuest.Stop()
+			CWAttackCityQuest.Stop()
+		endif
+		registerforsingleupdate(5)
+	EndEvent
+EndState
+
+State WaitingForPlayerToBeOutOfMinorCity
+
+	function OnPlayerLoadGame()
+		DoPlayerLoadGameStuff()
+	endfunction
+	Event OnUpdate()
+	
+		if !(CWs.CWFortSiegeCapital As CWFortSiegeScript).PlayerInMinorCity(self.GetActorRef())
+			GoToState("WaitingForSiegeToStop")
+			CWSiegeCapitalQuest.Stop()
+		endif
+		registerforsingleupdate(5)
+	EndEvent
+EndState
+
+State WaitingForSiegeToStop
+
+	function OnPlayerLoadGame()
+		DoPlayerLoadGameStuff()
+	endfunction
+	Event OnUpdate()
 	
 		if cws.CWCampaign.IsRunning() == False
 			GoToState("WaitingToStartNewCampaign")
 
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == False, going to state WaitingToStartNewCampaign.")
-			
-		Elseif (Cws.CwCampaignS.FieldHQ.GetLocation() != none && Game.GetPlayer().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())) || CWs.CWDefender.GetValueInt() == CWs.playerAllegiance
-			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
-			CWs.CWCampaignS.StartMissions()
-		Else
-			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, waiting for CWCampaign quest to stop.")
+			registerforsingleupdate(5)
+		else
+			registerforsingleupdate(5)
 		endif
-		registerforsingleupdate(10)
 	EndEvent
 EndState
 
@@ -255,6 +306,19 @@ function DoPlayerLoadGameStuff()
 		unregisterforupdate()
 		CWOVersion.SetValueInt(10000)
 		GoToState("WaitingToStartNewCampaign")
+	endif
+	if CWOVersion.GetValueInt() < 10003
+		(GetOwningQuest() AS CWOQuestStarter).PlayerAlias.ForceRefTo(Player)
+		CWOVersion.SetValueInt(10003)
+	endif
+	if CWOVersion.GetValueInt() < 10004
+		cws.cwcampaigns.CWOMonitorQuest = GetOwningQuest()
+		CWOVersion.SetValueInt(10004)
+	endif
+	if CWOVersion.GetValueInt() < 10005
+		CWAttackCityQuest = Game.GetForm(0x0004F8BF) as Quest
+		CWS.CWCampaignS.CWAttackCity = CWAttackCityQuest
+		CWOVersion.SetValueInt(10005)
 	endif
 	registerforsingleupdate(30)
 endfunction

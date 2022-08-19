@@ -1260,6 +1260,8 @@ kmyquest.jarlHasSurrendered = 1
 kmyquest.CWSiegeObj.setObjectiveCompleted(1210)
 kmyquest.CWSiegeObj.setStage(9000)
 
+kmyQuest.CWs.contestedHoldWinner = kmyQuest.CWs.PlayerAllegiance
+
 setStage(9000)
 ;END CODE
 EndFunction
@@ -1343,7 +1345,8 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
 kmyquest.CWs.CompleteCWObj(currentHold)
 
-registerForSingleUpdate(5)   ;enters a while loop until the player leaves, then stops this quest and CWSiege quest
+;registerForSingleUpdate(5)   ;enters a while loop until the player leaves, then stops this quest and CWSiege quest
+kmyquest.CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 ;END CODE
 EndFunction
 ;END FRAGMENT

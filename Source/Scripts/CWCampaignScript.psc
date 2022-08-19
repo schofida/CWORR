@@ -233,11 +233,11 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 ;## Activators ##
 
 ;*** !! *** !! *** !! these are now just forms, and will be set with Game.GetForm(HEX ID) function rather than being pointed at in the editor. As soon as we get Activator objects in Papyrus, this need to change to point directly at the activators
-;CWO - Sorry to the Bethesda deb's who had to work on this while the engine was still incomplete :( 
+;CWO - Sorry to the Bethesda dev's who had to work on this while the engine was still incomplete :( 
 Activator Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-
+Activator Property ResourceObjectMine2 auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
@@ -303,6 +303,10 @@ ObjectReference Property WindhelmExteriorGate01 Auto
 ObjectReference Property WindhelmExteriorGate02 Auto
 ObjectReference Property SolitudeExteriorGate01 Auto
 Faction Property CWODefensiveFaction Auto
+ActorBase Property JarlIdgrodRavencrone Auto
+ActorBase Property JarlSiddgeir Auto
+Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
+Quest Property CWOMonitorQuest Auto
 
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
@@ -1581,7 +1585,7 @@ function UpdateCWCampaignObjAliases()
  	CWScript.Log("CWCampaignScript", " UpdateCWCampaignObjAliases() forcing CWCampaignObj aliases to match. ")
 	;CWO - Set to CWs.FieldCO. CWCampaign FieldCO getting filled in conflicts with dialogue and quests so leaving it empty and optional
 	;I dont think CWCampaignObjFieldCO does anything but leave it just in case
-	CWCampaignObjFieldCO.ForceRefTo(CWs.FieldCO.GetReference())
+	CWCampaignObjFieldCO.ForceRefTo(FieldCO.GetActorReference())
 	CWCampaignObjFactionLeader.ForceRefTo(CWs.AliasFactionLeader.GetReference())
 	CWCampaignObjCampaignStartMarker.ForceRefTo(CampaignStartMarker.GetReference())
 	CWCampaignObjCampaignHold.ForceLocationTo(Hold.GetLocation())
@@ -1992,7 +1996,7 @@ bool function isCWMissionsOrSiegesRunning()
 		ret = "CWMission09"
 	elseif CWs.CWFortSiegeFort.IsRunning()
 		ret = "CWFortSiegeFort"
-	elseif CWs.CWFortSiegeCapital.IsRunning()
+	elseif (CWs.CWFortSiegeCapital as CWFortSiegeScript).GetMinorCityQuestStillRunning()
 		ret = "CWFortSiegeCapital"
 	elseif (CWSiege as CWSiegeScript).GetQuestStillRunning()
 		ret = "CWSiege"
@@ -2316,4 +2320,12 @@ function GetCWOUnstuck()
 		return
 	endif
 	debug.notification("Nothing to fix....")
+endfunction
+
+function SetMonitorMajorCitySiegeStopping()
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMajorCity")
+endfunction
+
+function SetMonitorMinorCitySiegeStopping()
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMinorCity")
 endfunction
