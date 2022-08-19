@@ -16,6 +16,7 @@ ObjectReference property CW5SpawnAttackerRiften1 Auto
 ObjectReference property CW5SpawnAttackerRiften2 Auto
 ObjectReference property CW5SpawnAttackerRiften3 Auto
 ObjectReference property CW5SpawnAttackerRiften4 Auto
+ReferenceAlias Property PlayerAlias Auto
 
 Event OnInit()
     utility.Wait(15)
@@ -46,6 +47,6 @@ Event OnInit()
 	CWs.CWDefender.SetValueInt(1)
 	CWS.CWCampaignS.CWDebugSkipPurchase.SetValueInt(1)
 	;That's it for now...
-    Debug.Notification("CWO version " + CWOVersion.GetValue() + " initialized :)")
+    Debug.Notification("CWO version " + CWOVersion.GetValueInt() + " initialized :)")
 endevent
 
