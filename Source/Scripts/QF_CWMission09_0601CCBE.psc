@@ -59,12 +59,16 @@ Function Fragment_1()
     cwmission09script kmyQuest = __temp as cwmission09script
     ;END AUTOCAST
     ;BEGIN CODE
-    ; ; debug.traceConditional("CWMission03 stage 10", kmyquest.CWs.debugon.value)
+    debug.traceConditional("CWMission09 stage 10", kmyquest.CWs.debugon.value)
     
     kmyQuest.FlagFieldCOWithPotentialMissionFactions(9, true)
     
     Alias_Document.TryToEnable()
-    Alias_Document.GetRef().SetActorOwner(kmyQuest.Cws.GetAliasHQFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)).GetActorRef().GetActorBase())
+    if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+        Alias_Document.GetRef().SetFactionOwner(kmyQuest.CWs.CrimeFactionSons)
+    Else
+        Alias_Document.GetRef().SetFactionOwner(kmyQuest.CWs.CrimeFactionImperial)        
+    endif
     
     SetObjectiveDisplayed(10)
     ;END CODE
@@ -84,8 +88,6 @@ Function Fragment_1()
     ; ; debug.traceConditional("CWMission03 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
     
-    ; ; debug.traceConditional("CWMission03 stage 255: turning on complex WI interactions", kmyquest.CWs.debugon.value)
-    kmyquest.ToggleOnComplexWIInteractions(Alias_CWCapitalHQ)
     
     ;END CODE
     EndFunction
@@ -105,8 +107,6 @@ Function Fragment_1()
     
     kmyquest.ResetCommonMissionProperties()
     
-    ; ; debug.traceConditional("CWMission03 stage 0: turning off complex WI interactions", kmyquest.CWs.debugon.value)
-    kmyquest.ToggleOffComplexWIInteractions(Alias_CWCapitalHQ)
     ;END CODE
     EndFunction
     ;END FRAGMENT
