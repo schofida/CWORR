@@ -1888,7 +1888,9 @@ kmyquest.DisableBarricades()
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript StopCWCitizensFlee()")
 	kmyquest.CWs.StopCWCitizensFlee()
-	Alias_CWFortSiegeClutterToggle.GetReference().Disable()
+	if Alias_CWFortSiegeClutterToggle.GetReference() != none
+		Alias_CWFortSiegeClutterToggle.GetReference().Disable()
+	endif
 
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
