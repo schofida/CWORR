@@ -93,6 +93,7 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;BEGIN CODE
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 255")
 
 ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
@@ -101,10 +102,17 @@ kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
 
 UnregisterForUpdate()
 
-;delete created references
-(Alias_ResourceObject1.GetReference() as ResourceObjectScript).Repair()
+if SmelterFix != None
+    SmelterFix.DisableNoWait()
+    SmelterFix.Delete()
+    SmelterFix = None
+    OldSmelter.Enable()
+else
+    ;delete created references
+    (Alias_ResourceObject1.GetReference() as ResourceObjectScript).Repair()
 
-(Alias_ResourceObject1 as CWMission02ResourceObjectScript).Unregisterforupdate()
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).Unregisterforupdate()
+endif
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_ResourceLocation)
 ;END CODE
@@ -120,7 +128,7 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;BEGIN CODE
 ;Successfully complete quest
 
-; ; debug.traceConditional("CWMission04 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 200")
 kmyquest.objectiveCompleted = 1
 
 kmyQuest.CWCampaignS.StopMonitors()
@@ -150,6 +158,8 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
 
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 100")
+
 
 setObjectiveCompleted(10)
 setObjectiveDisplayed(20)
@@ -165,6 +175,8 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 205")
+
 kmyQuest.CWCampaignS.StopMonitors()
 
 kmyQuest.CWCampaignS.StartDisguiseQuest()
@@ -186,6 +198,8 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
 
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 0")
+
 kmyquest.FlagFieldCOWithPotentialMissionFactions(2)
 
 kmyquest.ResetCommonMissionProperties()
@@ -203,10 +217,18 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 10")
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(2)
 
 kmyQuest.SetObjectiveDisplayed(10)
+
+if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMine)
+    OldSmelter = Alias_ResourceObject1.GetReference()
+    OldSmelter.Disable()
+    SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.CWs.CWCampaignS.ResourceObjectMine2)
+    Alias_ResourceObject1.ForceRefTo(SmelterFix)
+endif
 
 (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
 
@@ -224,9 +246,11 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;BEGIN CODE
 ;Fail quest
 
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
 
 kmyQuest.CWCampaignS.StartMonitors(kmyQuest)
+kmyQuest.CWCampaignS.StopDisguiseQuest()
+utility.wait(5)
 if kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
     Alias_CWFortSiegeSons1.TryToEnableNoWait()
     Alias_CWFortSiegeSons2.TryToEnableNoWait()
@@ -246,11 +270,29 @@ else
     Alias_CWFortSiegeImperial3.TryToEvaluatePackage()
     Alias_CWFortSiegeImperial4.TryToEvaluatePackage()
 endif
-kmyQuest.CWCampaignS.StopDisguiseQuest()
 
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_12()
+;BEGIN AUTOCAST TYPE CWMission02Script
+Quest __temp = self as Quest
+CWMission02Script kmyQuest = __temp as CWMission02Script
+;END AUTOCAST
+;BEGIN CODE
+;Fail quest
+
+CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 120")
+
+kmyQuest.CWCampaignS.StartDisguiseQuest()
+
+;END CODE
+EndFunction
+;END FRAGMENT
+    
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
+ObjectReference SmelterFix
+ObjectReference OldSmelter
