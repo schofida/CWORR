@@ -10,6 +10,10 @@ int Property KillLoyalists  Auto hidden Conditional
 
 ReferenceAlias Property TurncoatLeader Auto
 
+LocationAlias Property CWCampEnemy Auto
+
+Actor Property PlayerRef Auto
+
 Keyword Property LocTypeHabitation Auto
 
 Faction Property CWPlayerAlly Auto
@@ -37,17 +41,16 @@ Event OnUpdate()
 
 	;if we are at the correct stage, the TurncoatLeader is outside, and the player is in the same location, then start the scene.
 	if GetStage() == 10
-		if TurncoatLeader.GetReference().IsInInterior() == false && Game.GetPlayer().IsInInterior() == False
-			if TurncoatLeader.GetReference().GetCurrentLocation().IsSameLocation(Game.GetPlayer().GetCurrentLocation(), LocTypeHabitation)
-				if CWs.PlayerAllegiance == CWs.iImperials
-					CWMission06ImperialScene.start()
-				Else
-					CWMission06SonsScene.start()
-				endif
-				UnregisterForUpdate()
+		if PlayerRef.GetDistance(TurncoatLeader.GetReference()) < 1200
+			Debug.notification("User Entered Camp. Starting Scene")
+			if CWs.PlayerAllegiance == CWs.iImperials
+				CWMission06ImperialScene.start()
+			Else
+				CWMission06SonsScene.start()
 			endif
+			UnregisterForUpdate()
+		endif
 		
-		EndIf
 	EndIf
 
 EndEvent

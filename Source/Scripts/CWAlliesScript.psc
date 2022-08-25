@@ -125,74 +125,74 @@ bool ImperialsOnly = false, \
 bool SonsOnly = false \
 )
 
-; 	CWScript.Log("CWAlliesScript", self + "AddPotentialAlly() trying to add " + ReferenceToAdd + "Calling GetFreePotenialAllyAlias()")
+ 	CWScript.Log("CWAlliesScript", self + "AddPotentialAlly() trying to add " + ReferenceToAdd + "Calling GetFreePotenialAllyAlias()")
 
 	ReferenceAlias AliasToForceInto = GetFreePotentialAllyAlias()
 	
 	Actor ActorToAdd = ReferenceToAdd as Actor
 	
 	if AliasToForceInto != None
-; 		CWScript.Log("CWAlliesScript", self + "AddPotentialAlly() forcing " + ReferenceToAdd + " into alias " + AliasToForceInto)
+ 		CWScript.Log("CWAlliesScript", self + "AddPotentialAlly() forcing " + ReferenceToAdd + " into alias " + AliasToForceInto)
 		AliasToForceInto.ForceRefTo(ReferenceToAdd)
 
 		if AllowedInHaafingar
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesHaafingarFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesHaafingarFaction)
 			ActorToAdd.AddToFaction(CWAlliesHaafingarFaction)
 		EndIf
 		
 		if AllowedInReach
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesReachFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesReachFaction)
 			ActorToAdd.AddToFaction(CWAlliesReachFaction)
 		EndIf
 		
 		if AllowedInHjaalmarch
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesHjaalmarchFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesHjaalmarchFaction)
 			ActorToAdd.AddToFaction(CWAlliesHjaalmarchFaction)
 		EndIf
 		
 		if  AllowedInWhiterun
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesWhiterunFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesWhiterunFaction)
 			ActorToAdd.AddToFaction(CWAlliesWhiterunFaction)
 		EndIf
 		
 		if AllowedInFalkreath
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesFalkreathFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesFalkreathFaction)
 			ActorToAdd.AddToFaction(CWAlliesFalkreathFaction)
 		EndIf
 		
 		if AllowedInPale
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesPaleFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesPaleFaction)
 			ActorToAdd.AddToFaction(CWAlliesPaleFaction)
 		EndIf
 		
 		if AllowedInWinterhold
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesWinterholdFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesWinterholdFaction)
 			ActorToAdd.AddToFaction(CWAlliesWinterholdFaction)
 		EndIf
 		
 		if AllowedInEastmarch
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesEastmarchFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesEastmarchFaction)
 			ActorToAdd.AddToFaction(CWAlliesEastmarchFaction)
 		EndIf
 		
 		if AllowedInRift
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesRiftFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesRiftFaction)
 			ActorToAdd.AddToFaction(CWAlliesRiftFaction)
 		EndIf
 		
 		if ImperialsOnly
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesImperialsOnlyFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesImperialsOnlyFaction)
 			ActorToAdd.AddToFaction(CWAlliesImperialsOnlyFaction)
 		EndIf
 
 		if SonsOnly
-; 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesSonsOnlyFaction)
+ 			CWScript.Log("CWAlliesScript", self + "adding " + ReferenceToAdd + " to faction " + CWAlliesSonsOnlyFaction)
 			ActorToAdd.AddToFaction(CWAlliesSonsOnlyFaction)
 		EndIf		
 		
 	Else
 		;WARNING WE COULDN'T FIND FREE SLOT!!!!
-; 		CWScript.Log("CWAlliesScript", self + " WARNING: AddPotentialAlly() couldn't find a free slot for the ally.", 2, 1, 1 )
+ 		CWScript.Log("CWAlliesScript", self + " WARNING: AddPotentialAlly() couldn't find a free slot for the ally.", 2, 1, 1 )
 		
 	EndIf
 	
@@ -235,12 +235,12 @@ ReferenceAlias function GetFreePotentialAllyAlias()
 	
 	Else
 		;RAN OUT OF SLOTS
-; 		CWScript.Log("CWAlliesScript", self + " WARNING: GetFreePotenialAllyAlias() ran out of PotentialAlly Aliases, returning none.", 2, 1, 1 )
+ 		CWScript.Log("CWAlliesScript", self + " WARNING: GetFreePotenialAllyAlias() ran out of PotentialAlly Aliases, returning none.", 2, 1, 1 )
 		return None
 
 	EndIf
 
-; 	CWScript.Log("CWAlliesScript", self + "GetFreePotenialAllyAlias() returning " + AliasToReturn)
+ 	CWScript.Log("CWAlliesScript", self + "GetFreePotenialAllyAlias() returning " + AliasToReturn)
 	
 	return AliasToReturn
 
@@ -251,7 +251,7 @@ EndFunction
 function RegisterAllyPhaseMarkers(ObjectReference Phase0MarkerRef, ObjectReference Phase1MarkerRef, ObjectReference Phase2MarkerRef, ObjectReference Phase3MarkerRef, ObjectReference Phase4MarkerRef, ObjectReference Phase5MarkerRef, ObjectReference Phase6MarkerRef)
 {Called by Siege scripts to register 1 set of phase1/2/3/4/5 markers for all the allies to use for that siege}
 
-; 	CWScript.Log("CWAlliesScript", self + "RegisterAllyPhaseMarkers() forcing Refs: " + Phase0MarkerRef + "," + Phase1MarkerRef + ", " + Phase2MarkerRef + ", " +  Phase3MarkerRef + ", " + Phase4MarkerRef + ", " + Phase5MarkerRef + ", " + Phase6MarkerRef +  " into Phase0/1/2/3/4/5/6Marker Aliases.")
+ 	CWScript.Log("CWAlliesScript", self + "RegisterAllyPhaseMarkers() forcing Refs: " + Phase0MarkerRef + "," + Phase1MarkerRef + ", " + Phase2MarkerRef + ", " +  Phase3MarkerRef + ", " + Phase4MarkerRef + ", " + Phase5MarkerRef + ", " + Phase6MarkerRef +  " into Phase0/1/2/3/4/5/6Marker Aliases.")
 	Phase0Marker.ForceRefTo(Phase0MarkerRef)
 	Phase1Marker.ForceRefTo(Phase1MarkerRef)
 	Phase2Marker.ForceRefTo(Phase2MarkerRef)
@@ -264,12 +264,12 @@ EndFunction
 
 function ProcessAlliesForSiege(Location HoldLocation)
 {Called by Siege scripts to find appropriate allies and move them to Phase0Marker}	
-; 	CWScript.Log("CWAlliesScript", self + "ProcessAlliesForSiege() for location  " + HoldLocation + " will now try to find appropriate allies, move them to Phase1Marker and disable them.")
+ 	CWScript.Log("CWAlliesScript", self + "ProcessAlliesForSiege() for location  " + HoldLocation + " will now try to find appropriate allies, move them to Phase1Marker and disable them.")
 	
 	ObjectReference Phase0MarkerRef = Phase0Marker.GetReference()
 	
 	if Phase0MarkerRef == None
-; 		CWScript.Log("CWAlliesScript", self + " WARNING: ProcessAlliesForSiege() couldn't find a reference in Phase0Marker. Make sure Siege Script calls RegisterAllyPhaseMarkers() before calling ProcessAlliesForSiege()!!! ", 2, 1, 1 )
+ 		CWScript.Log("CWAlliesScript", self + " WARNING: ProcessAlliesForSiege() couldn't find a reference in Phase0Marker. Make sure Siege Script calls RegisterAllyPhaseMarkers() before calling ProcessAlliesForSiege()!!! ", 2, 1, 1 )
 		Return
 	EndIf
 	
@@ -284,22 +284,22 @@ function ProcessAlliesForSiege(Location HoldLocation)
 	TryToProcessAlly(PotentialAlly9, HoldLocation, Phase0MarkerRef)
 	TryToProcessAlly(PotentialAlly10, HoldLocation, Phase0MarkerRef)
 
-; 	CWScript.Log("CWAlliesScript", self + "ProcessAlliesForSiege() done processing potential allies.")
+ 	CWScript.Log("CWAlliesScript", self + "ProcessAlliesForSiege() done processing potential allies.")
 
 EndFunction
 
 Function TryToProcessAlly(ReferenceAlias PotentialAlly, Location HoldLocation, ObjectReference Phase0MarkerRef)
-; 	CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() for PotentialAlly Alias:" + PotentialAlly + " for HoldLocation:" + HoldLocation)
+ 	CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() for PotentialAlly Alias:" + PotentialAlly + " for HoldLocation:" + HoldLocation)
 
 	actor CurrentPotentialAlly = TryPromoteToActiveAllyAndReturnActor(PotentialAlly, HoldLocation)	
 	
 	if CurrentPotentialAlly
-; 		CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() disabling " + CurrentPotentialAlly + " and moving to to " + Phase0MarkerRef + "." )
+ 		CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() disabling " + CurrentPotentialAlly + " and moving to to " + Phase0MarkerRef + "." )
 		CurrentPotentialAlly.Disable()
 		CurrentPotentialAlly.MoveTo(Phase0MarkerRef)
 		
 	Else	;for some reason TryPromoteToActiveAllyAndReturnActor failed to return an actor. This does not mean something broke. There are cases where this is fine (for instance tha actor isn't in the faction that allows him to show up in the hold
-; 		CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() did not get an actor from TryPromoteToActiveAllyAndReturnActor( " + PotentialAlly + " ) so we are ignoring it.")
+ 		CWScript.Log("CWAlliesScript", self + "TryToProcessAlly() did not get an actor from TryPromoteToActiveAllyAndReturnActor( " + PotentialAlly + " ) so we are ignoring it.")
 	
 	EndIf
 	
@@ -312,35 +312,35 @@ Actor function TryPromoteToActiveAllyAndReturnActor(ReferenceAlias PotentialAlly
 
 	;check that there is an Actor in PotentialAllyToPromote
 	if ActorToForce == None
-; 		CWScript.Log("CWAlliesScript", self + " TryPromoteToActiveAllyAndReturnActor() did not find an actor in PotentialAllyToPromote alias: " + PotentialAllyToPromote)
+ 		CWScript.Log("CWAlliesScript", self + " TryPromoteToActiveAllyAndReturnActor() did not find an actor in PotentialAllyToPromote alias: " + PotentialAllyToPromote)
 		ActorToForce = None ;it's already none, but for consistency and readability I'm setting it here.
 		
 	Else
 		;Check that Actor is in the correct faction (ie that he is allowed to show up in the HoldLocation)
 		if IsAllowedInLocation(ActorToForce, HoldLocation) && IsAllowedToJoinPlayersFaction(ActorToForce)
 			;Is Allowed in location
-; 			CWScript.Log("CWAlliesScript", self + "TryPromoteToActiveAllyAndReturnActor() found actor" + ActorToForce + " is indeed allowed in location and is allowed to join up with the player's faction." )
+ 			CWScript.Log("CWAlliesScript", self + "TryPromoteToActiveAllyAndReturnActor() found actor" + ActorToForce + " is indeed allowed in location and is allowed to join up with the player's faction." )
 				
 			if AliasToForceInto != None
-; 				CWScript.Log("CWAlliesScript", self + "TryPromoteToActiveAllyAndReturnActor() forcing " + ActorToForce + " into alias " + AliasToForceInto)
+ 				CWScript.Log("CWAlliesScript", self + "TryPromoteToActiveAllyAndReturnActor() forcing " + ActorToForce + " into alias " + AliasToForceInto)
 				AliasToForceInto.ForceRefTo(ActorToForce)
 				
 			Else
 				;WARNING WE COULDN'T FIND FREE SLOT!!!!
-; 				CWScript.Log("CWAlliesScript", self + " WARNING: TryPromoteToActiveAllyAndReturnActor() couldn't find a free slot for the ally.", 2, 1, 1 )
+ 				CWScript.Log("CWAlliesScript", self + " WARNING: TryPromoteToActiveAllyAndReturnActor() couldn't find a free slot for the ally.", 2, 1, 1 )
 				ActorToForce = None
 				
 			EndIf
 			
 		Else ; Is Not Allowed in Location
-; 			CWScript.Log("CWAlliesScript", self + "promoteToActiveAlly() found actor" + ActorToForce + " is not allowed in location(" + HoldLocation + ") OR is not allowed to join player's faction:" + CWs.PlayerAllegiance + "[" + CWs.FactionName(CWs.PlayerAllegiance) +"]")
+ 			CWScript.Log("CWAlliesScript", self + "promoteToActiveAlly() found actor" + ActorToForce + " is not allowed in location(" + HoldLocation + ") OR is not allowed to join player's faction:" + CWs.PlayerAllegiance + "[" + CWs.FactionName(CWs.PlayerAllegiance) +"]")
 			ActorToForce = None
 		EndIf
 		
 	
 	Endif
 	
-; 	CWScript.Log("CWAlliesScript", self + "promoteToActiveAlly() returning " + ActorToForce)
+ 	CWScript.Log("CWAlliesScript", self + "promoteToActiveAlly() returning " + ActorToForce)
 	return ActorToForce
 	
 EndFunction
@@ -354,7 +354,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesHaafingarFaction)
 			IsAllowed = True
 		Else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesHaafingarFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesHaafingarFaction. Will return false.")
 			IsAllowed = False
 		EndIf
 					
@@ -362,7 +362,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesReachFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesReachFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesReachFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -370,7 +370,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesHjaalmarchFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesHjaalmarchFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesHjaalmarchFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -378,7 +378,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesWhiterunFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesWhiterunFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesWhiterunFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -386,7 +386,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesFalkreathFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesFalkreathFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesFalkreathFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -394,7 +394,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesPaleFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesPaleFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesPaleFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -402,7 +402,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesWinterholdFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesWinterholdFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesWinterholdFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -410,7 +410,7 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesEastmarchFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesEastmarchFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesEastmarchFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
@@ -418,12 +418,12 @@ bool function IsAllowedInLocation(Actor ActorToCheck, Location HoldLocationToChe
 		if ActorToCheck.IsInFaction(CWAlliesRiftFaction)
 			IsAllowed = true
 		else
-; 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesRiftFaction. Will return false.")
+ 			CWScript.Log("CWAlliesScript", self + "IsAllowedInLocation() did not find ActorToCheck" + ActorToCheck + " in CWAlliesRiftFaction. Will return false.")
 			IsAllowed = False
 		Endif
 			
 	Else
-; 		CWScript.Log("CWAlliesScript", self + " WARNING: IsAllowedInLocation() found an unexpected location for HoldLocationToCheck:" + HoldLocationToCheck, 2, 1, 1 )
+ 		CWScript.Log("CWAlliesScript", self + " WARNING: IsAllowedInLocation() found an unexpected location for HoldLocationToCheck:" + HoldLocationToCheck, 2, 1, 1 )
 		IsAllowed = False
 	EndIf	
 
@@ -437,12 +437,12 @@ bool Function IsAllowedToJoinPlayersFaction(Actor ActorToCheck)
 	
 	if CWs.PlayerAllegiance == CWs.iImperials && ActorToCheck.IsInFaction(CWAlliesSonsOnlyFaction)
 	
-; 		CWScript.Log("CWAlliesScript", self + "IsAllowedToJoinPlayersFaction(" + ActorToCheck + ") is in CWAlliesSonsOnlyFaction and player Imperial. Will return false.")
+ 		CWScript.Log("CWAlliesScript", self + "IsAllowedToJoinPlayersFaction(" + ActorToCheck + ") is in CWAlliesSonsOnlyFaction and player Imperial. Will return false.")
 
 		returnVal = False
 	
 	elseif CWs.PlayerAllegiance == CWs.iSons && ActorToCheck.IsInFaction(CWAlliesImperialsOnlyFaction)
-; 		CWScript.Log("CWAlliesScript", self + "IsAllowedToJoinPlayersFaction(" + ActorToCheck + ") is in CWAlliesImperialsOnlyFaction and player Sons. Will return false.")
+ 		CWScript.Log("CWAlliesScript", self + "IsAllowedToJoinPlayersFaction(" + ActorToCheck + ") is in CWAlliesImperialsOnlyFaction and player Sons. Will return false.")
 		returnVal = False
 		
 	Else
@@ -490,19 +490,19 @@ ReferenceAlias function GetFreeActiveAllyAlias()
 	
 	Else
 		;RAN OUT OF SLOTS
-; 		CWScript.Log("CWAlliesScript", self + " WARNING: GetFreePotenialAllyAlias() ran out of ActiveAlly Aliases, returning none.", 2, 1, 1 )
+ 		CWScript.Log("CWAlliesScript", self + " WARNING: GetFreePotenialAllyAlias() ran out of ActiveAlly Aliases, returning none.", 2, 1, 1 )
 		return None
 
 	EndIf
 
-; 	CWScript.Log("CWAlliesScript", self + "GetFreePotenialAllyAlias() returning " + AliasToReturn)
+ 	CWScript.Log("CWAlliesScript", self + "GetFreePotenialAllyAlias() returning " + AliasToReturn)
 	
 	return AliasToReturn
 
 EndFunction
 
 function EnableActiveAllies()
-; 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() calling TryToEnable() on all of the ActiveAllyX aliases.")
+ 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() calling TryToEnable() on all of the ActiveAllyX aliases.")
 	ActiveAlly1.TryToEnable()
 	ActiveAlly2.TryToEnable()
 	ActiveAlly3.TryToEnable()
@@ -514,13 +514,13 @@ function EnableActiveAllies()
 	ActiveAlly9.TryToEnable()
 	ActiveAlly10.TryToEnable()
 
-; 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() finished trying to enable all the active allies.")
+ 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() finished trying to enable all the active allies.")
 EndFunction
 
 function DeactivateAllies()
 {Called by Siege script when the siege is over and the allies should go home. This assumes the Allies have packages that take them some place. If this is not true, I need to revisit this system.}
 
-; 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() calling Clear() on all of the ActiveAllyX aliases.")
+ 	CWScript.Log("CWAlliesScript", self + "EnableActiveAllies() calling Clear() on all of the ActiveAllyX aliases.")
 	
 	ActiveAlly1.Clear()
 	ActiveAlly2.Clear()

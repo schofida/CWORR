@@ -237,7 +237,6 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 Activator Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Activator Property ResourceObjectMine2 auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
@@ -286,8 +285,8 @@ GlobalVariable Property CWOEnemyDefenderScaleMult Auto
 GlobalVariable Property CWOCampaignPhaseMax Auto
 ActorBase Property CWBattleRikke Auto
 ActorBase Property CWBattleGalmar Auto
-ActorBase Property CWBattleTullius Auto
-ActorBase Property CWBattleUlfric Auto
+Actor Property CWBattleTullius Auto
+Actor Property CWBattleUlfric Auto
 Quest Property CWAttackCity Auto
 Bool Property CWFortSiegeFortDone Auto Hidden Conditional
 Bool Property CWMission01Or02Done Auto Hidden Conditional
@@ -307,7 +306,13 @@ ActorBase Property JarlIdgrodRavencrone Auto
 ActorBase Property JarlSiddgeir Auto
 Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
 Quest Property CWOMonitorQuest Auto
-
+ObjectReference Property ResourceObjectMine2 auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Actor Property CWMission06DissaffectSoldierImperial1 auto
+Actor Property CWMission06DissaffectSoldierImperial2 auto
+Actor Property CWMission06DissaffectSoldierImperial3 auto
+Actor Property CWMission06DissaffectSoldierSons1 auto
+Actor Property CWMission06DissaffectSoldierSons2 auto
+Actor Property CWMission06DissaffectSoldierSons3 auto
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1

@@ -2495,12 +2495,6 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
 Debug.Notification("Siege cleaning up. This can take some time, Please wait until finished to resume Civil War.")
 
-if CWBattleCommanderTemp != none
-	CWBattleCommanderTemp.DisableNoWait()
-	CWBattleCommanderTemp.Delete()
-	CWBattleCommanderTemp = none
-endif
-
 Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
 
@@ -3611,7 +3605,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
 		if OldGeneral != none
-			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBAttleTullius, 1, false, true) as Actor
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius
 			OldGeneral.MoveTo(Alias_AttackerImperial1.GetActorRef())
 			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
@@ -3619,7 +3613,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	else
 		OldGeneral = Alias_AttackerSons1.GetActorRef()
 		if OldGeneral != none
-			CWBattleCommanderTemp = OldGeneral.PlaceAtMe(kmyQuest.CWs.CWCampaignS.CWBattleUlfric, 1, false, true) as Actor
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
 			OldGeneral.MoveTo(Alias_AttackerSons1.GetActorRef())
 			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerSons2.ForceRefTo(OldGeneral)
@@ -4367,5 +4361,3 @@ Quest Property MQ106  Auto
 Quest Property USLEEPHeimskrPreachJail Auto ; USKP 2.0.1 - For sending Heimskr to jail.
 ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate Riverwood Stormcloaks if they win Whiterun.
 ObjectReference Property RiverwoodImperialsMarker Auto
-
-Actor CWBattleCommanderTemp

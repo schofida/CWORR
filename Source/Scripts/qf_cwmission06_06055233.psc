@@ -152,13 +152,19 @@ kmyQuest.ResetCommonMissionProperties()
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
 
 if kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
-    Alias_DissaffectedSoldier01.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons1, 1, false, true))
-    Alias_DissaffectedSoldier02.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons2, 1, false, true))
-    Alias_DissaffectedSoldier03.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierSons3, 1, false, true))
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons1.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier01.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons1)
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons2.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier02.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons2)
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons3.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier03.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons3)
 else
-    Alias_DissaffectedSoldier01.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial1, 1, false, true))
-    Alias_DissaffectedSoldier02.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial2, 1, false, true))
-    Alias_DissaffectedSoldier03.ForceRefTo(Alias_CWCampEnemyLocationCenterMarker.GetRef().PlaceAtMe(kmyQuest.CWMission06DissaffectSoldierImperial3, 1, false, true))
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial1.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier01.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial1)
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial2.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier02.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial2)
+    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial3.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
+    Alias_DissaffectedSoldier03.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial3)
 endif
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_CWCampEnemy)
@@ -175,28 +181,19 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;BEGIN CODE
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6, true)
 
+kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
+
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
     kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
 Else
     kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
 endif
 
 kmyquest.CWs.RegisterEventHappening(Alias_CWCampEnemy.GetLocation())
 
 SetObjectiveDisplayed(10)
-
-Alias_LoyalistSoldier01.TryToEnable()
-Alias_LoyalistSoldier02.TryToEnable()
-Alias_LoyalistSoldier03.TryToEnable()
-Alias_LoyalistSoldier04.TryToEnable()
-Alias_LoyalistSoldier05.TryToEnable()
-Alias_LoyalistSoldier06.TryToEnable()
-Alias_LoyalistSoldier07.TryToEnable()
-Alias_LoyalistSoldier08.TryToEnable()
-Alias_LoyalistSoldier09.TryToEnable()
-Alias_LoyalistSoldier10.TryToEnable()
-Alias_LoyalistSoldier11.TryToEnable()
-Alias_LoyalistSoldier12.TryToEnable()
 
 Alias_LoyalistSoldier01.TryToReset()
 Alias_LoyalistSoldier02.TryToReset()
@@ -236,7 +233,9 @@ Alias_DissaffectedSoldier01.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier02.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier03.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 
-kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToDisable()
+if kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
+    kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToDisable()
+endif
 
 kmyQuest.TurncoatLeader = Alias_DissaffectedSoldier01
 kmyQuest.RegisterForUpdate(2)
@@ -370,17 +369,50 @@ kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
 
 if Alias_DissaffectedSoldier01.GetActorReference() != none
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef(), \
+    AllowedInHaafingar = False, \
+    AllowedInReach = True, \
+    AllowedInHjaalmarch = True, \
+    AllowedInWhiterun = True, \
+    AllowedInFalkreath = True, \
+    AllowedInPale = True, \
+    AllowedInWinterhold = True, \
+    AllowedInEastmarch = False, \
+    AllowedInRift = True, \
+    ImperialsOnly = False, \
+    SonsOnly = false)
 endif
 
 if Alias_DissaffectedSoldier02.GetActorReference() != none
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier02.GetActorRef(), \
+    AllowedInHaafingar = False, \
+    AllowedInReach = True, \
+    AllowedInHjaalmarch = True, \
+    AllowedInWhiterun = True, \
+    AllowedInFalkreath = True, \
+    AllowedInPale = True, \
+    AllowedInWinterhold = True, \
+    AllowedInEastmarch = False, \
+    AllowedInRift = True, \
+    ImperialsOnly = False, \
+    SonsOnly = false)
 endif
 
 if Alias_DissaffectedSoldier03.GetActorReference() != none
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef())
+    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier03.GetActorRef(), \
+    AllowedInHaafingar = False, \
+    AllowedInReach = True, \
+    AllowedInHjaalmarch = True, \
+    AllowedInWhiterun = True, \
+    AllowedInFalkreath = True, \
+    AllowedInPale = True, \
+    AllowedInWinterhold = True, \
+    AllowedInEastmarch = False, \
+    AllowedInRift = True, \
+    ImperialsOnly = False, \
+    SonsOnly = false)
 endif
 
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
