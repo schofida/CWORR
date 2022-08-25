@@ -142,7 +142,7 @@ State StopSpawning
 	Function registerDeath(ReferenceAlias DeadAlias)		
 		;Do nothing
 				
-; 		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'StopSpawning'] so will do nothing.")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'StopSpawning'] so will do nothing.")
 	EndFunction
 EndState
 
@@ -154,11 +154,11 @@ State Respawning
 			
 		
 		if iterating == True
-; 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and  currently iterating through 'array' respawning, so set flag that means iterate again immediately so we pick up this guy if we've already passed his positionin the array.")
+ 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and  currently iterating through 'array' respawning, so set flag that means iterate again immediately so we pick up this guy if we've already passed his positionin the array.")
 			iterateAgain = True
 			
 		Else	
-; 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and not currently iterating through 'array' respawning, so doing nothing")
+ 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and not currently iterating through 'array' respawning, so doing nothing")
 		EndIf
 		
 
@@ -170,22 +170,22 @@ EndState
 function StopSpawning()
 	GoToState("StopSpawning")
 		
-; 	CWScript.Log("CWReinforcementControllerScript", self + "stopSpawning() called - went to state 'StopSpawning'")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "stopSpawning() called - went to state 'StopSpawning'")
 EndFunction
 
 function registerDeath(ReferenceAlias DeadAlias)			;called in OnDeath event of the dying actor/ReferenceAlias
 	GoToState("Respawning")	
 
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] gone to state 'Respawning'")
+	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] gone to state 'Respawning'")
 	
 	bool done = False
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] will now Wait(" + ReinforcementInterval + ") to spawn reinforcements")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] will now Wait(" + ReinforcementInterval + ") to spawn reinforcements")
 	
 	utility.Wait(ReinforcementInterval)
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] is done waiting and will now try to respawn Aliass")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] is done waiting and will now try to respawn Aliass")
 
 	
 	
@@ -202,7 +202,7 @@ function registerDeath(ReferenceAlias DeadAlias)			;called in OnDeath event of t
 
 	if GetState() != "StopSpawning" ;reminder case sensative
 		GoToState("none")	
-; 		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath() [in state 'none'] is done respawning and is gone to state 'none'")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath() [in state 'none'] is done respawning and is gone to state 'none'")
 	EndIf
 	
 
@@ -266,24 +266,24 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 	bool isAttacker
 	
 	if !AliasToRespawn || AliasToRespawn.GetActorReference().IsDead() == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToRespawnAlias(" + AliasToRespawn + ") variable is empty or is currently alive, so we are returning without trying to repawn.")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToRespawnAlias(" + AliasToRespawn + ") variable is empty or is currently alive, so we are returning without trying to repawn.")
 
 		Return
 	EndIf
 	
 	;Determine which pool to use, store in pool variable
-; 	CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") calling IsAliasAttacker()" )
+ 	CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") calling IsAliasAttacker()" )
 	if IsAliasAttacker(AliasToRespawn)
 		isAttacker = true
 	EndIf
 	
 	
 	if IsAttacker
-; 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is an Attacker. PoolAttacker == " + PoolAttacker )
+ 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is an Attacker. PoolAttacker == " + PoolAttacker )
 		pool = PoolAttacker
 		
 	else ;assuming is Defender
-; 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is not an Attacker (assuming is Defender). PoolDefender ==" + PoolDefender )
+ 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is not an Attacker (assuming is Defender). PoolDefender ==" + PoolDefender )
 		pool = PoolDefender
 	
 	EndIf
@@ -291,20 +291,20 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 
 	;CHECK FOR POOL NOT BEING EMPTY 
 	if pool < costForReinforcement
-; 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ")... Pool(" + pool + ")  < costForReinforcement(" + costForReinforcement + ") So we won't respawn, and will check to see if all teammates are dead." )
+ 		CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ")... Pool(" + pool + ")  < costForReinforcement(" + costForReinforcement + ") So we won't respawn, and will check to see if all teammates are dead." )
 	
 		;CHECK FOR ALL THE VARIABLES BEING DEAD, IF THEY ARE, THEN SET THE STAGE
 		if isAttacker
-; 			CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is an Attacker, checking CountAttackersAlive()" )
+ 			CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is an Attacker, checking CountAttackersAlive()" )
 
 			if GetStageDone(StageToSetIfAttackerWipedOut) == True
-; 				CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") StageToSetIfAttackerWipedOut[" + StageToSetIfAttackerWipedOut  + "] is set, not bothering to check if any are alive." )				
+ 				CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") StageToSetIfAttackerWipedOut[" + StageToSetIfAttackerWipedOut  + "] is set, not bothering to check if any are alive." )				
 				
 			Else
 				if CountAttackersAlive() > PostTicketAttackerCountThreshold
-; 					CWScript.Log("CWReinforcementControllerScript", self +"CountAttackersAlive() > PostTicketAttackerCountThreshold[" + PostTicketAttackerCountThreshold + "] so doing nothing." )
+ 					CWScript.Log("CWReinforcementControllerScript", self +"CountAttackersAlive() > PostTicketAttackerCountThreshold[" + PostTicketAttackerCountThreshold + "] so doing nothing." )
 				Else
-; 					CWScript.Log("CWReinforcementControllerScript", self +"CountAttackersAlive() <= PostTicketAttackerCountThreshold[" + PostTicketAttackerCountThreshold + "], so we are setting stage that means all the Attackers are wiped out: " +  StageToSetIfAttackerWipedOut)
+ 					CWScript.Log("CWReinforcementControllerScript", self +"CountAttackersAlive() <= PostTicketAttackerCountThreshold[" + PostTicketAttackerCountThreshold + "], so we are setting stage that means all the Attackers are wiped out: " +  StageToSetIfAttackerWipedOut)
 					
 					if ShowAttackerPoolObjective
 						showAttackerPool()
@@ -318,16 +318,16 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 					
 
 		else	;assuming is Defender
-; 			CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is a Defender, checking CountDefendersAlive()" )
+ 			CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") is a Defender, checking CountDefendersAlive()" )
 
 			if GetStageDone(StageToSetIfDefenderWipedOut) == True
-; 				CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") StageToSetIfDefenderWipedOut[" + StageToSetIfDefenderWipedOut  + "] is set, not bothering to check if any are alive." )				
+ 				CWScript.Log("CWReinforcementControllerScript", self +"TryToRespawnAlias(" + AliasToRespawn + ") StageToSetIfDefenderWipedOut[" + StageToSetIfDefenderWipedOut  + "] is set, not bothering to check if any are alive." )				
 				
 			Else
 				if CountDefendersAlive() > PostTicketDefenderCountThreshold
-; 					CWScript.Log("CWReinforcementControllerScript", self +"CountDefendersAlive() > PostTicketDefenderCountThreshold[" + PostTicketDefenderCountThreshold + "] so doing nothing." )
+ 					CWScript.Log("CWReinforcementControllerScript", self +"CountDefendersAlive() > PostTicketDefenderCountThreshold[" + PostTicketDefenderCountThreshold + "] so doing nothing." )
 				Else
-; 					CWScript.Log("CWReinforcementControllerScript", self +"CountDefendersAlive() <= PostTicketDefenderCountThreshold[" + PostTicketDefenderCountThreshold + "], so we are setting stage that means all the Defenders are wiped out: " +  StageToSetIfDefenderWipedOut)
+ 					CWScript.Log("CWReinforcementControllerScript", self +"CountDefendersAlive() <= PostTicketDefenderCountThreshold[" + PostTicketDefenderCountThreshold + "], so we are setting stage that means all the Defenders are wiped out: " +  StageToSetIfDefenderWipedOut)
 					
 					if ShowDefenderPoolObjective
 						showDefenderPool()
@@ -341,10 +341,10 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 
 		EndIf
 		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "not respawning " + AliasToRespawn + " which is ref:" + AliasToRespawn.GetReference())
+ 		CWScript.Log("CWReinforcementControllerScript", self + "not respawning " + AliasToRespawn + " which is ref:" + AliasToRespawn.GetReference())
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "respawning" + AliasToRespawn + " which is ref:" + AliasToRespawn.GetReference())
+ 		CWScript.Log("CWReinforcementControllerScript", self + "respawning" + AliasToRespawn + " which is ref:" + AliasToRespawn.GetReference())
 
 		;SPAWN ALIASES HERE
 		if isAttacker
@@ -395,7 +395,7 @@ bool function IsAliasAttacker(ReferenceAlias AliasToRespawn)
 		Elseif CWs.iImperials == CWs.GetDefender(AttackPoint)
 			isDefender = true
 		Else
-; 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the attacker, or the defender.", 2, True, True)
+ 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf
 	
 	elseif AliasToRespawn.GetActorReference().IsInFaction(CWs.CWSonsFaction)
@@ -404,11 +404,11 @@ bool function IsAliasAttacker(ReferenceAlias AliasToRespawn)
 		Elseif CWs.iSons == CWs.GetDefender(AttackPoint)
 			isDefender = true
 		Else
-; 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the attacker, or the defender.", 2, True, True)
+ 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf	
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the Imperial faction or Sons faction, is neither.", 2, True, True)
+ 		CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the Imperial faction or Sons faction, is neither.", 2, True, True)
 	
 	EndIf
 	
@@ -423,7 +423,7 @@ EndFunction
 
 int Function CountAttackersAlive()
 		
-; 	CWScript.Log("CWReinforcementControllerScript", self + "CountAttackersAlive() checking 'array' to see if all the actors are dead.")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "CountAttackersAlive() checking 'array' to see if all the actors are dead.")
 
 	int returnVal
 	
@@ -448,7 +448,7 @@ int Function CountAttackersAlive()
 	returnVal += IsAliasAlive(A19)
 	returnVal += IsAliasAlive(A20)
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "CountAttackersAlive() will return:" + returnVal)
+ 	CWScript.Log("CWReinforcementControllerScript", self + "CountAttackersAlive() will return:" + returnVal)
 	
 	return returnVal
 	
@@ -458,7 +458,7 @@ EndFunction
 
 int Function CountDefendersAlive()
 		
-; 	CWScript.Log("CWReinforcementControllerScript", self + "CountDefendersAlive() checking 'array' to see if all the actors are dead.")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "CountDefendersAlive() checking 'array' to see if all the actors are dead.")
 
 	int returnVal
 	
@@ -483,7 +483,7 @@ int Function CountDefendersAlive()
 	returnVal += IsAliasAlive(D19)
 	returnVal += IsAliasAlive(D20)
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "CountDefendersAlive() will return:" + returnVal)
+ 	CWScript.Log("CWReinforcementControllerScript", self + "CountDefendersAlive() will return:" + returnVal)
 	
 	return returnVal
 	
@@ -493,15 +493,15 @@ int Function IsAliasAlive(ReferenceAlias AliasVariableToCheck)
 		
 	
 	if AliasVariableToCheck && AliasVariableToCheck.GetActorReference().IsDead() == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning true (1) for AliasVariableToCheck:"  + AliasVariableToCheck)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning true (1) for AliasVariableToCheck:"  + AliasVariableToCheck)
 		Return 1
 		
 	ElseIf AliasVariableToCheck && AliasVariableToCheck.GetActorReference().IsDead() == True
-; 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck)
 		return 0
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck + " because it's empty" )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck + " because it's empty" )
 		return 0
 		
 	endif
@@ -509,7 +509,7 @@ int Function IsAliasAlive(ReferenceAlias AliasVariableToCheck)
 EndFunction
 
 Function RegisterAttackPoint(Location SiegeLocationAttackPoint)
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAttackPoint() setting AttackPoint to: " + SiegeLocationAttackPoint)
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAttackPoint() setting AttackPoint to: " + SiegeLocationAttackPoint)
 
 	AttackPoint = SiegeLocationAttackPoint
 EndFunction
@@ -517,7 +517,7 @@ EndFunction
 
 Function RegisterAlias(ReferenceAlias AliasToAdd)
 		
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAlias(" + AliasToAdd +  ") checking faction and attacker or defender status, and then will call the appropriate RegisterAliasAttacker() or RegisterAliasDefender()")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAlias(" + AliasToAdd +  ") checking faction and attacker or defender status, and then will call the appropriate RegisterAliasAttacker() or RegisterAliasDefender()")
 
 
 
@@ -527,7 +527,7 @@ Function RegisterAlias(ReferenceAlias AliasToAdd)
 		Elseif CWs.iImperials == CWs.GetDefender(AttackPoint)
 			RegisterAliasDefender(AliasToAdd)
 		Else
-; 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: FAILING TO ADD ReferenceAlias TO RESPAWN ARRAY! RegisterAlias(" + AliasToAdd + ") expected to be either the attacker, or the defender.", 2, True, True)
+ 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: FAILING TO ADD ReferenceAlias TO RESPAWN ARRAY! RegisterAlias(" + AliasToAdd + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf
 	
 	elseif AliasToAdd.GetActorReference().IsInFaction(CWs.CWSonsFaction)
@@ -536,11 +536,11 @@ Function RegisterAlias(ReferenceAlias AliasToAdd)
 		Elseif CWs.iSons == CWs.GetDefender(AttackPoint)
 			RegisterAliasDefender(AliasToAdd)
 		Else
-; 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: FAILING TO ADD ReferenceAlias TO RESPAWN ARRAY! RegisterAlias(" + AliasToAdd + ") expected to be either the attacker, or the defender.", 2, True, True)
+ 			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: FAILING TO ADD ReferenceAlias TO RESPAWN ARRAY! RegisterAlias(" + AliasToAdd + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf	
 	
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAlias(" + AliasToAdd + ") expected to be either the Imperial faction or Sons faction, is neither.", 2, True, True)	
+ 		CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAlias(" + AliasToAdd + ") expected to be either the Imperial faction or Sons faction, is neither.", 2, True, True)	
 	
 	EndIf
 
@@ -550,71 +550,71 @@ Function RegisterAliasAttacker(ReferenceAlias AliasToAdd)
 
 	
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() is adding ReferenceAlias " + AliasToAdd)
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() is adding ReferenceAlias " + AliasToAdd)
 	
 	if !A1
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A1 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A1 variable")
 		A1 = AliasToAdd
 	elseif !A2
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A2 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A2 variable")
 		A2 = AliasToAdd
 	elseif !A3
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A3 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A3 variable")
 		A3 = AliasToAdd
 	elseif !A4
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A4 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A4 variable")
 		A4 = AliasToAdd
 	elseif !A5
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A5 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A5 variable")
 		A5 = AliasToAdd
 	elseif !A6
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A6 variable")
+		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A6 variable")
 		A6 = AliasToAdd
 	elseif !A7
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A7 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A7 variable")
 		A7 = AliasToAdd
 	elseif !A8
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A8 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A8 variable")
 		A8 = AliasToAdd
 	elseif !A9
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A9 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A9 variable")
 		A9 = AliasToAdd
 	elseif !A10
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A10 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A10 variable")
 		A10 = AliasToAdd
 	elseif !A11
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A11 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A11 variable")
 		A11 = AliasToAdd
 	elseif !A12
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A12 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A12 variable")
 		A12 = AliasToAdd
 	elseif !A13
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A13 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A13 variable")
 		A13 = AliasToAdd		
 	elseif !A14
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A14 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A14 variable")
 		A14 = AliasToAdd
 	elseif !A15
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A15 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A15 variable")
 		A15 = AliasToAdd
 	elseif !A16
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A16 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A16 variable")
 		A16 = AliasToAdd
 	elseif !A17
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A17 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A17 variable")
 		A17 = AliasToAdd
 	elseif !A18
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A18 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A18 variable")
 		A18 = AliasToAdd
 	elseif !A19
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A19 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A19 variable")
 		A19 = AliasToAdd
 	elseif !A20
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A20 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasAttacker() adding ReferenceAlias to A20 variable")
 		A20 = AliasToAdd
 	Else
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAliasAttacker() ran out of 'array' variables; there is no variable to store ReferenceAlias", 2, True, True)
+ 	CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAliasAttacker() ran out of 'array' variables; there is no variable to store ReferenceAlias", 2, True, True)
 	
 	EndIf
 EndFunction
@@ -623,71 +623,71 @@ Function RegisterAliasDefender(ReferenceAlias AliasToAdd)
 
 	
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() is adding ReferenceAlias " + AliasToAdd)
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() is adding ReferenceAlias " + AliasToAdd)
 	
 	if !D1
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D1 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D1 variable")
 		D1 = AliasToAdd
 	elseif !D2
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D2 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D2 variable")
 		D2 = AliasToAdd
 	elseif !D3
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D3 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D3 variable")
 		D3 = AliasToAdd
 	elseif !D4
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D4 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D4 variable")
 		D4 = AliasToAdd
 	elseif !D5
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D5 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D5 variable")
 		D5 = AliasToAdd
 	elseif !D6
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D6 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D6 variable")
 		D6 = AliasToAdd
 	elseif !D7
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D7 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D7 variable")
 		D7 = AliasToAdd
 	elseif !D8
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D8 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D8 variable")
 		D8 = AliasToAdd
 	elseif !D9
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D9 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D9 variable")
 		D9 = AliasToAdd
 	elseif !D10
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D10 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D10 variable")
 		D10 = AliasToAdd
 	elseif !D11
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D11 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D11 variable")
 		D11 = AliasToAdd
 	elseif !D12
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D12 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D12 variable")
 		D12 = AliasToAdd
 	elseif !D13
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D13 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D13 variable")
 		D13 = AliasToAdd		
 	elseif !D14
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D14 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D14 variable")
 		D14 = AliasToAdd
 	elseif !D15
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D15 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D15 variable")
 		D15 = AliasToAdd
 	elseif !D16
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D16 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D16 variable")
 		D16 = AliasToAdd
 	elseif !D17
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D17 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D17 variable")
 		D17 = AliasToAdd
 	elseif !D18
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D18 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D18 variable")
 		D18 = AliasToAdd
 	elseif !D19
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D19 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D19 variable")
 		D19 = AliasToAdd
 	elseif !D20
-; 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D20 variable")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "RegisterAliasDefender() adding ReferenceAlias to D20 variable")
 		D20 = AliasToAdd
 	Else
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAliasDefender() ran out of 'array' variables; there is no variable to store ReferenceAlias", 2, True, True)
+ 	CWScript.Log("CWReinforcementControllerScript", self + " ERROR: RegisterAliasDefender() ran out of 'array' variables; there is no variable to store ReferenceAlias", 2, True, True)
 	
 	EndIf
 
@@ -696,7 +696,7 @@ EndFunction
 ObjectReference Function TryToGetPrioritySpawnLinkedRef(ReferenceAlias AliasToCheckFor)
 	;THIS IS VERY SIMILAR TO TryToGetForcedSpawnLinkedRef
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef()" )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef()" )
 
 	ObjectReference AliasRef = AliasToCheckFor.GetReference()
 	
@@ -705,26 +705,26 @@ ObjectReference Function TryToGetPrioritySpawnLinkedRef(ReferenceAlias AliasToCh
 	
 	if CWs.CWBattlePhase.Value == 1 && AliasRef.GetLinkedRef(CWs.CW1PrioritySpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW1PrioritySpawn)
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW1PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW1PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	elseif CWs.CWBattlePhase.Value == 2 && AliasRef.GetLinkedRef(CWs.CW2PrioritySpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW2PrioritySpawn)
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW2PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW2PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	elseif CWs.CWBattlePhase.Value == 3 && AliasRef.GetLinkedRef(CWs.CW3PrioritySpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW3PrioritySpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW3PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW3PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 
 	elseif CWs.CWBattlePhase.Value == 4 && AliasRef.GetLinkedRef(CWs.CW4PrioritySpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW4PrioritySpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW4PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW4PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 
 	elseif CWs.CWBattlePhase.Value == 5 && AliasRef.GetLinkedRef(CWs.CW5PrioritySpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW5PrioritySpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW5PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() found CW5PrioritySpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() didn't find an appropriate Priority Spawn Linked Ref for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetPrioritySpawnLinkedRef() didn't find an appropriate Priority Spawn Linked Ref for: " + AliasRef )
 	
 	EndIf
 
@@ -736,7 +736,7 @@ EndFunction
 ObjectReference Function TryToGetForcedSpawnLinkedRef(ReferenceAlias AliasToCheckFor)
 	;THIS IS VERY SIMILAR TO TryToGetPrioritySpawnLinkedRef
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef()" )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef()" )
 
 	ObjectReference AliasRef = AliasToCheckFor.GetReference()
 	
@@ -745,26 +745,26 @@ ObjectReference Function TryToGetForcedSpawnLinkedRef(ReferenceAlias AliasToChec
 	
 	if CWs.CWBattlePhase.Value == 1 && AliasRef.GetLinkedRef(CWs.CW1ForcedSpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW1ForcedSpawn)
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW1ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW1ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	elseif CWs.CWBattlePhase.Value == 2 && AliasRef.GetLinkedRef(CWs.CW2ForcedSpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW2ForcedSpawn)
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW2ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW2ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	elseif CWs.CWBattlePhase.Value == 3 && AliasRef.GetLinkedRef(CWs.CW3ForcedSpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW3ForcedSpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW3ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW3ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 
 	elseif CWs.CWBattlePhase.Value == 4 && AliasRef.GetLinkedRef(CWs.CW4ForcedSpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW4ForcedSpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW4ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW4ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 
 	elseif CWs.CWBattlePhase.Value == 5 && AliasRef.GetLinkedRef(CWs.CW5ForcedSpawn)
 		linkedRefToReturn = AliasRef.GetLinkedRef(CWs.CW5ForcedSpawn)		
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW5ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() found CW5ForcedSpawn link: " + linkedRefToReturn + " for: " + AliasRef )
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() didn't find an appropriate Forced Spawn Linked Ref for: " + AliasRef )
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToGetForcedSpawnLinkedRef() didn't find an appropriate Forced Spawn Linked Ref for: " + AliasRef )
 	
 	EndIf
 
@@ -781,37 +781,37 @@ ObjectReference Function GetAttackerSpawnRef(ReferenceAlias AliasToCheckFor)
 
 	actor playerActor = Game.GetPlayer() as actor
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef()  " )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef()  " )
 	
 	ObjectReference PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
 	ObjectReference ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
 	
 	if ForcedSpawn
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)
 		return ForcedSpawn
 	
 	Elseif PrioritySpawn && playerActor.HasLOS(PrioritySpawn) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(PrioritySpawn) == False, returning " + PrioritySpawn)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(PrioritySpawn) == False, returning " + PrioritySpawn)
 		return PrioritySpawn
 		
 	elseif playerActor.HasLOS(SpawnAttacker1) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker1) == False, returning " + SpawnAttacker1)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker1) == False, returning " + SpawnAttacker1)
 		return SpawnAttacker1
 		
 	elseif playerActor.HasLOS(SpawnAttacker2) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker2) == False, returning " + SpawnAttacker2)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker2) == False, returning " + SpawnAttacker2)
 		return SpawnAttacker2	
 		
 	elseif playerActor.HasLOS(SpawnAttacker3) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker3) == False, returning " + SpawnAttacker3)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker3) == False, returning " + SpawnAttacker3)
 		return SpawnAttacker3	
 		
 	elseif playerActor.HasLOS(SpawnAttacker4) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker4) == False, returning " + SpawnAttacker4)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(SpawnAttacker4) == False, returning " + SpawnAttacker4)
 		return SpawnAttacker4	
 		
 	else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS to all the Spawn markers, returning the SpawnAttackerFailsafe:" + SpawnAttackerFailSafe)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS to all the Spawn markers, returning the SpawnAttackerFailsafe:" + SpawnAttackerFailSafe)
 		return SpawnAttackerFailSafe	
 	
 	EndIf
@@ -823,37 +823,37 @@ ObjectReference Function GetDefenderSpawnRef(ReferenceAlias AliasToCheckFor)
 
 	actor playerActor = Game.GetPlayer() as Actor
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef()  " )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef()  " )
 	
 	ObjectReference PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
 	ObjectReference ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
 	
 	if ForcedSpawn
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)
 		return ForcedSpawn
 	
 	elseif PrioritySpawn && playerActor.HasLOS(PrioritySpawn) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(PrioritySpawn) == False, returning " + PrioritySpawn)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(PrioritySpawn) == False, returning " + PrioritySpawn)
 		return PrioritySpawn
 		
 	elseif playerActor.HasLOS(SpawnDefender1) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender1) == False, returning " + SpawnDefender1)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender1) == False, returning " + SpawnDefender1)
 		return SpawnDefender1
 		
 	elseif playerActor.HasLOS(SpawnDefender2) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender2) == False, returning " + SpawnDefender2)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender2) == False, returning " + SpawnDefender2)
 		return SpawnDefender2	
 		
 	elseif playerActor.HasLOS(SpawnDefender3) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender3) == False, returning " + SpawnDefender3)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender3) == False, returning " + SpawnDefender3)
 		return SpawnDefender3	
 		
 	elseif playerActor.HasLOS(SpawnDefender4) == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender4) == False, returning " + SpawnDefender4)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(SpawnDefender4) == False, returning " + SpawnDefender4)
 		return SpawnDefender4	
 		
 	else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS to all the Spawn markers, returning the SpawnDefenderFailsafe:" + SpawnDefenderFailSafe)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS to all the Spawn markers, returning the SpawnDefenderFailsafe:" + SpawnDefenderFailSafe)
 		return SpawnDefenderFailSafe	
 	
 	EndIf
@@ -863,7 +863,7 @@ EndFunction
 
 Function RegisterSpawnAttackerAliases(ReferenceAlias Marker1Alias, ReferenceAlias Marker2Alias, ReferenceAlias Marker3Alias, ReferenceAlias Marker4Alias, ReferenceAlias FailSafeMarkerAlias)
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() adding ReferenceAlias references.")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() adding ReferenceAlias references.")
 	
 	SpawnAttacker1 = Marker1Alias.GetReference()
 	SpawnAttacker2 = Marker2Alias.GetReference()
@@ -872,17 +872,17 @@ Function RegisterSpawnAttackerAliases(ReferenceAlias Marker1Alias, ReferenceAlia
 	SpawnAttackerFailSafe = FailSafeMarkerAlias.GetReference()
 	
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker1 = " + SpawnAttacker1 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker2 = " + SpawnAttacker2 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker3 = " + SpawnAttacker3 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker4 = " + SpawnAttacker4 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttackerFailSafe = " + SpawnAttackerFailSafe )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker1 = " + SpawnAttacker1 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker2 = " + SpawnAttacker2 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker3 = " + SpawnAttacker3 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttacker4 = " + SpawnAttacker4 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnAttackerMarkersAsAliases() SpawnAttackerFailSafe = " + SpawnAttackerFailSafe )
 	
 EndFunction
 
 Function RegisterSpawnDefenderAliases(ReferenceAlias Marker1Alias, ReferenceAlias Marker2Alias, ReferenceAlias Marker3Alias, ReferenceAlias Marker4Alias, ReferenceAlias FailSafeMarkerAlias)
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() adding ReferenceAlias references.")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() adding ReferenceAlias references.")
 	
 	SpawnDefender1 = Marker1Alias.GetReference()
 	SpawnDefender2 = Marker2Alias.GetReference()
@@ -890,11 +890,11 @@ Function RegisterSpawnDefenderAliases(ReferenceAlias Marker1Alias, ReferenceAlia
 	SpawnDefender4 = Marker4Alias.GetReference()
 	SpawnDefenderFailSafe = FailSafeMarkerAlias.GetReference()
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender1 = " + SpawnDefender1 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender2 = " + SpawnDefender2 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender3 = " + SpawnDefender3 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender4 = " + SpawnDefender4 )
-; 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefenderFailSafe = " + SpawnDefenderFailSafe )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender1 = " + SpawnDefender1 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender2 = " + SpawnDefender2 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender3 = " + SpawnDefender3 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefender4 = " + SpawnDefender4 )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "RegisterSpawnDefenderMarkersAsAliases() SpawnDefenderFailSafe = " + SpawnDefenderFailSafe )
 EndFunction
 
 
@@ -903,7 +903,7 @@ Function setInfinitePools(bool AttackerHasInfinite = true, bool DefenderHasInfin
 {THIS MUST BE CALLED AFTER CALLING SetPoolAttacker/Defender, or in place of calling those}
 ;both params are true for backwards compatability when this function set a single variable meaning ALL respawns were infinite
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "setInfinitePools( AttackerHasInfinite==" + AttackerHasInfinite + ", DefenderHasInfinite==" + DefenderHasInfinite + ")")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "setInfinitePools( AttackerHasInfinite==" + AttackerHasInfinite + ", DefenderHasInfinite==" + DefenderHasInfinite + ")")
 	
 	if AttackerHasInfinite
 		PoolAttacker = 9999
@@ -942,12 +942,12 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		if AttackDelta > 0
 			
 			pool = (BasePool + (AttackDelta * AttackDeltaMult)) * scaleMult
-; 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() Pool[" + Pool +  "] = (BasePool[" + BasePool + "] + (AttackDelta[" + AttackDelta + "] * AttackDeltaMult[" + AttackDeltaMult + "])) * scaleMult[" + scaleMult + "]" )
+ 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() Pool[" + Pool +  "] = (BasePool[" + BasePool + "] + (AttackDelta[" + AttackDelta + "] * AttackDeltaMult[" + AttackDeltaMult + "])) * scaleMult[" + scaleMult + "]" )
 			
 		Else
 		
 			pool = BasePool * scaleMult		
-; 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
+ 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
 			
 		EndIf
 		
@@ -955,7 +955,7 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		StartingPoolAttacker = pool as int
 	
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() is making Attackers have an Infinite Pool.")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() is making Attackers have an Infinite Pool.")
 		setInfinitePools(AttackerHasInfinite = true, DefenderHasInfinite = False)	;doesn't set it to false, just doesn't set it to true
 	
 	EndIf
@@ -963,7 +963,7 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 	CWs.CWPercentPoolRemainingAttacker.setValue(100)
 	PoolRemainingObjectiveQuest.UpdateCurrentInstanceGlobal(CWs.CWPercentPoolRemainingAttacker)
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() PoolAttacker = " + PoolAttacker )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() PoolAttacker = " + PoolAttacker )
 	
 EndFunction
 
@@ -988,13 +988,13 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		if AttackDelta < 0
 
 			pool = (BasePool + (Math.ABS(AttackDelta) * AttackDeltaMult)) * scaleMult
-; 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() Pool[" + Pool +  "] = (BasePool[" + BasePool + "] + (Math.ABS(AttackDelta[" + AttackDelta + "]) * AttackDeltaMult[" + AttackDeltaMult + "])) * scaleMult[" + scaleMult + "]" )
+ 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() Pool[" + Pool +  "] = (BasePool[" + BasePool + "] + (Math.ABS(AttackDelta[" + AttackDelta + "]) * AttackDeltaMult[" + AttackDeltaMult + "])) * scaleMult[" + scaleMult + "]" )
 
 			
 		Else
 
 			pool = BasePool * scaleMult		
-; 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
+ 			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
 
 		EndIf
 		
@@ -1002,7 +1002,7 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		StartingPoolDefender = pool as int
 	
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() is making Defenders have an Infinite Pool.")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() is making Defenders have an Infinite Pool.")
 		setInfinitePools(AttackerHasInfinite = False, DefenderHasInfinite = True)	;doesn't set it to false, just doesn't set it to true
 	
 	EndIf
@@ -1011,7 +1011,7 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 	PoolRemainingObjectiveQuest.UpdateCurrentInstanceGlobal(CWs.CWPercentPoolRemainingDefender)
 
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() PoolDefender = " + PoolDefender )
+ 	CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() PoolDefender = " + PoolDefender )
 	
 EndFunction
 
@@ -1019,7 +1019,7 @@ function shuffleSpawnMarkers()
 {Promotes each spawn alias into the next position so that the first choice of respawn point is "randomized"}
 	
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "shuffleSpawnAliases() shuffling Spawn Marker Aliases.")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "shuffleSpawnAliases() shuffling Spawn Marker Aliases.")
 
 	ObjectReference tempSpawn4
 	tempSpawn4 = SpawnAttacker4
@@ -1041,11 +1041,11 @@ function SubtractFromAttackerPool(int NumSoldiersToSubtractBy = 1)
 {This function subtracts the value of a soldier from the bool}		;Note: this is occasionally called externally when we need to modify the pool for some other reason than respawning a soldier
 
 	if InfiniteRespawnAttacker == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromAttackerPool() calling ModifyPool().")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromAttackerPool() calling ModifyPool().")
 		ModifyPool(true, -(NumSoldiersToSubtractBy))
 	
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromAttackerPool() InfiniteRespawnAttacker == true, so NOT modifying the pool")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromAttackerPool() InfiniteRespawnAttacker == true, so NOT modifying the pool")
 		
 	EndIf
 	
@@ -1056,11 +1056,11 @@ function SubtractFromDefenderPool(int NumSoldiersToSubtractBy = 1)
 {This function subtracts the value of a soldier from the bool}		;Note: this is occasionally called externally when we need to modify the pool for some other reason than respawning a soldier
 	
 	if InfiniteRespawnDefender == False
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromDefenderPool() calling ModifyPool().")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromDefenderPool() calling ModifyPool().")
 		ModifyPool(false, -(NumSoldiersToSubtractBy))
 		
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromDefenderPool() InfiniteRespawnDefender == true, so NOT modifying the pool")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "SubtractFromDefenderPool() InfiniteRespawnDefender == true, so NOT modifying the pool")
 		
 	EndIf
 	
@@ -1069,7 +1069,7 @@ EndFunction
 function AddBackToAttackerPool(int NumSoldiersToAddBackBy = 1)
 {This function subtracts the value of a soldier from the bool}		;Note: this is occasionally called externally to add back to the pool
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "AddBackToAttackerPool() calling ModifyPool().")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "AddBackToAttackerPool() calling ModifyPool().")
 	ModifyPool(true, NumSoldiersToAddBackBy)
 	
 EndFunction
@@ -1077,7 +1077,7 @@ EndFunction
 function AddBackToDefenderPool(int NumSoldiersToAddBackBy = 1)
 {This function subtracts the value of a soldier from the bool}		;Note: this is occasionally called externally to add back to the pool
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "AddBackToDefenderPool() calling ModifyPool().")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "AddBackToDefenderPool() calling ModifyPool().")
 	ModifyPool(False, NumSoldiersToAddBackBy)
 	
 EndFunction
@@ -1091,7 +1091,7 @@ function ModifyPool(bool ModAttackerPool, int NumSoldiersToModifyBy)
 	
 	
 	if ModAttackerPool
-; 		CWScript.Log("CWReinforcementControllerScript", self + "ModifyPool() modifying attacker pool by: " + valueToModifyBy)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "ModifyPool() modifying attacker pool by: " + valueToModifyBy)
 		PoolAttacker += valueToModifyBy
 		CWs.CWReinforcementPoolAttacker.SetValue(PoolAttacker)
 		if getStageDone(StageToSetIfAttacker25PercentRemainging) == false && percentRemaningAttacker <= 0.25
@@ -1099,7 +1099,7 @@ function ModifyPool(bool ModAttackerPool, int NumSoldiersToModifyBy)
 		EndIf
 		
 	Else ;we are modifying defender pool
-; 		CWScript.Log("CWReinforcementControllerScript", self + "ModifyPool() modifying defender pool by: " + valueToModifyBy)
+ 		CWScript.Log("CWReinforcementControllerScript", self + "ModifyPool() modifying defender pool by: " + valueToModifyBy)
 		PoolDefender += valueToModifyBy
 		CWs.CWReinforcementPoolDefender.SetValue(PoolDefender)
 		if getStageDone(StageToSetIfDefender25PercentRemainging) == false && percentRemaningDefender <= 0.25
@@ -1118,7 +1118,7 @@ function killOffscreenDefender()
 ;This function kills an offscreen soldier in the defender alias "array".
 ;This is called by CWFortSiege Interior Defender Aliases on Death to give a reward to attacker for killing an interior defender, because interior defenders don't respawn normally
 ;See CWFortSiegeInteriorDefenderScript
-; 	CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender()")
+ 	CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender()")
 	
 	bool success
 	
@@ -1165,9 +1165,9 @@ function killOffscreenDefender()
 	EndIf
 
 	if success
-; 		CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender() found an offscreen defender and killed him.")
+ 		CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender() found an offscreen defender and killed him.")
 	Else
-; 		CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender() could not find an offscreen defender so didn't kill anyone.", 1)	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "killOffscreenDefender() could not find an offscreen defender so didn't kill anyone.", 1)	
 	EndIf
 
 EndFunction
@@ -1179,7 +1179,7 @@ bool function tryToKillOffscreenDefender(ReferenceAlias AliasToTryToKill)
 		if AliasActor.IsDead() == false && AliasActor.IsInInterior() == False
 			if Game.GetPlayer().IsInInterior() == True
 				if AliasActor.GetParentCell() != Game.GetPlayer().GetParentCell()
-; 					CWScript.Log("CWReinforcementControllerScript", self + "tryToKillOffscreenDefender() killing " + AliasActor + " in alias " + AliasToTryToKill)
+ 					CWScript.Log("CWReinforcementControllerScript", self + "tryToKillOffscreenDefender() killing " + AliasActor + " in alias " + AliasToTryToKill)
 					AliasActor.kill()
 					Return True
 				EndIf
@@ -1187,7 +1187,7 @@ bool function tryToKillOffscreenDefender(ReferenceAlias AliasToTryToKill)
 		EndIf
 	EndIf
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "tryToKillOffscreenDefender() NOT killing " + AliasActor + " in alias " + AliasToTryToKill + "because he's not not dead, not in an exterior, the player isn't in an interior, or they are in the same interior.")	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "tryToKillOffscreenDefender() NOT killing " + AliasActor + " in alias " + AliasToTryToKill + "because he's not not dead, not in an exterior, the player isn't in an interior, or they are in the same interior.")	
 	return False
 	
 EndFunction
@@ -1202,14 +1202,14 @@ int function getPoolExpressedAsSoldierCount(float Pool)
 		soldiers = 0
 	EndIf
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "getPoolExpressedAsSoldierCount() returning: " + soldiers)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "getPoolExpressedAsSoldierCount() returning: " + soldiers)	
 	
 	return soldiers
 	
 EndFunction
 
 function ShowPoolsToPlayer()
-; 	CWScript.Log("CWReinforcementControllerScript", self + "ShowPoolsToPlayer() PoolAttacker=" + PoolAttacker +", PoolDefender=" + PoolDefender)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "ShowPoolsToPlayer() PoolAttacker=" + PoolAttacker +", PoolDefender=" + PoolDefender)	
 	TryToShowAttackerPools()
 	TryToShowDefenderPools()
 
@@ -1218,7 +1218,7 @@ EndFunction
 int function GetThresholdCounter(float startingPool, float CurrentPool, float PercentThreshold = 5.0)
 {Returns an int that when it "ticks" means it's time to show the pool to the player (for example every 5% of reinforcements)}
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "GetThresholdCounter() startingPool: " + startingPool + ", CurrentPool: " + CurrentPool + ", PercentThreshold:" + PercentThreshold)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "GetThresholdCounter() startingPool: " + startingPool + ", CurrentPool: " + CurrentPool + ", PercentThreshold:" + PercentThreshold)	
 
 	;convert pools to soldier counts incase we later change the cost per soldier
 	startingPool = getPoolExpressedAsSoldierCount(startingPool)
@@ -1227,7 +1227,7 @@ int function GetThresholdCounter(float startingPool, float CurrentPool, float Pe
 	;chunk the percentage into an integer we can compare to the last time
 	float thresholdCounter = currentPool / startingPool * 100 / PercentThreshold
 	
-; 	CWScript.Log("CWReinforcementControllerScript", self + "GetThresholdCounter() returning: " + thresholdCounter as int)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "GetThresholdCounter() returning: " + thresholdCounter as int)	
 	
 	return thresholdCounter as int
 	
@@ -1238,7 +1238,7 @@ function TryToShowAttackerPools()
 	int currentThresholdCounter
 	
 	if ShowAttackerPoolObjective
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() will check to see if enough tickets were lost to display the number again.")	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() will check to see if enough tickets were lost to display the number again.")	
 		
 		currentThresholdCounter = GetThresholdCounter(StartingPoolAttacker, PoolAttacker, 5)
 		
@@ -1253,13 +1253,13 @@ function TryToShowAttackerPools()
 			ShowAttackerPool()
 		Else
 			;then we didn't reach the next 5% threshold so don't show the pool to the player
-; 			CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() found it's not yet time to display the number again. CurrentThresholdCounter: " + currentThresholdCounter + " is not > than ThresholdCounterPoolAttacker:" + ThresholdCounterPoolAttacker)	
+ 			CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() found it's not yet time to display the number again. CurrentThresholdCounter: " + currentThresholdCounter + " is not > than ThresholdCounterPoolAttacker:" + ThresholdCounterPoolAttacker)	
 			
 		EndIf
 	
 	Else
 		;we aren't supposed to show
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() isn't supposed to show Attacker Pool.")	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() isn't supposed to show Attacker Pool.")	
 	EndIf
 	
 EndFunction
@@ -1269,7 +1269,7 @@ function TryToShowDefenderPools()
 	int currentThresholdCounter
 	
 	if ShowDefenderPoolObjective
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() will check to see if enough tickets were lost to display the number again.")	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() will check to see if enough tickets were lost to display the number again.")	
 		
 		currentThresholdCounter = GetThresholdCounter(StartingPoolDefender, PoolDefender, 7)
 		
@@ -1284,13 +1284,13 @@ function TryToShowDefenderPools()
 			ShowDefenderPool()
 		Else
 			;then we didn't reach the next 5% threshold so don't show the pool to the player
-; 			CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() found it's not yet time to display the number again. CurrentThresholdCounter: " + currentThresholdCounter + " is not > than ThresholdCounterPoolDefender:" + ThresholdCounterPoolDefender)	
+ 			CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() found it's not yet time to display the number again. CurrentThresholdCounter: " + currentThresholdCounter + " is not > than ThresholdCounterPoolDefender:" + ThresholdCounterPoolDefender)	
 			
 		EndIf
 	
 	Else
 		;we aren't supposed to show
-; 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() isn't supposed to show Defender Pool.")	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() isn't supposed to show Defender Pool.")	
 	EndIf
 	
 EndFunction
@@ -1299,7 +1299,7 @@ function showAttackerPool()
 
 	float percentRemaning = PoolAttacker / StartingPoolAttacker
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "showAttackerPool() Attackers % Remaining =" + percentRemaning)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "showAttackerPool() Attackers % Remaining =" + percentRemaning)	
 	
 	CWs.CWPercentPoolRemainingAttacker.setValue((percentRemaning * 100) as Int)
 	PoolRemainingObjectiveQuest.UpdateCurrentInstanceGlobal(CWs.CWPercentPoolRemainingAttacker)
@@ -1319,7 +1319,7 @@ function showDefenderPool()
 
 	float percentRemaning = PoolDefender / StartingPoolDefender
 
-; 	CWScript.Log("CWReinforcementControllerScript", self + "showDefenderPool() Defenders % Remaining =" + percentRemaning)	
+ 	CWScript.Log("CWReinforcementControllerScript", self + "showDefenderPool() Defenders % Remaining =" + percentRemaning)	
 	
 	CWs.CWPercentPoolRemainingDefender.setValue((percentRemaning * 100) as Int)
 	PoolRemainingObjectiveQuest.UpdateCurrentInstanceGlobal(CWs.CWPercentPoolRemainingDefender)

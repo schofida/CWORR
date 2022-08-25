@@ -256,3 +256,16 @@ endfunction
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission01 quest")
 endfunction
+
+function EnableMapMarkerAlias(ReferenceAlias MapMarkerAlias)
+	
+	ObjectReference mapMarkerRef = MapMarkerAlias.GetReference()
+	
+	if mapMarkerRef
+		mapMarkerRef.AddToMap(False)
+	Else
+ 		CWScript.Log("CWMissionScript", self + "WARNING: EnableMapMarkerAlias([" + MapMarkerAlias + "]) is empty.", 2)
+	
+	EndIf
+
+EndFunction

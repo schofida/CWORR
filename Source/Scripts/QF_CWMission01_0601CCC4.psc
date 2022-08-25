@@ -223,6 +223,8 @@ kmyquest.CWs.RegisterEventHappening(Alias_Garrison.GetLocation())
 Alias_CWGarrisonEnableMarkerImperial.TryToDisable()
 Alias_CWGarrisonEnableMarkerSons.TryToDisable()
 
+kmyQuest.EnableMapMarkerAlias(Alias_MapMarkerGarrison)
+
 setObjectiveDisplayed(10)
 
 ;<TurnOnAliases>------------------
