@@ -1729,13 +1729,17 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
+kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;Fourth Objective is complete -- ATTACKERS HAVE WON
-kmyquest.CWs.CWBattlePhase.SetValue(6)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50")	;*** WRITE TO LOG
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, setting CWBattlePhase to 0 IF the player isn't a defender")	;*** WRITE TO LOG
-if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation())
+if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation()) || kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
 
 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an attacker, go ahead and set CWBattlePhase to 6")	;*** WRITE TO LOG
 
@@ -1801,55 +1805,18 @@ Alias_Defender10.TryToEvaluatePackage()
 ;WE DON'T WANT THIS TO HAPPEN IF THE PLAYER IS DEFENDING ANYMORE, I AM MOVING THIS INTO THE IsAttack() conditioned stuff below
 ;schofida - Sorry all caps guy. The enemy would like to know if the attacker has won too
 kmyquest.AttackersHaveWon = True		;Announces the attackers as winner, causing the defenders to retreat
+kmyQuest.DefendersHaveWon = false
+
+;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
+if kmyquest.CWs.WhiterunSiegeFinished == False
+	kmyquest.CWs.WhiterunSiegeFinished = True
+endif
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, checking Attack/Defense and starting follow up quests")	;*** WRITE TO LOG
 
 ;**ATTACK/DEFEND SPECIFIC
 
 location cityVar = Alias_City.GetLocation()
-
-if kmyquest.IsAttack()
-	
-; 	;CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, stopping polling player location")	;*** WRITE TO LOG
-	;((self as quest) as CWSiegePollPlayerLocation).UnregisterForUpdate()
-
-	kmyquest.AttackersHaveWon = True		;Announces the attackers as winner, causing the defenders to retreat
-
-	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-	if kmyquest.CWs.WhiterunSiegeFinished == False
-		kmyquest.CWs.WhiterunSiegeFinished = True
-	endif
-
-	;start CWAttackCity quest
-
-	if ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == false	
-		if cityVar != kmyquest.CWs.SolitudeLocation && cityVar != kmyquest.CWs.WindhelmLocation 
- 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, starting CWAttackCity quest via story manager script event")	;*** WRITE TO LOG
-			kmyquest.CWs.CWAttackCityStart.SendStoryEvent(Alias_City.GetLocation(), kmyquest.CWs.GetRikkeOrGalmar())
-		endif
-
-	else
- 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
-		kmyquest.CWSiegeObj.setStage(9000)
-		stop()
-	endif
-
-else
-
-	;Prevent player activation of main gate into city
-	Alias_MainGateExterior.GetReference().BlockActivation(FALSE)
-
-	;!!!!  *** WE ARE NO LONGER EVER FAILING A DEFENSE MISSION BY THEM PULLING THE LEVER. YOU ONLY EVER FAIL BY WALKING AWAY. THIS MEANS WE DON'T NEED TO DO ANYTHING HERE. *** !!!
-	;schofida - Oh yes we are
-	;START ESCORT JARL TO SAFETY QUEST (this also happens in stage 100)
-	;schofida - The jarl safety quest does not happen :( but it sets other needed stuff
- 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
-	kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
-
-
-
-
-endif
 
 ;**CITY SPECIFIC:
 if cityVar == kmyquest.CWs.WhiterunLocation
@@ -1863,8 +1830,8 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	else
 
 		;Set BattlePhase
-		kmyquest.CWs.CWBattlePhase.SetValue(6)
-		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+		;kmyquest.CWs.CWBattlePhase.SetValue(6)
+		;kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 	endif
 
@@ -1892,28 +1859,67 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
-		;schofida - TODO hope to restore siege on Solitude and Windhelm
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade
-
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - Last Gate
 	else
-		;no defense planned
-		;schofida - defense happens but only within city walls. cwfortsiegecapital will handle
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); COMPLETED - Last Gate
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 	if kmyquest.IsAttack()
-		;schofida - TODO hope to restore siege on Solitude and Windhelm
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade
-
+		if GetStageDone(41)
+			Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
+		else
+			;Do nothing since the player didn't hit the skip trigger.
+		endif
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
 	else
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4800, 1); COMPLETED - Last Gate
 		;no defense planned
-		;schofida - defense happens but only within city walls. cwfortsiegecapital will handle
 	endif
 
 
 endif
 
-kmyquest.CWs.CWBattlePhase.SetValue(6)
+if kmyquest.IsAttack()
+	
+; 	;CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, stopping polling player location")	;*** WRITE TO LOG
+	;((self as quest) as CWSiegePollPlayerLocation).UnregisterForUpdate()
+
+	;start CWAttackCity quest
+
+	if cityVar != kmyquest.CWs.SolitudeLocation && cityVar != kmyquest.CWs.WindhelmLocation 
+		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, starting CWAttackCity quest via story manager script event")	;*** WRITE TO LOG
+	   	kmyquest.CWs.CWAttackCityStart.SendStoryEvent(Alias_City.GetLocation(), kmyquest.CWs.GetRikkeOrGalmar())
+	   	if ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
+			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
+			while kmyQuest.CWs.CWCampaignS.CWAttackCity.GetStageDone(0) == false
+				Utility.Wait(1)
+			endwhile
+			kmyQuest.CWs.CWCampaignS.CWAttackCity.SetStage(50)
+		endif
+	else
+		if ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
+			kmyQuest.CWs.CWCampaignS.ResolveCivilWarOffscreen()
+		endif
+    endif
+
+else
+
+	;Prevent player activation of main gate into city
+	Alias_MainGateExterior.GetReference().BlockActivation(FALSE)
+
+	;!!!!  *** WE ARE NO LONGER EVER FAILING A DEFENSE MISSION BY THEM PULLING THE LEVER. YOU ONLY EVER FAIL BY WALKING AWAY. THIS MEANS WE DON'T NEED TO DO ANYTHING HERE. *** !!!
+	;schofida - Oh yes we are
+	;START ESCORT JARL TO SAFETY QUEST (this also happens in stage 100)
+	;schofida - The jarl safety quest does not happen :( but it sets other needed stuff
+ 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
+	kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
+
+
+
+
+endif
+
 Alias_WhiterunDrawbridge.GetReference().Enable()
 ;END CODE
 EndFunction
@@ -1989,12 +1995,13 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	if kmyquest.IsAttack()
-		;schofida - TODO hopefully Solitude will have objectives
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - barricade
-		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4500, 1); DISPLAY - final barricade
 
 ;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
 kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)
 
     else
 		;Currently no defense planned
@@ -2004,13 +2011,13 @@ kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 	if kmyquest.IsAttack()
-		if GetStageDone(41)
-			Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
-		else
-			;Do nothing since the player didn't hit the skip trigger.
-		endif
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
-		setStage(50)	; windhelm doesn't have a phase 5, so skip ahead.
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3300, 1); DISPLAY - final barricade
+
+;Set Dialog States
+kmyquest.CWStateAttackerAtGate.SetValue(1)
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderLastStand.SetValue(1)	; windhelm doesn't have a phase 5, so skip ahead.
 
 	else
 		;Currently no defense planned
@@ -2168,15 +2175,22 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
 		;CWO Stuff
 	else
-
+		if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
+			;CWO Stuff
+				kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
+		
+			endif
 	endif
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.ForceActive(True)
-	Alias_WindhelmGateLever2a.GetReference().BlockActivation(true)
-	Alias_WindhelmGateLever2b.GetReference().BlockActivation(true)
 	if kmyquest.IsAttack()
 		;CWO Stuff
 	else
+		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
+		;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01); Open the gate
+	
+		endif
 		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 2)	; Reddit BugFix #15
 		;CWO Stuff
 			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02); Open the gate
@@ -2334,9 +2348,14 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 200")	;*** WRITE TO LOG
 
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
+kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;Attackers ran out of respawn tickets and too many died
 ;-- OLD WAY kmyquest.AttackersHaveWon = False    ;Announces the Defenders as winner, causing the attackers to retreat
-
+kmyQuest.AttackersHaveWon = false
 kmyquest.DefendersHaveWon = true    ;Announces the Defenders as winner, causing the attackers to retreat
 
 	;kmyQuest.CWDistantCatapultsAMB.SetValue(0)	;Disable distant catapults if weather is enabled.
@@ -2440,10 +2459,23 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
+	if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 4)	; Reddit BugFix #15
+	;CWO Stuff
+		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
 
+	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
+	if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 4)	; Reddit BugFix #15
+	;CWO Stuff
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02); Open the gate
 
+	endif
+	if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 4)	; Reddit BugFix #15
+	;CWO Stuff
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01); Open the gate
+
+	endif
 
 
 endif
@@ -2493,7 +2525,6 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
-Debug.Notification("Siege cleaning up. This can take some time, Please wait until finished to resume Civil War.")
 
 Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Enable()
@@ -2504,6 +2535,8 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePha
 
 if kmyQuest.CWPrepareCity.IsRunning()
     kmyQuest.CWPrepareCity.Stop()
+elseif kmyQuest.CWs.CwCampaignS.PlayerAllegianceLastStand()
+	kmyquest.CWs.StopCWCitizensFlee()
 endif
 
 kmyquest.CWs.CWBattlePhase.SetValue(0)
@@ -2590,7 +2623,7 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdat
 UnregisterForUpdate()
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: ToggleMapMarkersAndFastTravelEndBattle().")
-kmyquest.ToggleMapMarkersAndFastTravelEndBattle(kmyquest.IsAttack())	;*** CHANGE THIS TO FALSE IF THIS IS A DEFENSE QUEST
+kmyquest.ToggleMapMarkersAndFastTravelEndBattle(kmyquest.WasThisAnAttack)	;*** CHANGE THIS TO FALSE IF THIS IS A DEFENSE QUEST
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "turning on complex WI interactions")  ;*** WRITE TO LOG
 kmyquest.ToggleOnComplexWIInteractions(Alias_City)
@@ -2635,7 +2668,7 @@ else
 endif
 
 
-if kmyquest.IsAttack()
+if kmyquest.WasThisAnAttack
 	Alias_WhiterunDrawbridge.GetReference().Disable()
 	Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
 	Alias_WhiterunDrawbridgeAfter.GetReference().Enable()
@@ -2743,18 +2776,8 @@ kmyquest.CWStateDefenderLastStand.SetValue(0)
 kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-
-;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
-if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
-	kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-	;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
-	kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
-endif
-
 ;CWO - Shut down campaign if its running
-Debug.Notification("Stopping Campaign")
 if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
-	Debug.Notification("In condition.. Setting Campaign Stage to 255")
 	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
 	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = true
@@ -2763,7 +2786,12 @@ endif
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 
-Debug.Notification("Siege clean up done. If you are attacking, you may now speak to the commander to get the next quest.")
+;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
+if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
+	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
+	;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
+	kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
+endif
 
 ;END CODE
 EndFunction
@@ -2809,10 +2837,7 @@ kmyquest.CWAttackerStartingScene.Stop()
 
 ;schofida - Start charge scene (Tullius doesn't charge in in Vanilla?)
 kmyQuest.CWs.CWCampaignS.CWSiegeGeneralChargeScene.start()
-;schofida - Last stand defense handles starting the quest differently
-if !kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
-	kmyQuest.CWSiegeObj.SetObjectiveCompleted(1000, 1 as Bool); COMPLETED - Meet with General
-endIf
+kmyQuest.CWSiegeObj.SetObjectiveCompleted(1000, 1 as Bool); COMPLETED - Meet with General
 
 kmyQuest.MUSCombatCivilWar.Add()
 
@@ -2900,10 +2925,11 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 		;kmyquest.CWAttackerStartingScene.Stop()
+		utility.Wait(8)
 		SetStage(10)
 	else
 		;Currently no defense planned
-
+		SetStage(10)
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
@@ -2914,10 +2940,11 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
 		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
 		;kmyquest.CWAttackerStartingScene.Stop()
+		utility.Wait(11)
 		SetStage(10)
 	else
 		;Currently no defense planned
-
+		SetStage(10)
 	endif
 
 endif
@@ -3034,8 +3061,6 @@ else ;is Defense
 	;Reddit Bugfix #2
 	((self as Quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
 	;Reddit Bugfix #2
-	((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
-	((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 	((self as Quest) as cwreinforcementcontrollerscript).StageToSetIfDefenderWipedOut = 50
 
 endif
@@ -3229,6 +3254,12 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 		Alias_ThreatTriggersToggle.TryToEnable()
 
+		if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 4)	; Reddit BugFix #15
+			;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
+	
+		endif
+
 	endif
 
 ;if either attack or defense
@@ -3273,6 +3304,17 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 		Alias_ThreatTriggersToggle.TryToEnable()
 
+		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 4)	; Reddit BugFix #15
+			;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01); Open the gate
+	
+		endif
+		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 3  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.GetOpenState() == 4)	; Reddit BugFix #15
+			;CWO Stuff
+			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02); Open the gate
+	
+		endif
+
 	endif
 
 ;if either attack or defense
@@ -3293,16 +3335,11 @@ RegisterForUpdate(1)		;Needed for checking if the player has left the battle
 
 ;<CWSiegeObj>------------------
 ;CWO Account for whether player is on final city defense
-if !kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
 	if kmyquest.IsAttack()
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1000, 1);DISPLAYED - Meet with General
 	else
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2000, 1);DISPLAYED - Meet with General
 	endif
-else
-	kmyQuest.CWSiegeObj.SetObjectiveDisplayed(500, 1 as Bool, false)
-	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
-endIf
 kmyQuest.CWSiegeObj.setStage(1)
 ;</CWSiegeObj>--------------------
 
@@ -3322,7 +3359,7 @@ endif
 
 
 ;START PREPARE CITY IF DEFENSE
-if kmyquest.IsAttack() == false
+if kmyquest.IsAttack() == false && cityVar != kmyquest.CWs.WindhelmLocation && cityVar != kmyquest.CWs.SolitudeLocation
 	While kmyquest.CWs.CWPrepareCity.IsRunning() == false
 	utility.wait(1)
  	CWScript.Log("CWSiegeQuestFragmentScript", self + "waiting for CWPrepareCity.IsRunning == true")	;*** WRITE TO LOG
@@ -3331,6 +3368,8 @@ if kmyquest.IsAttack() == false
 
  	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling setStage(1) on CWPrepareCityStart")	;*** WRITE TO LOG
 	kmyquest.CWs.CWPrepareCity.SetStage(1)	;puts everyone in packages
+elseif kmyQuest.CWs.CwCampaignS.PlayerAllegianceLastStand()
+	kmyquest.CWs.StartCWCitizensFlee(cityVar)
 endif
 
 
@@ -3360,7 +3399,7 @@ kmyquest.CWs.AddEnemyFortsToBackToWar()
 
 
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
-	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(20)
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endif
 
 kmyquest.ToggleMapMarkersAndFastTravelStartBattle(kmyquest.IsAttack())	
@@ -3377,9 +3416,7 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 10")	;*** WRITE TO LOG
-;CWO - Start Player Essential Quest
-kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 10")	;*** WRITE TO LOG
 ;**ATTACK/DEFEND SPECIFIC
 if kmyquest.IsAttack()
 	kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
@@ -3450,22 +3487,22 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	if kmyquest.IsAttack()
 		;CWO Set objective
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 
 	else
 		;Currently no defense planned
-
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2065, 1); DISPLAYED - barricade
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.SetActive(True)
 
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
 
 	else
 		;Currently no defense planned
-
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4600, 1); DISPLAYED - barricade
 	endif
 
 endif
@@ -3518,8 +3555,8 @@ Alias_Defender8.TryToEvaluatePackage()
 Alias_Defender9.TryToEvaluatePackage()
 Alias_Defender10.TryToEvaluatePackage()
 
-;used for failing if player leaves
-((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
+;CWO - Start Player Essential Quest
+kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 
 ;TEMP AMBIENT SOUND TRACK
 ;kmyquest.StartCombatSoundsLoop()
@@ -3581,6 +3618,7 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+SiegeFinished = False
 ;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
 Debug.Notification("Siege is getting ready behind the scenes. This can take some time. Please wait before speaking to Officer.")
 ;CWO Start Courier Defense Quest
@@ -3918,7 +3956,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;First Objective is complete
 
-; CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 20")	;*** WRITE TO LOG
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 20")	;*** WRITE TO LOG
 
 ;Set BattlePhase
 kmyquest.CWs.CWBattlePhase.SetValue(3)
@@ -4093,6 +4131,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	else
 		;Currently no defense planned
+		kmyquest.CWSiegeObj.SetObjectiveFailed(2065, 1); FAILED  - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4700, 1); DISPLAY - barricade
 
 	endif
 
@@ -4113,6 +4153,8 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 	else
 		;Currently no defense planned
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4600, 1); FAILED  - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4300, 1); DISPLAY - barricade
 
 	endif
 
@@ -4286,9 +4328,6 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 				Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade2A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 				;CWO
 		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
-		;CWO
-		self.setStage(40)
-		;CWO
 
 
 	else
@@ -4308,19 +4347,20 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		else
 			;Do nothing since the player didn't hit the skip trigger.
 		endif
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - barricade
 		;Set Dialog States
-		kmyquest.CWStateAttackerAtGate.SetValue(1)
-		kmyquest.CWStateDefenderLastStand.SetValue(1)
-
+kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+kmyquest.CWStateDefenderFallingBack.SetValue(1)
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+				;CWO
+				Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.SolitudeExteriorGate01, 0.000000, 0.000000, 0.000000, true)
+				;CWO
+				(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
 	else
 		;Currently no defense planned
-		if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
-		;CWO Stuff
-			kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
-	
-		endif
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4700, 1); FAILED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4400, 1); DISPLAY - barricade
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
@@ -4333,19 +4373,23 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 			;Do nothing since the player didn't hit the skip trigger.
 		endif
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(3020, 1); COMPLETED - First Gate
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAYED - Last Gate
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAYED - Last Gate
 
-;Set Dialog States
-kmyquest.CWStateAttackerAtGate.SetValue(1)
-kmyquest.CWStateDefenderLastStand.SetValue(1)
+		;Set Dialog States
+		kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
+		kmyquest.CWStateDefenderFallingBack.SetValue(1)
+						;CWO
+						Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.SolitudeExteriorGate01, 0.000000, 0.000000, 0.000000, true)
+						;CWO
+						(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
 
 	else
 		;Currently no defense planned
-		if (kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
-		;CWO Stuff
-			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01); Open the gate
-	
-		endif
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4300, 1); FAILED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2060, 1); DISPLAY - barricade
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
+
+
 	endif
 
 endif
@@ -4361,3 +4405,5 @@ Quest Property MQ106  Auto
 Quest Property USLEEPHeimskrPreachJail Auto ; USKP 2.0.1 - For sending Heimskr to jail.
 ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate Riverwood Stormcloaks if they win Whiterun.
 ObjectReference Property RiverwoodImperialsMarker Auto
+
+bool SiegeFinished = false
