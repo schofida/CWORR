@@ -313,6 +313,8 @@ Actor Property CWMission06DissaffectSoldierImperial3 auto
 Actor Property CWMission06DissaffectSoldierSons1 auto
 Actor Property CWMission06DissaffectSoldierSons2 auto
 Actor Property CWMission06DissaffectSoldierSons3 auto
+LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
+LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
@@ -1590,7 +1592,7 @@ function UpdateCWCampaignObjAliases()
  	CWScript.Log("CWCampaignScript", " UpdateCWCampaignObjAliases() forcing CWCampaignObj aliases to match. ")
 	;CWO - Set to CWs.FieldCO. CWCampaign FieldCO getting filled in conflicts with dialogue and quests so leaving it empty and optional
 	;I dont think CWCampaignObjFieldCO does anything but leave it just in case
-	CWCampaignObjFieldCO.ForceRefTo(FieldCO.GetActorReference())
+	CWCampaignObjFieldCO.ForceRefTo(CWs.GetRikkeOrGalmar())
 	CWCampaignObjFactionLeader.ForceRefTo(CWs.AliasFactionLeader.GetReference())
 	CWCampaignObjCampaignStartMarker.ForceRefTo(CampaignStartMarker.GetReference())
 	CWCampaignObjCampaignHold.ForceLocationTo(Hold.GetLocation())
@@ -1817,6 +1819,11 @@ function StartMonitors(Quest kmyQuest)
 	CWOStillABetterEndingMonitor.start()
 	CWOStillABetterEndingMonitor.triggerQuest = kmyQuest
 
+	CWSiegePollPlayerLocation ppLocation = kmyQuest as CWSiegePollPlayerLocation
+	if ppLocation != none
+		ppLocation.PlayerHasBeenToLocationOfBattle = true
+	endif
+
 endfunction
 
 function StopMonitors()
@@ -1852,9 +1859,12 @@ function StartDefense(Location CityFortOrGarrison)
 	CWScript.Log("CWCampaignScript", " StartDefense()") 
 	;This function is called at start up stage for CWMission01, CWFortSiegeFort, CWFortSiegeCapital, CWSiege
 	;If player is on the defense for this campaign, start the courier quest.
-	if CWS.CWAttacker.GetValueInt() != CWs.PlayerAllegiance && CWS.WhiterunSiegeFinished
-		CWScript.Log("CWCampaignScript", "StartDefense() - Player on defense. Starting Defender Quest") 
-		CWODefendingStart.sendstoryeventandwait(CityFortOrGarrison, CWs.FieldCO.GetActorRef(), none, 0, 0)
+	if CWS.CWAttacker.GetValueInt() != CWs.PlayerAllegiance && CWS.WhiterunSiegeFinished && PlayerAllegianceLastStand()
+		CWScript.Log("CWCampaignScript", "StartDefense() - Player on defense. Starting Defender Quest")
+		CWODefendingStart.sendstoryeventandwait(CityFortOrGarrison, Cws.GetRikkeOrGalmar(), none, 0, 0)
+	elseif CWS.CWAttacker.GetValueInt() != CWs.PlayerAllegiance && CWS.WhiterunSiegeFinished
+		CWScript.Log("CWCampaignScript", "StartDefense() - Player on defense. Starting Defender Quest")
+		CWODefendingStart.sendstoryeventandwait(CityFortOrGarrison, Cws.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.PlayerAllegiance), none, 0, 0)		
 	endIf
 endfunction
 
@@ -2010,19 +2020,29 @@ bool function isCWMissionsOrSiegesRunning()
 	return StringUtil.GetLength(ret) > 0
 endFunction
 
-function ResolveCivilWarFailOffscreen()
+function ResolveCivilWarOffscreen()
 
-	CWS.CWSiegeS.Stop()
-	if CWs.PlayerAllegiance == CWs.iImperials
-		CWS.Rikke.GetActorReference().KillEssential(CWS.Galmar.GetActorReference())
-		Utility.Wait(5.0)
-		CWS.GeneralTulliusRef.KillEssential(CWS.UlfricRef)
-	Else
-		CWS.Galmar.GetActorReference().KillEssential(CWS.Rikke.GetActorReference())
-		Utility.Wait(5.0)
-		CWS.UlfricRef.KillEssential(CWS.GeneralTulliusRef)
+	if !PlayerAllegianceLastStand()
+		if CWs.PlayerAllegiance == CWs.iImperials
+			CWS.Galmar.GetActorReference().KillEssential(CWS.Rikke.GetActorReference())
+			Utility.Wait(5.0)
+			CWS.UlfricRef.KillEssential(CWS.GeneralTulliusRef)
+		Else
+			CWS.Rikke.GetActorReference().KillEssential(CWS.Galmar.GetActorReference())
+			Utility.Wait(5.0)
+			CWS.GeneralTulliusRef.KillEssential(CWS.UlfricRef)
+		endif
+	else
+		if CWs.PlayerAllegiance == CWs.iImperials
+			CWS.Rikke.GetActorReference().KillEssential(CWS.Galmar.GetActorReference())
+			Utility.Wait(5.0)
+			CWS.GeneralTulliusRef.KillEssential(CWS.UlfricRef)
+		Else
+			CWS.Galmar.GetActorReference().KillEssential(CWS.Rikke.GetActorReference())
+			Utility.Wait(5.0)
+			CWS.UlfricRef.KillEssential(CWS.GeneralTulliusRef)
+		endif
 	endif
-	CWS.CWSiegeObj.SetStage(8999)
 endfunction
 
 function AcceptRadiantMissions()
@@ -2238,10 +2258,9 @@ endfunction
 
 function CompleteCWSieges()
 	CWScript.Log("CWScript", "CompleteCWSieges()")
-	if CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 && CWS.CWCampaignS.PlayerAllegianceLastStand() ;schofida - siege and capital are both running in final siege. Have capital take care of it
+	if CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 ;schofida - siege and capital are both running in final siege. Have capital take care of it
 		if CWS.IsPlayerAttacking(CWS.CWSiegeS.City.GetLocation())
 			CWS.CWSiegeS.Setstage(50)
-			CWAttackCity.Setstage(50)
 		else
 			CWS.CWSiegeS.Setstage(200)
 		endIf
@@ -2334,3 +2353,96 @@ endfunction
 function SetMonitorMinorCitySiegeStopping()
 	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMinorCity")
 endfunction
+
+function SetMonitorMajorCitySiegeStopped()
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForSiegeToStop")
+endfunction
+
+Bool Function FactionOwnsAll(int FactionToTest)
+	{Returns true if FactionToTest represents a faction that owns all the contestable holds.}
+		
+	;Note the use of \ to break the single if statement across multiple lines for ease of reading
+	if 	CWs.GetOwner(CWs.ReachHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.HjaalmarchHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.WhiterunHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.FalkreathHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.PaleHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.WinterholdHoldLocation) == FactionToTest && \
+		CWs.GetOwner(CWs.RiftHoldLocation) == FactionToTest
+		return True
+	Else
+		return False
+	EndIf
+
+EndFunction
+
+function updateObjective(location HoldLocationWhoseObjectiveWeShouldUpdate, bool MarkObjectiveComplete = false, bool FailObjective = false, GlobalVariable GlobalToResetDueToFailure = None)
+{This sets the global and flashes the objective for taking over the hold for the supplied location}
+
+	if (CWs.PlayerInvolved == 1 && CWs.WarIsActive == 1) == false
+		CWScript.log("CWScript", "updateObjective() PlayerInvolved or WarIsActive, is not 1, NOT updating the objective." )
+		
+		Return
+	
+	EndIf
+
+
+	;note: this works because in the CWObj quest are objectives with the following formula:
+	;x0y where x is the number of the hold, and y is the number for the players Faction
+	
+	int HoldID = CWs.GetHoldID(HoldLocationWhoseObjectiveWeShouldUpdate) 
+	
+	int Obj = 100 * HoldID
+	Obj += CWs.PlayerAllegiance
+
+	if CWs.CWObj.IsObjectiveCompleted(Obj)
+		;do nothing
+	
+	Else
+	
+		if MarkObjectiveComplete == True
+			CWs.CWObj.SetObjectiveCompleted(Obj)
+			CWs.displayFactionLeaderObjective()
+		
+		ElseIf FailObjective == True
+		
+			;Fail it
+			CWs.CWObj.SetObjectiveFailed(Obj)
+			
+			;reset the percentage to completion
+			GlobalToResetDueToFailure.SetValue(0)
+			
+			;reshow it
+			Cws.CWObj.SetObjectiveFailed(Obj, True)
+			Cws.CWObj.SetObjectiveDisplayed(Obj, abDisplayed = true, abForce = true)
+
+			;displayFactionLeaderObjective()
+		
+		else
+		
+			CWs.CWObj.UpdateCurrentInstanceGlobal(CWs.GetCWObjGlobal(HoldID))
+			CWs.CWObj.SetObjectiveDisplayed(Obj, abDisplayed = true, abForce = true)
+		
+		EndIf
+	endif
+
+EndFunction
+
+;OBSOLETE - from when there was multiple campaigns running at the same time
+function failCWObj(Location HoldWhoseObjectiveToFail)
+	int myHoldID = CWs.GetHoldID(HoldWhoseObjectiveToFail)
+	GlobalVariable myCWObjGlobal = CWs.GetCWObjGlobal(myHoldID)
+
+	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
+	if CWs.WhiterunSiegeFinished == False
+		CWs.WhiterunSiegeFinished = True
+		CWs.displayFactionLeaderObjective()
+		
+	else
+		updateObjective(HoldWhoseObjectiveToFail, FailObjective = True, GlobalToResetDueToFailure = myCWObjGlobal)
+		myCWObjGlobal.setValue(0)
+		CWs.updateObjective(HoldWhoseObjectiveToFail)
+		
+	EndIf
+	
+EndFunction
