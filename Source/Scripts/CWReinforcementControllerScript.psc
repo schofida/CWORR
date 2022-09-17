@@ -1240,7 +1240,7 @@ function TryToShowAttackerPools()
 	if ShowAttackerPoolObjective
  		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowAttackerPools() will check to see if enough tickets were lost to display the number again.")	
 		
-		currentThresholdCounter = GetThresholdCounter(StartingPoolAttacker, PoolAttacker, 5)
+		currentThresholdCounter = GetThresholdCounter(StartingPoolAttacker, PoolAttacker, 10.0)
 		
 		if ThresholdCounterPoolAttacker == -999  ;initialized value
 			ThresholdCounterPoolAttacker = currentThresholdCounter
@@ -1271,7 +1271,7 @@ function TryToShowDefenderPools()
 	if ShowDefenderPoolObjective
  		CWScript.Log("CWReinforcementControllerScript", self + "TryToShowDefenderPools() will check to see if enough tickets were lost to display the number again.")	
 		
-		currentThresholdCounter = GetThresholdCounter(StartingPoolDefender, PoolDefender, 7)
+		currentThresholdCounter = GetThresholdCounter(StartingPoolDefender, PoolDefender, 14.0)
 		
 		if ThresholdCounterPoolDefender == -999  ;initialized value
 			ThresholdCounterPoolDefender = currentThresholdCounter
