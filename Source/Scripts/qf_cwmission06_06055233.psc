@@ -151,20 +151,8 @@ kmyQuest.ResetCommonMissionProperties()
 
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
 
-if kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons1.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier01.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons1)
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons2.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier02.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons2)
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons3.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier03.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierSons3)
-else
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial1.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier01.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial1)
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial2.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier02.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial2)
-    kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial3.MoveTo(Alias_CWCampEnemyLocationCenterMarker.GetRef())
-    Alias_DissaffectedSoldier03.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWMission06DissaffectSoldierImperial3)
+if Alias_CWCampEnemyMapMarker.GetRef() == none
+    Alias_CWCampEnemyMapMarker.ForceRefTo(kmyQuest.GetCampMapMarker(Alias_Hold.GetLocation()))
 endif
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_CWCampEnemy)
@@ -329,17 +317,15 @@ kmyquest.CWs.UnregisterEventHappening(Alias_CWCampEnemy.GetLocation())
 
 ;delete created references
 ;*** TO DO: When we have arrays, CreateMissionAliasedActor should put all created references to an array, then a new funciton should delete ALL of them
-kmyquest.CWs.RegisterEventHappening(Alias_CWCampEnemy.GetLocation())
-
-Alias_LoyalistSoldier01.TryToDisable()
-Alias_LoyalistSoldier02.TryToDisable()
-Alias_LoyalistSoldier03.TryToDisable()
-Alias_LoyalistSoldier04.TryToDisable()
-Alias_LoyalistSoldier05.TryToDisable()
-Alias_LoyalistSoldier06.TryToDisable()
-Alias_LoyalistSoldier07.TryToDisable()
-Alias_LoyalistSoldier08.TryToDisable()
-Alias_LoyalistSoldier09.TryToDisable()
+Alias_LoyalistSoldier01.TryToReset()
+Alias_LoyalistSoldier02.TryToReset()
+Alias_LoyalistSoldier03.TryToReset()
+Alias_LoyalistSoldier04.TryToReset()
+Alias_LoyalistSoldier05.TryToReset()
+Alias_LoyalistSoldier06.TryToReset()
+Alias_LoyalistSoldier07.TryToReset()
+Alias_LoyalistSoldier08.TryToReset()
+Alias_LoyalistSoldier09.TryToReset()
 
 Alias_DissaffectedSoldier01.TryToDisable()
 Alias_DissaffectedSoldier02.TryToDisable()
@@ -367,8 +353,9 @@ kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier01)
 kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
 kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
 
-if Alias_DissaffectedSoldier01.GetActorReference() != none
+if Alias_DissaffectedSoldier01.GetActorReference() != none && !Alias_DissaffectedSoldier01.GetActorReference().IsDead()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
+    Alias_DissaffectedSoldier01.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \
@@ -383,8 +370,9 @@ if Alias_DissaffectedSoldier01.GetActorReference() != none
     SonsOnly = false)
 endif
 
-if Alias_DissaffectedSoldier02.GetActorReference() != none
+if Alias_DissaffectedSoldier02.GetActorReference() != none && !Alias_DissaffectedSoldier02.GetActorReference().IsDead()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
+    Alias_DissaffectedSoldier02.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier02.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \
@@ -399,8 +387,9 @@ if Alias_DissaffectedSoldier02.GetActorReference() != none
     SonsOnly = false)
 endif
 
-if Alias_DissaffectedSoldier03.GetActorReference() != none
+if Alias_DissaffectedSoldier03.GetActorReference() != none && !Alias_DissaffectedSoldier03.GetActorReference().IsDead()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
+    Alias_DissaffectedSoldier03.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier03.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \

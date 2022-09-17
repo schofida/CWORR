@@ -102,14 +102,16 @@ kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
 
 UnregisterForUpdate()
 
-;delete created references
-(Alias_ResourceObject1.GetReference() as ResourceObjectScript).Repair()
-
-(Alias_ResourceObject1 as CWMission02ResourceObjectScript).Unregisterforupdate()
-
-
-if OldSmelter != None
+if SmelterFix != None
+    SmelterFix.DisableNoWait()
+    SmelterFix.Delete()
+    SmelterFix = None
     OldSmelter.Enable()
+else
+    ;delete created references
+    (Alias_ResourceObject1.GetReference() as ResourceObjectScript).Repair()
+
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).Unregisterforupdate()
 endif
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_ResourceLocation)
@@ -224,10 +226,9 @@ kmyQuest.SetObjectiveDisplayed(10)
 if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMine)
     OldSmelter = Alias_ResourceObject1.GetReference()
     OldSmelter.Disable()
-    Alias_ResourceObject1.ForceRefTo(kmyQuest.CWs.CWCampaignS.ResourceObjectMine2)
+    SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectMine)
+    Alias_ResourceObject1.ForceRefTo(SmelterFix)
 endif
-
-kmyQuest.EnableMapMarkerAlias(Alias_MapMarker)
 
 (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
 
@@ -293,4 +294,5 @@ EndFunction
     
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
+ObjectReference SmelterFix
 ObjectReference OldSmelter

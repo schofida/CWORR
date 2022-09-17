@@ -112,6 +112,7 @@ Function SetInitialLoyalistAliveCount( \
 		LoyalistAliveCount += 1
 	EndIf
 	
+	TurnCoatAliveCount = 3
 	
 EndFunction
 
@@ -190,6 +191,49 @@ function giveNewOutfit(Actor ActorRef)
 	EndIf
 
 EndFunction
+
+ObjectReference function GetCampMapMarker(Location Hold)
+
+	int FactionID = CWs.PlayerAllegiance
+
+
+	if FactionID == CWs.iSons && Hold == CWs.FalkreathHoldLocation
+		;MilitaryCampEastmarchImperialMapMarker NOT ADDING THIS HERE BECAUSE THIS FUNCTION HAPPENS BEFORE YOU ARE ALLOWED TO GET MISSIONS IN THE FINAL HOLD
+		return CWs.MilitaryCampFalkreathImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.HjaalmarchHoldLocation
+		return CWs.MilitaryCampHjaalmarchImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.PaleHoldLocation
+		return CWs.MilitaryCampPaleImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.ReachHoldLocation
+		return CWs.MilitaryCampReachImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.RiftHoldLocation
+		return CWs.MilitaryCampRiftImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.WhiterunHoldLocation
+		return CWs.MilitaryCampWhiterunImperialMapMarker
+	elseif FactionID == CWs.iSons && Hold == CWs.WinterholdHoldLocation
+		return CWs.MilitaryCampWinterholdImperialMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.FalkreathHoldLocation
+		;MilitaryCampEastmarchImperialMapMarker NOT ADDING THIS HERE BECAUSE THIS FUNCTION HAPPENS BEFORE YOU ARE ALLOWED TO GET MISSIONS IN THE FINAL HOLD
+		return CWs.MilitaryCampFalkreathSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.HjaalmarchHoldLocation
+		return CWs.MilitaryCampHjaalmarchSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.PaleHoldLocation
+		return CWs.MilitaryCampPaleSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.ReachHoldLocation
+		return CWs.MilitaryCampReachSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.RiftHoldLocation
+		return CWs.MilitaryCampRiftSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.WhiterunHoldLocation
+		return CWs.MilitaryCampWhiterunSonsMapMarker
+	elseif FactionID == CWs.iImperials && Hold == CWs.WinterholdHoldLocation
+		return CWs.MilitaryCampWinterholdSonsMapMarker
+	else
+
+			CWScript.log("CWScript", " WARNING: GetCampMapMarker(" + FactionID + ") FactionID parameter unrecognized. Or Hold not found " + Hold, 2, True, True)
+
+	EndIf
+
+endfunction
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission06 quest")

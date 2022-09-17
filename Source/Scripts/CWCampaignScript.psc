@@ -285,8 +285,8 @@ GlobalVariable Property CWOEnemyDefenderScaleMult Auto
 GlobalVariable Property CWOCampaignPhaseMax Auto
 ActorBase Property CWBattleRikke Auto
 ActorBase Property CWBattleGalmar Auto
-Actor Property CWBattleTullius Auto
-Actor Property CWBattleUlfric Auto
+ReferenceAlias Property CWBattleTullius Auto
+ReferenceAlias Property CWBattleUlfric Auto
 Quest Property CWAttackCity Auto
 Bool Property CWFortSiegeFortDone Auto Hidden Conditional
 Bool Property CWMission01Or02Done Auto Hidden Conditional
@@ -306,13 +306,7 @@ ActorBase Property JarlIdgrodRavencrone Auto
 ActorBase Property JarlSiddgeir Auto
 Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
 Quest Property CWOMonitorQuest Auto
-ObjectReference Property ResourceObjectMine2 auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Actor Property CWMission06DissaffectSoldierImperial1 auto
-Actor Property CWMission06DissaffectSoldierImperial2 auto
-Actor Property CWMission06DissaffectSoldierImperial3 auto
-Actor Property CWMission06DissaffectSoldierSons1 auto
-Actor Property CWMission06DissaffectSoldierSons2 auto
-Actor Property CWMission06DissaffectSoldierSons3 auto
+		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
