@@ -1364,8 +1364,6 @@ endif
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
-((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
-((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 ;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 200
 
@@ -1513,10 +1511,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 endif
 
-;CWO Advance campaign
-if kmyQuest.CWs.CWCampaign.IsRunning()
-	kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-endif
 stop()
 ;END CODE
 EndFunction
@@ -1598,9 +1592,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 CWScript.Log("CWFortSiege", "Stage 9999: Shutdown phase.")
 
-if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
-	((self as quest) as CWFortSiegeMissionScript).ProcessFieldCOFactionsOnQuestShutDown()
-endif
+((self as quest) as CWFortSiegeMissionScript).ProcessFieldCOFactionsOnQuestShutDown()
 
 ;CWO Set Flag on Campaign
 if kmyQuest.CWs.CWCampaign.IsRunning()
@@ -1842,6 +1834,12 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 
 endif
 
+CWScript.Log("CWFortSiege", self + "Stage 10: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
+RegisterForUpdate(1)		;Needed for checking if the player has left the battle
+((self as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_CenterMarker.GetReference(), Alias_Fort.GetLocation())
+
+
+
 if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 
  	CWScript.Log("CWFortSiege", "Stage 10: Calling StartCWCitizensFlee() ")
@@ -1850,7 +1848,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 endif
 
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
-	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(20)
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endif
 
 CWScript.Log("CWFortSiege", "Stage 10: turning off complex WI interactions")
