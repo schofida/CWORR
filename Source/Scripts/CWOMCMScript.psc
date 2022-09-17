@@ -524,9 +524,7 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 
 		endif
 	elseIf a_option == optionsWinHold
-		if CWs.GetHoldOwner(a_index + 1) != CWs.PlayerAllegiance
-			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.GetLocationForHold(a_index + 1), true, false)
-		endIf
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.GetLocationForHold(a_index + 1), true, false)
 	elseif a_option == optionsDisguiseGameType
 		CWODisguiseGameType.SetValueInt(a_index)
 		if CWOArmorDisguise.IsRunning()
