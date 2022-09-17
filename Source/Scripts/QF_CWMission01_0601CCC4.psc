@@ -158,11 +158,9 @@ kmyQuest.RegisterAllyAliases(Alias_Ally1, Alias_Ally2, Alias_Ally3, Alias_Ally4)
 kmyQuest.RegisterEnemyAliases(Alias_Enemy1, Alias_Enemy2, Alias_Enemy3, Alias_Enemy4)
 
 if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-    Alias_MapMarkerGarrison.ForceRefTo(Alias_CWGarrisonEnableMarkerImperial.GetRef())
     kmyQuest.EnemySpawnMarker = Alias_CWGarrisonEnableMarkerSons.GetRef()
 
 Else
-    Alias_MapMarkerGarrison.ForceRefTo(Alias_CWGarrisonEnableMarkerSons.GetRef())
     kmyQuest.EnemySpawnMarker = Alias_CWGarrisonEnableMarkerImperial.GetRef()
 endif
 
@@ -239,7 +237,7 @@ endWhile
 
 ;CWO Stop defense courier quest if running
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
-	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.setStage(20)
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
 ;END CODE
