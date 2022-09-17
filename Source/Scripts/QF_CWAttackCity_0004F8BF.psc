@@ -1033,8 +1033,6 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;player left the area (see CWPlayerScript attached to Player alias)
 ;so close out this quest and advance it as if he got the jarl to surrender (it was an optional objective anyway)
 if GetStageDone(9000) == false
-	;CWO - Stop Player Essential quest
-	kmyQuest.CWCampaignS.StopMonitors()
 	;CWO - Fire up disguise quest since this siege is done
 	kmyQuest.CWCampaignS.StartDisguiseQuest()
 	;CWO - Set contested hold winner for campagin
@@ -1252,7 +1250,6 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 ;THIS IS SIMILAR TO STAGE 200
 
-kmyQuest.CWCampaignS.StopMonitors()
 kmyQuest.CWCampaignS.StartDisguiseQuest()
 
 kmyquest.jarlHasSurrendered = 1
