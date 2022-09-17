@@ -1412,20 +1412,23 @@ function FailAttackQuest(locationAlias CityAlias)
 	;fail the siege quest:
 	CWs.CWSiegeObj.setStage(8999)
 
-	CWs.FailCWObj(Hold.GetLocation())
+	CWs.CWCampaignS.FailCWObj(Hold.GetLocation())
 	
 	;fail the campaign
 	CWs.CWCampaignS.FailedMission = 1
 
-	CWs.CWCampaignS.StopMonitors()
 	CWs.CWCampaignS.StartDisguiseQuest()
 	
 	CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
 	;schofida - Player is attacker and attacker lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
+	
+	if cws.CWFinale.IsRunning()
+		cws.CWFinale.Stop()
+	endif
 
-
+	CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
 	;while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailAttackQuest() Waiting for player to leave City before stoping Siege quest")
 	;	utility.wait(5)
@@ -1459,11 +1462,8 @@ function FailDefenseQuest(locationAlias CityAlias)
 	;fail the siege quest:
 	CWs.CWSiegeObj.setStage(8999)
 	
-	if CWs.WhiterunSiegeFinished
-		CWs.FailCWObj(Hold.GetLocation())
-	endif
 
-	CWs.CWCampaignS.StopMonitors()
+
 	CWs.CWCampaignS.StartDisguiseQuest()
 	
 	
@@ -1474,10 +1474,14 @@ function FailDefenseQuest(locationAlias CityAlias)
 	CWs.CWCampaignS.FailedMission = 1
 	
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
+	CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
 
 	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
-	
+
+	if CWs.CWCampaignS.PlayerAllegianceLastStand()
+		CWs.CWCampaignS.ResolveCivilWarOffscreen()
+	endif
 ;	while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
 ; 		CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
 ;		utility.wait(5)
@@ -1507,10 +1511,9 @@ CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 
 CWs.CWSiegeObj.setStage(9000)
 
-CWs.CWCampaignS.StopMonitors()
 CWs.CWCampaignS.StartDisguiseQuest()
 
-;schofida - Player is defender and defender one. Now the player can attak
+;schofida - Player is defender and defender won. Now the player can attak
 CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
 
 ;obsolete:
@@ -1518,6 +1521,11 @@ CWs.CompleteCWObj(Hold.GetLocation())
 
 CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
+CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+
+if cws.CWFinale.IsRunning()
+	cws.CWFinale.Stop()
+endif
 ;CWs.registerMissionSuccess()	- NOT counting final sieges as successful missions, since those are what increase the CWObj global values
 
 ;CWs.CWCampaign.setStage(255) -- OBSOLETE

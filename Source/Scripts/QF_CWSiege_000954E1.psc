@@ -1859,9 +1859,9 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - Last Gate
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - final barricade
 	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); COMPLETED - Last Gate
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); FAILED - final barricade
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
@@ -1994,8 +1994,14 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
+	Alias_SolitudeGateLever1.GetReference().BlockActivation(true)
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
+		if GetStageDone(31)
+			Alias_SolitudeGateLever1.GetReference().Activate(Alias_SolitudeGateLever1.GetReference())
+		else
+			;Do nothing since the player didn't hit the skip trigger.
+		endif
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - gate
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4500, 1); DISPLAY - final barricade
 
 ;Set Dialog States
@@ -2004,8 +2010,9 @@ kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 kmyquest.CWStateDefenderLastStand.SetValue(1)
 
     else
-		;Currently no defense planned
-
+		;no new objectives, already displayed the defend finale barricade
+		kmyquest.CWSiegeObj.SetObjectiveFailed(4700, 1); FAILED - gate
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4400, 1); DISPLAY - final barricade
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
@@ -2535,8 +2542,6 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 setting CWBattlePha
 
 if kmyQuest.CWPrepareCity.IsRunning()
     kmyQuest.CWPrepareCity.Stop()
-elseif kmyQuest.CWs.CwCampaignS.PlayerAllegianceLastStand()
-	kmyquest.CWs.StopCWCitizensFlee()
 endif
 
 kmyquest.CWs.CWBattlePhase.SetValue(0)
@@ -3259,7 +3264,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 			kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
 	
 		endif
-
+		kmyquest.SolitudeOpening.setStage(200)	;stops the execution scene
+		kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
 	endif
 
 ;if either attack or defense
@@ -3314,6 +3320,11 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 			kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.activate(kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02); Open the gate
 	
 		endif
+		;THIS PREVENTS THE MURDER SCENE DURING THE SIEGE
+		kmyquest.MS11.CivilWarBattle(true)
+
+		;MOVED THIS TO STAGE 1 TO SOLVE BUGS WITH NOT WANTING TO START THIS IF DOING Dark Brotherhood AND WE NEED TO PREVENT THE SIEGE FROM DOING ALL THIS SETUP	
+		kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
 
 	endif
 
@@ -3368,8 +3379,6 @@ if kmyquest.IsAttack() == false && cityVar != kmyquest.CWs.WindhelmLocation && c
 
  	CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling setStage(1) on CWPrepareCityStart")	;*** WRITE TO LOG
 	kmyquest.CWs.CWPrepareCity.SetStage(1)	;puts everyone in packages
-elseif kmyQuest.CWs.CwCampaignS.PlayerAllegianceLastStand()
-	kmyquest.CWs.StartCWCitizensFlee(cityVar)
 endif
 
 
@@ -3643,7 +3652,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
 		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius.GetActorRef()
 			OldGeneral.MoveTo(Alias_AttackerImperial1.GetActorRef())
 			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
@@ -3651,7 +3660,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	else
 		OldGeneral = Alias_AttackerSons1.GetActorRef()
 		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric.GetActorRef()
 			OldGeneral.MoveTo(Alias_AttackerSons1.GetActorRef())
 			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerSons2.ForceRefTo(OldGeneral)
@@ -4114,25 +4123,26 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	;Set Dialog States
 	kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 	kmyquest.CWStateDefenderFallingBack.SetValue(1)
-
-	;Set Dialog States
-	kmyquest.CWStateAttackerAtGate.SetValue(1)
-	kmyquest.CWStateDefenderLastStand.SetValue(1)
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - gate
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		;CWO
+		Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000, true)
+		;CWO
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 30)
 
 	else
 		;Currently no defense planned
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2065, 1); FAILED  - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4700, 1); DISPLAY - barricade
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 30)
 
 	endif
 
@@ -4340,27 +4350,13 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
-	Alias_SolitudeGateLever1.GetReference().BlockActivation(true)
 	if kmyquest.IsAttack()
-		if GetStageDone(31)
-			Alias_SolitudeGateLever1.GetReference().Activate(Alias_SolitudeGateLever1.GetReference())
-		else
-			;Do nothing since the player didn't hit the skip trigger.
-		endif
 		;Set Dialog States
-kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 kmyquest.CWStateDefenderFallingBack.SetValue(1)
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
-				;CWO
-				Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.SolitudeExteriorGate01, 0.000000, 0.000000, 0.000000, true)
-				;CWO
-				(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
+		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); COMPLETED - barricade
 	else
 		;Currently no defense planned
-		kmyquest.CWSiegeObj.SetObjectiveFailed(4700, 1); FAILED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4400, 1); DISPLAY - barricade
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
 	endif
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation

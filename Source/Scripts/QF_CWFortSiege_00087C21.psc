@@ -1135,7 +1135,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 	JarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
 	HousecarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
 	JarlActor.setOutfit(kmyquest.CWS.CWCampaignS.CWArmorBalgruufSteelPlateNoHelmetOutfit)
-Else
+Elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 	SetObjectiveDisplayed(210)
 endif
 
@@ -1159,8 +1159,9 @@ CWReinforcementControllerScript kmyQuest = __temp as CWReinforcementControllerSc
 CWScript.Log("CWFortSiege", "Stage 9200: FAILURE!!! Calling Stop() on quest.")
 
 ;CWO - Set CW quest objective to failed
-kmyQuest.CWs.failCWObj(Alias_hold.getlocation())
-
+if ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
+	kmyQuest.CWs.CWCampaignS.failCWObj(Alias_hold.getlocation())
+endif
 ;CWO - Stop player essential quest
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;CWO - Set Failed Mission in Campaign
@@ -1187,6 +1188,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	((self as Quest) as CWFortSiegeScript).AttackersHaveWon = !((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	((self as Quest) as CWFortSiegeScript).DefendersHaveWon = ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), !((self as Quest) as CWFortSiegeScript).WasThisAnAttack, ((self as Quest) as CWFortSiegeScript).WasThisAnAttack)
+	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_hold.getlocation(), ((self as Quest) as CWFortSiegeScript).AttackersHaveWon, ((self as Quest) as CWFortSiegeScript).DefendersHaveWon)
 endif
 
 kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
@@ -1318,7 +1320,6 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 
 ((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True)
 ;location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
-;kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(currentHold, AttackersWon = true, DefendersWon = false)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1348,16 +1349,14 @@ SiegeFinished = false
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
-((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolAttacker = 10
-((self as Quest) as cwreinforcementcontrollerscript).ThresholdCounterPoolDefender = 10
 ;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeCapital
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingDefenderObjective = 100
 ((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 200
 
 ;CWO - Start Courier quest where applicable
-kmyquest.CWs.CWCampaignS.StartDefense(Alias_Fort.GetLocation())
-
-Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 1)
+if !kmyquest.cws.CWSiegeS.IsRunning()
+	kmyquest.CWs.CWCampaignS.StartDefense(Alias_Fort.GetLocation())
+endif
 
 ;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
 CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
@@ -1378,6 +1377,8 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1		;We are a final resolution battle at a minor hold
 
 	((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
+
+	Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 1)
 
 endif
 
@@ -1440,7 +1441,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
 	endif
  	CWScript.Log("CWFortSiege", "Stage 0: Calling StartCWCitizensFlee() and setting Stage 10")
 	kmyquest.CWs.StartCWCitizensFlee(Alias_Fort.GetLocation())
-	setStage(10)
+	if kmyquest.CWs.IsPlayerAttacking(Alias_Fort.GetLocation())
+		setStage(10)
+	endif
 	Alias_CWFortSiegeClutterToggle.GetReference().Enable()
 	Alias_CWFortSiegeClutterEnableForever.GetReference().Enable()
 	Alias_CWFortSiegeClutterDisableForever.GetReference().Disable()
@@ -1555,6 +1558,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 
 endif
 
+CWScript.Log("CWFortSiege", self + "Stage 10: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
+RegisterForUpdate(1)		;Needed for checking if the player has left the battle
+((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_CenterMarker.GetReference(), Alias_Fort.GetLocation())
 
 CWScript.Log("CWFortSiege", "Stage 10: turning off complex WI interactions")
 ((self as quest) as CWFortSiegeMissionScript).ToggleOffComplexWIInteractions(Alias_Fort)
@@ -1589,7 +1595,7 @@ endIf
 
 ;CWO Stop defense courier quest if running
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
-	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.setStage(20)
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
 ;END CODE
@@ -1717,7 +1723,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyQuest.IsPlayerAttacking(), !kmyQuest.IsPlayerAttacking())
 
 ;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
-
+	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 endif
 
 kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
@@ -1846,7 +1852,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 CWScript.Log("CWFortSiege", "Stage 9999: Shutdown phase.")
 
-if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 	((self as quest) as CWFortSiegeMissionScript).ProcessFieldCOFactionsOnQuestShutDown()
 endif
 
@@ -1861,8 +1867,6 @@ Alias_MapMarker.GetReference().enable()
 ;	utility.wait(5)	
 ; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
 ;endwhile
-
-Debug.Notification("Siege is cleaning up behind the scenes. This can take some time. Please wait before continuing CW.")
 
 if Alias_JarlsHouseDoor.GetReference()
 Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
@@ -1894,8 +1898,13 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
-		CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
-		kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+	;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
+	if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+		kmyQuest.CWs.CWCampaign.SetStage(255)
+	endif
+	Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
+	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
+	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 
 endif
 
@@ -1999,14 +2008,6 @@ CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): turning on complex WI 
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling DeleteWhenAbleInteriorDefenders()")
 kmyquest.DeleteWhenAbleInteriorDefenders()
 
-;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
-kmyQuest.CWs.CWCampaign.SetStage(255)
-endif
-
-Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
-
-Debug.Notification("Siege cleanup has completed. You may now speak with the Commander.")
 ;END CODE
 EndFunction
 ;END FRAGMENT

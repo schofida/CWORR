@@ -30,6 +30,7 @@ GlobalVariable property CWOCourierHoursMax auto
 
 function Fragment_1()
 	; Quest stage 10 (after reading city note, but player is not yet in Riften/Markarth/Whiterun)
+	self.SetObjectiveCompleted(10, true)
 	self.setobjectivedisplayed(0, 1 as Bool, false)
 	Alias_FieldCO.getactorreference().addtofaction(CWODefensiveFaction)
 	CWOCourierSentGlobal.SetValueInt(0)
@@ -42,39 +43,25 @@ endFunction
 function Fragment_11()
 	; Quest stage 40 (after reading minor hold note)
 	CWOCourierSentGlobal.SetValueInt(0)
-	
-	CWS.WarIsActive = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
-	CWS.PlayerInvolved = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
-
+	self.SetObjectiveCompleted(10, true)
 	if CWS.CWFortSiegeCapital.IsRunning()
+		CWS.WarIsActive = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
+		CWS.PlayerInvolved = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General	
 		CWS.CWFortSiegeCapital.SetStage(10)
 	elseif CWS.CWFortSiegeFort.IsRunning()
 		CWS.CWFortSiegeFort.SetStage(10)
 	elseif CWS.CWCampaignS.CWMission01.IsRunning()
 		CWS.CWCampaignS.CWMission01.SetStage(10)
 	endif		
-	self.SetObjectiveCompleted(0, true)
-	Alias_FieldCO.getactorreference().removefromfaction(CWODefensiveFaction)
-	utility.wait(50 as Float)
-	Alias_Note.getreference().delete()
-	Alias_NoteMinor.getreference().delete()
-	Alias_NoteFinalImperial.getreference().delete()
-	Alias_NoteFinalSons.getreference().delete()
-	self.stop()
 endFunction
 
 function Fragment_7()
 	; Quest stage 20 (I guess this is a failsafe if the defense siege starts, called from capital/minor capital siege scripts)
-	self.SetObjectiveCompleted(10, true)
-	self.SetObjectiveCompleted(0, true)
-	Alias_FieldCO.getactorreference().removefromfaction(CWODefensiveFaction)
-	CWOCourierSentGlobal.SetValueInt(0)
-	utility.wait(50 as Float)
-	Alias_Note.getreference().delete()
-	Alias_NoteMinor.getreference().delete()
-	Alias_NoteFinalImperial.getreference().delete()
-	Alias_NoteFinalSons.getreference().delete()
-	self.stop()
+	Actor PlayerRef = Alias_Player.GetActorRef()
+	PlayerRef.RemoveItem(Alias_Note.GetReference().GetBaseObject())
+	PlayerRef.RemoveItem(Alias_NoteMinor.GetReference().GetBaseObject())
+	PlayerRef.RemoveItem(Alias_NoteFinalImperial.GetReference().GetBaseObject())
+	PlayerRef.RemoveItem(Alias_NoteFinalSons.GetReference().GetBaseObject())
 endFunction
 
 function Fragment_0()
@@ -82,7 +69,7 @@ function Fragment_0()
 	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
-	kmyQuest.registerforsingleupdate(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue()))
+	kmyQuest.RegisterForSingleUpdateGameTime(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue()))
 endFunction
 
 function Fragment_3()
@@ -116,10 +103,4 @@ function Fragment_10()
 	CWS.CWSiegeS.setstage(1)
 	self.SetObjectiveCompleted(0, true)
 	Alias_FieldCO.getactorreference().removefromfaction(CWODefensiveFaction)
-	utility.wait(10 as Float)
-	Alias_Note.getreference().delete()
-	Alias_NoteMinor.getreference().delete()
-	Alias_NoteFinalImperial.getreference().delete()
-	Alias_NoteFinalSons.getreference().delete()
-	self.stop()
 endFunction

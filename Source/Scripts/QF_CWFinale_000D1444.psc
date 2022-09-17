@@ -620,9 +620,9 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 
 CWScript.Log("CWFinale", "Stage 330")
 ;CWO Lose or win the war
-if kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
-	kmyQuest.CWS.CWSiegeObj.SetStage(8999)
-Else
+if !kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
+
+
 	kmyquest.CWs.AddCivilWarAchievment(3)
 
 	;complete the Execute EnemyLeaderobjectives
@@ -631,17 +631,20 @@ Else
 
 	;COMPLETE THE SIEGE QUEST
 	kmyquest.CWs.CWSiegeObj.setStage(9000)
+
+	if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
+
+		kmyquest.CWFinaleSolitudeSceneC.Start()
+	
+	else		;assume Windhelm
+	
+		kmyquest.CWFinaleWindhelmSceneC.Start()
+	
+	endif
+else
+	SetStage(340)
 endif
 
-if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
-
-	kmyquest.CWFinaleSolitudeSceneC.Start()
-
-else		;assume Windhelm
-
-	kmyquest.CWFinaleWindhelmSceneC.Start()
-
-endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -669,9 +672,10 @@ Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
 
 if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
+	kmyquest.CWFinaleFactionLeaderSwordList = kmyQuest.CWs.CWCampaignS.CWOFinaleFactionLeaderSwordListImperial
 else
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
-
+	kmyquest.CWFinaleFactionLeaderSwordList = kmyQuest.CWs.CWCampaignS.CWOFinaleFactionLeaderSwordListSons
 endif	
 
 ;END CODE
@@ -686,20 +690,23 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;leader told player to come out and give speech with him
+if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	kmyquest.CWs.CWObj.SetStage(254)
+else
+	;give player sword if not given it to him before to kill the enemy leader
+	;ALSO  HAPPENS IN STAGE 305
+	if getStageDone(305) == false
+		Game.GetPlayer().addItem(kmyquest.CWFinaleFactionLeaderSwordList)
+	endif
 
-;give player sword if not given it to him before to kill the enemy leader
-;ALSO  HAPPENS IN STAGE 305
-if getStageDone(305) == false
-	Game.GetPlayer().addItem(kmyquest.CWFinaleFactionLeaderSwordList)
+	;COMPLETE THE CIVIL WAR!!!
+	kmyquest.CWs.CWObj.SetStage(255)
+
+	;rank the player up in case he skipped ranks due to running away, or swapping holds in MQ302
+	kmyquest.CWs.PlayerRank = 4
+
+	kmyquest.CWs.CWFin.Start()   ;start the post questline dialogue quest
 endif
-
-;COMPLETE THE CIVIL WAR!!!
-kmyquest.CWs.CWObj.SetStage(255)
-
-;rank the player up in case he skipped ranks due to running away, or swapping holds in MQ302
-kmyquest.CWs.PlayerRank = 4
-
-kmyquest.CWs.CWFin.Start()   ;start the post questline dialogue quest
 
 ;UNLOCK THE DOORS
 kmyquest.unlockDoors()
@@ -710,17 +717,21 @@ Game.EnableFastTravel(True)
 
 if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 
-	kmyquest.CWs.SolitudeLocation.SetKeywordData(kmyquest.CWs.CWOwner, 2)
-;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.HaafingarHoldLocation, true, false)
+	kmyquest.CWs.SolitudeLocation.SetKeywordData(kmyquest.CWs.CWOwner, kmyQuest.CWs.CWDebugForceAttacker.GetValueInt())
+	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.HaafingarHoldLocation, true, false)
 	Alias_JarlSolitude.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
-	kmyquest.CWFinaleSolitudeSceneD.Start()
+	if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+		kmyQuest.SetStage(400)
+	else
+		kmyquest.CWFinaleSolitudeSceneD.Start()
+	endif
 
 	
 	
 else		;assume windhelm
 
-	kmyquest.CWs.WindhelmLocation.SetKeywordData(kmyquest.CWs.CWOwner, 1)
-;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.EastmarchHoldLocation, true, false)
+	kmyquest.CWs.WindhelmLocation.SetKeywordData(kmyquest.CWs.CWOwner, kmyQuest.CWs.CWDebugForceAttacker.GetValueInt())
+	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.EastmarchHoldLocation, true, false)
 	Alias_NewJarlWindhelm.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
 	
 	; USKP 2.0.4 - So he'll stop giving the bandit clearance quest.
@@ -731,8 +742,12 @@ else		;assume windhelm
 			Favor104.Stop()
 		EndIf
 	EndIf
-
-	kmyquest.CWFinaleWindhelmSceneD.Start()
+	
+	if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+		kmyQuest.SetStage(400)
+	else
+		kmyquest.CWFinaleWindhelmSceneD.Start()
+	endif
 
 
 

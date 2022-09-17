@@ -102,6 +102,10 @@ EVENT onActivate(objectReference triggerRef)
 
 				CWSiegeDoorDefendMessage.show()
 
+			elseif CWs.CWCampaignS.PlayerAllegianceLastStand() && GetOwningQuest().GetStageDone(DoorBlockedUntilStageDuringDefense) && (triggerRef == game.GetPlayer())
+				GetOwningQuest().Stop()
+				CWs.CWFortSiegeCapital.Stop()
+				CWs.CWCampaignS.SetMonitorMajorCitySiegeStopped()
 			endif
 
 		endif

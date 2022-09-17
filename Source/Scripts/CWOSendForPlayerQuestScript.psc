@@ -1,5 +1,5 @@
 Scriptname CWOSendForPlayerQuestScript extends Quest
 
-Event OnUpdate()
-    SetStage(10)
+Event OnUpdateGameTime()
+    SetStage(5)
 endevent

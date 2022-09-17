@@ -12,6 +12,7 @@ perk property Perk2 auto
 perk property Perk6 auto
 GlobalVariable property CWOVersion auto
 GlobalVariable property CWOCurrentHold auto
+ObjectReference property CWSiegeDefendTrigger2Windhelm auto
 
 Event init()
 	;used by CWHoldManagerScript attached to this quest
@@ -27,7 +28,7 @@ auto State WaitingToStartNewCampaign
 	Event OnUpdate()
 		CWScript.log("CWScript", "State WaitingToStartNewCampaign OnUpdate()")
 
-		if !cws.WhiterunSiegeFinished && !cws.cwcampaignS.CWOWarBegun.GetValueInt() == 1
+		if !cws.WhiterunSiegeFinished
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, War has not started yet. Bailing out here.")
 			registerforsingleupdate(30)
 			return
@@ -40,44 +41,52 @@ auto State WaitingToStartNewCampaign
 				;### START NEW CAMPAIGN
 				cws.StartNewCampaign()
 			
-		elseif cws.FactionOwnsAll(cws.PlayerAllegiance) && cws.CWDebugForceAttacker.GetValueInt() == cws.PlayerAllegiance && !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && CWS.CWCampaign.IsRunning() == False
-			GoToState("WaitingToFinishWar")
-			if cws.PlayerAllegiance == cws.iImperials
-				cws.CWContestedHold.setValueInt(cws.iEastmarch)
-			Else
-				cws.CWContestedHold.SetValueInt(cws.iHaafingar)
-			endif
-			cws.CWAttacker.value = cws.PlayerAllegiance
-			cws.CWDefender.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
+		elseif cws.CWCampaignS.FactionOwnsAll(cws.PlayerAllegiance) && \
+			cws.CWDebugForceAttacker.GetValueInt() == cws.PlayerAllegiance && \
+			!(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && \
+			!(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && \
+			CWS.CWCampaign.IsRunning() == False
+				GoToState("WaitingToFinishWar")
+				if cws.PlayerAllegiance == cws.iImperials
+					cws.CWContestedHold.setValueInt(cws.iEastmarch)
+				Else
+					cws.CWContestedHold.SetValueInt(cws.iHaafingar)
+				endif
+				cws.CWAttacker.value = cws.PlayerAllegiance
+				cws.CWDefender.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
 
-			CWs.setAttackDelta()
-			CWs.purchaseDelta = CWs.AttackDelta
-			CWScript.log("CWScript", "WaitingToStartNewCampaign, Player is taking final. Do not start a campaign. Simply let vanilla flow take over")
-		elseif cws.FactionOwnsAll(cws.getOppositeFactionInt(cws.PlayerAllegiance)) && cws.CWDebugForceAttacker.GetValueInt() == cws.getOppositeFactionInt(cws.PlayerAllegiance) && !CWSiegeQuest.IsRunning() && !CWSiegeCapitalQuest.IsRunning() && CWS.CWCampaign.IsRunning() == False
-			GoToState("StartingNewCampaign")
-			int contestedHold = 0
-			if cws.PlayerAllegiance == cws.iImperials
+				CWs.setAttackDelta()
+				CWs.purchaseDelta = CWs.AttackDelta
+				CWScript.log("CWScript", "WaitingToStartNewCampaign, Player is taking final. Do not start a campaign. Simply let vanilla flow take over")
+		elseif cws.CWCampaignS.FactionOwnsAll(cws.getOppositeFactionInt(cws.PlayerAllegiance)) && \
+			cws.CWDebugForceAttacker.GetValueInt() == cws.getOppositeFactionInt(cws.PlayerAllegiance) && \
+			!(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && \
+			!(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && \
+			CWS.CWCampaign.IsRunning() == False
+				GoToState("StartingNewCampaign")
+				int contestedHold = 0
+				if cws.PlayerAllegiance == cws.iImperials
 
-				contestedHold = cws.iHaafingar
-			Else
-				contestedHold = cws.iEastMarch
-			endif
-			cws.CWContestedHold.setValueInt(contestedHold)
-			cws.CWAttacker.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
-			cws.CWDefender.value = cws.PlayerAllegiance
+					contestedHold = cws.iHaafingar
+				Else
+					contestedHold = cws.iEastMarch
+				endif
+				cws.CWContestedHold.setValueInt(contestedHold)
+				cws.CWAttacker.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
+				cws.CWDefender.value = cws.PlayerAllegiance
 
-			cws.cwcampaigns.SetLastStand(1)
+				cws.cwcampaigns.SetLastStand(1)
 
-			CWs.setAttackDelta()
-			CWs.purchaseDelta = CWs.AttackDelta
-			CWScript.log("CWScript", "WaitingToStartNewCampaign, Opponent is taking final hold. Player must defend to keep from losing the war. ")
+				CWs.setAttackDelta()
+				CWs.purchaseDelta = CWs.AttackDelta
+				CWScript.log("CWScript", "WaitingToStartNewCampaign, Opponent is taking final hold. Player must defend to keep from losing the war. ")
 
-			CWs.startCampaignQuest(ContestedHold)
+				CWs.startCampaignQuest(ContestedHold)
 			
 		elseif !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && CWS.CWCampaign.IsRunning() == False
 				GoToState("StartingNewCampaign")
 				CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaign.")
-				
+				cws.cwcampaigns.SetLastStand(0)
 				;### START NEW CAMPAIGN
 				cws.StartNewCampaign()
 			

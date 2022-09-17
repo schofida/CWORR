@@ -41,12 +41,8 @@ Float HealthPercentage
 
 ; Skipped compiler generated GotoState
 
-bool function IsSiegeRunning()
-	return CWS.CWSiegeS.IsRunning() || CWS.CWFortSiegeCapital.IsRunning() || CWS.CWFortSiegeFort.IsRunning()
-endfunction
-
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	if !IsSiegeRunning()
+	if !CWs.CWCampaignS.isCWMissionsOrSiegesRunning()
 		GetOwningQuest().Stop()
 	endIf
 EndEvent
@@ -59,12 +55,9 @@ Event OnEnterBleedout()
 	game.DisablePlayerControls(true, true, true, true, true, true, true, false, 0)
 	PlayerRef.DamageAv("Health", 99999 as Float)
 	PlayerRef.SetUnconscious(true)
-	CWSiegePollPlayerLocation ppLocation = (GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest as CWSiegePollPlayerLocation
-	if ppLocation != none
-		ppLocation.UnregisterforUpdate()
-	endif
 
-	utility.wait(20 as Float)
+
+	utility.wait(10 as Float)
 	game.enablefasttravel(true)
 	utility.wait(2 as Float)
 	PlayerRef.moveto(WhereweGoinTo, 0.000000, 0.000000, 0.000000, true)
@@ -112,11 +105,7 @@ endFunction
 bool function FigureItOut()
 	if CWS.PlayerAllegiance == CWS.iImperials
 		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
-			if CWS.CWFortSiegeFort.IsRunning() ; Final fort siege running but its just a fort battle. Make it loseable
-				WhereweGoinTo = CWs.MilitaryCampWinterholdImperialMapMarker
-			Else
-				return false ; schofida - Final attack siege. Unloseable
-			endif
+			WhereweGoinTo = CWs.MilitaryCampWinterholdImperialMapMarker
 		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
 			WhereweGoinTo = CWs.MilitaryCampHjaalmarchImperialMapMarker ; schofida Edit
 		elseIf PlayerRef.IsInLocation(CWS.HjaalmarchHoldLocation)
@@ -140,11 +129,7 @@ bool function FigureItOut()
 		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
 			WhereweGoinTo = CWs.MilitaryCampWinterholdSonsMapMarker ; schofida - final scene no longer occurs for losing battle
 		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
-			if CWS.CWFortSiegeFort.IsRunning() ; Final fort siege running. Make it loseable
-				WhereweGoinTo = CWs.MilitaryCampHjaalmarchSonsMapMarker
-			Else
-				return false ; schofida - Final attack siege. Unloseable
-			endif
+			WhereweGoinTo = CWs.MilitaryCampHjaalmarchSonsMapMarker
 		elseIf PlayerRef.IsInLocation(CWS.WinterholdHoldLocation)
 			WhereweGoinTo = CWS.MilitaryCampRiftSonsMapMarker		; schofida Edit
 		elseIf PlayerRef.IsInLocation(CWS.WhiterunHoldLocation)
