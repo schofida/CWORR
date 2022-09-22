@@ -115,7 +115,11 @@ State StartingNewCampaign
 				GoToState("WaitingForCampaignToFinish")
 
 				CWScript.log("CWScript", "StartingNewCampaign, CWCampaign.isRunning == True, going to state WaitingForCampaignToFinish.")
-							
+			elseif !cws.isrunning()
+				CWScript.log("CWScript", "StartingNewCampaign, That's all folks. Thanks for Playing!")
+				unregisterforupdate()
+				GetOwningQuest().stop()	
+				return	
 			Else
 				CWScript.log("CWScript", "StartingNewCampaign, CWCampaign.isRunning == False, waiting for CWCampaign to start.")
 				

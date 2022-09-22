@@ -105,6 +105,7 @@ EVENT onActivate(objectReference triggerRef)
 			elseif CWs.CWCampaignS.PlayerAllegianceLastStand() && GetOwningQuest().GetStageDone(DoorBlockedUntilStageDuringDefense) && (triggerRef == game.GetPlayer())
 				GetOwningQuest().Stop()
 				CWs.CWFortSiegeCapital.Stop()
+				CWs.CWFinale.Stop()
 				CWs.CWCampaignS.SetMonitorMajorCitySiegeStopped()
 			endif
 

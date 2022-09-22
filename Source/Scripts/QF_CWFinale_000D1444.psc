@@ -692,6 +692,10 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;leader told player to come out and give speech with him
 if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
 	kmyquest.CWs.CWObj.SetStage(254)
+	kmyquest.CWs.CWCampaignS.StopDisguiseQuest()
+	utility.WAIT(3.0)
+	kmyquest.CWs.PlayerFaction.SetEnemy(kmyquest.CWs.getPlayerAllegianceEnemyFaction(true), true, true)
+	kmyquest.CWs.CWFin.Start()   ;start the post questline dialogue quest
 else
 	;give player sword if not given it to him before to kill the enemy leader
 	;ALSO  HAPPENS IN STAGE 305

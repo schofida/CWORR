@@ -1474,8 +1474,9 @@ function FailDefenseQuest(locationAlias CityAlias)
 	CWs.CWCampaignS.FailedMission = 1
 	
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
-	CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
-
+	if !cws.cwfinale.isrunning()
+		CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
+	endif
 	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
 
