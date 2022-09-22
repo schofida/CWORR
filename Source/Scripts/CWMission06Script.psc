@@ -24,13 +24,9 @@ int Property LoyalistAliveCount auto Conditional hidden ;set in stage 0 by calli
 
 ActorBase Property CWMission06LoyalistLeaderImperial auto
 ActorBase Property CWMission06DissaffectSoldierImperial1 auto
-ActorBase Property CWMission06DissaffectSoldierImperial2 auto
-ActorBase Property CWMission06DissaffectSoldierImperial3 auto
 
 ActorBase Property CWMission06LoyalistLeaderSons auto
 ActorBase Property CWMission06DissaffectSoldierSons1 auto
-ActorBase Property CWMission06DissaffectSoldierSons2 auto
-ActorBase Property CWMission06DissaffectSoldierSons3 auto
 
 Event OnUpdate()
 

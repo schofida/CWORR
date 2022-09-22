@@ -228,7 +228,16 @@ if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQues
     OldSmelter.Disable()
     SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectMine)
     Alias_ResourceObject1.ForceRefTo(SmelterFix)
+elseif (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMill)
+    OldSmelter = Alias_ResourceObject1.GetReference()
+    OldSmelter.Disable()
+    SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectSawMill)
+    Alias_ResourceObject1.ForceRefTo(SmelterFix)  
+else
+    Alias_ResourceObject1.TryToEnable()
 endif
+Alias_MapMarker.TryToEnable()
+
 
 (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
 

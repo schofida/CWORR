@@ -173,10 +173,10 @@ kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
     kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
 Else
     kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
 endif
 
 kmyquest.CWs.RegisterEventHappening(Alias_CWCampEnemy.GetLocation())
@@ -221,7 +221,7 @@ Alias_DissaffectedSoldier01.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier02.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier03.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 
-if kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
+if !kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
     kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToDisable()
 endif
 
@@ -263,6 +263,14 @@ SetObjectiveCompleted(10)
 SetObjectiveDisplayed(20)
 
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+
+if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
+    kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
+Else
+    kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
+endif
 
 Alias_LoyalistSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
 Alias_LoyalistSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
@@ -331,7 +339,9 @@ Alias_DissaffectedSoldier01.TryToDisable()
 Alias_DissaffectedSoldier02.TryToDisable()
 Alias_DissaffectedSoldier03.TryToDisable()
 
-kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToEnable()
+if !kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
+    kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToEnable()
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -354,8 +364,8 @@ kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
 kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
 
 if Alias_DissaffectedSoldier01.GetActorReference() != none && !Alias_DissaffectedSoldier01.GetActorReference().IsDead()
+    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
-    Alias_DissaffectedSoldier01.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \
@@ -371,8 +381,8 @@ if Alias_DissaffectedSoldier01.GetActorReference() != none && !Alias_Dissaffecte
 endif
 
 if Alias_DissaffectedSoldier02.GetActorReference() != none && !Alias_DissaffectedSoldier02.GetActorReference().IsDead()
+    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
-    Alias_DissaffectedSoldier02.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier02.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \
@@ -388,8 +398,8 @@ if Alias_DissaffectedSoldier02.GetActorReference() != none && !Alias_Dissaffecte
 endif
 
 if Alias_DissaffectedSoldier03.GetActorReference() != none && !Alias_DissaffectedSoldier03.GetActorReference().IsDead()
+    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
     kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
-    Alias_DissaffectedSoldier03.TryToReset()
     kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier03.GetActorRef(), \
     AllowedInHaafingar = False, \
     AllowedInReach = True, \
