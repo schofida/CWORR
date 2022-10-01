@@ -6,6 +6,8 @@ Potion Property FoodApple02  Auto
 ReferenceAlias Property Goldar Auto
 
 int DistanceFromCow = 2000				;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
+int DistanceFromPlayer = 6000				;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
+
 int StopCheckingDistanceAtStage	= 20	;what quest stage to stop checking distance to cow (ie the player gave the cow to the giant)
 
 int TimeForAnotherApple = 30			;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
@@ -32,16 +34,16 @@ Event OnUnload()
 EndEvent
 
 Event OnUpdate()
+	CWScript.Log("CWMission08CowOfferingScript", self + "OnUpdate()")
+	Actor GoldarRef = Goldar.GetActorRef()
+	Actor PlayerRef = Game.GetPlayer()
 	if GetOwningQuest().getStage() < StopCheckingDistanceAtStage
 
-		if  GetReference().GetDistance(Game.GetPlayer()) <= DistanceFromCow
+		if  GetReference().GetDistance(PlayerRef) <= DistanceFromCow && GoldarRef.Is3dLoaded() && GoldarRef.GetDistance(PlayerRef) <= DistanceFromPlayer
 ; 			CWScript.Log("CWMission08CowOfferingScript", "Player close to cow, adding player to CWMission08AllGiantsPlayerFriendFaction")
 			Game.GetPlayer().AddToFaction((GetOwningQuest() as CWMission08Script).CWMission08AllGiantsPlayerFriendFaction)
 			
-		Else
-; 			CWScript.Log("CWMission08CowOfferingScript", "Player far from cow, removing player to CWMission08AllGiantsPlayerFriendFaction")
-			Game.GetPlayer().RemoveFromFaction((GetOwningQuest() as CWMission08Script).CWMission08AllGiantsPlayerFriendFaction)
-					
+			GetOwningQuest().SetStage(20)
 		EndIf
 	elseif IntervalCheck > TimeForAnotherApple
 		IntervalCheck = 0
@@ -53,12 +55,6 @@ Event OnUpdate()
 	EndIf
 	IntervalCheck += 1
 EndEvent
-
-Event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	if akNewLoc == (GetOwningQuest() as CWMission08Script).AttackPoint.GetLocation()
-		GetOwningQuest().SetStage(20)
-	endif
-endevent
 
 
 Event OnActivate(ObjectReference akActionRef)

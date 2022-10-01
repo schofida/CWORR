@@ -8,10 +8,11 @@ faction Property CWMission08AllGiantsPlayerFriendFaction Auto
 scene Property CWMission08Scene1 auto
 scene Property CWMission08Scene2 auto
 
-LocationAlias Property AttackPoint Auto
 int Property playerAtAttackPoint auto conditional hidden	;0 = unset, 1 = player arrived - used to control scene, making sure the player is present before the giant takes the herd and gaurds attack
 
+bool Property CowHandGreetedPlayer = false Auto Conditional hidden
 
+bool Property PlayerReachedAttackPoint = false auto hidden
 
 CWAlliesScript Property CWAlliesS Auto	;pointer to script on CWAllies Quest
 
