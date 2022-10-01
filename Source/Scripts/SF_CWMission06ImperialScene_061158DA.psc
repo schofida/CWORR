@@ -5,7 +5,6 @@ Scriptname SF_CWMission06ImperialScene_061158DA Extends Scene Hidden
 ;BEGIN FRAGMENT Fragment_2
 Function Fragment_2()
 ;BEGIN CODE
-Debug.notification(self+"end")
 GetOwningQuest().SetStage(20)
 ;END CODE
 EndFunction

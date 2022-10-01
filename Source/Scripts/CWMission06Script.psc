@@ -38,7 +38,6 @@ Event OnUpdate()
 	;if we are at the correct stage, the TurncoatLeader is outside, and the player is in the same location, then start the scene.
 	if GetStage() == 10
 		if PlayerRef.GetDistance(TurncoatLeader.GetReference()) < 1200
-			Debug.notification("User Entered Camp. Starting Scene")
 			if CWs.PlayerAllegiance == CWs.iImperials
 				CWMission06ImperialScene.start()
 			Else
