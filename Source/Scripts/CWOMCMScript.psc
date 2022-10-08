@@ -348,7 +348,7 @@ function OnPageReset(String a_page)
 			self.AddtextOption("X's Last Battle", "Is On Stage " + CWs.CWCampaignS.CWMission05.Getstage() as String, 0)
 		endIf
 		if CWs.CWCampaignS.CWMission06.IsRunning()
-			self.AddtextOption("Defector Collecter", "Is On Stage " + CWs.CWCampaignS.CWMission06.Getstage() as String, 0)
+			self.AddtextOption("Defector Collector", "Is On Stage " + CWs.CWCampaignS.CWMission06.Getstage() as String, 0)
 		endIf
 		if CWs.CWMission07.IsRunning()
 			self.AddtextOption("Compelling Tribute", "Is On Stage " + CWs.CWMission07.Getstage() as String, 0)
