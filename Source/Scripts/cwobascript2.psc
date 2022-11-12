@@ -1,70 +1,115 @@
 scriptName CWOBAScript2 extends ReferenceAlias
 
-;-- Properties --------------------------------------
-faction property FactionToAdd auto
-faction property NPCFactionToAdd auto
 faction property CWSoldierNoGuardDialogueFaction auto
-
+faction property GuardFaction auto
+ReferenceAlias property SpyTarget auto
 ;-- Variables ---------------------------------------
 
 ;-- Functions ---------------------------------------
-Faction[] ActorFactions	; Reddit BugFix #9
-Bool IsSwapped = false
+Faction CrimeFaction	; Reddit BugFix #9
+Faction[] OldFactions
+Faction NewFaction
+Faction NewNPCFaction
+
+Bool HasRemovedFactions = false
+Bool HasSwappedCWFactions = false
+
 
 ; Skipped compiler generated GotoState
 
 ; Skipped compiler generated GetState
 ; Reddit BugFix #9
 
-
-
-event OnDeath(Actor akKiller)
-	RevertFactions()
-endEvent
-
-function RemoveFromAllFactions(actor actorRef)
-	Faction[] currentFactions = actorRef.GetFactions(-128, 127)
-	int i = currentFactions.length
-	While i
-		i -= 1
-		actorRef.RemoveFromFaction(currentFactions[i])
-	endwhile
-endfunction
-
 function RevertFactions()
 	actor Myself = self.GetActorReference()
-	if Myself == none || IsSwapped == false
+	if Myself == none
 		return
 	endif
-	IsSwapped = false
-	RemoveFromAllFactions(Myself)
-	int i = ActorFactions.length
-	While i
-		i -= 1
-		Myself.AddToFaction(ActorFactions[i])
-	endwhile
+
+	if HasSwappedCWFactions
+		HasSwappedCWFactions = false
+		Myself.RemoveFromFaction(NewFaction)
+		Myself.RemoveFromFaction(NewNPCFaction)		
+	endif
+
+	if HasRemovedFactions
+		HasRemovedFactions = false
+
+		int i = OldFactions.Length
+		While i
+			i -= 1
+			Myself.AddToFaction(OldFactions[i])
+		EndWhile
+		Myself.SetCrimeFaction(CrimeFaction)
+	endif
+
 	Myself.EvaluatePackage()
 endfunction
 
-event OnInit()
+function UndoNPCFaction()
+	actor Myself = self.GetActorReference()
+	if Myself == none
+		return
+	endif
 
+	if HasSwappedCWFactions
+		HasSwappedCWFactions = false
+		Myself.RemoveFromFaction(NewFaction)
+		Myself.RemoveFromFaction(NewNPCFaction)		
+	endif
+endfunction
+
+
+function SwapFactions()
 	Actor Myself = self.GetActorReference()
 	if Myself == none
 		return
 	endif
-	ActorFactions = Myself.GetFactions(-128, 127)	; Reddit BugFix #9
-	RemoveFromAllFactions(Myself)
-	Myself.AddToFaction(FactionToAdd)
-	Myself.AddToFaction(NPCFactionToAdd)
-	Myself.AddToFaction(CWSoldierNoGuardDialogueFaction)
-	IsSwapped = true
-	Myself.EquipItem(CWOBAArrow, false, true)
-	Myself.EvaluatePackage()
-endEvent
 
-event OnPackageChange(Package akOldPackage)
-	self.GetActorReference().EquipItem(Invisibility2, false, true)
+	CWscript CWs = (GetOwningQuest() as CWOBAQuestScript).CWs
+
+	if !HasSwappedCWFactions
+		HasSwappedCWFactions = true
+
+		Myself.AddToFaction(NewFaction)
+		Myself.AddToFaction(NewNPCFaction)
+
+		Myself.EvaluatePackage()
+		Myself.StartCombat(SpyTarget.GetActorRef())
+	endif
+endfunction
+
+event OnUpdate()
+	Actor Myself = self.GetActorReference()
+	if Myself.GetDistance(SpyTarget.GetActorReference()) <= 300 && Myself.HasLOS(SpyTarget.GetActorReference())
+		(GetOwningQuest() as CWOBAQuestScript).TargetFound = true
+		GetOwningQuest().SetStage(30)
+		return
+	endif
+	RegisterForSingleUpdate(3.0)
 endevent
 
-Potion Property Invisibility2  Auto
-Ammo Property CWOBAArrow Auto
+event OnInit()
+	Actor Myself = self.GetActorReference()
+	if Myself == none
+		return
+	endif
+
+	if !HasRemovedFactions
+		HasRemovedFactions = true
+		CWscript CWs = (GetOwningQuest() as CWOBAQuestScript).CWs
+
+		int myAllegiance = CWs.GetActorAllgeiance(myself)
+		NEwFaction = CWs.getFaction(CWs.getOppositeFactionInt(myAllegiance))
+		NewNPCFaction = CWs.getFaction(CWs.getOppositeFactionInt(myAllegiance), true)
+
+		OldFactions = Myself.GetFactions(-128, 127)
+		CrimeFaction = Myself.GetCrimeFaction()
+		Myself.RemoveFromAllFactions()
+	endif
+
+	Myself.EvaluatePackage()
+
+	RegisterForSingleUpdate(3.0)
+
+endEvent

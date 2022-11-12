@@ -1633,6 +1633,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO Player is now up to enemy troops start player essential quest and stop disguise quest
 	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 endif
 ;END CODE
 EndFunction
@@ -1696,6 +1697,7 @@ CWScript.Log("CWFortSiege", "Stage 9000: SUCCESS! Calling Stop() on quest.")
 ;CWO restart disguise and stop player essential quest
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StopMonitors()
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
 

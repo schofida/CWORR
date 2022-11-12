@@ -1,12 +1,14 @@
 scriptName CWOBAControllerScript extends ReferenceAlias
 
 ;-- Properties --------------------------------------
-quest property CWFinale auto
 quest property WaitForHelgen auto
 quest property AwesomeQuest auto
 globalvariable property CWOBAUpper auto
 globalvariable property CWOBALower auto
 globalvariable property UpdateTime auto
+keyword property CWCapital auto
+keyword property LocTypeMilitaryCamp auto
+GlobalVariable Property CWOBAChance Auto
 
 ;-- Variables ---------------------------------------
 
@@ -14,25 +16,36 @@ globalvariable property UpdateTime auto
 
 ; Skipped compiler generated GotoState
 
-function OnUpdate()
+Event OnCellAttach()
+    Actor player = GetActorRef()
+	if !AwesomeQuest.IsRunning()
+		return
+	endif
+    if player.IsInInterior()
+        GetOwningQuest().Stop()
+    elseif !player.getCurrentLocation().HasKeyword(CWCapital) && !player.getCurrentLocation().HasKeyword(LocTypeMilitaryCamp)
+        GetOwningQuest().Stop()
+    endif
+endevent
 
-	if CWFinale.IsCompleted() || CWFinale.GetStageDone(100) ;schofida - Don't run quest on victory scene :(
-		self.GetOwningQuest().Stop()
-		return 
-	endIf
+function OnUpdate()
+    Actor player = GetActorRef()
 	if AwesomeQuest.IsRunning()
 		AwesomeQuest.Stop()
 		utility.wait(5 as Float)
 	endIf
-	AwesomeQuest.Start()
+	if WaitForHelgen.IsCompleted() && \
+		!player.IsInInterior() && \
+		CWOBAChance.GetValueInt() > 0 && \
+		(player.getCurrentLocation().HasKeyword(CWCapital) || \
+			player.getCurrentLocation().HasKeyword(LocTypeMilitaryCamp))
+		AwesomeQuest.Start()
+	endif
 	self.registerforsingleupdate(utility.randomfloat(CWOBALower.GetValue(), CWOBAUpper.GetValue()))
 endFunction
 
 function OnInit()
 
-	while !WaitForHelgen.IsCompleted()
-		utility.wait(60 as Float)
-	endWhile
 	self.registerforsingleupdate(utility.randomfloat(CWOBALower.GetValue(), CWOBAUpper.GetValue()))
 endFunction
 

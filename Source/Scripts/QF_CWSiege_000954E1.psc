@@ -2831,6 +2831,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 
 ;CWO - Stop Disguise Quest
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 
 ;Gets called at the end of CWAttackerStartingScene, sets Phase 1, then sets stage 10.
  	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	

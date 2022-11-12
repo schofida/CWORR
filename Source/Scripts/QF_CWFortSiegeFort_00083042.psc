@@ -1085,7 +1085,7 @@ CWScript.Log("CWFortSiege", "Stage 1000: Defender wiped out, determined success 
 ;CWO Battle is over stop essential player quest and start disguise quest
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
@@ -1157,7 +1157,7 @@ CWScript.Log("CWFortSiege", "Stage 2000: Attacker wiped out, determined success 
 ;CWO Battle is over stop essential player quest and start disguise quest
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
@@ -1558,6 +1558,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO Player is now up to enemy troops start player essential quest and stop disguise quest
 	kmyQuest.CWs.CWCampaignS.StartMonitors(self as Quest)
 	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 endif
 ;END CODE
 EndFunction

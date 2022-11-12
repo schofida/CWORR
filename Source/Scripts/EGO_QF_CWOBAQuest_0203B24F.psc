@@ -1,65 +1,81 @@
-scriptName EGO_QF_CWOBAQuest_0203B24F extends Quest hidden
+;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
+;NEXT FRAGMENT INDEX 5
+Scriptname EGO_QF_CWOBAQuest_0203B24F Extends Quest Hidden
 
-;-- Properties --------------------------------------
-referencealias property Alias_StormcloakSpy01 auto
-referencealias property Alias_StormcloakSpy02 auto
-referencealias property Alias_StormcloakSpy03 auto
-referencealias property Alias_StormcloakSpy04 auto
-referencealias property Alias_StormcloakSpy05 auto
-referencealias property Alias_StormcloakSpy06 auto
-referencealias property Alias_StormcloakSpy07 auto
-referencealias property Alias_StormcloakSpy08 auto
-referencealias property Alias_StormcloakSpy09 auto
-globalvariable property QuestLength auto
-referencealias property Alias_StormcloakSpy10 auto
-referencealias property Alias_StormcloakSpy11 auto
-referencealias property Alias_ImperialSpy01 auto
-referencealias property Alias_ImperialSpy02 auto
-referencealias property Alias_ImperialSpy03 auto
-referencealias property Alias_ImperialSpy04 auto
-referencealias property Alias_ImperialSpy05 auto
-referencealias property Alias_ImperialSpy06 auto
-referencealias property Alias_ImperialSpy07 auto
-referencealias property Alias_ImperialSpy08 auto
-referencealias property Alias_ImperialSpy09 auto
-referencealias property Alias_ImperialSpy10 auto
+;BEGIN ALIAS PROPERTY ImperialTargetPlayer
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ImperialTargetPlayer Auto
+;END ALIAS PROPERTY
 
-;-- Variables ---------------------------------------
+;BEGIN ALIAS PROPERTY StormcloakSpy01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_StormcloakSpy01 Auto
+;END ALIAS PROPERTY
 
-;-- Functions ---------------------------------------
+;BEGIN ALIAS PROPERTY ImperialSpy01
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ImperialSpy01 Auto
+;END ALIAS PROPERTY
 
-; Skipped compiler generated GetState
+;BEGIN ALIAS PROPERTY ImperialTarget
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ImperialTarget Auto
+;END ALIAS PROPERTY
 
-; Skipped compiler generated GotoState
+;BEGIN ALIAS PROPERTY SpyTarget
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SpyTarget Auto
+;END ALIAS PROPERTY
 
-function Fragment_1()
+;BEGIN ALIAS PROPERTY SonsTargetPlayer
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SonsTargetPlayer Auto
+;END ALIAS PROPERTY
 
-	(Alias_StormcloakSpy11 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy10 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy09 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy08 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy07 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy06 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy05 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy04 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy03 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy02 as cwobascript2).RevertFactions()
-	(Alias_StormcloakSpy01 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy10 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy09 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy08 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy07 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy06 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy05 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy04 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy03 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy02 as cwobascript2).RevertFactions()
-	(Alias_ImperialSpy01 as cwobascript2).RevertFactions()
-endFunction
+;BEGIN ALIAS PROPERTY SonsTarget
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SonsTarget Auto
+;END ALIAS PROPERTY
 
-function Fragment_0()
-	Quest __temp = self as Quest
-	CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
+;BEGIN CODE
+(Alias_StormcloakSpy01 as cwobascript2).RevertFactions()
+(Alias_ImperialSpy01 as cwobascript2).RevertFactions()
+;END CODE
+EndFunction
+;END FRAGMENT
 
-	kmyQuest.registerforsingleupdate(QuestLength.GetValue())
-endFunction
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWOBAQuestScript
+Quest __temp = self as Quest
+CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.registerforsingleupdate(kmyQuest.QuestLength.GetValue())
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_3
+Function Fragment_3()
+;BEGIN CODE
+(Alias_StormcloakSpy01 as cwobascript2).SwapFactions()
+(Alias_ImperialSpy01 as cwobascript2).SwapFactions()
+;Source NOT loaded
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_4
+Function Fragment_4()
+;BEGIN CODE
+(Alias_StormcloakSpy01 as cwobascript2).UndoNPCFaction()
+(Alias_ImperialSpy01 as cwobascript2).UndoNPCFaction()
+;Source NOT loaded
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment

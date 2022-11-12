@@ -1418,6 +1418,7 @@ function FailAttackQuest(locationAlias CityAlias)
 	CWs.CWCampaignS.FailedMission = 1
 
 	CWs.CWCampaignS.StartDisguiseQuest()
+	CWs.CWCampaignS.StartCWOBAControllerQuest()
 	
 	CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
@@ -1465,7 +1466,7 @@ function FailDefenseQuest(locationAlias CityAlias)
 
 
 	CWs.CWCampaignS.StartDisguiseQuest()
-	
+	CWs.CWCampaignS.StartCWOBAControllerQuest()
 	
 	;Update the campaign objectives
 	;CWs.CWCampaignObj.setStage(50)		;objective to flee the city with the Jarl
@@ -1513,6 +1514,7 @@ CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 CWs.CWSiegeObj.setStage(9000)
 
 CWs.CWCampaignS.StartDisguiseQuest()
+CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 ;schofida - Player is defender and defender won. Now the player can attak
 CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)

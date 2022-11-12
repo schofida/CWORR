@@ -306,6 +306,7 @@ ActorBase Property JarlIdgrodRavencrone Auto
 ActorBase Property JarlSiddgeir Auto
 Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
 Quest Property CWOMonitorQuest Auto
+Quest Property CWOBAController Auto
 		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
@@ -2350,6 +2351,14 @@ endfunction
 
 function SetMonitorMajorCitySiegeStopped()
 	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForSiegeToStop")
+endfunction
+
+function StartCWOBAControllerQuest()
+	CWOBAController.Start()
+endfunction
+
+function StopCWOBAControllerQuest()
+	CWOBAController.Stop()
 endfunction
 
 Bool Function FactionOwnsAll(int FactionToTest)
