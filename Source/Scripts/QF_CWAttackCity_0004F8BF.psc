@@ -917,7 +917,7 @@ ResolutionDefenderMarkerRef5.Enable()
 
 CWScript.Log("AttackCity", "Stage 0: creating player enemy soldiers")
 
-if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
+if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation && kmyQuest.CWs.Playerallegiance == 2
 
 Alias_EnemySoldier1.ForceRefTo(ResolutionDefenderMarkerRef1.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 Alias_EnemySoldier2.ForceRefTo(ResolutionDefenderMarkerRef2.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
@@ -931,6 +931,36 @@ Alias_EnemySoldier9.ForceRefTo(ResolutionDefenderMarkerRef9.PlaceAtMe(kmyquest.C
 Alias_EnemySoldier10.ForceRefTo(ResolutionDefenderMarkerRef10.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 Alias_EnemySoldier11.ForceRefTo(ResolutionDefenderMarkerRef11.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
 Alias_EnemySoldier12.ForceRefTo(ResolutionDefenderMarkerRef12.PlaceAtMe(kmyquest.CWSiegeWhiterunImperialSoldier))
+
+elseif  Alias_City.GetLocation() == kmyquest.CWs.MarkarthLocation && kmyQuest.CWs.Playerallegiance == 2
+
+Alias_EnemySoldier1.ForceRefTo(ResolutionDefenderMarkerRef1.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier2.ForceRefTo(ResolutionDefenderMarkerRef2.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier3.ForceRefTo(ResolutionDefenderMarkerRef3.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier4.ForceRefTo(ResolutionDefenderMarkerRef4.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier5.ForceRefTo(ResolutionDefenderMarkerRef5.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier6.ForceRefTo(ResolutionDefenderMarkerRef6.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier7.ForceRefTo(ResolutionDefenderMarkerRef7.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier8.ForceRefTo(ResolutionDefenderMarkerRef8.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier9.ForceRefTo(ResolutionDefenderMarkerRef9.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier10.ForceRefTo(ResolutionDefenderMarkerRef10.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier11.ForceRefTo(ResolutionDefenderMarkerRef11.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+Alias_EnemySoldier12.ForceRefTo(ResolutionDefenderMarkerRef12.PlaceAtMe(kmyquest.CWSiegeMarkarthImperialSoldier))
+
+elseif  Alias_City.GetLocation() == kmyquest.CWs.RiftenLocation && kmyQuest.CWs.Playerallegiance == 1
+
+Alias_EnemySoldier1.ForceRefTo(ResolutionDefenderMarkerRef1.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier2.ForceRefTo(ResolutionDefenderMarkerRef2.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier3.ForceRefTo(ResolutionDefenderMarkerRef3.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier4.ForceRefTo(ResolutionDefenderMarkerRef4.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier5.ForceRefTo(ResolutionDefenderMarkerRef5.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier6.ForceRefTo(ResolutionDefenderMarkerRef6.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier7.ForceRefTo(ResolutionDefenderMarkerRef7.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier8.ForceRefTo(ResolutionDefenderMarkerRef8.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier9.ForceRefTo(ResolutionDefenderMarkerRef9.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier10.ForceRefTo(ResolutionDefenderMarkerRef10.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier11.ForceRefTo(ResolutionDefenderMarkerRef11.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
+Alias_EnemySoldier12.ForceRefTo(ResolutionDefenderMarkerRef12.PlaceAtMe(kmyquest.CWSiegeRiftenSonsSoldier))
 
 else
 
@@ -955,7 +985,7 @@ CWScript.Log("AttackCity", "Stage 0: creating player ally soldiers")
 
 ;*** !!! *** !!! THESE SHOULD BE SET UP TO SPAWN INFINITE REINFORCEMENTS *** !!! *** !!! 
 
-if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
+if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation && kmyQuest.CWs.Playerallegiance == 2
 
 	Alias_Soldier1.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
 	Alias_Soldier2.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
@@ -963,6 +993,24 @@ if  Alias_City.GetLocation() == kmyquest.CWs.WhiterunLocation
 	Alias_Soldier4.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
 	Alias_Soldier5.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
 	Alias_Soldier6.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+
+elseif  Alias_City.GetLocation() == kmyquest.CWs.MarkarthLocation && kmyQuest.CWs.Playerallegiance == 2
+
+	Alias_Soldier1.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+	Alias_Soldier2.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+	Alias_Soldier3.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+	Alias_Soldier4.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+	Alias_Soldier5.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+	Alias_Soldier6.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeSonsSoldier))
+
+elseif  Alias_City.GetLocation() == kmyquest.CWs.RiftenLocation && kmyQuest.CWs.Playerallegiance == 1
+
+	Alias_Soldier1.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
+	Alias_Soldier2.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
+	Alias_Soldier3.ForceRefTo(SpawnAttacker1.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
+	Alias_Soldier4.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
+	Alias_Soldier5.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
+	Alias_Soldier6.ForceRefTo(SpawnAttacker2.PlaceAtMe(kmyquest.CWSiegeImperialSoldier))
 
 else
 
