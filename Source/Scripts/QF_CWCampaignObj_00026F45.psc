@@ -50,7 +50,7 @@ Quest __temp = self as Quest
 CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveDisplayed(30)
+;setObjectiveDisplayed(30)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -102,8 +102,8 @@ Quest __temp = self as Quest
 CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveCompleted(15)
-setObjectiveDisplayed(20)
+;setObjectiveCompleted(15)
+;setObjectiveDisplayed(20)
 ;END CODE
 EndFunction
 ;END FRAGMENT
