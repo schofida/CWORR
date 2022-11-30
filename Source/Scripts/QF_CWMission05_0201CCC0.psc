@@ -21,6 +21,7 @@ function Fragment_10()
 
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
+	debug.traceConditional("CWMission05 stage 205", kmyquest.CWs.debugon.value)
 	kmyQuest.FailAllObjectives()
 	kmyQuest.FlagFieldCOWithMissionResultFaction(5, true)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
@@ -31,8 +32,10 @@ function Fragment_0()
 
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
+	debug.traceConditional("CWMission05 stage 200", kmyquest.CWs.debugon.value)
 	kmyQuest.CompleteAllObjectives()
 	kmyQuest.FlagFieldCOWithMissionResultFaction(5, false)
+	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 	kmyQuest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), false)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 	self.stop()
@@ -43,18 +46,24 @@ function Fragment_6()
 
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
+	debug.traceConditional("CWMission05 stage 30", kmyquest.CWs.debugon.value)
 endFunction
 
 function Fragment_5()
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
+	debug.traceConditional("CWMission05 stage 20", kmyquest.CWs.debugon.value)
 endfunction
 
 function Fragment_4()
 
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
+	debug.traceConditional("CWMission05 stage 100", kmyquest.CWs.debugon.value)
 	kmyQuest.objectiveCompleted = 1
+	;Just in case
+	Alias_EnemyFieldCO.TryToKill()
+	
 	kmyQuest.SetObjectiveCompleted(10, true)
 	kmyQuest.SetObjectiveDisplayed(100, true)
 endFunction
@@ -65,7 +74,7 @@ function Fragment_8()
 
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
-
+	debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
 	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5, true)
 	self.SetObjectiveDisplayed(10, 1 as Bool, false)
 	;Reddit Bugfix #5
@@ -86,7 +95,7 @@ endFunction
 function Fragment_1()
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
-
+	debug.traceConditional("CWMission05 stage 0", kmyquest.CWs.debugon.value)
 	kmyQuest.ResetCommonMissionProperties()
 	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5, false)
 endfunction
@@ -94,7 +103,7 @@ endfunction
 function fragment_2()
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
-
+	debug.traceConditional("CWMission05 stage 255", kmyquest.CWs.debugon.value)
 	Location currentHold = kmyQuest.CWs.GetMyCurrentHoldLocation(Alias_EnemyFieldCO.GetActorReference())
 	int aliasAllegiance = kmyQuest.CWs.GetActorAllgeiance(Alias_EnemyFieldCO.GetActorReference())
 	Actor FieldCOHQ = kmyQuest.CWs.GetAliasHQFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
