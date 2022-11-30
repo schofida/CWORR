@@ -307,6 +307,20 @@ ActorBase Property JarlSiddgeir Auto
 Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
 Quest Property CWOMonitorQuest Auto
 Quest Property CWOBAController Auto
+objectreference property CWGarrisonEnableMarkerSonsCampRift auto
+objectreference property CWGarrisonEnableMarkerSonsCampWinterhold auto
+objectreference property CWGarrisonEnableMarkerSonsCampPale auto
+objectreference property CWGarrisonEnableMarkerSonsCampFalkreath auto
+objectreference property CWGarrisonEnableMarkerSonsCampWhiterun auto
+objectreference property CWGarrisonEnableMarkerSonsCampHjaalmarch auto
+objectreference property CWGarrisonEnableMarkerSonsCampReach auto
+objectreference property CWGarrisonEnableMarkerImperialCampRift auto
+objectreference property CWGarrisonEnableMarkerImperialCampWinterhold auto
+objectreference property CWGarrisonEnableMarkerImperialCampPale auto
+objectreference property CWGarrisonEnableMarkerImperialCampFalkreath auto
+objectreference property CWGarrisonEnableMarkerImperialCampWhiterun auto
+objectreference property CWGarrisonEnableMarkerImperialCampHjaalmarch auto
+objectreference property CWGarrisonEnableMarkerImperialCampReach auto
 		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
@@ -2449,3 +2463,56 @@ function failCWObj(Location HoldWhoseObjectiveToFail)
 	EndIf
 	
 EndFunction
+
+function enableCamp()
+	Location HoldLoc = Hold.GetLocation()
+	int iAllegiance = CWs.getOppositeFactionInt(Cws.PlayerAllegiance)
+
+	if iAllegiance == CWs.iSons
+		if HoldLoc == CWs.RiftHoldLocation
+			CWGarrisonEnableMarkerSonsCampRift.Enable(false)
+			CWs.MilitaryCampRiftSonsMapMarker.AddToMap()
+		elseif HoldLoc == CWs.WinterholdHoldLocation
+			CWGarrisonEnableMarkerSonsCampWinterhold.Enable(false)
+			CWs.MilitaryCampWinterholdSonsMapMarker.AddToMap()
+		elseif holdLoc == CWs.PaleHoldLocation
+			CWGarrisonEnableMarkerSonsCampPale.Enable(false)
+			CWs.MilitaryCampPaleSonsMapMarker.AddToMap()
+		elseif holdLoc == CWs.FalkreathHoldLocation
+			CWGarrisonEnableMarkerSonsCampFalkreath.Enable(false)
+			CWs.MilitaryCampFalkreathSonsMapMarker.AddToMap()
+		elseif holdLoc == CWs.WhiterunHoldLocation
+			CWGarrisonEnableMarkerSonsCampWhiterun.Enable(false)
+			CWs.MilitaryCampWhiterunSonsMapMarker.AddToMap()
+		elseif holdLoc == CWs.HjaalmarchHoldLocation
+			CWGarrisonEnableMarkerSonsCampHjaalmarch.Enable(false)
+			CWs.MilitaryCampHjaalmarchSonsMapMarker.AddToMap()
+		elseif holdLoc == CWs.ReachHoldLocation
+			CWGarrisonEnableMarkerSonsCampReach.Enable(false)
+			CWs.MilitaryCampReachSonsMapMarker.AddToMap()
+		Endif
+	Elseif  iAllegiance == CWs.iImperials
+		if holdLoc == CWs.RiftHoldLocation
+			CWGarrisonEnableMarkerImperialCampRift.Enable(false)
+			CWs.MilitaryCampRiftImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.WinterholdHoldLocation
+			CWGarrisonEnableMarkerImperialCampWinterhold.Enable(false)
+			CWs.MilitaryCampWinterholdImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.PaleHoldLocation
+			CWGarrisonEnableMarkerImperialCampPale.Enable(false)
+			CWs.MilitaryCampPaleImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.FalkreathHoldLocation
+			CWGarrisonEnableMarkerImperialCampFalkreath.Enable(false)
+			CWs.MilitaryCampFalkreathImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.WhiterunHoldLocation
+			CWGarrisonEnableMarkerImperialCampWhiterun.Enable(false)
+			CWs.MilitaryCampWhiterunImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.HjaalmarchHoldLocation
+			CWGarrisonEnableMarkerImperialCampHjaalmarch.Enable(false)
+			CWs.MilitaryCampHjaalmarchImperialMapMarker.AddToMap()
+		elseif holdLoc == CWs.ReachHoldLocation
+			CWGarrisonEnableMarkerImperialCampReach.Enable(false)
+			CWs.MilitaryCampReachImperialMapMarker.AddToMap()
+		Endif
+	endif
+endfunction

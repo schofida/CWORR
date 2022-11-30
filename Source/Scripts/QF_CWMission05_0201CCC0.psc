@@ -78,58 +78,8 @@ function Fragment_8()
 
 	Alias_EnemyFieldCO.GetActorReference().GetActorBase().SetEssential(false)
 
-	if FieldCOCamp != Alias_EnemyFieldCO.GetActorRef()
-		return
-	endif
-
-	int hold = kmyQuest.CWs.CWContestedHold.GetValueInt()
-
-	if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-		if hold == 9
-			kmyQuest.CWGarrisonEnableMarkerSonsCampRift.Enable(false)
-			kmyQuest.CWs.MilitaryCampRiftSonsMapMarker.AddToMap()
-		elseif hold == 7
-			kmyQuest.CWGarrisonEnableMarkerSonsCampWinterhold.Enable(false)
-			kmyQuest.CWs.MilitaryCampWinterholdSonsMapMarker.AddToMap()
-		elseif hold == 6
-			kmyQuest.CWGarrisonEnableMarkerSonsCampPale.Enable(false)
-			kmyQuest.CWs.MilitaryCampPaleSonsMapMarker.AddToMap()
-		elseif hold == 5
-			kmyQuest.CWGarrisonEnableMarkerSonsCampFalkreath.Enable(false)
-			kmyQuest.CWs.MilitaryCampFalkreathSonsMapMarker.AddToMap()
-		elseif hold == 4
-			kmyQuest.CWGarrisonEnableMarkerSonsCampWhiterun.Enable(false)
-			kmyQuest.CWs.MilitaryCampWhiterunSonsMapMarker.AddToMap()
-		elseif hold == 3
-			kmyQuest.CWGarrisonEnableMarkerSonsCampHjaalmarch.Enable(false)
-			kmyQuest.CWs.MilitaryCampHjaalmarchSonsMapMarker.AddToMap()
-		elseif hold == 2
-			kmyQuest.CWGarrisonEnableMarkerSonsCampReach.Enable(false)
-			kmyQuest.CWs.MilitaryCampReachSonsMapMarker.AddToMap()
-		Endif
-	Elseif  kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iSons
-		if hold == 9
-			kmyQuest.CWGarrisonEnableMarkerImperialCampRift.Enable(false)
-			kmyQuest.CWs.MilitaryCampRiftImperialMapMarker.AddToMap()
-		elseif hold == 7
-			kmyQuest.CWGarrisonEnableMarkerImperialCampWinterhold.Enable(false)
-			kmyQuest.CWs.MilitaryCampWinterholdImperialMapMarker.AddToMap()
-		elseif hold == 6
-			kmyQuest.CWGarrisonEnableMarkerImperialCampPale.Enable(false)
-			kmyQuest.CWs.MilitaryCampPaleImperialMapMarker.AddToMap()
-		elseif hold == 5
-			kmyQuest.CWGarrisonEnableMarkerImperialCampFalkreath.Enable(false)
-			kmyQuest.CWs.MilitaryCampFalkreathImperialMapMarker.AddToMap()
-		elseif hold == 4
-			kmyQuest.CWGarrisonEnableMarkerImperialCampWhiterun.Enable(false)
-			kmyQuest.CWs.MilitaryCampWhiterunImperialMapMarker.AddToMap()
-		elseif hold == 3
-			kmyQuest.CWGarrisonEnableMarkerImperialCampHjaalmarch.Enable(false)
-			kmyQuest.CWs.MilitaryCampHjaalmarchImperialMapMarker.AddToMap()
-		elseif hold == 2
-			kmyQuest.CWGarrisonEnableMarkerImperialCampReach.Enable(false)
-			kmyQuest.CWs.MilitaryCampReachImperialMapMarker.AddToMap()
-		Endif
+	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef()
+		kmyQuest.CWs.CWCampaignS.EnableCamp()
 	endif
 endFunction
 
