@@ -124,12 +124,12 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 205 (Misson Failed)", kmyquest.CWs.debugon.value)
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(6, MissionFailure = true)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
- 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
     utility.wait(5)
 endwhile
 
@@ -147,6 +147,7 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 0", kmyquest.CWs.debugon.value)
 kmyQuest.ResetCommonMissionProperties()
 
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
@@ -167,6 +168,7 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 10", kmyquest.CWs.debugon.value)
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6, true)
 
 kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
@@ -243,7 +245,22 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 100", kmyquest.CWs.debugon.value)
 kmyQuest.objectiveCompleted = 1
+
+;Just In Case
+Alias_LoyalistSoldier01.TryToKill()
+Alias_LoyalistSoldier02.TryToKill()
+Alias_LoyalistSoldier03.TryToKill()
+Alias_LoyalistSoldier04.TryToKill()
+Alias_LoyalistSoldier05.TryToKill()
+Alias_LoyalistSoldier06.TryToKill()
+Alias_LoyalistSoldier07.TryToKill()
+Alias_LoyalistSoldier08.TryToKill()
+Alias_LoyalistSoldier09.TryToKill()
+Alias_LoyalistSoldier10.TryToKill()
+Alias_LoyalistSoldier11.TryToKill()
+Alias_LoyalistSoldier12.TryToKill()
 
 SetObjectiveCompleted(20)
 
@@ -259,6 +276,7 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 20", kmyquest.CWs.debugon.value)
 SetObjectiveCompleted(10)
 SetObjectiveDisplayed(20)
 
@@ -315,11 +333,11 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
 ;shut down stage --  clean up created references, etc.
-; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission06 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyQuest.ProcessFieldCOFactionsOnQuestShutDown()
 
 kmyQuest.CWs.CWCampaignS.CWMission06Done = true
-; ; debug.traceConditional("CWMission04 stage 255: turning on complex WI interactions", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission06 stage 255: turning on complex WI interactions", kmyquest.CWs.debugon.value)
 kmyquest.ToggleOffComplexWIInteractions(Alias_CWCampEnemy)
 kmyquest.CWs.UnregisterEventHappening(Alias_CWCampEnemy.GetLocation())
 
@@ -353,6 +371,7 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission06 stage 200 (Misson Success)", kmyquest.CWs.debugon.value)
 kmyQuest.FlagFieldCOWithMissionResultFaction(6)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
@@ -415,7 +434,6 @@ if Alias_DissaffectedSoldier03.GetActorReference() != none && !Alias_Dissaffecte
 endif
 
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
- 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
     utility.wait(5)
 endwhile
 

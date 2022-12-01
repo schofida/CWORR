@@ -193,7 +193,6 @@ ObjectReference function GetCampMapMarker(Location Hold)
 
 
 	if FactionID == CWs.iSons && Hold == CWs.FalkreathHoldLocation
-		;MilitaryCampEastmarchImperialMapMarker NOT ADDING THIS HERE BECAUSE THIS FUNCTION HAPPENS BEFORE YOU ARE ALLOWED TO GET MISSIONS IN THE FINAL HOLD
 		return CWs.MilitaryCampFalkreathImperialMapMarker
 	elseif FactionID == CWs.iSons && Hold == CWs.HjaalmarchHoldLocation
 		return CWs.MilitaryCampHjaalmarchImperialMapMarker
@@ -208,7 +207,6 @@ ObjectReference function GetCampMapMarker(Location Hold)
 	elseif FactionID == CWs.iSons && Hold == CWs.WinterholdHoldLocation
 		return CWs.MilitaryCampWinterholdImperialMapMarker
 	elseif FactionID == CWs.iImperials && Hold == CWs.FalkreathHoldLocation
-		;MilitaryCampEastmarchImperialMapMarker NOT ADDING THIS HERE BECAUSE THIS FUNCTION HAPPENS BEFORE YOU ARE ALLOWED TO GET MISSIONS IN THE FINAL HOLD
 		return CWs.MilitaryCampFalkreathSonsMapMarker
 	elseif FactionID == CWs.iImperials && Hold == CWs.HjaalmarchHoldLocation
 		return CWs.MilitaryCampHjaalmarchSonsMapMarker
@@ -232,4 +230,15 @@ endfunction
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission06 quest")
+	if GetStage() == 0
+		SetStage(10)
+	elseif GetStage() == 10
+		SetStage(20)
+	elseif GetStage() == 20 && Game.GetPlayer().IsInLocation(CWs.CWCampaignS.EnemyCamp.GetLocation())
+		SetStage(100)
+	elseif GetStage() == 100
+		SetStage(200)
+	elseif GetStage() == 200
+		Stop()
+	endif
 endfunction
