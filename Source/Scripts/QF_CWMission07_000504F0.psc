@@ -215,9 +215,12 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;Player is told to meet up and attack the caravan
-; ; debug.traceConditional("CWMission07 stage 40", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 40", kmyquest.CWs.debugon.value)
 
 (Alias_Steward as CWMission07StewardScript).MonitorPlayerDistance(False)
+
+;CWO - In case one of the sieges disabled your friend
+Alias_Friend.TryToEnable()
 
 Alias_Friend.TryToMoveTo(Alias_CaravanFriendMarker.GetReference())
 
@@ -236,7 +239,7 @@ Quest __temp = self as Quest
 CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission07 stage 20", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 20", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(10)
 SetObjectiveDisplayed(20)
 ;END CODE
@@ -302,7 +305,7 @@ Quest __temp = self as Quest
 CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission07 stage 10", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 10", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(MissionType = 7)
 
@@ -364,7 +367,7 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;BEGIN CODE
 ;Fail quest
 
-; ; debug.traceConditional("CWMission07 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(7, MissionFailure = true)
 
@@ -398,7 +401,7 @@ Quest __temp = self as Quest
 CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission07 Stage 0: Quest Started in " + Alias_AttackPoint.GetLocation(), kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 Stage 0: Quest Started in " + Alias_AttackPoint.GetLocation(), kmyquest.CWs.debugon.value)
 ;debug.messageBox("CWMission07 Started")
 
 kmyquest.FlagFieldCOWithPotentialMissionFactions(7) ;7 = Blackmail Steward (this quest type)
@@ -467,7 +470,7 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;BEGIN CODE
 ;Successfully complete quest
 
-; ; debug.traceConditional("CWMission07 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(7)
 
@@ -476,6 +479,8 @@ kmyquest.CWs.CWMission07Done = 1 ;used to conditionalize story manager node
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
 
 UnregisterForUpdate()
+
+kmyQuest.CWs.CWCampaignS.addAttackDeltaMissionBonus(1)
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
@@ -494,7 +499,7 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
 
-; ; debug.traceConditional("CWMission07 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
 
 Alias_Friend.GetActorReference().AddToFaction(kmyquest.CWs.CWBuddies)
@@ -519,6 +524,14 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;player should talk to friend
+;CWO Just in case
+Alias_CaravanSoldier1.TryToKill()
+Alias_CaravanSoldier2.TryToKill()
+Alias_CaravanSoldier3.TryToKill()
+Alias_CaravanSoldier4.TryToKill()
+Alias_CaravanSoldier5.TryToKill()
+Alias_CaravanSoldier6.TryToKill()
+
 setObjectiveCompleted(60)
 setObjectiveDisplayed(90)
 ;END CODE
@@ -532,7 +545,7 @@ Quest __temp = self as Quest
 CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission01 stage 100", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission01 stage 100", kmyquest.CWs.debugon.value)
 kmyquest.objectiveCompleted = 1
 setObjectiveCompleted(90)
 
@@ -556,7 +569,7 @@ CWMission07Script kmyQuest = __temp as CWMission07Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;start the attack
-; ; debug.traceConditional("CWMission07 stage 50", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission07 stage 50", kmyquest.CWs.debugon.value)
 Alias_Friend.GetActorReference().EvaluatePackage()
 Alias_CaravanSoldierFriendly1.GetActorReference().EvaluatePackage()
 Alias_CaravanSoldierFriendly2.GetActorReference().EvaluatePackage()

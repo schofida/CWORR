@@ -241,4 +241,5 @@ function TryToFixQuest()
 	elseif GetStage() == 200
 		Stop()
 	endif
+	debug.notification("Done advancing CWMission06 quest")	
 endfunction
