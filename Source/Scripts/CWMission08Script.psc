@@ -18,4 +18,20 @@ CWAlliesScript Property CWAlliesS Auto	;pointer to script on CWAllies Quest
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission08 quest")
+	if GetStage() == 0
+		SetStage(10)
+	elseif GetStage() == 10
+		SetStage(15)
+	elseif GetStage() == 15
+		SetStage(20)
+	elseif GetStage() == 20
+		SetStage(40)
+	elseif GetStage() == 40
+		SetStage(100)
+	elseif GetStage() == 100
+		SetStage(200)
+	elseif GetStage() == 200
+		Stop()
+	endif
+	debug.notification("Done advancing CWMission08 quest")	
 endfunction

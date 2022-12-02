@@ -144,8 +144,10 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission08 stage 15", kmyquest.CWs.debugon.value)
 kmyQuest.SetObjectiveCompleted(10)
 kmyQuest.SetObjectiveDisplayed(20)
+
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -157,8 +159,9 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
-Alias_AttackPointRef.TryToEnable()
+debug.traceConditional("CWMission08 stage 20", kmyquest.CWs.debugon.value)
 Alias_Cow.GetActorRef().GetActorBase().SetEssential(true)
+kmyQuest.SetObjectiveCompleted(20)
 ;Let them fight for a bit
 kmyQuest.SetStage(21)
 ;END CODE
@@ -175,14 +178,10 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
 
-; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission08 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
 
-kmyQuest.CWs.CWCampaignS.CWMission08Done = true
-
 UnregisterForUpdate()
-
-kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 
 ;delete created references
 Alias_AttackPointRef.TryToDisableNoWait()
@@ -200,6 +199,7 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission08 stage 10", kmyquest.CWs.debugon.value)
 Alias_Cow.TryToReset()
 Alias_Cow.TryToEnable()
 Alias_CowHand.TryToEnable()
@@ -220,22 +220,31 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission08 stage 40", kmyquest.CWs.debugon.value)
 Alias_SonsSoldier01.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
 Alias_SonsSoldier02.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
 Alias_SonsSoldier03.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
+
 Alias_SonsSoldier01.TryToAddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFaction)
 Alias_SonsSoldier02.TryToAddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFaction)
 Alias_SonsSoldier03.TryToAddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFaction)
+
 Alias_Goldar.TryToAddToFaction(kmyQuest.CWs.CWSonsFactionNPC)
+
 Game.GetPlayer().AddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFaction)
+
 Alias_SonsSoldier01.TryToStopCombat()
 Alias_SonsSoldier02.TryToStopCombat()
 Alias_SonsSoldier03.TryToStopCombat()
+
 Alias_Goldar.TryToStopCombat()
+
 Alias_SonsSoldier01.TryToEvaluatePackage()
 Alias_SonsSoldier02.TryToEvaluatePackage()
 Alias_SonsSoldier03.TryToEvaluatePackage()
+
 Alias_Goldar.TryToEvaluatePackage()
+
 kmyQuest.SetStage(100)
 ;END CODE
 EndFunction
@@ -248,6 +257,7 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission08 stage 21", kmyquest.CWs.debugon.value)
 Utility.Wait(6.9)
 kmyQuest.SetStage(40)
 ;END CODE
@@ -261,7 +271,8 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
-kmyquest.FlagFieldCOWithPotentialMissionFactions(8) ;3 = Intercept Courier (this quest type)
+debug.traceConditional("CWMission08 stage 0", kmyquest.CWs.debugon.value)
+kmyquest.FlagFieldCOWithPotentialMissionFactions(8) 
 
 kmyquest.ResetCommonMissionProperties()
 
@@ -277,10 +288,17 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
 ;Fail quest
+debug.traceConditional("CWMission08 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+
 kmyQuest.FailAllObjectives()
-; ; debug.traceConditional("CWMission03 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(8, MissionFailure = true)
+
+kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+
+Utility.Wait(10.0)
+
+Stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -294,15 +312,19 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;BEGIN CODE
 ;Successfully complete quest
 
-; ; debug.traceConditional("CWMission03 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission08 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(8)
-
-;kmyquest.CWs.CWMission03Done = 1 ;used to conditionalize story manager node
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
 
 kmyQuest.CWs.CWAlliesS.AddPotentialAlly(Alias_Goldar.GetRef(), true, true, true, true, true, true, true, true, true, false, true)
+
+kmyQuest.CWs.CWCampaignS.CWMission08Done = true
+
+kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+
+;CWO - Quest is stopped on success via CWMission08GiantScript
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -314,8 +336,8 @@ Quest __temp = self as Quest
 cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission08 stage 100", kmyquest.CWs.debugon.value)
 kmyQuest.CompleteAllObjectives()
-; ; debug.traceConditional("CWMission03 stage 100", kmyquest.CWs.debugon.value)
 kmyquest.objectiveCompleted = 1
 
 setStage(200)

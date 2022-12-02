@@ -135,7 +135,7 @@ endwhile
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
-stop()  ;if unsuccessful, stop quest... quest is also stopped in CWMission04PrisonerScript if successful and he unloads
+stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
