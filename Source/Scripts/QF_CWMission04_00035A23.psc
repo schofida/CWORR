@@ -399,7 +399,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission04 Stage 0: Quest Started in " + Alias_AttackPoint.GetLocation(), kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 Stage 0: Quest Started in " + Alias_AttackPoint.GetLocation(), kmyquest.CWs.debugon.value)
 ;debug.messageBox("CWMission04 Started")
 
 kmyquest.FlagFieldCOWithPotentialMissionFactions(4) ;4 = Rescue Prisoner (this quest type)
@@ -407,7 +407,7 @@ kmyquest.FlagFieldCOWithPotentialMissionFactions(4) ;4 = Rescue Prisoner (this q
 kmyquest.ResetCommonMissionProperties()
 ;kmyquest.PrisonerFreed = 0
 
-; ; debug.traceConditional("CWMission04 stage 0: creating Prisoner and forcing Gatekeeper, ExteriorPatroller, and Jailor aliases", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 0: creating Prisoner and forcing Gatekeeper, ExteriorPatroller, and Jailor aliases", kmyquest.CWs.debugon.value)
 ;Create the prisoner
 ;kmyquest.CreateAliasedPrisonerAlly(Alias_Prisoner1, Alias_PrisonerMarker1.getReference(), true, aiLevelMod = 4)
 ;kmyquest.CreateAliasedPrisonerAlly(Alias_Prisoner2, Alias_PrisonerMarker2.getReference(), true, aiLevelMod = 4)
@@ -481,7 +481,7 @@ Alias_PrisonerDoor2.GetReference().Lock(25)
 Alias_PrisonerDoor3.GetReference().Lock(25)
 Alias_PrisonerDoor4.GetReference().Lock(25)
 
-; ; debug.traceConditional("CWMission04 stage 0: turning off complex WI interactions", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 0: turning off complex WI interactions", kmyquest.CWs.debugon.value)
 kmyquest.ToggleOffComplexWIInteractions(Alias_AttackPoint)
 kmyquest.CWs.RegisterEventHappening(Alias_AttackPoint.GetLocation())
 
@@ -498,6 +498,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 50", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(40)
 setObjectiveDisplayed(50)
 ;END CODE
@@ -511,6 +512,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 11", kmyquest.CWs.debugon.value)
 ;player got close, friendlies should start walking to the rendevouz point
 ;END CODE
 EndFunction
@@ -523,7 +525,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission04 stage 10", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 10", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(MissionType = 4)
 
@@ -603,7 +605,7 @@ CWMission04Script kmyQuest = __temp as CWMission04Script
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
 
-; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
 
 Alias_Friend.GetActorReference().AddToFaction(kmyquest.CWs.CWBuddies)
@@ -645,7 +647,7 @@ CWMission04Script kmyQuest = __temp as CWMission04Script
 ;BEGIN CODE
 ;FREED PRISONERS
 
-; ; debug.traceConditional("CWMission04 stage 20", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 20", kmyquest.CWs.debugon.value)
 
 kmyquest.moveFriendliesToAttackMarker()
 
@@ -696,7 +698,7 @@ CWMission04Script kmyQuest = __temp as CWMission04Script
 ;BEGIN CODE
 ;Successfully complete quest
 
-; ; debug.traceConditional("CWMission04 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(4)
 
@@ -719,6 +721,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 20", kmyquest.CWs.debugon.value)
 ;All the prisoners died before you rescued them
 
 kmyquest.moveFriendliesToAttackMarker()
@@ -738,6 +741,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 15", kmyquest.CWs.debugon.value)
 ;set in CWMission04PrisonerScript
 
 setObjectiveCompleted(12)
@@ -753,6 +757,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 30", kmyquest.CWs.debugon.value)
 ;combat in the exterior started
 ;see combatStarted() in CWMission04Script and CWMission04SoldierScript
 
@@ -778,7 +783,7 @@ CWMission04Script kmyQuest = __temp as CWMission04Script
 ;BEGIN CODE
 ;Fail quest
 
-; ; debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(4, MissionFailure = true)
 
@@ -798,6 +803,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 12", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(10)
 setObjectiveDisplayed(12)
 ;END CODE
@@ -811,6 +817,7 @@ Quest __temp = self as Quest
 CWMission04Script kmyQuest = __temp as CWMission04Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission04 stage 100", kmyquest.CWs.debugon.value)
 kmyquest.objectiveCompleted = 1
 ;kmyquest.prisonerFreed = 2
 setObjectiveCompleted(50)

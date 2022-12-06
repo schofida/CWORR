@@ -186,3 +186,25 @@ function combatStarted(Actor Soldier, Actor akTarget, int aeCombatState)
 	
 
 EndFunction
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWMission04 quest")
+	if GetStage() == 0
+		SetStage(10)
+	elseif (GetStage() >= 10 || GetStage() < 12) && Game.GetPlayer().IsInLocation(AttackPoint.GetLocation()) && Game.GetPlayer().IsInInterior() == false
+		SetStage(12)
+	elseif (GetStage() >= 10 || GetStage() <= 12) && Game.GetPlayer().IsInLocation(AttackPoint.GetLocation()) && Game.GetPlayer().IsInInterior() == true
+		SetStage(15)
+	elseif (GetStage() == 15) && Game.GetPlayer().IsInInterior() == false
+		SetStage(30)
+	elseif (GetStage() >= 20 || GetStage() <= 30) && Game.GetPlayer().IsInInterior() == false
+		SetStage(50)
+	elseif (GetStage() == 50)
+		SetStage(100)
+	elseif (GetStage() == 100)
+		SetStage(200)
+	elseif GetStage() == 200
+		Stop()
+	endif
+	debug.notification("Done advancing CWMission04 quest")	
+endfunction
