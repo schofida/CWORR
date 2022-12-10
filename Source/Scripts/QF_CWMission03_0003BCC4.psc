@@ -207,7 +207,7 @@ CWMission03Script kmyQuest = __temp as CWMission03Script
 ;shut down stage --  clean up created references, etc.
 ;NOTE: campaign should be advanced prior to this quest stage
 
-; ; debug.traceConditional("CWMission03 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
 
 Alias_InnkeeperA.GetActorReference().RemoveFromFaction(kmyquest.CWs.FavorAllowBribeFaction)
@@ -236,7 +236,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission03 stage 100", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 100", kmyquest.CWs.debugon.value)
 kmyquest.objectiveCompleted = 1
 
 setStage(200)
@@ -251,6 +251,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission03 stage 39", kmyquest.CWs.debugon.value)
 Game.GetPlayer().AddItem(Alias_ForgedDocuments.GetReference())
 ;END CODE
 EndFunction
@@ -263,6 +264,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission03 stage 40", kmyquest.CWs.debugon.value)
 ;if i don't do this the enemy field co often attacks the player because he knows the player attacked a member of his faction
 kmyquest.CWs.ClearActorsEnemyFlagOnCrimeFactions(Alias_EnemyFieldCO.GetActorReference())
 
@@ -279,6 +281,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission03 stage 50", kmyquest.CWs.debugon.value)
 SetObjectiveCompleted(40)
 Game.GetPlayer().RemoveItem(Alias_ForgedDocuments.GetReference())
 ;END CODE
@@ -292,6 +295,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission03 stage 51", kmyquest.CWs.debugon.value)
 ;token reward from the enemy field co
 Game.GetPlayer().addItem(kmyquest.CWs.Gold001, 5)
 
@@ -307,7 +311,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission03 stage 31", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 31", kmyquest.CWs.debugon.value)
 
 ObjectReference PackageImperial = Alias_PackageImperial.GetReference()
 ObjectReference PackageSons = Alias_PackageSons.GetReference()
@@ -335,7 +339,7 @@ CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;INKEEPER B TOLD PLAYER ABOUT COURIER
-; ; debug.traceConditional("CWMission03 stage 21", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 21", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(10)
 setObjectiveDisplayed(20)
 
@@ -353,7 +357,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission03 stage 30", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 30", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(20)
 setObjectiveDisplayed(30)
 ;END CODE
@@ -367,6 +371,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
+debug.traceConditional("CWMission03 stage 15", kmyquest.CWs.debugon.value)
 ;player has arrived in one of the inns (set by CWPlayerScript attached to Player Alias)
 
 ;HORSE IS CAUSING PROBLEMS, LEAVING DISABLED FOR NOW
@@ -386,7 +391,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission03 stage 10", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 10", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithActiveQuestFaction(MissionType = 3)
 
@@ -411,7 +416,7 @@ CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
 ;INKEEPER A TOLD PLAYER ABOUT COURIER
-; ; debug.traceConditional("CWMission03 stage 20", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 20", kmyquest.CWs.debugon.value)
 setObjectiveCompleted(10)
 setObjectiveDisplayed(20)
 
@@ -429,7 +434,7 @@ Quest __temp = self as Quest
 CWMission03Script kmyQuest = __temp as CWMission03Script
 ;END AUTOCAST
 ;BEGIN CODE
-; ; debug.traceConditional("CWMission03 Stage 0: Quest Started", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 Stage 0: Quest Started", kmyquest.CWs.debugon.value)
 ;debug.messageBox("CWMission03 Started")
 
 kmyquest.FlagFieldCOWithPotentialMissionFactions(3) ;3 = Intercept Courier (this quest type)
@@ -472,7 +477,7 @@ CWMission03Script kmyQuest = __temp as CWMission03Script
 ;BEGIN CODE
 ;Successfully complete quest
 
-; ; debug.traceConditional("CWMission03 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(3)
 
@@ -498,7 +503,7 @@ CWMission03Script kmyQuest = __temp as CWMission03Script
 ;BEGIN CODE
 ;Fail quest
 
-; ; debug.traceConditional("CWMission03 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission03 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
 
 kmyquest.FlagFieldCOWithMissionResultFaction(3, MissionFailure = true)
 
