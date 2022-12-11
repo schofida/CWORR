@@ -129,10 +129,8 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;Successfully complete quest
 
 CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 200")
-kmyquest.objectiveCompleted = 1
 
-kmyQuest.CWCampaignS.StopMonitors()
-
+;Set in stage 120 but just in case..
 kmyQuest.CWCampaignS.StartDisguiseQuest()
 
 kmyquest.FlagFieldCOWithMissionResultFaction(2)
@@ -159,7 +157,7 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;BEGIN CODE
 
 CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 100")
-
+kmyquest.objectiveCompleted = 1
 
 setObjectiveCompleted(10)
 setObjectiveDisplayed(20)
@@ -176,8 +174,6 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 205")
-
-kmyQuest.CWCampaignS.StopMonitors()
 
 kmyQuest.CWCampaignS.StartDisguiseQuest()
 
@@ -257,7 +253,6 @@ CWMission02Script kmyQuest = __temp as CWMission02Script
 
 CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
 
-kmyQuest.CWCampaignS.StartMonitors(kmyQuest)
 kmyQuest.CWCampaignS.StopDisguiseQuest()
 utility.wait(5)
 if kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
@@ -291,7 +286,6 @@ Quest __temp = self as Quest
 CWMission02Script kmyQuest = __temp as CWMission02Script
 ;END AUTOCAST
 ;BEGIN CODE
-;Fail quest
 
 CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 120")
 
