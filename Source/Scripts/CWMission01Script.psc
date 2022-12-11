@@ -255,6 +255,18 @@ endfunction
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission01 quest")
+	if GetStage() == 0
+		SetStage(10)
+	elseif GetStage() == 10
+		SetStage(11)
+	elseif GetStage() == 11 || GetStage() == 51
+		SetStage(100)
+	elseif GetStage() == 100
+		SetStage(200)
+	elseif GetStage() == 200
+		Stop()
+	endif
+	debug.notification("Done advancing CWMission01 quest")
 endfunction
 
 function EnableMapMarkerAlias(ReferenceAlias MapMarkerAlias)
