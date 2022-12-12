@@ -2324,24 +2324,8 @@ function GetCWOUnstuck()
 		(CWMission02 as CWMission02Script).TryToFixQuest()
 		return
 	endif
-	if CWMission05.IsRunning()
-		(CWMission05 as CWMission05Script).TryToFixQuest()
-		return
-	endif
-	if CWMission06.IsRunning()
-		(CWMission06 as CWMission06Script).TryToFixQuest()
-		return
-	endif
 	if CWs.CWMission07.IsRunning()
 		(CWs.CWMission07 as CWMission07Script).TryToFixQuest()
-		return
-	endif
-	if CWMission08Quest.IsRunning()
-		(CWMission08Quest as CWMission08Script).TryToFixQuest()
-		return
-	endif
-	if CWMission09.IsRunning()
-		(CWMission09 as CWMission09Script).TryToFixQuest()
 		return
 	endif
 	if CWS.CWFortSiegeFort.IsRunning() || cws.CWFortSiegeCapital.IsRunning()
@@ -2350,6 +2334,27 @@ function GetCWOUnstuck()
 	endif
 	if CWs.CWSiegeS.IsRunning()
 		(CWs.CWSiegeS).TryToFixQuest()
+		return
+	endif
+	debug.notification("Nothing to fix....")
+endfunction
+
+function GetCWOUnstuck2()
+	CWScript.Log("CWScript", "GetCWOUnstuck2()")
+	if CWMission05.IsRunning()
+		(CWMission05 as CWMission05Script).TryToFixQuest()
+		return
+	endif
+	if CWMission06.IsRunning()
+		(CWMission06 as CWMission06Script).TryToFixQuest()
+		return
+	endif
+	if CWMission08Quest.IsRunning()
+		(CWMission08Quest as CWMission08Script).TryToFixQuest()
+		return
+	endif
+	if CWMission09.IsRunning()
+		(CWMission09 as CWMission09Script).TryToFixQuest()
 		return
 	endif
 	debug.notification("Nothing to fix....")

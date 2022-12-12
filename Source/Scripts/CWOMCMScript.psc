@@ -55,6 +55,7 @@ Int optionsReinforcementsBaseFort
 Int optionsReinforcementsBaseCapital
 Int optionsReinforcementsBaseGarrison
 Int optionsCWOHelp
+Int optionsCWOHelp2
 Int optionsCWOUninstall
 Int optionsPlayerAttackerScaleMult
 Int optionsPlayerDefenderScaleMult
@@ -73,6 +74,7 @@ Float _sliderPercent = 100.000
 
 Bool optionWinWarToggle = false
 Bool optionsCWOHelpToggle = false
+Bool optionsCWOHelpToggle2 = false
 Bool optionsCWOUninstallToggle = false
 bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
@@ -194,7 +196,11 @@ function OnOptionSelect(Int a_option)
 		optionsCWOHelpToggle = !optionsCWOHelpToggle
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle, false)
 		CWs.CWCampaignS.GetCWOUnstuck()
-	elseIf a_option == optionsCWOHelp
+	elseIf a_option == optionsCWOHelp2
+		optionsCWOHelpToggle2 = !optionsCWOHelpToggle2
+		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle2, false)
+		CWs.CWCampaignS.GetCWOUnstuck2()
+	elseIf a_option == optionsCWOUninstall
 		optionsCWOUninstallToggle = true
 		self.SetToggleOptionValue(a_option, true, false)
 		UninstallCWO()
@@ -289,9 +295,10 @@ endFunction
 event OnConfigClose()
 	optionWinWarToggle = false
 	optionsCWOHelpToggle = false
+	optionsCWOHelpToggle2 = false
 	SetReinforcementsBusy = False
 	optionsToggleCWWinBattle = false
-	optionsCWOHelpToggle = false
+	optionsCWOUninstallToggle = false
 endevent
 
 function OnPageReset(String a_page)
@@ -450,6 +457,9 @@ function OnPageReset(String a_page)
 		optionsWinHold = self.AddMenuOption("Win hold here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
+		if CWs.CWCampaignS.CWMission05.IsRunning() || CWs.CWCampaignS.CWMission06.IsRunning() || CWs.CWCampaignS.CWMission08Quest.IsRunning() || CWs.CWCampaignS.CWMission09.IsRunning()
+			optionsCWOHelp2 = self.AddToggleOption("Help get additional CW Missions unstuck", optionsCWOHelpToggle2, 0)
+		endif
 		optionsCWOUninstall = self.AddToggleOption("Uninstall CWO", optionsCWOUninstallToggle, 0)
 
 		self.AddEmptyOption()
@@ -577,6 +587,8 @@ function OnOptionHighlight(Int a_option)
 	elseif a_option == optionsWinHold
 		self.SetInfoText("EXPERIMENTAL: Wins a hold of your choice. Use this if the commander is not giving you the quest for the next hold. The dialogue conditions are pretty strict and sometimes (mod conflict maybe?) you are not gaining the hold in the proper order. Check the holds on the debug page to see the orders of hold conquests. Imperials go down; Stormcloaks go up. Please close MCM after selecting.")
 	elseif a_option == optionsCWOHelp
+		self.SetInfoText("TODO")
+	elseif a_option == optionsCWOHelp2
 		self.SetInfoText("TODO")
 	elseif a_option == optionsCWOUninstall
 		self.SetInfoText("TODO")
