@@ -191,12 +191,7 @@ Utility.Wait(1)
 
 kmyQuest.SetEnemyPools()
 
-((self as quest) as CWGarrisonObserverScript).CountAliasIfFilledAndAlive(Alias_Ally1)
-((self as quest) as CWGarrisonObserverScript).CountAliasIfFilledAndAlive(Alias_Ally2)
-((self as quest) as CWGarrisonObserverScript).CountAliasIfFilledAndAlive(Alias_Ally3)
-((self as quest) as CWGarrisonObserverScript).CountAliasIfFilledAndAlive(Alias_Ally4)
-
-((self as quest) as CWGarrisonObserverScript).DoneSettingInitialCount = true
+((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_ReservationMarker.GetReference(), Alias_Garrison.GetLocation())
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -299,6 +294,8 @@ CWScript.Log("CWMission01QuestFragment", self + "Stage 51" )
 
 kmyquest.CWs.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
 
 kmyQuest.FriendlyShouldAttack = 0
 Alias_Ally1.TryToEvaluatePackage()
