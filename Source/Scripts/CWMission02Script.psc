@@ -2,6 +2,12 @@ Scriptname CWMission02Script extends CWMissionScript  Conditional
 {Extends CWMissionScript which extends Quest.}
 Activator Property ResourceObjectMine Auto
 Activator Property ResourceObjectSawMill Auto
+Activator Property ResourceObjectSawMillLever Auto
+Activator Property ResourceObjectGrainMill Auto
+ObjectReference[] Property SawMills Auto
+ObjectReference[] Property SawMillLevers Auto
+
+ReferenceAlias Property ResourceObject1 Auto
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission02 quest")

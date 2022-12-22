@@ -237,7 +237,6 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 Activator Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 Furniture Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
 CWScript Property CWs Auto hidden
@@ -324,6 +323,8 @@ objectreference property CWGarrisonEnableMarkerImperialCampReach auto
 		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
+Furniture Property ResourceObjectGrainMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Furniture Property ResourceObjectMillLever auto
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1

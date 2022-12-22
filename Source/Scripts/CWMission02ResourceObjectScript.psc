@@ -67,8 +67,7 @@ Event OnHit(ObjectReference akAggressor, Form akWeapon, Projectile akProjectile,
 EndEvent
 
 Event OnDestructionStageChanged(int aiOldStage, int aiCurrentStage)
-	if aiCurrentStage > aiOldStage && (GetReference() as ResourceObjectScript).sabotaged == false
-		debug.MessageBox("CWMission02ResourceObjectScript: SABOTAGED!!!")
+	if aiCurrentStage > aiOldStage && aiCurrentStage >= 3 && (GetReference() as ResourceObjectScript).sabotaged == false
 		(GetReference() as ResourceObjectScript).sabotaged = true
 	endif
 endevent

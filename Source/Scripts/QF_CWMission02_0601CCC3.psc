@@ -107,6 +107,12 @@ if SmelterFix != None
     SmelterFix.Delete()
     SmelterFix = None
     OldSmelter.Enable()
+    if NewSawMillLever != None
+        NewSawMillLever.DisableNoWait()
+        NewSawMillLever.Delete()
+        NewSawMillLever = None
+        OldSawMillLever.Enable()
+    endif
 else
     ;delete created references
     (Alias_ResourceObject1.GetReference() as ResourceObjectScript).Repair()
@@ -224,11 +230,25 @@ if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQues
     OldSmelter.Disable()
     SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectMine)
     Alias_ResourceObject1.ForceRefTo(SmelterFix)
+elseif (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectGrainMill)
+    OldSmelter = Alias_ResourceObject1.GetReference()
+    OldSmelter.Disable()
+    SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectGrainMill)
+    Alias_ResourceObject1.ForceRefTo(SmelterFix)
 elseif (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMill)
     OldSmelter = Alias_ResourceObject1.GetReference()
     OldSmelter.Disable()
     SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectSawMill)
-    Alias_ResourceObject1.ForceRefTo(SmelterFix)  
+    Alias_ResourceObject1.ForceRefTo(SmelterFix) 
+    int i = kmyQuest.SawMills.Length
+    while i
+        i = i - 1
+        if kmyQuest.SawMills[i] == OldSmelter
+            OldSawMillLever = kmyQuest.SawMillLevers[i]
+            OldSawMillLever.Disable()
+            SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
+        endif
+    endwhile
 else
     Alias_ResourceObject1.TryToEnable()
 endif
@@ -299,3 +319,5 @@ EndFunction
 
 ObjectReference SmelterFix
 ObjectReference OldSmelter
+ObjectReference NewSawMillLever
+ObjectReference OldSawMillLever
