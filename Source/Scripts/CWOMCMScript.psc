@@ -559,21 +559,21 @@ function OnOptionHighlight(Int a_option)
 	elseIf a_option == optionsReinforcementsBaseCity
 		self.SetInfoText("Base reinforcements for Major sieges")
 	elseIf a_option == optionsReinforcementsBaseGarrison
-		self.SetInfoText("TODO")
+		self.SetInfoText("Base reinforcements for Garrison battles")
 	elseIf a_option == optionsPlayerAttackerScaleMult
-		self.SetInfoText("TODO")
+		self.SetInfoText("Reinforcement multiplier for player's reinforcements when attacking.")
 	elseIf a_option == optionsPlayerDefenderScaleMult
-		self.SetInfoText("TODO")
+		self.SetInfoText("Reinforcement multiplier for player's reinforcements when defending.")
 	elseIf a_option == optionsEnemyAttackerScaleMult
-		self.SetInfoText("TODO")
+		self.SetInfoText("Reinforcement multiplier for enemy's reinforcements when attacking.")
 	elseIf a_option == optionsEnemyDefenderScaleMult
-		self.SetInfoText("TODO")
+		self.SetInfoText("Reinforcement multiplier for enemy's reinforcements when defending.")
 	elseIf a_option == optionsCampaignPhaseMax
-		self.SetInfoText("TODO")
+		self.SetInfoText("Number of missions per hold (counting city siege). Setting to 1 will immediately go to city siege.")
 	elseIf a_option == optionsPartyCrashersChance
 		self.SetInfoText("Chance for dragon attacks during major capital sieges.")
 	elseIf a_option == optionsWinWar
-		self.SetInfoText("Automatically wins the war for your side")
+		self.SetInfoText("Automatically wins the war for your side. Please close MCM after selecting.")
 	elseif a_option == optionsBAChance
 		self.SetInfoText("Set the chance that a random guard or inconsequential NPC will become a spy for the other side. Set to 0 to disable.")
 	elseif a_option == optionsDisguiseGameType
@@ -585,13 +585,13 @@ function OnOptionHighlight(Int a_option)
 	elseif a_option == optionsWinSiege
 		self.SetInfoText("Wins a fort or major/minor capital siege already in progress. Use this if the siege did not finish for some reason. Please do not use this at the battle of Solitude or Windhelm. Please close MCM after selecting.")
 	elseif a_option == optionsWinHold
-		self.SetInfoText("EXPERIMENTAL: Wins a hold of your choice. Use this if the commander is not giving you the quest for the next hold. The dialogue conditions are pretty strict and sometimes (mod conflict maybe?) you are not gaining the hold in the proper order. Check the holds on the debug page to see the orders of hold conquests. Imperials go down; Stormcloaks go up. Please close MCM after selecting.")
+		self.SetInfoText("Toggles a hold ownership of your choice. This might not work for the hold currently in progress. Please close MCM after selecting.")
 	elseif a_option == optionsCWOHelp
-		self.SetInfoText("TODO")
+		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. Please close MCM after selecting.")
 	elseif a_option == optionsCWOHelp2
-		self.SetInfoText("TODO")
+		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. This option pertains to the following quests: 'X's Last Battle', 'Defector Collector', 'Can't Lead a Cow to Goldar' and 'X Marks the Docs'. Please close MCM after selecting.")
 	elseif a_option == optionsCWOUninstall
-		self.SetInfoText("TODO")
+		self.SetInfoText("Uninstalls CWO. Before selecting this option, make sure that you do a hard save and make sure that you are indoors. Make another hard save after uninstallation is complete. Once uninstallation has completed, remove CWO and any patches and restart the game. Please close MCM after selecting.")
 	endIf
 endFunction
 
