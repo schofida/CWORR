@@ -38,7 +38,8 @@ function OnUpdate()
 		!player.IsInInterior() && \
 		CWOBAChance.GetValueInt() > 0 && \
 		(player.getCurrentLocation().HasKeyword(CWCapital) || \
-			player.getCurrentLocation().HasKeyword(LocTypeMilitaryCamp))
+			player.getCurrentLocation().HasKeyword(LocTypeMilitaryCamp)) && \
+		SKSE.GetVersionRelease() > 0
 		AwesomeQuest.Start()
 	endif
 	self.registerforsingleupdate(utility.randomfloat(CWOBALower.GetValue(), CWOBAUpper.GetValue()))
