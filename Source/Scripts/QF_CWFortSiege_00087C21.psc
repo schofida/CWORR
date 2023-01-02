@@ -1382,8 +1382,6 @@ elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFor
 
 endif
 
-
-
 ;<From Extended CWSiegeScript>
 CWScript.Log("CWFortSiege", "Stage 0: Registering aliases")
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
@@ -1492,6 +1490,11 @@ endif
 CWScript.Log("CWFortSiege", "Stage 10: Disabling normal garrison markers")
 Alias_GarrisonEnableMarkerImperial.GetReference().Disable()
 Alias_GarrisonEnableMarkerSons.GetReference().Disable()
+
+kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF.Disable()
+kmyQuest.CWs.CWCampaignS.FalkreathMapMarker.Disable()
+kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef.Disable()
+kmyQuest.CWs.CWCampaignS.WinterholdMapMarker.Disable()
 
 ; Block below added by USKP to terminate Captain Aldis' quests if he's been disabled
 if CWGarrisonEnableMarkerImperialSolitude.IsDisabled() == 1
@@ -1864,6 +1867,11 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 ; CWScript.Log("CWFortSiege", "Stage 9999: temporarily enabling map markers until I have a function to turn off fast travel or move the marker that you fast travel to")
 ; debug.trace("TEMP: Enabling Map marker, until I can disable/enable fast travel or move heading marker.")
 Alias_MapMarker.GetReference().enable()
+
+kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF.Enable()
+kmyQuest.CWs.CWCampaignS.FalkreathMapMarker.Enable()
+kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef.Enable()
+kmyQuest.CWs.CWCampaignS.WinterholdMapMarker.Enable()
 
 ;while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
 ;	utility.wait(5)	

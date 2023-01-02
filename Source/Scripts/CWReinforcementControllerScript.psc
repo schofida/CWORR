@@ -349,8 +349,11 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 		;SPAWN ALIASES HERE
 		if isAttacker
 			;SPAWN ME AND SUBTRACT FROM POOLAttacker	
-			AliasToRespawn.GetActorReference().Reset(GetAttackerSpawnRef(AliasToRespawn))
-			
+			ObjectReference SpawnRef = GetAttackerSpawnRef(AliasToRespawn)
+			Actor ActorRef = AliasToRespawn.GetActorReference()
+			ActorRef.Reset(SpawnRef)
+			Utility.Wait(0.1)
+			ActorRef.MoveTo(SpawnRef)
 ;			;****TEMP TEST A THEORY ABOUT WHY STUFF IS BROKEN:
 ;			utility.wait(2)
 ;			if AliasToRespawn.GetActorReference().IsDead()
@@ -364,8 +367,11 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 		
 		else	;assuming is Defender
 			;SPAWN ME AND SUBTRACT FROM POOLDefender
-			AliasToRespawn.GetActorReference().Reset(GetDefenderSpawnRef(AliasToRespawn))
-
+			ObjectReference SpawnRef = GetDefenderSpawnRef(AliasToRespawn)
+			Actor ActorRef = AliasToRespawn.GetActorReference()
+			ActorRef.Reset(SpawnRef)
+			Utility.Wait(0.1)
+			ActorRef.MoveTo(SpawnRef)
 ;			;****TEMP TEST A THEORY ABOUT WHY STUFF IS BROKEN:
 ;			utility.wait(2)
 ;			if AliasToRespawn.GetActorReference().IsDead()

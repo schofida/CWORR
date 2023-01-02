@@ -41,7 +41,23 @@ Quest Property CWOSpanishInquisitionSons Auto
 Quest Property CWOBAController Auto
 Quest Property CWOBAQuest Auto
 Quest Property CWOQuestMonitor Auto
-
+GlobalVariable Property CWODisableCWMission01 Auto
+GlobalVariable Property CWODisableCWMission02 Auto
+GlobalVariable Property CWODisableCWMission05 Auto
+GlobalVariable Property CWODisableCWMission06 Auto
+GlobalVariable Property CWODisableCWMission08 Auto
+GlobalVariable Property CWODisableCWMission09 Auto
+GlobalVariable Property CWODisableFortSiegeFort Auto
+GlobalVariable Property CWODisableWindhelmSiege Auto
+GlobalVariable Property CWODisableSolitudeSiege Auto
+LeveledItem Property LItemArmorCuirassLightSpecial Auto
+LeveledItem Property LItemArmorCuirassHeavySpecial Auto
+LeveledItem Property LItemArmorShieldLightSpecial Auto
+LeveledItem Property LItemArmorShieldHeavySpecial Auto
+LeveledItem Property LItemWeaponSwordSpecial Auto
+LeveledItem Property CWRankRewardSons Auto
+LeveledItem Property CWRankRewardImperial Auto
+LeveledItem Property CWFinaleFactionLeaderSwordList Auto
 ;-- Variables ---------------------------------------
 Int _color = 16777215
 Int _colorOID_C
@@ -69,6 +85,15 @@ int optionsSIChance
 int optionsCourierHoursMin
 int optionsCourierHoursMax
 int optionsCampaignPhaseMax
+int optionsCWODisableCWMission01
+int optionsCWODisableCWMission02
+int optionsCWODisableCWMission05
+int optionsCWODisableCWMission06
+int optionsCWODisableCWMission08
+int optionsCWODisableCWMission09
+int optionsCWODisableFortSiegeFort
+int optionsCWODisableWindhelmSiege
+int optionsCWODisableSolitudeSiege
 
 Float _sliderPercent = 100.000
 
@@ -204,6 +229,78 @@ function OnOptionSelect(Int a_option)
 		optionsCWOUninstallToggle = true
 		self.SetToggleOptionValue(a_option, true, false)
 		UninstallCWO()
+	elseif a_option == optionsCWODisableCWMission01
+		if CWODisableCWMission01.GetValueInt() == 0
+			CWODisableCWMission01.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission01.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableCWMission02
+		if CWODisableCWMission02.GetValueInt() == 0
+			CWODisableCWMission02.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission02.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableCWMission05
+		if CWODisableCWMission05.GetValueInt() == 0
+			CWODisableCWMission05.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission05.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableCWMission06
+		if CWODisableCWMission06.GetValueInt() == 0
+			CWODisableCWMission06.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission06.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableCWMission08
+		if CWODisableCWMission08.GetValueInt() == 0
+			CWODisableCWMission08.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission08.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableCWMission09
+		if CWODisableCWMission09.GetValueInt() == 0
+			CWODisableCWMission09.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableCWMission09.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableWindhelmSiege
+		if CWODisableWindhelmSiege.GetValueInt() == 0
+			CWODisableWindhelmSiege.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableWindhelmSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableFortSiegeFort
+		if CWODisableFortSiegeFort.GetValueInt() == 0
+			CWODisableFortSiegeFort.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableFortSiegeFort.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableSolitudeSiege
+		if CWODisableSolitudeSiege.GetValueInt() == 0
+			CWODisableSolitudeSiege.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableSolitudeSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
 	endIf
 endFunction
 
@@ -463,6 +560,18 @@ function OnPageReset(String a_page)
 		optionsCWOUninstall = self.AddToggleOption("Uninstall CWO", optionsCWOUninstallToggle, 0)
 
 		self.AddEmptyOption()
+	elseIf a_page == "Compatibility"
+		self.SetCursorFillMode(self.TOP_TO_BOTTOM)
+		SetTitleText("Click the following options to DISABLE the following quests")
+		optionsCWODisableCWMission01 = self.AddToggleOption("Skirmish At X", CWODisableCWMission01.GetValueInt() == 1, 0)
+		optionsCWODisableCWMission02 = self.AddToggleOption("Sabotage At X", CWODisableCWMission02.GetValueInt() == 1, 0)
+		optionsCWODisableCWMission05 = self.AddToggleOption("X's Last Battle", CWODisableCWMission05.GetValueInt() == 1, 0)
+		optionsCWODisableCWMission06 = self.AddToggleOption("Defector Collector", CWODisableCWMission06.GetValueInt() == 1, 0)
+		optionsCWODisableCWMission08 = self.AddToggleOption("Can't Lead a Cow to Guldar", CWODisableCWMission08.GetValueInt() == 1, 0)
+		optionsCWODisableCWMission09 = self.AddToggleOption("X Marks the Docs", CWODisableCWMission09.GetValueInt() == 1, 0)
+		optionsCWODisableFortSiegeFort = self.AddToggleOption("Fort Siege Quest", CWODisableFortSiegeFort.GetValueInt() == 1, 0)
+		optionsCWODisableSolitudeSiege = self.AddToggleOption("Solitude Exterior Siege", CWODisableSolitudeSiege.GetValueInt() == 1, 0)
+		optionsCWODisableWindhelmSiege = self.AddToggleOption("Windhelm Exterior Siege", CWODisableWindhelmSiege.GetValueInt() == 1, 0)
 	endIf
 endFunction
 
@@ -473,9 +582,11 @@ endFunction
 
 function OnConfigInit()
 
-	Pages = new String[2]
+	Pages = new String[3]
 	Pages[0] = "CWO Debug"
 	Pages[1] = "CWO Options"
+	Pages[2] = "Compatibility"
+
 	holdsList = new String[9]
 	holdsList[0] = "Solitude"
 	holdsList[1] = "Markarth"
@@ -591,7 +702,25 @@ function OnOptionHighlight(Int a_option)
 	elseif a_option == optionsCWOHelp2
 		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. This option pertains to the following quests: 'X's Last Battle', 'Defector Collector', 'Can't Lead a Cow to Goldar' and 'X Marks the Docs'. Please close MCM after selecting.")
 	elseif a_option == optionsCWOUninstall
-		self.SetInfoText("Uninstalls CWO. Before selecting this option, make sure that you do a hard save and make sure that you are indoors. Make another hard save after uninstallation is complete. Once uninstallation has completed, remove CWO and any patches and restart the game. Please close MCM after selecting.")
+		self.SetInfoText("Uninstalls CWO. Before selecting this option, make sure that you do a hard save and make sure that you are indoors Make sure you use the console to remove any unique items that you received in CW Rewards. Make another hard save after uninstallation is complete. Once uninstallation has completed, remove CWO and any patches and restart the game. Please close MCM after selecting.")
+	elseif a_option == optionsCWODisableCWMission01
+		self.SetInfoText("Disables radiant quest. This mod adds small skirmishes to the following towns. Use caution if using mods that drastically alters these locations: Riverwood, Rorikstead, Helgen, Ivarstead, Shor's Stone, Sarethi Farm, Heartwood Mill, Stone Hills, Karthwasten, Old Hroldan, Kolskeggr Mine, Soljund's Sinkhole, Agnas Mill, Loreius Farm, Half-Moon Mill, Whistling Mine")
+	elseif a_option == optionsCWODisableCWMission02
+		self.SetInfoText("Disables radiant quest. This does not affect any vanilla records but can cause problems if you install a mod that removes smelters, saw mills or windmills in the following locations: Riverwood, Rorikstead, Helgen, Ivarstead, Shor's Stone, Sarethi Farm, Heartwood Mill, Stone Hills, Karthwasten, Old Hroldan, Kolskeggr Mine, Soljund's Sinkhole, Agnas Mill, Loreius Farm, Half-Moon Mill, Whistling Mine")
+	elseif a_option == optionsCWODisableCWMission05
+		self.SetInfoText("Disables radiant quest. This quest affects enemy commanders for each hold but does not alter any vanilla records.")
+	elseif a_option == optionsCWODisableCWMission06
+		self.SetInfoText("Disables radiant quest. This quest affects military camps.")
+	elseif a_option == optionsCWODisableCWMission08
+		self.SetInfoText("Disables radiant quest. This should not conflict with anything since the events happen in the wilderness.")
+	elseif a_option == optionsCWODisableCWMission09
+		self.SetInfoText("Disables radiant quest. This quest makes small changes to invisible and unused markers in the Jarl buildings where the CW leader usually hangs out.")
+	elseif a_option == optionsCWODisableWindhelmSiege
+		self.SetInfoText("CWO restores siege objectives outside of Windhelm (instead of just waltzing up to the front door). This can cause issues if you install mods that drastically changes Windhelm's exterior. Select to revert to vanilla.")
+	elseif a_option == optionsCWODisableFortSiegeFort
+		self.SetInfoText("Disables fort sieges radiant quest that is given in between city sieges.")
+	elseif a_option == optionsCWODisableSolitudeSiege
+		self.SetInfoText("CWO restores siege objectives outside of Solitude (instead of just waltzing up to the front door). This can cause issues if you install mods that drastically changes Solitude's exterior. Select to revert to vanilla.")
 	endIf
 endFunction
 
@@ -603,6 +732,15 @@ function UninstallCWO()
 	Utility.Wait(10)
 	CWs.CWCampaignS.CompleteCWSieges()
 	Utility.Wait(10)
+	CWS.CWRank1RewardImperial = CWRankRewardImperial
+	CWS.CWRank2RewardImperial = LItemWeaponSwordSpecial 
+	CWS.CWRank3RewardImperial = LItemArmorShieldHeavySpecial
+	CWS.CWRank4RewardImperial = LItemArmorCuirassHeavySpecial
+	CWS.CWRank1RewardSons = CWRankRewardSons
+	CWS.CWRank2RewardSons = LItemWeaponSwordSpecial 
+	CWS.CWRank3RewardSons = LItemArmorShieldLightSpecial
+	CwS.CWRank4RewardSons = LItemArmorCuirassLightSpecial
+	(CWS.CWFinale As CWFinaleScript).CWFinaleFactionLeaderSwordList = CWFinaleFactionLeaderSwordList
 	if CWS.PlayerAllegiance == cws.iImperials
 		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.haafingarholdlocation, CWs.GetOwner(cws.haafingarholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.haafingarholdlocation) == cws.playerAllegiance)
 		Cws.WinHoldOffScreenIfNotDoingCapitalBattles(cws.Hjaalmarchholdlocation, CWs.GetOwner(cws.Hjaalmarchholdlocation) != cws.playerAllegiance, CWs.GetOwner(cws.Hjaalmarchholdlocation) == cws.playerAllegiance)
@@ -654,6 +792,8 @@ function UninstallCWO()
 			CWs.CWMission03Done = 1
 		endif
 	endif	
+	Debug.notification("CWO Uninstalled.")
+	self.Stop()
 endfunction
 
 ; Skipped compiler generated GetState

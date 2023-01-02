@@ -12,6 +12,8 @@ LeveledItem Property CWORank1RewardSons Auto
 LeveledItem Property CWORank2RewardSons Auto
 LeveledItem Property CWORank3RewardSons Auto
 LeveledItem Property CWORank4RewardSons Auto
+LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
+LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
 ObjectReference property CW5SpawnAttackerRiften1 Auto
 ObjectReference property CW5SpawnAttackerRiften2 Auto
 ObjectReference property CW5SpawnAttackerRiften3 Auto

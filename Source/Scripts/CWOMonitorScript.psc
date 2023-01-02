@@ -12,7 +12,6 @@ perk property Perk2 auto
 perk property Perk6 auto
 GlobalVariable property CWOVersion auto
 GlobalVariable property CWOCurrentHold auto
-ObjectReference property CWSiegeDefendTrigger2Windhelm auto
 
 Event init()
 	;used by CWHoldManagerScript attached to this quest

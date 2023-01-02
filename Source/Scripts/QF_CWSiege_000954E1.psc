@@ -1858,25 +1858,27 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
-	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - final barricade
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); FAILED - final barricade
-	endif
-
-elseif cityVar == kmyquest.CWs.WindhelmLocation
-	if kmyquest.IsAttack()
-		if GetStageDone(41)
-			Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
+	if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0
+		if kmyquest.IsAttack()
+			kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - final barricade
 		else
-			;Do nothing since the player didn't hit the skip trigger.
+			kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); FAILED - final barricade
 		endif
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
-	else
-		kmyquest.CWSiegeObj.SetObjectiveFailed(4800, 1); COMPLETED - Last Gate
-		;no defense planned
 	endif
-
+elseif cityVar == kmyquest.CWs.WindhelmLocation
+	if kmyQuest.CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0
+		if kmyquest.IsAttack()
+			if GetStageDone(41)
+				Alias_WindhelmGateLever2a.GetReference().Activate(Alias_WindhelmGateLever2a.GetReference())
+			else
+				;Do nothing since the player didn't hit the skip trigger.
+			endif
+			kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
+		else
+			kmyquest.CWSiegeObj.SetObjectiveFailed(4800, 1); COMPLETED - Last Gate
+			;no defense planned
+		endif
+	endif
 
 endif
 
@@ -2094,6 +2096,8 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;BEGIN CODE
 ;DEFENSE ONLY triggered by walking out the main gate
 ;CWSiege quest stage 7
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 7")	;*** WRITE TO LOG
+
 
 ;Set BattlePhase
 kmyquest.CWBattlePhase.SetValue(0)
@@ -2828,6 +2832,7 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 9 starting")	
 
 ;CWO - Stop Disguise Quest
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
@@ -2882,9 +2887,10 @@ endif
 ;**CITY SPECIFIC:
 location cityVar = Alias_City.GetLocation()
 
+kmyquest.CWBattlePhase.SetValue(1)
+
 if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyQuest.WeatherWhiterun.SetActive(True)
-	kmyquest.CWBattlePhase.SetValue(1)
 
 	if kmyquest.IsAttack()
 		kmyquest.WhiterunAmbExt01.Enable()
@@ -2903,6 +2909,9 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	kmyQuest.WeatherMarkarth.SetActive(True)
 
 	if kmyquest.IsAttack()
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+		kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
 		utility.Wait(8)
 		SetStage(10)
@@ -2915,6 +2924,9 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 	kmyQuest.WeatherRiften.SetActive(True)
 
 	if kmyquest.IsAttack()
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+		kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 		SetStage(10)
 	else
@@ -2927,12 +2939,22 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyQuest.WeatherSolitude.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;schofida - Nah fuck that. We gotta work for that solitude victory No more waltzing up to the front gate to meet with Ulfric
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
-		;kmyquest.CWAttackerStartingScene.Stop()
-		utility.Wait(8)
-		SetStage(10)
+		if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 1
+			;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+			kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+			kmyquest.CWAttackerStartingScene.Stop()
+			SetStage(50)
+		else
+			;schofida - Nah fuck that. We gotta work for that solitude victory No more waltzing up to the front gate to meet with Ulfric
+			;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+			kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+			kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+			kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
+			kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
+			;kmyquest.CWAttackerStartingScene.Stop()
+			utility.Wait(8)
+			SetStage(10)
+		endif
 	else
 		;Currently no defense planned
 		SetStage(10)
@@ -2942,12 +2964,22 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;schofida - Nah fuck that. We gotta work for that windhelm victory No more waltzing up to the front gate to meet with Tullius
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
-		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
-		;kmyquest.CWAttackerStartingScene.Stop()
-		utility.Wait(11)
-		SetStage(10)
+		if kmyQuest.CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 1
+			;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+			kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+			kmyquest.CWAttackerStartingScene.Stop()
+			SetStage(50)
+		else
+			;schofida - Nah fuck that. We gotta work for that windhelm victory No more waltzing up to the front gate to meet with Tullius
+			kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+			kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+			kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
+			kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
+			;kmyquest.CWSiegeObj.SetObjectiveCompleted(1000, 1); COMPLETED - Meet with General
+			;kmyquest.CWAttackerStartingScene.Stop()
+			utility.Wait(11)
+			SetStage(10)
+		endif
 	else
 		;Currently no defense planned
 		SetStage(10)
@@ -3234,11 +3266,12 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
-	Alias_SolitudeGateLever1.TryToEnable()
-	Alias_SolitudeGateLever1.TryToReset()
-	kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Enable()
-	kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Reset()
-	
+	if kmyQuest.CWS.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0 || !kmyQuest.IsAttack()
+		Alias_SolitudeGateLever1.TryToEnable()
+		Alias_SolitudeGateLever1.TryToReset()
+		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Enable()
+		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Reset()
+	endif
 	if kmyquest.IsAttack()
 		;If Attack
 
@@ -3246,6 +3279,19 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;Set BattlePhase
 		kmyquest.CWBattlePhase.SetValue(0)
 		kmyquest.CWAttackerStartingScene.Start()
+
+		if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 1
+			Alias_Defender1General.GetReference().Disable()
+			Alias_Defender2.GetReference().Disable()
+			Alias_Defender3.GetReference().Disable()
+			Alias_Defender4.GetReference().Disable()
+			Alias_Defender5.GetReference().Disable()
+			Alias_Defender6.GetReference().Disable()
+			Alias_Defender7.GetReference().Disable()
+			Alias_Defender8.GetReference().Disable()
+			Alias_Defender9.GetReference().Disable()
+			Alias_Defender10.GetReference().Disable()
+		endif
 
 		;MOVED THIS TO STAGE 1 TO SOLVE BUGS WITH NOT WANTING TO START THIS IF DOING Dark Brotherhood AND WE NEED TO PREVENT THE SIEGE FROM DOING ALL THIS SETUP
 		kmyquest.SolitudeOpening.setStage(200)	;stops the execution scene
@@ -3278,17 +3324,18 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
-	Alias_WindhelmGateLever1.TryToEnable()
-	Alias_WindhelmGateLever1.TryToReset()
-	Alias_WindhelmGateLever2A.TryToEnable()
-	Alias_WindhelmGateLever2A.TryToReset()
-	Alias_WindhelmGateLever2B.TryToEnable()
-	Alias_WindhelmGateLever2B.TryToReset()
-	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Enable()
-	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Enable()
-	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Reset()
-	kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Reset()
-
+	if kmyQuest.CWS.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0 || !kmyQuest.IsAttack()
+		Alias_WindhelmGateLever1.TryToEnable()
+		Alias_WindhelmGateLever1.TryToReset()
+		Alias_WindhelmGateLever2A.TryToEnable()
+		Alias_WindhelmGateLever2A.TryToReset()
+		Alias_WindhelmGateLever2B.TryToEnable()
+		Alias_WindhelmGateLever2B.TryToReset()
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Enable()
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Enable()
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Reset()
+		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Reset()
+	endif
 	if kmyquest.IsAttack()
 		;If Attack
  		CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
@@ -3298,6 +3345,19 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 		;THIS PREVENTS THE MURDER SCENE DURING THE SIEGE
 		kmyquest.MS11.CivilWarBattle(true)
+
+		if kmyQuest.CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 1
+			Alias_Defender1General.GetReference().Disable()
+			Alias_Defender2.GetReference().Disable()
+			Alias_Defender3.GetReference().Disable()
+			Alias_Defender4.GetReference().Disable()
+			Alias_Defender5.GetReference().Disable()
+			Alias_Defender6.GetReference().Disable()
+			Alias_Defender7.GetReference().Disable()
+			Alias_Defender8.GetReference().Disable()
+			Alias_Defender9.GetReference().Disable()
+			Alias_Defender10.GetReference().Disable()
+		endif
 
 		;MOVED THIS TO STAGE 1 TO SOLVE BUGS WITH NOT WANTING TO START THIS IF DOING Dark Brotherhood AND WE NEED TO PREVENT THE SIEGE FROM DOING ALL THIS SETUP	
 		kmyquest.SetupInteriorSiege(cityVar, Alias_FieldCO.GetReference(), Alias_CityCenterMarker.getReference())
@@ -3473,6 +3533,9 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
 
 	else
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2030, 1); DISPLAYED - barricade
 
 	endif
@@ -3487,6 +3550,9 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 		Alias_Barricade2A.GetReference().Enable()
 
 	else
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2065, 1); DISPLAYED - barricade
 
 	endif
@@ -3500,6 +3566,9 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 
 	else
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+
 		;Currently no defense planned
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2065, 1); DISPLAYED - barricade
 	endif
@@ -3511,6 +3580,9 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(3010, 1); DISPLAYED - barricade
 
 	else
+		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
+		kmyquest.AMBDistantBattleStartInstance = kmyQuest.AMBCivilWarBattleStartDistant.Play(game.GetPlayer())
+		
 		;Currently no defense planned
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4600, 1); DISPLAYED - barricade
 	endif
@@ -3582,6 +3654,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;Defense only - triggered by walking out of the HQ
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 5")	;*** WRITE TO LOG
 
 ;Adds this music to stack, at highest priority
 kmyQuest.MUSCombatCivilWar.Add()
@@ -3631,6 +3704,8 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 SiegeFinished = False
 ;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
 Debug.Notification("Siege is getting ready behind the scenes. This can take some time. Please wait before speaking to Officer.")
+
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 0")	;*** WRITE TO LOG
 ;CWO Start Courier Defense Quest
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
 
@@ -3645,6 +3720,88 @@ Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 1)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "turning off complex WI interactions")  ;*** WRITE TO LOG
 kmyquest.ToggleOffComplexWIInteractions(Alias_City)
+
+if cityVar == kmyquest.CWs.WindhelmLocation
+	Alias_RespawnAttackerPhase5A.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnAttacker5Marker1)
+	Alias_RespawnAttackerPhase5B.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnAttacker5Marker2)
+	Alias_RespawnAttackerPhase5C.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnAttacker5Marker3)
+	Alias_RespawnAttackerPhase5D.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnAttacker5Marker4)
+	Alias_RespawnAttackerPhase5FailSafe.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnAttacker5FailSafeMarker1)
+	Alias_RespawnDefenderPhase5A.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnDefender5Marker1)
+	Alias_RespawnDefenderPhase5B.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnDefender5Marker2)
+	Alias_RespawnDefenderPhase5C.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnDefender5Marker3)
+	Alias_RespawnDefenderPhase5D.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnDefender5Marker4)
+	Alias_RespawnDefenderPhase5FailSafe.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmRespawnDefender5FailSafeMarker1)
+	if kmyQuest.CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker1.SetPosition(145991.187500, 23779.458984, -10030.190430)
+		Alias_AttackerImperial1.GetReference().SetPosition(145991.187500, 23779.458984, -10030.190430)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker2.SetPosition(146323.421875, 23779.458984, -9895.925781)
+		Alias_AttackerImperial2.GetReference().SetPosition(146323.421875, 23779.458984, -9895.925781)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker3.SetPosition(146158.156250, 23651.888672, -9959.806641)
+		Alias_AttackerImperial3.GetReference().SetPosition(146158.156250, 23651.888672, -9959.806641)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker4.SetPosition(146249.421875, 24043.863281, -9893.644531)
+		Alias_AttackerImperial4.GetReference().SetPosition(146249.421875, 24043.863281, -9893.644531)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker5.SetPosition(146443.437500, 23938.630860, -9873.740234)
+		Alias_AttackerImperial5.GetReference().SetPosition(146443.437500, 23938.630860, -9873.740234)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker6.SetPosition(146392.765625, 23561.357422, -9895.356445)
+		Alias_AttackerImperial6.GetReference().SetPosition(146392.765625, 23561.357422, -9895.356445)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker7.SetPosition(146051.468750, 24105.898437, -9953.388672)
+		Alias_AttackerImperial7.GetReference().SetPosition(146051.468750, 24105.898437, -9953.388672)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker8.SetPosition(146162.109375, 24226.847656, -9863.760742)
+		Alias_AttackerImperial8.GetReference().SetPosition(146162.109375, 24226.847656, -9863.760742)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker9.SetPosition(146512.203125, 23692.482422, -9876.414062)
+		Alias_AttackerImperial9.GetReference().SetPosition(146512.203125, 23692.482422, -9876.414062)
+		kmyQuest.CWs.CWCampaignS.SiegeFixWindhelmSoldierMarker10.SetPosition(146716.062500, 23584.332031, -9867.553711)
+		Alias_AttackerImperial10.GetReference().SetPosition(146716.062500, 23584.332031, -9867.553711)
+	endif
+	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
+	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
+elseif cityVar == kmyquest.CWs.SolitudeLocation
+	Alias_AttackTrigger1.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeAttackTrigger1)
+	Alias_AttackTrigger4.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeAttackTrigger4)
+	Alias_RespawnDefenderPhase5A.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeRespawnDefender5Marker1)
+	Alias_RespawnDefenderPhase5B.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeRespawnDefender5Marker2)
+	Alias_RespawnDefenderPhase5C.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeRespawnDefender5Marker3)
+	Alias_RespawnDefenderPhase5D.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeRespawnDefender5Marker4)
+	Alias_RespawnDefenderPhase5FailSafe.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeRespawnDefender5FailSafeMarker1)
+	if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker1.SetPosition(-80234.523437, 96257.203125, -11244.417969)
+		Alias_AttackerSons1.GetReference().SetPosition(-80234.523437, 96257.203125, -11244.417969)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker2.SetPosition(-80504.234375, 95725.906250, -11490.605469)
+		Alias_AttackerSons2.GetReference().SetPosition(-80504.234375, 95725.906250, -11490.605469)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker3.SetPosition(-80398.601562, 96052.156250, -11392.137695)
+		Alias_AttackerSons3.GetReference().SetPosition(-80504.234375, 95725.906250, -11490.605469)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker4.SetPosition(-80488.335938, 96261.375000, -11281.050782)
+		Alias_AttackerSons4.GetReference().SetPosition(-80488.335938, 96261.375000, -11281.050782)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker5.SetPosition(-80647.328125, 95899.398438, -11501.552734)
+		Alias_AttackerSons5.GetReference().SetPosition(-80647.328125, 95899.398438, -11501.552734)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker6.SetPosition(-80226.476562, 95899.585938, -11358.188476)
+		Alias_AttackerSons6.GetReference().SetPosition(-80226.476562, 95899.585938, -11358.188476)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker7.SetPosition(-80740.195312, 96388.632813, -11296.324218)
+		Alias_AttackerSons7.GetReference().SetPosition(-80740.195312, 96388.632813, -11296.324218)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker8.SetPosition(-80873.140625, 96316.585938, -11388.634765)
+		Alias_AttackerSons8.GetReference().SetPosition(-80873.140625, 96316.585938, -11388.634765)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker9.SetPosition(-80668.804687, 96142.679687, -11408.175781)
+		Alias_AttackerSons9.GetReference().SetPosition(-80668.804687, 96142.679687, -11408.175781)
+		kmyQuest.CWs.CWCampaignS.SiegeFixSolitudeSoldierMarker10.SetPosition(-80921.898438, 95822.562500, -11509.023438)
+		Alias_AttackerSons10.GetReference().SetPosition(-80921.898438, 95822.562500, -11509.023438)
+	endif
+	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeA)
+	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeB)
+elseif cityVar == kmyquest.CWs.RiftenLocation
+	Alias_RespawnAttackerPhase5A.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CW5SpawnAttackerRiften1)
+	Alias_RespawnAttackerPhase5B.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CW5SpawnAttackerRiften2)
+	Alias_RespawnAttackerPhase5C.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CW5SpawnAttackerRiften3)
+	Alias_RespawnAttackerPhase5D.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CW5SpawnAttackerRiften4)
+	Alias_RespawnDefenderPhase5A.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixRiftenRespawnDefender5Marker1)
+	Alias_RespawnDefenderPhase5B.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixRiftenRespawnDefender5Marker2)
+	Alias_RespawnDefenderPhase5C.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixRiftenRespawnDefender5Marker3)
+	Alias_RespawnDefenderPhase5D.ForceRefTo(kmyQuest.CWs.CWCampaignS.SiegeFixRiftenRespawnDefender5Marker4)
+endif
+Alias_DisableMapMarkerForBattle13.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF)
+Alias_DisableMapMarkerForBattle14.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.FalkreathMapMarker)
+Alias_DisableMapMarkerForBattle15.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef)
+Alias_DisableMapMarkerForBattle16.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.WinterholdMapMarker)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
@@ -3770,14 +3927,6 @@ Alias_NonRespawningDefenderSons3.TryToDisable()
 Alias_NonRespawningDefenderSons4.TryToDisable()
 Alias_NonRespawningDefenderSons5.TryToDisable()
 Alias_NonRespawningDefenderSons6.TryToDisable()
-
-if cityVar == kmyQuest.CWs.WindhelmLocation
-	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmA)
-	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeWindhelmB)
-elseif cityVar == kmyQuest.CWs.SolitudeLocation 
-	Alias_Barricade1A.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeA)
-	Alias_Barricade1B.ForceRefTo(kmyQuest.CWs.CWCampaignS.CWSiegeBarricadeSolitudeB)
-endif
 
 Alias_Barricade1A.TryToReset()
 if Alias_Barricade1A.GetReference() != none
@@ -4184,6 +4333,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;Attack only - triggered by walking out of the Tent
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 8")	;*** WRITE TO LOG
 
 Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
 Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())

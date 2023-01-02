@@ -672,10 +672,10 @@ Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
 
 if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
-	kmyquest.CWFinaleFactionLeaderSwordList = kmyQuest.CWs.CWCampaignS.CWOFinaleFactionLeaderSwordListImperial
+	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListImperial
 else
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
-	kmyquest.CWFinaleFactionLeaderSwordList = kmyQuest.CWs.CWCampaignS.CWOFinaleFactionLeaderSwordListSons
+	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListSons
 endif	
 
 ;END CODE

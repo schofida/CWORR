@@ -320,11 +320,56 @@ objectreference property CWGarrisonEnableMarkerImperialCampFalkreath auto
 objectreference property CWGarrisonEnableMarkerImperialCampWhiterun auto
 objectreference property CWGarrisonEnableMarkerImperialCampHjaalmarch auto
 objectreference property CWGarrisonEnableMarkerImperialCampReach auto
-		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
-LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
-Furniture Property ResourceObjectGrainMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+objectreference property SiegeFixWindhelmSoldierMarker1 auto
+objectreference property SiegeFixWindhelmSoldierMarker2 auto
+objectreference property SiegeFixWindhelmSoldierMarker3 auto
+objectreference property SiegeFixWindhelmSoldierMarker4 auto
+objectreference property SiegeFixWindhelmSoldierMarker5 auto
+objectreference property SiegeFixWindhelmSoldierMarker6 auto
+objectreference property SiegeFixWindhelmSoldierMarker7 auto
+objectreference property SiegeFixWindhelmSoldierMarker8 auto
+objectreference property SiegeFixWindhelmSoldierMarker9 auto
+objectreference property SiegeFixWindhelmSoldierMarker10 auto
+objectreference property SiegeFixSolitudeSoldierMarker1 auto
+objectreference property SiegeFixSolitudeSoldierMarker2 auto
+objectreference property SiegeFixSolitudeSoldierMarker3 auto
+objectreference property SiegeFixSolitudeSoldierMarker4 auto
+objectreference property SiegeFixSolitudeSoldierMarker5 auto
+objectreference property SiegeFixSolitudeSoldierMarker6 auto
+objectreference property SiegeFixSolitudeSoldierMarker7 auto
+objectreference property SiegeFixSolitudeSoldierMarker8 auto
+objectreference property SiegeFixSolitudeSoldierMarker9 auto
+objectreference property SiegeFixSolitudeSoldierMarker10 auto
+objectreference property SiegeFixRiftenRespawnDefender5Marker1 auto
+objectreference property SiegeFixRiftenRespawnDefender5Marker2 auto
+objectreference property SiegeFixRiftenRespawnDefender5Marker3 auto
+objectreference property SiegeFixRiftenRespawnDefender5Marker4 auto
+objectreference property SiegeFixSolitudeAttackTrigger1 auto
+objectreference property SiegeFixSolitudeAttackTrigger4 auto
+objectreference property SiegeFixSolitudeRespawnDefender5FailSafeMarker1 auto
+objectreference property SiegeFixSolitudeRespawnDefender5Marker1 auto
+objectreference property SiegeFixSolitudeRespawnDefender5Marker2 auto
+objectreference property SiegeFixSolitudeRespawnDefender5Marker3 auto
+objectreference property SiegeFixSolitudeRespawnDefender5Marker4 auto
+objectreference property SiegeFixWindhelmRespawnDefender5FailSafeMarker1 auto
+objectreference property SiegeFixWindhelmRespawnDefender5Marker1 auto
+objectreference property SiegeFixWindhelmRespawnDefender5Marker2 auto
+objectreference property SiegeFixWindhelmRespawnDefender5Marker3 auto
+objectreference property SiegeFixWindhelmRespawnDefender5Marker4 auto
+objectreference property SiegeFixWindhelmRespawnAttacker5FailSafeMarker1 auto
+objectreference property SiegeFixWindhelmRespawnAttacker5Marker1 auto
+objectreference property SiegeFixWindhelmRespawnAttacker5Marker2 auto
+objectreference property SiegeFixWindhelmRespawnAttacker5Marker3 auto
+objectreference property SiegeFixWindhelmRespawnAttacker5Marker4 auto
+Furniture Property ResourceObjectGrainMill auto
 Furniture Property ResourceObjectMillLever auto
+GlobalVariable Property CWODisableFortSiegeFort auto
+GlobalVariable Property CWODisableSolitudeSiege auto
+GlobalVariable Property CWODisableWindhelmSiege auto
+objectreference property DawnstarMapMarkerREF auto
+objectreference property FalkreathMapMarker auto
+objectreference property MorthalMapMarkerRef auto
+objectreference property WinterholdMapMarker auto
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
@@ -417,7 +462,7 @@ Event OnInit()
 		candocwmission07 = 0
 	endif
 
-	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath
+	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
 		CWFortSiegeFortDone = 1
 	endif
 
@@ -1916,6 +1961,7 @@ function CWOImperialsWin()
 	CWs.SetOwnerPale(CWs.iImperials, false)
 	CWs.SetOwnerWinterhold(CWs.iImperials, false)
 	CWs.SetOwnerEastmarch(CWs.iImperials, false)
+	ResolveCivilWarOffscreen()
 endFunction
 
 function CWOStormcloaksWin()
@@ -1928,6 +1974,7 @@ function CWOStormcloaksWin()
 	CWs.SetOwnerPale(CWs.iSons, false)
 	CWs.SetOwnerWinterhold(CWs.iSons, false)
 	CWs.SetOwnerEastmarch(CWs.iSons, false)
+	ResolveCivilWarOffscreen()
 endFunction
 
 function CWOTotalReset()
@@ -2271,6 +2318,9 @@ function CompleteCWSieges()
 	if CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 ;schofida - siege and capital are both running in final siege. Have capital take care of it
 		if CWS.IsPlayerAttacking(CWS.CWSiegeS.City.GetLocation())
 			CWS.CWSiegeS.Setstage(50)
+			if CWS.CWFinale.IsRunning()
+				ResolveCivilWarOffscreen()
+			endif
 		else
 			CWS.CWSiegeS.Setstage(200)
 		endIf
