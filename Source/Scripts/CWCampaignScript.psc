@@ -233,10 +233,10 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 ;## Activators ##
 
 ;*** !! *** !! *** !! these are now just forms, and will be set with Game.GetForm(HEX ID) function rather than being pointed at in the editor. As soon as we get Activator objects in Papyrus, this need to change to point directly at the activators
-;CWO - Sorry to the Bethesda dev's who had to work on this while the engine was still incomplete :( 
-Activator Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Furniture Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Furniture Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
 CWScript Property CWs Auto hidden
@@ -362,7 +362,6 @@ objectreference property SiegeFixWindhelmRespawnAttacker5Marker2 auto
 objectreference property SiegeFixWindhelmRespawnAttacker5Marker3 auto
 objectreference property SiegeFixWindhelmRespawnAttacker5Marker4 auto
 Furniture Property ResourceObjectGrainMill auto
-Furniture Property ResourceObjectMillLever auto
 GlobalVariable Property CWODisableFortSiegeFort auto
 GlobalVariable Property CWODisableSolitudeSiege auto
 GlobalVariable Property CWODisableWindhelmSiege auto
@@ -466,6 +465,12 @@ Event OnInit()
 		CWFortSiegeFortDone = 1
 	endif
 
+	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
+	ResourceObjectFarm = Game.GetForm(0X0001DA07)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
+	ResourceObjectMill = Game.GetForm(0X00071C47)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
+	ResourceObjectMine = Game.GetForm(0X0009C6CE)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
+	;*** !!! *** !!! 
+		
  EndEvent
 
 

@@ -2,24 +2,9 @@
 ;NEXT FRAGMENT INDEX 14
 Scriptname QF_CWMission09_0601CCBE Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY DocumentSpawn
+;BEGIN ALIAS PROPERTY DocumentsSons
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DocumentSpawn Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Hold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_Hold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Document
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Document Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CampaignStartMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampaignStartMarker Auto
+ReferenceAlias Property Alias_DocumentsSons Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY MissionNumberRef
@@ -27,14 +12,9 @@ ReferenceAlias Property Alias_CampaignStartMarker Auto
 ReferenceAlias Property Alias_MissionNumberRef Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DocumentsImperial
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DocumentsImperial Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DocumentsSons
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DocumentsSons Auto
+;BEGIN ALIAS PROPERTY Hold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_Hold Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY FieldCO
@@ -42,10 +22,35 @@ ReferenceAlias Property Alias_DocumentsSons Auto
 ReferenceAlias Property Alias_FieldCO Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY DocumentSpawn
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DocumentSpawn Auto
+;END ALIAS PROPERTY
+
 ;BEGIN ALIAS PROPERTY Player
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampaignStartMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampaignStartMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyFieldHQ
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_EnemyFieldHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DocumentsImperial
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DocumentsImperial Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Document
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Document Auto
+;END ALIAS PROPERTY    
 
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()

@@ -2,34 +2,14 @@
 ;NEXT FRAGMENT INDEX 27
 Scriptname QF_CWMission02_0601CCC3 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY Player
+;BEGIN ALIAS PROPERTY SawmillLever
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
+ReferenceAlias Property Alias_SawmillLever Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CWFortSiegeImperial2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeImperial2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Garrison1EnableSons
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Garrison1EnableSons Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CampaignStartMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampaignStartMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MapMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MapMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWFortSiegeImperial1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeImperial1 Auto
+;BEGIN ALIAS PROPERTY Hold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_Hold Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY CWFortSiegeSons1
@@ -37,49 +17,9 @@ ReferenceAlias Property Alias_CWFortSiegeImperial1 Auto
 ReferenceAlias Property Alias_CWFortSiegeSons1 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CWFortSiegeImperial3
+;BEGIN ALIAS PROPERTY MapMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeImperial3 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY ResourceObject1
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ResourceObject1 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MissionNumberRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MissionNumberRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWFortSiegeSons2
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeSons2 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCO Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWFortSiegeImperial4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeImperial4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY ResourceLocation
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_ResourceLocation Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CWFortSiegeSons4
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CWFortSiegeSons4 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Garrison1EnableImperial
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Garrison1EnableImperial Auto
+ReferenceAlias Property Alias_MapMarker Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY CWFortSiegeSons3
@@ -87,9 +27,74 @@ ReferenceAlias Property Alias_Garrison1EnableImperial Auto
 ReferenceAlias Property Alias_CWFortSiegeSons3 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Hold
+;BEGIN ALIAS PROPERTY Garrison1EnableSons
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Garrison1EnableSons Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MissionNumberRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MissionNumberRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY ResourceLocation
 ;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_Hold Auto
+LocationAlias Property Alias_ResourceLocation Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCO
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCO Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Garrison1EnableImperial
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Garrison1EnableImperial Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampaignStartMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampaignStartMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY ResourceObject1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_ResourceObject1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeImperial4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeImperial4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWFortSiegeSons2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CWFortSiegeSons2 Auto
 ;END ALIAS PROPERTY
 ;BEGIN FRAGMENT Fragment_11
 Function Fragment_11()
@@ -247,15 +252,11 @@ Function Fragment_11()
         OldSmelter.Disable()
         SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectSawMill)
         Alias_ResourceObject1.ForceRefTo(SmelterFix) 
-        int i = kmyQuest.SawMills.Length
-        while i
-            i = i - 1
-            if kmyQuest.SawMills[i] == OldSmelter
-                OldSawMillLever = kmyQuest.SawMillLevers[i]
-                OldSawMillLever.Disable()
-                SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
-            endif
-        endwhile
+        if Alias_SawmillLever.GetReference() != None
+            OldSawMillLever = Alias_SawmillLever.GetReference()
+            OldSawMillLever.Disable()
+            SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
+        endif
     else
         Alias_ResourceObject1.TryToEnable()
     endif

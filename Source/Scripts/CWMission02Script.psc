@@ -4,8 +4,6 @@ Activator Property ResourceObjectMine Auto
 Activator Property ResourceObjectSawMill Auto
 Activator Property ResourceObjectSawMillLever Auto
 Activator Property ResourceObjectGrainMill Auto
-ObjectReference[] Property SawMills Auto
-ObjectReference[] Property SawMillLevers Auto
 
 ReferenceAlias Property ResourceObject1 Auto
 
