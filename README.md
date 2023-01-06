@@ -21,5 +21,12 @@ This mod attempts to bring new life into the frankly bullshit Civil War questlin
 * If on the offensive, you be given missions 2 at a time by your commanding officer (unless you selected 0 missions in the MCM to which they will just skip to ordering the attack on the city). The base game only included 4 missions whereas CWO incorporates those 4 and restores 6 additional missions cut from the base game (more details on that included here https://tcrf.net/The_Elder_Scrolls_V:_Skyrim/Civil_War). The dialogue by the commanding officers are fully voiced as it was all recorded but cut dialogue. Again, finishing the quests successfully will reward you with additional troops and even some new allies for the city siege.
 * If you are on the offense but hanging around in a city that you control, there is also a small chance that there will be a squad to your doorstep intending to sack the city. This chance is configurable in the MCM (under 'Spanish Inquisition').
 * In the base game, only 3 cities were elligible for Civil War sieges. Now all 9 will be up for grabs and the battle for each city will determine who will  maintain or relinquish control of the hold. Again, like Whiterun, winning the battle will put you on the offensive while losing will put you on the defensive of the next hold. 
-* Markarth and Riften city battles will have additional debris and barriers set similar to Whiterun to make things a little more interesting.
+* Markarth and Riften city proper will have additional debris and barriers set similar to Whiterun to make things a little more interesting.
 * Winning the battle at minor cities will also trigger a scene with the Jarl handing over control to the player.
+### So only Windhelm or Solitude remains, what next?
+* Windhelm and Solitude now both will have you go through the city exterior to reach the front gate like the other major cities.
+* If on the defensive, ready yourself for your final stand against the enemy. If the enemy breaks through, your side loses the war.
+* If on the offensive, once you reach the city gate the Solitude/Windhelm interior sieges will play out like normal along with a final unique prize given out by your respective generals.
+
+## After the Civil War
+* The rest of the game should remain as though you completed the Civil War questline normally (but it was hopefully a lot more fun :) )
