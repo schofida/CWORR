@@ -2852,7 +2852,7 @@ kmyQuest.CWSiegeObj.SetObjectiveCompleted(1000, 1 as Bool); COMPLETED - Meet wit
 
 kmyQuest.MUSCombatCivilWar.Add()
 
-
+kmyquest.CWBattlePhase.SetValue(1)
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
@@ -2886,8 +2886,6 @@ endif
 
 ;**CITY SPECIFIC:
 location cityVar = Alias_City.GetLocation()
-
-kmyquest.CWBattlePhase.SetValue(1)
 
 if cityVar == kmyquest.CWs.WhiterunLocation
 	kmyQuest.WeatherWhiterun.SetActive(True)

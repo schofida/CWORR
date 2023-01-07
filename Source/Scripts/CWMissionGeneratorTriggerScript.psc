@@ -13,6 +13,8 @@ Keyword Property CWCampSons Auto
 
 Keyword Property CWLinkFieldCOEnable Auto	;keyword on linked ref to generate field co so we can enable disable him as appropriate when Rikke/Galmar is present or not
 
+Keyword Property DomCWLinkFieldCOEnableTwin Auto ; link the version of the field co in a city with this
+
 ObjectReference Property myEnableMarker Auto
 {REFERENCE PROPERTY: Pointer to the enable marker in the camp, checks to make sure that's enabled before enabling the genreic fieldco}
 
@@ -24,7 +26,17 @@ Event OnCellAttach()
 	Location myLocation = GetEditorLocation()
 	Location myHoldLocation = CW.GetMyCurrentHoldLocation(self)
 	ObjectReference myLinkedFieldCO = GetLinkedRef(CWLinkFieldCOEnable)
-	
+	;domenicus
+	actor myLinkedFieldCOTwin = GetLinkedRef(DomCWLinkFieldCOEnableTwin) as Actor
+	bool shouldCommanderbeDead 
+
+	shouldCommanderbeDead = False
+	if(myLinkedFieldCOTwin)
+		if((myLinkedFieldCOTwin as actor).isDead())
+			shouldCommanderbeDead = True
+		endif
+	EndIf
+
 	Actor RikkeOrGalmar
 	
 	if myLocation.HasKeyword(CWCampImperial) && CW.PlayerAllegiance == CW.iImperials
@@ -42,15 +54,14 @@ Event OnCellAttach()
 
 	if  RikkeOrGalmar
 
-		if RikkeOrGalmar.GetCurrentLocation() == myLocation || myEnableMarker.IsDisabled() == true
+		if RikkeOrGalmar.GetCurrentLocation() == myLocation || myEnableMarker.IsDisabled() == true || shouldCommanderbeDead
+			CW.SetFieldCOAlias(RikkeOrGalmar)	;for dialogue purposes
 			myLinkedFieldCO.disable()
 			
 		Elseif myEnableMarker.IsDisabled() == False
 			myLinkedFieldCO.enable()
-			
+
 		EndIf
-		
-		CW.SetFieldCOAlias(RikkeOrGalmar)	;for dialogue purposes
 		;CWO If campaign running use campaign to start missions
 		if CW.CWCampaign.IsRunning()
 			CW.CWCampaignS.StartMissions()
@@ -58,6 +69,10 @@ Event OnCellAttach()
 			;In theory, this should only be hit in the last player attacking stage
 			CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
 		endif
+	elseif myEnableMarker.IsDisabled() == False
+		myLinkedFieldCO.enable()
+	elseif myEnableMarker.IsDisabled() == True
+		myLinkedFieldCO.disable()
 	
 
 	
