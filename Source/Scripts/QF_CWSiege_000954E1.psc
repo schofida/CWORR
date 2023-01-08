@@ -3808,7 +3808,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
 		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius.GetActorRef()
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius
 			OldGeneral.MoveTo(Alias_AttackerImperial1.GetActorRef())
 			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
@@ -3816,7 +3816,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	else
 		OldGeneral = Alias_AttackerSons1.GetActorRef()
 		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric.GetActorRef()
+			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
 			OldGeneral.MoveTo(Alias_AttackerSons1.GetActorRef())
 			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerSons2.ForceRefTo(OldGeneral)

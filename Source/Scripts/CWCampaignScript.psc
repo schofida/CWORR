@@ -233,42 +233,69 @@ ObjectReference Property CWMission3Ref Auto	;Passed in to SendStoryEvent when ge
 ;## Activators ##
 
 ;*** !! *** !! *** !! these are now just forms, and will be set with Game.GetForm(HEX ID) function rather than being pointed at in the editor. As soon as we get Activator objects in Papyrus, this need to change to point directly at the activators
-Form Property ResourceObjectFarm auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Form Property ResourceObjectMill auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
-Form Property ResourceObjectMine auto		;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectFarm auto hidden	;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectMill auto hidden	;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
+Form Property ResourceObjectMine auto hidden	;*** !!! TEMPORARILY SET IN OnInit() event using GetForm().... REMOVE THAT FROM THE OnInit() event
 
 ;## Scripts ##
 ;These will be assigned in the OnInit() block
 CWScript Property CWs Auto hidden
 
 ;## CWO! LET'S FUCKING GO!! ##
+;CWO Quests
 CWOStillABetterEndingMonitorScript Property CWOStillABetterEndingMonitor Auto
 Quest Property CWOArmorDisguise Auto
-GlobalVariable Property CWODisguiseGlobal Auto
-GlobalVariable Property CWOCapitalReinforcements Auto
-GlobalVariable Property CWOFortReinforcements Auto
-GlobalVariable Property CWOSiegeReinforcements Auto
-GlobalVariable Property CWOGarrisonReinforcements Auto
-GlobalVariable Property CWOStillABetterEndingGlobal Auto
 Quest Property CWOSendForPlayerQuest Auto
-Keyword Property CWODefendingStart Auto
-Scene Property CWSiegeGeneralChargeScene Auto
-GlobalVariable Property CWOPCChance Auto
 Quest Property CWMission01 Auto
 Quest Property CWMission02 Auto
 Quest Property CWMission05 Auto
 Quest Property CWMission06 Auto
 Quest Property CWMission08Quest Auto
 Quest Property CWMission09 Auto
-KeyWord Property cwopartycrasher Auto
+Quest Property CWAttackCity Auto
+Quest Property CWOMonitorQuest Auto
+Quest Property CWOBAController Auto
+;CWO Global Variables
+GlobalVariable Property CWOPCChance Auto
+GlobalVariable Property CWODisguiseGlobal Auto
+GlobalVariable Property CWOCapitalReinforcements Auto
+GlobalVariable Property CWOFortReinforcements Auto
+GlobalVariable Property CWOSiegeReinforcements Auto
+GlobalVariable Property CWOGarrisonReinforcements Auto
+GlobalVariable Property CWOStillABetterEndingGlobal Auto
+GlobalVariable Property CWOWarBegun Auto
+GlobalVariable Property CWODisableFortSiegeFort auto
+GlobalVariable Property CWODisableSolitudeSiege auto
+GlobalVariable Property CWODisableWindhelmSiege auto
+GlobalVariable Property CWODisableFaint auto
+GlobalVariable Property CWOPlayerAttackerScaleMult Auto
+GlobalVariable Property CWOPlayerDefenderScaleMult Auto
+GlobalVariable Property CWOEnemyAttackerScaleMult Auto
+GlobalVariable Property CWOEnemyDefenderScaleMult Auto
+GlobalVariable Property CWOCampaignPhaseMax Auto
+;New Packages for CO's
 Package Property CWGalmarAtCampWhiterun Auto
 Package Property CWRikkeAtCampWhiterun Auto
+;Story event keywords
+KeyWord Property cwopartycrasher Auto
+Keyword Property CWODefendingStart Auto
 Keyword Property CWOMissionStart2 Auto
-GlobalVariable Property CWOWarBegun Auto
+;Siege scene for Generals
+Scene Property CWSiegeGeneralChargeScene Auto
+;NPC Records Jarls that don't fight in minor sieges
+ActorBase Property JarlIdgrodRavencrone Auto
+ActorBase Property JarlSiddgeir Auto
+;Grain mill for mission 2
+Furniture Property ResourceObjectGrainMill auto
+;Player enemy faction
+Faction Property CWSoldierPlayerEnemyFaction Auto
+;Faction to indicate Defense
+Faction Property CWODefensiveFaction Auto
+;Outfit for Jarl Fight in Minor Cities
+Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
+;Enemy Camp Helpful for CWMission06
 LocationAlias Property EnemyCamp Auto
-Int Property CanDoCWMission03 Auto Conditional
-Int Property CanDoCWMission04 Auto Conditional
-Int Property CanDoCWMission07 Auto Conditional
+;Enable Garrison Markers
 ReferenceAlias Property Garrison1EnableImperial Auto
 ReferenceAlias Property Garrison2EnableImperial Auto
 ReferenceAlias Property Garrison3EnableImperial Auto
@@ -277,35 +304,10 @@ ReferenceAlias Property Garrison1EnableSons Auto
 ReferenceAlias Property Garrison2EnableSons Auto
 ReferenceAlias Property Garrison3EnableSons Auto
 ReferenceAlias Property Garrison4EnableSons Auto
-GlobalVariable Property CWOPlayerAttackerScaleMult Auto
-GlobalVariable Property CWOPlayerDefenderScaleMult Auto
-GlobalVariable Property CWOEnemyAttackerScaleMult Auto
-GlobalVariable Property CWOEnemyDefenderScaleMult Auto
-GlobalVariable Property CWOCampaignPhaseMax Auto
-ActorBase Property CWBattleRikke Auto
-ActorBase Property CWBattleGalmar Auto
-ReferenceAlias Property CWBattleTullius Auto
-ReferenceAlias Property CWBattleUlfric Auto
-Quest Property CWAttackCity Auto
-Bool Property CWFortSiegeFortDone Auto Hidden Conditional
-Bool Property CWMission01Or02Done Auto Hidden Conditional
-Bool Property CWMission06Done Auto Hidden Conditional
-Bool Property CWMission08Done Auto Hidden Conditional
-Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
-ObjectReference Property CWSiegeBarricadeWindhelmA Auto
-ObjectReference Property CWSiegeBarricadeWindhelmB Auto
-ObjectReference Property CWSiegeBarricadeSolitudeA Auto
-ObjectReference Property CWSiegeBarricadeSolitudeB Auto
-Faction Property CWSoldierPlayerEnemyFaction Auto
-ObjectReference Property WindhelmExteriorGate01 Auto
-ObjectReference Property WindhelmExteriorGate02 Auto
-ObjectReference Property SolitudeExteriorGate01 Auto
-Faction Property CWODefensiveFaction Auto
-ActorBase Property JarlIdgrodRavencrone Auto
-ActorBase Property JarlSiddgeir Auto
-Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
-Quest Property CWOMonitorQuest Auto
-Quest Property CWOBAController Auto
+;There is a chance that Ulfric or Tullius will join the sieges. These references are the unused defensive references outside of Solitude and Windhelm
+Actor Property CWBattleTullius Auto
+Actor Property CWBattleUlfric Auto
+;Enable markers for the military camps. Used in CWMission05
 objectreference property CWGarrisonEnableMarkerSonsCampRift auto
 objectreference property CWGarrisonEnableMarkerSonsCampWinterhold auto
 objectreference property CWGarrisonEnableMarkerSonsCampPale auto
@@ -320,6 +322,18 @@ objectreference property CWGarrisonEnableMarkerImperialCampFalkreath auto
 objectreference property CWGarrisonEnableMarkerImperialCampWhiterun auto
 objectreference property CWGarrisonEnableMarkerImperialCampHjaalmarch auto
 objectreference property CWGarrisonEnableMarkerImperialCampReach auto
+;Object references for Sieges
+ObjectReference Property CWSiegeBarricadeWindhelmA Auto
+ObjectReference Property CWSiegeBarricadeWindhelmB Auto
+ObjectReference Property CWSiegeBarricadeSolitudeA Auto
+ObjectReference Property CWSiegeBarricadeSolitudeB Auto
+ObjectReference Property WindhelmExteriorGate01 Auto
+ObjectReference Property WindhelmExteriorGate02 Auto
+ObjectReference Property SolitudeExteriorGate01 Auto
+objectreference property DawnstarMapMarkerREF auto
+objectreference property FalkreathMapMarker auto
+objectreference property MorthalMapMarkerRef auto
+objectreference property WinterholdMapMarker auto
 objectreference property SiegeFixWindhelmSoldierMarker1 auto
 objectreference property SiegeFixWindhelmSoldierMarker2 auto
 objectreference property SiegeFixWindhelmSoldierMarker3 auto
@@ -361,14 +375,15 @@ objectreference property SiegeFixWindhelmRespawnAttacker5Marker1 auto
 objectreference property SiegeFixWindhelmRespawnAttacker5Marker2 auto
 objectreference property SiegeFixWindhelmRespawnAttacker5Marker3 auto
 objectreference property SiegeFixWindhelmRespawnAttacker5Marker4 auto
-Furniture Property ResourceObjectGrainMill auto
-GlobalVariable Property CWODisableFortSiegeFort auto
-GlobalVariable Property CWODisableSolitudeSiege auto
-GlobalVariable Property CWODisableWindhelmSiege auto
-objectreference property DawnstarMapMarkerREF auto
-objectreference property FalkreathMapMarker auto
-objectreference property MorthalMapMarkerRef auto
-objectreference property WinterholdMapMarker auto
+;Helper conditional variables
+Int Property CanDoCWMission03 Auto Hidden Conditional
+Int Property CanDoCWMission04 Auto Hidden Conditional
+Int Property CanDoCWMission07 Auto Hidden Conditional
+Bool Property CWFortSiegeFortDone Auto Hidden Conditional
+Bool Property CWMission01Or02Done Auto Hidden Conditional
+Bool Property CWMission06Done Auto Hidden Conditional
+Bool Property CWMission08Done Auto Hidden Conditional
+Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
@@ -1876,8 +1891,10 @@ endfunction
 function StartMonitors(Quest kmyQuest)
 	CWScript.Log("CWCampaignScript", " StartMonitors()") 
 	;CWO - This quest marks the player as essential and auto/resolves the battle if he/she falls
-	CWOStillABetterEndingMonitor.start()
-	CWOStillABetterEndingMonitor.triggerQuest = kmyQuest
+	if CWODisableFaint.GetValueInt() == 0
+		CWOStillABetterEndingMonitor.start()
+		CWOStillABetterEndingMonitor.triggerQuest = kmyQuest
+	endif
 
 	CWSiegePollPlayerLocation ppLocation = kmyQuest as CWSiegePollPlayerLocation
 	if ppLocation != none

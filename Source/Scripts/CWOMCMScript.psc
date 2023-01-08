@@ -50,6 +50,7 @@ GlobalVariable Property CWODisableCWMission09 Auto
 GlobalVariable Property CWODisableFortSiegeFort Auto
 GlobalVariable Property CWODisableWindhelmSiege Auto
 GlobalVariable Property CWODisableSolitudeSiege Auto
+GlobalVariable Property CWODisableFaint Auto
 LeveledItem Property LItemArmorCuirassLightSpecial Auto
 LeveledItem Property LItemArmorCuirassHeavySpecial Auto
 LeveledItem Property LItemArmorShieldLightSpecial Auto
@@ -94,6 +95,7 @@ int optionsCWODisableCWMission09
 int optionsCWODisableFortSiegeFort
 int optionsCWODisableWindhelmSiege
 int optionsCWODisableSolitudeSiege
+int optionsDisableFaint
 
 Float _sliderPercent = 100.000
 
@@ -299,6 +301,14 @@ function OnOptionSelect(Int a_option)
 			self.SetToggleOptionValue(a_option, true, false)
 		else
 			CWODisableSolitudeSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsDisableFaint
+		if CWODisableFaint.GetValueInt() == 0
+			CWODisableFaint.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableFaint.SetValueInt(0)
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
 	endIf
@@ -549,6 +559,7 @@ function OnPageReset(String a_page)
 		optionsCourierHoursMin = self.AddSlideroption("Courier Hours Min", CWOCourierHoursMin.GetValueInt() as Float, "{0}", 0)
 		optionsCourierHoursMax = self.AddSlideroption("Courier Hours Max", CWOCourierHoursMax.GetValueInt() as Float, "{0}", 0)
 		optionsDisguiseGameType = self.AddMenuOption("Disguise Mechanic:", " ", 0)
+		optionsDisableFaint = self.AddToggleOption("Disable 'Take a Knee':", CWODisableFaint.GetValueInt() == 1, 0)
 		optionsStartSiege = self.AddMenuOption("Force start siege here:", " ", 0)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
 		optionsWinHold = self.AddMenuOption("Win hold here:", " ", 0)
@@ -721,6 +732,8 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("Disables fort sieges radiant quest that is given in between city sieges.")
 	elseif a_option == optionsCWODisableSolitudeSiege
 		self.SetInfoText("CWO restores siege objectives outside of Solitude (instead of just waltzing up to the front door). This can cause issues if you install mods that drastically changes Solitude's exterior. Select to revert to vanilla.")
+	elseif a_option == optionsDisableFaint
+		self.SetInfoText("During a skirmish or siege, if your hitpoints drop to 0, you will instead 'take a knee' and will be whisked off to a nearby military camp allowing the battle to resolve offscreen. Check to disable this so you can just die and reload.")
 	endIf
 endFunction
 
