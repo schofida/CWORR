@@ -28,6 +28,9 @@ ActorBase Property CWMission06DissaffectSoldierImperial1 auto
 ActorBase Property CWMission06LoyalistLeaderSons auto
 ActorBase Property CWMission06DissaffectSoldierSons1 auto
 
+Outfit Property CWMission06TurncoatGuardSonsOutfit auto
+Outfit Property CWMission06TurncoatGuardImperialOutfit auto
+
 Event OnUpdate()
 
 ; ;	debug.trace("TurncoatLeader.GetReference():" + TurncoatLeader.GetReference())
@@ -178,10 +181,10 @@ EndFunction
 function giveNewOutfit(Actor ActorRef)
 
 	if CWs.PlayerAllegiance == CWs.iImperials
-		ActorRef.setOutfit(CWs.CWSoldierImperialSoldierOutfit)
+		ActorRef.setOutfit(CWMission06TurncoatGuardImperialOutfit)
 			
 	Else
-		ActorRef.setOutfit(CWs.CWSoldierSonsSoldierOutfit)
+		ActorRef.setOutfit(CWMission06TurncoatGuardSonsOutfit)
 		
 	EndIf
 
