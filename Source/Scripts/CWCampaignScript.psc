@@ -255,6 +255,8 @@ Quest Property CWMission09 Auto
 Quest Property CWAttackCity Auto
 Quest Property CWOMonitorQuest Auto
 Quest Property CWOBAController Auto
+;House Quest
+Quest Property HousePurchase Auto
 ;CWO Global Variables
 GlobalVariable Property CWOPCChance Auto
 GlobalVariable Property CWODisguiseGlobal Auto
@@ -289,6 +291,8 @@ ActorBase Property JarlSiddgeir Auto
 Furniture Property ResourceObjectGrainMill auto
 ;Player enemy faction
 Faction Property CWSoldierPlayerEnemyFaction Auto
+;Follow faction
+Faction Property CurrentFollowerFaction Auto
 ;Faction to indicate Defense
 Faction Property CWODefensiveFaction Auto
 ;Outfit for Jarl Fight in Minor Cities
@@ -307,6 +311,8 @@ ReferenceAlias Property Garrison4EnableSons Auto
 ;There is a chance that Ulfric or Tullius will join the sieges. These references are the unused defensive references outside of Solitude and Windhelm
 Actor Property CWBattleTullius Auto
 Actor Property CWBattleUlfric Auto
+;Lydia
+Actor Property HousecarlWhiterunRef Auto
 ;Enable markers for the military camps. Used in CWMission05
 objectreference property CWGarrisonEnableMarkerSonsCampRift auto
 objectreference property CWGarrisonEnableMarkerSonsCampWinterhold auto
@@ -2593,4 +2599,16 @@ function enableCamp()
 			CWs.MilitaryCampReachImperialMapMarker.AddToMap()
 		Endif
 	endif
+endfunction
+
+bool function DisableLydiaDuringSiege()
+	if HousecarlWhiterunRef.IsEnabled() && !HousecarlWhiterunRef.IsInFaction(CurrentFollowerFaction) && (HousePurchase as HousePurchaseScript).whiterunhousevar == 0
+		HousecarlWhiterunRef.Disable()
+		return true
+	endif
+	return false
+endfunction
+
+function EnableLydiaAfterSiege()
+	HousecarlWhiterunRef.Enable()
 endfunction

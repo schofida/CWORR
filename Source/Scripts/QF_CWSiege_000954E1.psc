@@ -2730,6 +2730,10 @@ if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
 		USLEEPHeimskrPreachJail.SetStage(3)
 	EndIf
 endif
+if LydiaHasBeenDisabled
+	kmyQuest.CWs.CWCampaignS.EnableLydiaAfterSiege()
+	LydiaHasBeenDisabled = false
+endif
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
 ;if either attack or defense
@@ -2901,7 +2905,6 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 	else
 		SetStage(10)
 	endif
-
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 	kmyQuest.WeatherMarkarth.SetActive(True)
@@ -3522,7 +3525,7 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 		Alias_Attacker10.GetReference().MoveTo(Alias_WhiterunDefenseMoveTo.GetReference())
 
 	endif
-
+	LydiaHasBeenDisabled = kmyQuest.CWs.CWCampaignS.DisableLydiaDuringSiege()
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 	kmyQuest.WeatherMarkarth.SetActive(True)
@@ -4552,3 +4555,4 @@ ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate
 ObjectReference Property RiverwoodImperialsMarker Auto
 
 bool SiegeFinished = false
+bool LydiaHasBeenDisabled = false
