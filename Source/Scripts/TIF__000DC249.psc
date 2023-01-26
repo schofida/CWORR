@@ -10,9 +10,15 @@ CWScript CWs = GetOwningQuest() as CWScript
 
 if CWs.GetStageDone(50) == false
 	CWs.setStage(50)
-	CWs.CW03.SetStage(210)
-	CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
 Endif
+if CWs.CW03.IsRunning()
+	CWs.CW03.SetStage(210)
+endif
+if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+	CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
+Else
+	CWs.CWSiegeS.SetStage(1)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

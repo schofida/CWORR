@@ -1078,6 +1078,7 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 ;THIS IS SIMILAR TO STAGE 50
 
+kmyQuest.CWs.CWDebugForceAttacker.SetValueInt(kmyQuest.CWs.PlayerAllegiance)
 ;player left the area (see CWPlayerScript attached to Player alias)
 ;so close out this quest and advance it as if he got the jarl to surrender (it was an optional objective anyway)
 if GetStageDone(9000) == false
@@ -1087,6 +1088,8 @@ if GetStageDone(9000) == false
 	kmyQuest.CWs.contestedHoldWinner = kmyQuest.CWs.PlayerAllegiance
 
 	kmyquest.jarlHasSurrendered = 1
+	kmyquest.CWAttackCitySurrenderScene.Stop()
+	
 	kmyquest.CWSiegeObj.setObjectiveFailed(1210)
 	kmyquest.CWSiegeObj.setStage(9000)
 	setStage(9000)
@@ -1301,6 +1304,7 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 kmyQuest.CWCampaignS.StartDisguiseQuest()
 
 kmyquest.jarlHasSurrendered = 1
+kmyquest.CWAttackCitySurrenderScene.Stop()
 
 kmyquest.CWSiegeObj.setObjectiveCompleted(1210)
 kmyquest.CWSiegeObj.setStage(9000)
@@ -1342,32 +1346,32 @@ Alias_BodyGuard4.TryToDisable()
 Alias_BodyGuard5.TryToDisable()
 Alias_BodyGuard6.TryToDisable()
 
-Alias_BodyGuard1.GetActorReference().DeleteWhenAble()
-Alias_BodyGuard2.GetActorReference().DeleteWhenAble()
-Alias_BodyGuard3.GetActorReference().DeleteWhenAble()
-Alias_BodyGuard4.GetActorReference().DeleteWhenAble()
-Alias_BodyGuard5.GetActorReference().DeleteWhenAble()
-Alias_BodyGuard6.GetActorReference().DeleteWhenAble()
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard1)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard2)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard3)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard4)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard5)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard6)
 
-Alias_EnemySoldier1.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier2.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier3.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier4.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier5.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier6.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier7.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier8.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier9.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier10.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier11.GetActorReference().DeleteWhenAble()
-Alias_EnemySoldier12.GetActorReference().DeleteWhenAble()
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier1)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier2)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier3)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier4)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier5)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier6)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier7)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier8)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier9)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier10)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier11)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier12)
 
-Alias_Soldier1.GetActorReference().DeleteWhenAble()
-Alias_Soldier2.GetActorReference().DeleteWhenAble()
-Alias_Soldier3.GetActorReference().DeleteWhenAble()
-Alias_Soldier4.GetActorReference().DeleteWhenAble()
-Alias_Soldier5.GetActorReference().DeleteWhenAble()
-Alias_Soldier6.GetActorReference().DeleteWhenAble()
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier1)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier2)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier3)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier4)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier5)
+kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier6)
 
 CWScript.Log("AttackCity", self + "Stage 9999: Shutdown stage, Giving Jarl his normal outfit")
 ;WE DONT YET HAVE FUNCTIONALITY TO GET OUTFIT
@@ -1389,6 +1393,9 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 
 location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
 kmyquest.CWs.CompleteCWObj(currentHold)
+
+kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(currentHold, true, false)
+kmyquest.CWs.CWCampaignS.AddGeneralToRewardFaction(Alias_City.GetLocation())
 
 ;registerForSingleUpdate(5)   ;enters a while loop until the player leaves, then stops this quest and CWSiege quest
 kmyquest.CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()

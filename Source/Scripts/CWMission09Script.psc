@@ -3,6 +3,7 @@ Scriptname CWMission09Script extends CWMissionScript conditional
 
 MiscObject Property CWDocumentsImperial  Auto
 MiscObject Property CWDocumentsSons  Auto
+ReferenceAlias Property DocumentSpawn Auto
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission09 quest")

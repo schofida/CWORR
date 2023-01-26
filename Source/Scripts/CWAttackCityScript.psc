@@ -52,3 +52,27 @@ Event OnUpdate()  ;REGISTERED IN STAGE 9000
 	stop()
 	
 EndEvent
+
+function TryToFixQuest()
+	debug.notification("Trying to fix CWAttackCity quest")
+	if GetStage() < 10
+		SetStage(10)
+		return
+	endif
+	if GetStage() < 50
+		SetStage(200)
+		return
+	endif
+	if GetStageDone(9000)
+		Stop()
+	endif
+endfunction
+
+function tryToDeleteWhenAbleAlias(ReferenceAlias AliasToDeleteWhenAble)
+	ObjectReference RefToDeleteWhenAble = AliasToDeleteWhenAble.GetReference() 
+		if RefToDeleteWhenAble
+; 			CWScript.Log("CWFortSiegeScript", self + "tryToDeleteWhenAbleAlias() disabling " + RefToDeleteWhenAble + " in alias " + AliasToDeleteWhenAble)
+			RefToDeleteWhenAble.DeleteWhenAble()
+		Endif
+
+EndFunction

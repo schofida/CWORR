@@ -59,6 +59,7 @@ LeveledItem Property LItemWeaponSwordSpecial Auto
 LeveledItem Property CWRankRewardSons Auto
 LeveledItem Property CWRankRewardImperial Auto
 LeveledItem Property CWFinaleFactionLeaderSwordList Auto
+Quest Property CWOApolloFixMe Auto
 ;-- Variables ---------------------------------------
 Int _color = 16777215
 Int _colorOID_C
@@ -222,11 +223,11 @@ function OnOptionSelect(Int a_option)
 	elseIf a_option == optionsCWOHelp
 		optionsCWOHelpToggle = !optionsCWOHelpToggle
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle, false)
-		CWs.CWCampaignS.GetCWOUnstuck()
+		CWOApolloFixMe.SetStage(10)
 	elseIf a_option == optionsCWOHelp2
 		optionsCWOHelpToggle2 = !optionsCWOHelpToggle2
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle2, false)
-		CWs.CWCampaignS.GetCWOUnstuck2()
+		CWOApolloFixMe.SetStage(20)
 	elseIf a_option == optionsCWOUninstall
 		optionsCWOUninstallToggle = true
 		self.SetToggleOptionValue(a_option, true, false)

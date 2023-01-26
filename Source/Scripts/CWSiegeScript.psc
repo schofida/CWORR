@@ -1528,6 +1528,8 @@ CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
 
 if cws.CWFinale.IsRunning()
 	cws.CWFinale.Stop()
+Else
+	cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
 endif
 ;CWs.registerMissionSuccess()	- NOT counting final sieges as successful missions, since those are what increase the CWObj global values
 
@@ -1652,7 +1654,53 @@ ObjectReference Property WhiterunAmbExt03  Auto
 GlobalVariable Property CWDistantCatapultsAMB  Auto  
 
 function TryToFixQuest()
-	debug.notification("Trying to fix CWMission08 quest")
+	debug.notification("Trying to fix CWSiege quest")
+	if GetStage() == 0
+		if CWs.GetStageDone(50) == false
+			CWs.setStage(50)
+		Endif
+		if CWs.CW03.IsRunning()
+			CWs.CW03.SetStage(210)
+		endif
+		if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+			CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
+		Else
+			CWs.CWSiegeS.SetStage(1)
+		endif
+		return
+	endif
+	if WasThisAnAttack
+		if GetStage() < 10
+			SetStage(7)
+			Utility.Wait(5)
+			SetStage(9)
+			return
+		endif
+		if GetStage() < 50
+			SetStage(50)
+			return
+		endif
+		if CWS.CWFinale.IsRunning()
+			(CWs.CWFinale as CWFinaleScript).TryToFixQuest()
+		elseif CWs.CWCampaignS.CWAttackCity.IsRunning()
+			(CWs.CWCampaignS.CWAttackCity as CWAttackCityScript).TryToFixQuest()
+		else
+			Debug.Notification("CWAttackCity or CWFinale not running. Please report to Mod Author")
+		endif
+	else
+		if GetStage() < 10
+			SetStage(5)
+			Utility.Wait(5)
+			SetStage(8)
+			Utility.Wait(5)
+			SetStage(9)
+			return
+		endif
+		if GetStage() < 200
+			SetStage(200)
+			return
+		endif
+	endif
 endfunction
 
 bool function GetQuestStillRunning()

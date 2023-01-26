@@ -1365,7 +1365,7 @@ endif
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
 ;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
-((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 200
+((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 101
 
 ;<From Extended CWSiegeScript>
 CWScript.Log("CWFortSiege", "Stage 0: Registering aliases")

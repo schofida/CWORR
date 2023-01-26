@@ -1,80 +1,51 @@
-scriptName QF_CWOApolloFixMe_0201F7E2 extends Quest hidden
+;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
+;NEXT FRAGMENT INDEX 4
+Scriptname QF_CWOApolloFixMe_0201F7E2 Extends Quest Hidden
 
-;-- Properties --------------------------------------
-referencealias property Alias_TravelMarker auto
-referencealias property Alias_Player auto
-referencealias property Alias_PlayerMarker auto
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
+kmyQuest.MUSCombatCivilWar.remove()
+CWScript CWs = kmyQuest.CWs
+CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
+if CWCampaignS.CWMission05.IsRunning()
+	(CWCampaignS.CWMission05 as CWMission05Script).TryToFixQuest()
+	return
+endif
+if CWCampaignS.CWMission06.IsRunning()
+	(CWCampaignS.CWMission06 as CWMission06Script).TryToFixQuest()
+	return
+endif
+if CWCampaignS.CWMission08Quest.IsRunning()
+	(CWCampaignS.CWMission08Quest as CWMission08Script).TryToFixQuest()
+	return
+endif
+if CWCampaignS.CWMission09.IsRunning()
+	(CWCampaignS.CWMission09 as CWMission09Script).TryToFixQuest()
+	return
+endif
+debug.notification("Nothing to fix....")
+Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
 
-;-- Variables ---------------------------------------
-
-;-- Functions ---------------------------------------
-
-function Fragment_3()
-
-	Quest __temp = self as Quest
-	cwmission10script kmyQuest = __temp as cwmission10script
-	self.SetObjectiveDisplayed(20, 1 as Bool, false)
-	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
-	Alias_PlayerMarker.GetReference().disable(false)
-	Alias_PlayerMarker.GetReference().delete()
-	self.stop()
-endFunction
-
-; Skipped compiler generated GotoState
-
-; Skipped compiler generated GetState
-
-function Fragment_2()
-
-	Quest __temp = self as Quest
-	cwmission10script kmyQuest = __temp as cwmission10script
-;	self.SetObjectiveDisplayed(10, 1 as Bool, false)
-;	utility.wait(1 as Float)
-;	kmyQuest.CWsiege.setstage(50)
-;	kmyQuest.CWAttackCity.setstage(50)
-;	kmyQuest.CWFortsiegeFort.setstage(1000)
-;	kmyQuest.CWFortSiegeCapital.setstage(1000)
-;	kmyQuest.CWmission03.setstage(100)
-;	kmyQuest.CWmission04.setstage(100)
-;	kmyQuest.CWmission07.setstage(100)
-;	utility.wait(10 as Float)
-;	if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-;		if kmyQuest.CWs.GetHoldowner(3) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(3)
-;		elseIf kmyQuest.CWs.GetHoldowner(2) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(2)
-;		elseIf kmyQuest.CWs.GetHoldowner(5) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(5)
-;		elseIf kmyQuest.CWs.GetHoldowner(4) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(4)
-;		elseIf kmyQuest.CWs.GetHoldowner(6) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(6)
-;		elseIf kmyQuest.CWs.GetHoldowner(9) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(9)
-;		elseIf kmyQuest.CWs.GetHoldowner(7) == kmyQuest.CWs.ISons
-;			kmyQuest.CWOCurrentHold.SetValueInt(7)
-;		endIf
-;	elseIf kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.ISons
-;		if kmyQuest.CWs.GetHoldowner(7) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(7)
-;		elseIf kmyQuest.CWs.GetHoldowner(9) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(9)
-;		elseIf kmyQuest.CWs.GetHoldowner(6) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(6)
-;		elseIf kmyQuest.CWs.GetHoldowner(4) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(4)
-;		elseIf kmyQuest.CWs.GetHoldowner(5) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(5)
-;		elseIf kmyQuest.CWs.GetHoldowner(2) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(2)
-;		elseIf kmyQuest.CWs.GetHoldowner(3) == kmyQuest.CWs.iImperials
-;			kmyQuest.CWOCurrentHold.SetValueInt(3)
-;		endIf
-;	endIf
+;BEGIN FRAGMENT Fragment_3
+Function Fragment_3()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
 ;	kmyQuest.CWs.CWODefendingActive.SetValueInt(0)
 ;	utility.wait(5 as Float)
 ;	kmyQuest.CWs.GetRikkeOrGalmar(-1).enable(false)
-;	kmyQuest.MUSCombatCivilWar.remove()
+;	
 ;	kmyQuest.CWOArmorDisguises.stop()
 ;	game.getplayer().removefromfaction(kmyQuest.CWSonsFactionNPC)
 ;	game.getplayer().removefromfaction(kmyQuest.CWImperialFactionNPC)
@@ -88,16 +59,72 @@ function Fragment_2()
 ;	game.getplayer().moveto(Alias_PlayerMarker.GetReference(), 0.000000, 0.000000, 0.000000, true)
 ;	utility.wait(1 as Float)
 ;	self.setstage(20)
-endFunction
+	CWScript.Log("CWScript", "GetCWOUnstuck()")
+	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
+	kmyQuest.MUSCombatCivilWar.remove()
+	CWScript CWs = kmyQuest.CWs
+	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
+	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
+		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
+		debug.notification("Trying to start Whiterun Siege")
+	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
+		Stop()
+    endif
+	if CWs.WarIsActive == 1 && CWs.CWCampaign.IsRunning() && CWs.CWCampaign.GetStage() == 0
+		debug.notification("Conversation with General did not trigger Campaign to start. Setting CW Stage to 4")
+		CWs.SetStage(4)
+		Stop()
+	endif
+	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
+		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.EastmarchFortBattleComplete
+			debug.notification("Trying to start Final Fort Siege")
+			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), false)
+			Stop()
+		elseif !CWs.CWSiegeS.IsRunning() && CWS.EastmarchFortBattleComplete
+			debug.notification("Trying to start Final Siege")
+			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), true)
+			Stop()
+		endif
+	elseif CWs.PlayerAllegiance == CWs.iSons && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
+		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.HaafingarFortBattleComplete
+			debug.notification("Trying to start Final Siege")
+			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), false)
+			Stop()
+		elseif !CWs.CWSiegeS.IsRunning() && CWS.HaafingarFortBattleComplete
+			debug.notification("Trying to start Final Siege")
+			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), true)
+			Stop()
+		endif
+	endif
+	if CWCampaignS.CWMission01.IsRunning()
+		debug.notification("Trying to fix CWMission01")
+		(CWCampaignS.CWMission01 as CWMission01Script).TryToFixQuest()
+		Stop()
+	endif
+	if CWCampaignS.CWMission02.IsRunning()
+		debug.notification("Trying to fix CWMission02")
+		(CWCampaignS.CWMission02 as CWMission02Script).TryToFixQuest()
+		Stop()
+	endif
+	if CWs.CWMission07.IsRunning()
+		debug.notification("Trying to fix CWMission07")
+		(CWs.CWMission07 as CWMission07Script).TryToFixQuest()
+		Stop()
+	endif
+	if CWS.CWFortSiegeFort.IsRunning() || cws.CWFortSiegeCapital.IsRunning()
+		debug.notification("Trying to fix CWFortSiegeFort or CWFortSiegeCapital")		
+		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
+		Stop()
+	endif
+	if CWs.CWSiegeS.IsRunning()
+		debug.notification("Trying to fix CWSiegeS")	
+		(CWs.CWSiegeS).TryToFixQuest()
+		Stop()
+	endif
+	debug.notification("Nothing to fix....")
+	Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
 
-function Fragment_0()
-
-	Quest __temp = self as Quest
-	cwmission10script kmyQuest = __temp as cwmission10script
-;	self.SetObjectiveDisplayed(0, 1 as Bool, false)
-;	game.disableplayercontrols(true, true, false, false, false, true, true, false, 0)
-;	utility.wait(2 as Float)
-;	game.getplayer().moveto(Alias_TravelMarker.GetReference(), 0.000000, 0.000000, 0.000000, true)
-;	utility.wait(1 as Float)
-;	self.setstage(10)
-endFunction
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment

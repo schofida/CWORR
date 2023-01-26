@@ -255,6 +255,7 @@ Quest Property CWMission09 Auto
 Quest Property CWAttackCity Auto
 Quest Property CWOMonitorQuest Auto
 Quest Property CWOBAController Auto
+Quest Property CWOPartyCrasherCageMatch Auto
 ;House Quest
 Quest Property HousePurchase Auto
 ;CWO Global Variables
@@ -340,47 +341,6 @@ objectreference property DawnstarMapMarkerREF auto
 objectreference property FalkreathMapMarker auto
 objectreference property MorthalMapMarkerRef auto
 objectreference property WinterholdMapMarker auto
-objectreference property SiegeFixWindhelmSoldierMarker1 auto
-objectreference property SiegeFixWindhelmSoldierMarker2 auto
-objectreference property SiegeFixWindhelmSoldierMarker3 auto
-objectreference property SiegeFixWindhelmSoldierMarker4 auto
-objectreference property SiegeFixWindhelmSoldierMarker5 auto
-objectreference property SiegeFixWindhelmSoldierMarker6 auto
-objectreference property SiegeFixWindhelmSoldierMarker7 auto
-objectreference property SiegeFixWindhelmSoldierMarker8 auto
-objectreference property SiegeFixWindhelmSoldierMarker9 auto
-objectreference property SiegeFixWindhelmSoldierMarker10 auto
-objectreference property SiegeFixSolitudeSoldierMarker1 auto
-objectreference property SiegeFixSolitudeSoldierMarker2 auto
-objectreference property SiegeFixSolitudeSoldierMarker3 auto
-objectreference property SiegeFixSolitudeSoldierMarker4 auto
-objectreference property SiegeFixSolitudeSoldierMarker5 auto
-objectreference property SiegeFixSolitudeSoldierMarker6 auto
-objectreference property SiegeFixSolitudeSoldierMarker7 auto
-objectreference property SiegeFixSolitudeSoldierMarker8 auto
-objectreference property SiegeFixSolitudeSoldierMarker9 auto
-objectreference property SiegeFixSolitudeSoldierMarker10 auto
-objectreference property SiegeFixRiftenRespawnDefender5Marker1 auto
-objectreference property SiegeFixRiftenRespawnDefender5Marker2 auto
-objectreference property SiegeFixRiftenRespawnDefender5Marker3 auto
-objectreference property SiegeFixRiftenRespawnDefender5Marker4 auto
-objectreference property SiegeFixSolitudeAttackTrigger1 auto
-objectreference property SiegeFixSolitudeAttackTrigger4 auto
-objectreference property SiegeFixSolitudeRespawnDefender5FailSafeMarker1 auto
-objectreference property SiegeFixSolitudeRespawnDefender5Marker1 auto
-objectreference property SiegeFixSolitudeRespawnDefender5Marker2 auto
-objectreference property SiegeFixSolitudeRespawnDefender5Marker3 auto
-objectreference property SiegeFixSolitudeRespawnDefender5Marker4 auto
-objectreference property SiegeFixWindhelmRespawnDefender5FailSafeMarker1 auto
-objectreference property SiegeFixWindhelmRespawnDefender5Marker1 auto
-objectreference property SiegeFixWindhelmRespawnDefender5Marker2 auto
-objectreference property SiegeFixWindhelmRespawnDefender5Marker3 auto
-objectreference property SiegeFixWindhelmRespawnDefender5Marker4 auto
-objectreference property SiegeFixWindhelmRespawnAttacker5FailSafeMarker1 auto
-objectreference property SiegeFixWindhelmRespawnAttacker5Marker1 auto
-objectreference property SiegeFixWindhelmRespawnAttacker5Marker2 auto
-objectreference property SiegeFixWindhelmRespawnAttacker5Marker3 auto
-objectreference property SiegeFixWindhelmRespawnAttacker5Marker4 auto
 ;Helper conditional variables
 Int Property CanDoCWMission03 Auto Hidden Conditional
 Int Property CanDoCWMission04 Auto Hidden Conditional
@@ -484,6 +444,8 @@ Event OnInit()
 
 	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
 		CWFortSiegeFortDone = 1
+	else
+		CWFortSiegeFortDone = 0
 	endif
 
 	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
@@ -1219,9 +1181,9 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	;CWO - Missions either start on a CWOMonitor or in CWMissionGeneratorTriggerScript
 	;StartMissions()
 	
-	if DebugOn.value == 1
-		debug.MessageBox("CWCampaignScript: Ready to start campaign.")
-	EndIf
+	;if DebugOn.value == 1
+	;	debug.MessageBox("CWCampaignScript: Ready to start campaign.")
+	;EndIf
 	
 EndFunction
 
@@ -1616,13 +1578,9 @@ function ForceFieldHQAliases()
 		;make the enemy camp as the EnemyFieldHQ
 		If playerAllegiance == iImperials 	;enemy is Sons
 			EnemyFieldHQ.ForceLocationTo(CampSons.GetLocation())
-			;CWO - Useful for CWMission06
-			EnemyCamp.ForceLocationTo(CampSons.GetLocation())
 		
 		Elseif playerAllegiance == iSons ;enemy is Imperials
 			EnemyFieldHQ.ForceLocationTo(CampImperial.GetLocation())
-			;CWO - Useful for CWMission06
-			EnemyCamp.ForceLocationTo(CampImperial.GetLocation())
 		
 		Else	;unexpected allegiance
  			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
@@ -1977,6 +1935,10 @@ function DragonTime()
 		CWScript.Log("CWCampaignScript", " DragonTime() Starting Dragon Quest") 
 		cwopartycrasher.SendStoryEvent(Capital.GetLocation() )
 	endIf
+endfunction
+
+function NoMoreDragonTime()
+	CWOPartyCrasherCageMatch.Stop()
 endfunction
 
 function CWOImperialsWin()
@@ -2361,84 +2323,6 @@ function CompleteCWSieges()
 	endIf
 endfunction
 
-function GetCWOUnstuck()
-	CWScript.Log("CWScript", "GetCWOUnstuck()")
-	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
-		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
-		debug.notification("Trying to start Whiterun Siege")
-	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
-		return
-    endif
-	if CWs.WarIsActive == 1 && CWs.CWCampaign.IsRunning() && CWs.CWCampaign.GetStage() == 0
-		debug.notification("Conversation with General did not trigger Campaign to start. Setting CW Stage to 4")
-		CWs.SetStage(4)
-		return
-	endif
-	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
-		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.EastmarchFortBattleComplete
-			debug.notification("Trying to start Final Fort Siege")
-			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), false)
-			return
-		elseif !CWs.CWSiegeS.IsRunning() && CWS.EastmarchFortBattleComplete
-			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), true)
-			return
-		endif
-	elseif CWs.PlayerAllegiance == CWs.iSons && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
-		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.HaafingarFortBattleComplete
-			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), false)
-			return
-		elseif !CWs.CWSiegeS.IsRunning() && CWS.HaafingarFortBattleComplete
-			debug.notification("Trying to start Final Siege")
-			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), true)
-			return
-		endif
-	endif
-	if CWMission01.IsRunning()
-		(CWMission01 as CWMission01Script).TryToFixQuest()
-		return
-	endif
-	if CWMission02.IsRunning()
-		(CWMission02 as CWMission02Script).TryToFixQuest()
-		return
-	endif
-	if CWs.CWMission07.IsRunning()
-		(CWs.CWMission07 as CWMission07Script).TryToFixQuest()
-		return
-	endif
-	if CWS.CWFortSiegeFort.IsRunning() || cws.CWFortSiegeCapital.IsRunning()
-		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
-		return
-	endif
-	if CWs.CWSiegeS.IsRunning()
-		(CWs.CWSiegeS).TryToFixQuest()
-		return
-	endif
-	debug.notification("Nothing to fix....")
-endfunction
-
-function GetCWOUnstuck2()
-	CWScript.Log("CWScript", "GetCWOUnstuck2()")
-	if CWMission05.IsRunning()
-		(CWMission05 as CWMission05Script).TryToFixQuest()
-		return
-	endif
-	if CWMission06.IsRunning()
-		(CWMission06 as CWMission06Script).TryToFixQuest()
-		return
-	endif
-	if CWMission08Quest.IsRunning()
-		(CWMission08Quest as CWMission08Script).TryToFixQuest()
-		return
-	endif
-	if CWMission09.IsRunning()
-		(CWMission09 as CWMission09Script).TryToFixQuest()
-		return
-	endif
-	debug.notification("Nothing to fix....")
-endfunction
-
 function SetMonitorMajorCitySiegeStopping()
 	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMajorCity")
 endfunction
@@ -2611,4 +2495,40 @@ endfunction
 
 function EnableLydiaAfterSiege()
 	HousecarlWhiterunRef.Enable()
+endfunction
+
+function AddGeneralToRewardFaction(Location City)
+	Actor General
+	if CWs.PlayerAllegiance == CWs.iImperials
+		General = CWs.GeneralTulliusRef
+	else
+		General = CWs.UlfricRef
+	endif
+	if City == Cws.WhiterunLocation
+		General.AddToFaction(CWs.CWRewardFactionWhiterun)
+	elseif City == CWs.DawnstarLocation
+		General.AddToFaction(CWs.CWRewardFactionPale)
+	elseif City == Cws.RiftenLocation
+		General.AddToFaction(CWs.CWRewardFactionRift)
+	elseif City == CWs.WinterholdLocation
+		General.AddToFaction(CWs.CWRewardFactionWinterhold)
+	elseif City == CWs.FalkreathLocation
+		General.AddToFaction(CWs.CWRewardFactionFalkreath)
+	elseif City == CWs.MarkarthLocation
+		General.AddToFaction(CWs.CWRewardFactionReach)
+	elseif City == CWs.MorthalLocation
+		General.AddToFaction(CWs.CWRewardFactionHjaalmarch)
+	endif
+
+endfunction
+
+function RemoveGeneralFromRewardFaction(Actor General)
+
+	General.RemoveFromFaction(CWs.CWRewardFactionWhiterun)
+	General.RemoveFromFaction(CWs.CWRewardFactionPale)
+	General.RemoveFromFaction(CWs.CWRewardFactionRift)
+	General.RemoveFromFaction(CWs.CWRewardFactionWinterhold)
+	General.RemoveFromFaction(CWs.CWRewardFactionFalkreath)
+	General.RemoveFromFaction(CWs.CWRewardFactionReach)
+	General.RemoveFromFaction(CWs.CWRewardFactionHjaalmarch)
 endfunction

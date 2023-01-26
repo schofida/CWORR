@@ -322,3 +322,41 @@ Function MakeCrowdMember(ReferenceAlias MarkerAlias, ReferenceAlias MemberAlias)
 	EndIf
 
 EndFunction
+
+Function TryToFixQuest()
+	debug.notification("Trying to fix CWFinale quest")
+	if GetStageDone(100) == false
+		PlayerEnteredCastle()
+		return
+	endif
+	if GetStage() < 150
+		CWFinaleSolitudeSceneA.Stop()
+		CWFinaleWindhelmSceneA.Stop()
+		SetStage(150)
+		return
+	endif
+	if GetStage() < 200
+		EnemySecondDied()
+		return
+	endif
+	if GetStage() < 310
+		CWFinaleSolitudeSceneB.Stop()
+		CWFinaleWindhelmSceneB.Stop()
+		SetStage(310)
+		return
+	endif
+	if GetStage() < 320
+		SetStage(320)
+		return
+	endif
+	if GetStage() < 330
+		SetStage(330)
+		return
+	endif
+	if GetStage() < 340
+		CWFinaleSolitudeSceneC.Stop()
+		CWFinaleWindhelmSceneC.Stop()
+		SetStage(340)
+		return
+	endif
+endfunction

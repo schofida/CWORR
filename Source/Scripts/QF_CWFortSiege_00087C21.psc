@@ -1704,6 +1704,8 @@ kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
+kmyQuest.CWFortSiegeCapitalSurrenderScene.Stop()
+
 ;CWO Account for player attacking or defending
 kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
 
@@ -1729,6 +1731,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 
 ;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+	kmyQuest.CWs.CWCampaignS.AddGeneralToRewardFaction(Alias_Fort.GetLocation())
 endif
 
 kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()

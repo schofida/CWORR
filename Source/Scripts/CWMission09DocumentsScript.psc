@@ -8,3 +8,6 @@ Event OnContainerChanged(ObjectReference akNewContainer, ObjectReference akOldCo
 
 EndEvent
 
+Event OnCellLoad()
+	GetRef().MoveTo((GetOwningQuest() As CWMission09Script).DocumentSpawn.GetRef())
+EndEvent

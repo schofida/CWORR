@@ -70,10 +70,6 @@ Function Fragment_1()
         Alias_Document.GetRef().SetFactionOwner(kmyQuest.CWs.CrimeFactionImperial)        
     endif
 
-    if Alias_DocumentSpawn.GetRef().IsInLocation(kmyQuest.CWs.CWCampaignS.EnemyCamp.GetLocation())
-        kmyQuest.CWs.CWCampaignS.EnableCamp()
-    endif
-
     SetObjectiveDisplayed(10)
     ;END CODE
 EndFunction

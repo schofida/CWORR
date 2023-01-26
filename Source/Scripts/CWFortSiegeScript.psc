@@ -678,7 +678,34 @@ function StartFinalCityInteriorBattle()
 EndFunction
 
 function TryToFixQuest()
-	debug.notification("Trying to fix CWMission08 quest")
+	debug.notification("Trying to fix CWFortSiegeCapital quest")
+	if GetStage() < 10
+		SetStage(10)
+		return
+	endif
+	if IsPlayerAttacking()
+		if GetStage() < 1000
+			SetStage(1000)
+			return
+		endif
+		if GetStageDone(950) == false && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+			SetStage(950)
+			return
+		endif
+	Else
+		if GetStage() < 2000
+			SetStage(2000)
+			return
+		endif
+	endif
+	if GetStage() < 9000
+		SetStage(9000)
+		return 
+	endif
+	if GetStage() >= 9000
+		Stop()
+		return
+	endif
 endfunction
 
 bool function PlayerInMinorCity(Actor PlayerRef)
