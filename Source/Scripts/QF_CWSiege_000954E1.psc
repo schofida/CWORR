@@ -2021,7 +2021,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 	if kmyquest.IsAttack()
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3300, 1); DISPLAY - final barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAY - final barricade
 
 ;Set Dialog States
 kmyquest.CWStateAttackerAtGate.SetValue(1)
@@ -2548,6 +2548,8 @@ if kmyQuest.CWPrepareCity.IsRunning()
     kmyQuest.CWPrepareCity.Stop()
 endif
 
+kmyQuest.CWs.CWCampaignS.NoMoreDragonTime()
+
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -2582,18 +2584,18 @@ kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Disable()
 ;Disable aliases
 Alias_ThreatTriggersToggle.TryToDisable()
 
-;Alias_NonRespawningDefenderImperial1.TryToDisable()
-;Alias_NonRespawningDefenderImperial2.TryToDisable()
-;Alias_NonRespawningDefenderImperial3.TryToDisable()
-;Alias_NonRespawningDefenderImperial4.TryToDisable()
-;Alias_NonRespawningDefenderImperial5.TryToDisable()
-;Alias_NonRespawningDefenderImperial6.TryToDisable()
-;Alias_NonRespawningDefenderSons1.TryToDisable()
-;Alias_NonRespawningDefenderSons2.TryToDisable()
-;Alias_NonRespawningDefenderSons3.TryToDisable()
-;Alias_NonRespawningDefenderSons4.TryToDisable()
-;Alias_NonRespawningDefenderSons5.TryToDisable()
-;Alias_NonRespawningDefenderSons6.TryToDisable()
+Alias_NonRespawningDefenderImperial1.TryToDisable()
+Alias_NonRespawningDefenderImperial2.TryToDisable()
+Alias_NonRespawningDefenderImperial3.TryToDisable()
+Alias_NonRespawningDefenderImperial4.TryToDisable()
+Alias_NonRespawningDefenderImperial5.TryToDisable()
+Alias_NonRespawningDefenderImperial6.TryToDisable()
+Alias_NonRespawningDefenderSons1.TryToDisable()
+Alias_NonRespawningDefenderSons2.TryToDisable()
+Alias_NonRespawningDefenderSons3.TryToDisable()
+Alias_NonRespawningDefenderSons4.TryToDisable()
+Alias_NonRespawningDefenderSons5.TryToDisable()
+Alias_NonRespawningDefenderSons6.TryToDisable()
 
 
 ;THIS ALSO HAPPENS IN STAGE 200
@@ -2627,6 +2629,7 @@ kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
 kmyquest.CWs.CWAlliesS.DeactivateAllies()
+kmyquest.CWs.CWCampaignS.CWMission06Done = false
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
 UnregisterForUpdate()
@@ -3070,21 +3073,21 @@ endif
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "Turning on the appropriate advanced soldiers based on player's allegiance")	
 
 	;Enable Initial Advanced Defender for correct side
-	;if kmyQuest.CWs.GetDefender(Alias_City.GetLocation()) == kmyQuest.CWs.iImperials	;Player is an Imperial
-	;	Alias_NonRespawningDefenderImperial1.TryToEnable()
-	;	Alias_NonRespawningDefenderImperial2.TryToEnable()
-	;	Alias_NonRespawningDefenderImperial3.TryToEnable()
-	;	Alias_NonRespawningDefenderImperial4.TryToEnable()
-	;	Alias_NonRespawningDefenderImperial5.TryToEnable()
-	;	Alias_NonRespawningDefenderImperial6.TryToEnable()
-	;else		;defender is a Sons
-	;	Alias_NonRespawningDefenderSons1.TryToEnable()
-	;	Alias_NonRespawningDefenderSons2.TryToEnable()
-	;	Alias_NonRespawningDefenderSons3.TryToEnable()
-	;	Alias_NonRespawningDefenderSons4.TryToEnable()
-	;	Alias_NonRespawningDefenderSons5.TryToEnable()
-	;	Alias_NonRespawningDefenderSons6.TryToEnable()
-	;endif
+	if kmyQuest.CWs.GetDefender(Alias_City.GetLocation()) == kmyQuest.CWs.iImperials	;Player is an Imperial
+		Alias_NonRespawningDefenderImperial1.TryToEnable()
+		Alias_NonRespawningDefenderImperial2.TryToEnable()
+		Alias_NonRespawningDefenderImperial3.TryToEnable()
+		Alias_NonRespawningDefenderImperial4.TryToEnable()
+		Alias_NonRespawningDefenderImperial5.TryToEnable()
+		Alias_NonRespawningDefenderImperial6.TryToEnable()
+	else		;defender is a Sons
+		Alias_NonRespawningDefenderSons1.TryToEnable()
+		Alias_NonRespawningDefenderSons2.TryToEnable()
+		Alias_NonRespawningDefenderSons3.TryToEnable()
+		Alias_NonRespawningDefenderSons4.TryToEnable()
+		Alias_NonRespawningDefenderSons5.TryToEnable()
+		Alias_NonRespawningDefenderSons6.TryToEnable()
+	endif
 
 	;Enabling the correct reinforcements based on if player is attacking, and which side he's on.
 	if kmyQuest.CWs.GetAttacker(Alias_City.GetLocation()) == kmyQuest.CWs.iImperials	;Player is an Imperial, and is attacking
@@ -3750,8 +3753,11 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 SiegeFinished = False
-;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
-Debug.Notification("Siege is getting ready behind the scenes. This can take some time. Please wait before speaking to Officer.")
+
+CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
+kmyquest.WasThisAnAttack = kmyquest.IsAttack()
+
+Debug.Notification("Siege is getting ready behind the scenes. Please wait before speaking to Officer.")
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 0")	;*** WRITE TO LOG
 ;CWO Start Courier Defense Quest
@@ -3762,10 +3768,6 @@ CommanderNewPositionZ = 0.0
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
 
 Location cityVar = Alias_City.GetLocation()
-
-CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
-kmyquest.WasThisAnAttack = kmyquest.IsAttack()
-
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 1")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 1)
@@ -3813,7 +3815,7 @@ Alias_DisableMapMarkerForBattle16.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.Winte
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
-if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 100) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
+if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
 	Actor OldGeneral
 	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
@@ -3838,6 +3840,7 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 	endif
 endif
 
+;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process Imperial Aliases")	;*** WRITE TO LOG
 ;Imperial Aliases pointing to references in world:
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
@@ -3911,33 +3914,33 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allie
 
 ; ;CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling Reset() on advanced soldiers that aren't meant to respawn")	
 ;Aiases I will be enabling through the course of the attack.  Should be taken care of in 255.
-;Alias_NonRespawningDefenderImperial1.TryToReset()
-;Alias_NonRespawningDefenderImperial2.TryToReset()
-;Alias_NonRespawningDefenderImperial3.TryToReset()
-;Alias_NonRespawningDefenderImperial4.TryToReset()
-;Alias_NonRespawningDefenderImperial5.TryToReset()
-;Alias_NonRespawningDefenderImperial6.TryToReset()
+Alias_NonRespawningDefenderImperial1.TryToReset()
+Alias_NonRespawningDefenderImperial2.TryToReset()
+Alias_NonRespawningDefenderImperial3.TryToReset()
+Alias_NonRespawningDefenderImperial4.TryToReset()
+Alias_NonRespawningDefenderImperial5.TryToReset()
+Alias_NonRespawningDefenderImperial6.TryToReset()
 
-;Alias_NonRespawningDefenderSons1.TryToReset()
-;Alias_NonRespawningDefenderSons2.TryToReset()
-;Alias_NonRespawningDefenderSons3.TryToReset()
-;Alias_NonRespawningDefenderSons4.TryToReset()
-;Alias_NonRespawningDefenderSons5.TryToReset()
-;Alias_NonRespawningDefenderSons6.TryToReset()
+Alias_NonRespawningDefenderSons1.TryToReset()
+Alias_NonRespawningDefenderSons2.TryToReset()
+Alias_NonRespawningDefenderSons3.TryToReset()
+Alias_NonRespawningDefenderSons4.TryToReset()
+Alias_NonRespawningDefenderSons5.TryToReset()
+Alias_NonRespawningDefenderSons6.TryToReset()
 
-;Alias_NonRespawningDefenderImperial1.TryToDisable()
-;Alias_NonRespawningDefenderImperial2.TryToDisable()
-;Alias_NonRespawningDefenderImperial3.TryToDisable()
-;Alias_NonRespawningDefenderImperial4.TryToDisable()
-;Alias_NonRespawningDefenderImperial5.TryToDisable()
-;Alias_NonRespawningDefenderImperial6.TryToDisable()
+Alias_NonRespawningDefenderImperial1.TryToDisable()
+Alias_NonRespawningDefenderImperial2.TryToDisable()
+Alias_NonRespawningDefenderImperial3.TryToDisable()
+Alias_NonRespawningDefenderImperial4.TryToDisable()
+Alias_NonRespawningDefenderImperial5.TryToDisable()
+Alias_NonRespawningDefenderImperial6.TryToDisable()
 
-;Alias_NonRespawningDefenderSons1.TryToDisable()
-;Alias_NonRespawningDefenderSons2.TryToDisable()
-;Alias_NonRespawningDefenderSons3.TryToDisable()
-;Alias_NonRespawningDefenderSons4.TryToDisable()
-;Alias_NonRespawningDefenderSons5.TryToDisable()
-;Alias_NonRespawningDefenderSons6.TryToDisable()
+Alias_NonRespawningDefenderSons1.TryToDisable()
+Alias_NonRespawningDefenderSons2.TryToDisable()
+Alias_NonRespawningDefenderSons3.TryToDisable()
+Alias_NonRespawningDefenderSons4.TryToDisable()
+Alias_NonRespawningDefenderSons5.TryToDisable()
+Alias_NonRespawningDefenderSons6.TryToDisable()
 
 Alias_Barricade1A.TryToReset()
 if Alias_Barricade1A.GetReference() != none
@@ -4211,7 +4214,7 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(10, 30)
 
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
@@ -4241,7 +4244,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		;CWO
 		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
 		;CWO
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(10, 30)
 
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
@@ -4297,7 +4300,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;CWO
 		Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 		;CWO
-		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 30)
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 30)
 
 	else
 		;Currently no defense planned
@@ -4499,7 +4502,7 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 				;CWO
 				Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade2A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 				;CWO
-		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 40)
 
 
 	else
@@ -4539,7 +4542,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 						;CWO
 						Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.SolitudeExteriorGate01, 0.000000, 0.000000, 0.000000, true)
 						;CWO
-						(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(15, 40)
+						(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 40)
 
 	else
 		;Currently no defense planned

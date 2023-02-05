@@ -15,18 +15,22 @@ CWScript CWs = kmyQuest.CWs
 CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
 if CWCampaignS.CWMission05.IsRunning()
 	(CWCampaignS.CWMission05 as CWMission05Script).TryToFixQuest()
+	Stop()
 	return
 endif
 if CWCampaignS.CWMission06.IsRunning()
 	(CWCampaignS.CWMission06 as CWMission06Script).TryToFixQuest()
+	Stop()
 	return
 endif
 if CWCampaignS.CWMission08Quest.IsRunning()
 	(CWCampaignS.CWMission08Quest as CWMission08Script).TryToFixQuest()
+	Stop()
 	return
 endif
 if CWCampaignS.CWMission09.IsRunning()
 	(CWCampaignS.CWMission09 as CWMission09Script).TryToFixQuest()
+	Stop()
 	return
 endif
 debug.notification("Nothing to fix....")
@@ -69,57 +73,68 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		debug.notification("Trying to start Whiterun Siege")
 	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
 		Stop()
+		Return
     endif
 	if CWs.WarIsActive == 1 && CWs.CWCampaign.IsRunning() && CWs.CWCampaign.GetStage() == 0
 		debug.notification("Conversation with General did not trigger Campaign to start. Setting CW Stage to 4")
 		CWs.SetStage(4)
 		Stop()
+		Return
 	endif
 	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
 		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.EastmarchFortBattleComplete
 			debug.notification("Trying to start Final Fort Siege")
 			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), false)
 			Stop()
+			Return
 		elseif !CWs.CWSiegeS.IsRunning() && CWS.EastmarchFortBattleComplete
 			debug.notification("Trying to start Final Siege")
 			CWs.CreateMissions(CWs.EastmarchHoldLocation, CWs.Rikke.GetActorReference(), true)
 			Stop()
+			Return
 		endif
 	elseif CWs.PlayerAllegiance == CWs.iSons && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
 		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.HaafingarFortBattleComplete
 			debug.notification("Trying to start Final Siege")
 			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), false)
 			Stop()
+			Return
 		elseif !CWs.CWSiegeS.IsRunning() && CWS.HaafingarFortBattleComplete
 			debug.notification("Trying to start Final Siege")
 			CWs.CreateMissions(CWs.HaafingarHoldLocation, CWs.Galmar.GetActorReference(), true)
 			Stop()
+			Return
 		endif
 	endif
 	if CWCampaignS.CWMission01.IsRunning()
 		debug.notification("Trying to fix CWMission01")
 		(CWCampaignS.CWMission01 as CWMission01Script).TryToFixQuest()
 		Stop()
+		Return
 	endif
 	if CWCampaignS.CWMission02.IsRunning()
 		debug.notification("Trying to fix CWMission02")
 		(CWCampaignS.CWMission02 as CWMission02Script).TryToFixQuest()
 		Stop()
+		Return
 	endif
 	if CWs.CWMission07.IsRunning()
 		debug.notification("Trying to fix CWMission07")
 		(CWs.CWMission07 as CWMission07Script).TryToFixQuest()
 		Stop()
+		Return
 	endif
 	if CWS.CWFortSiegeFort.IsRunning() || cws.CWFortSiegeCapital.IsRunning()
 		debug.notification("Trying to fix CWFortSiegeFort or CWFortSiegeCapital")		
 		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
 		Stop()
+		Return
 	endif
 	if CWs.CWSiegeS.IsRunning()
 		debug.notification("Trying to fix CWSiegeS")	
 		(CWs.CWSiegeS).TryToFixQuest()
 		Stop()
+		Return
 	endif
 	debug.notification("Nothing to fix....")
 	Stop()

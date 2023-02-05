@@ -42,12 +42,14 @@ Float HealthPercentage
 ; Skipped compiler generated GotoState
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
+	CWScript.Log("CWOSABETME3Monitor", " OnLocationChange()") 
 	if !CWs.CWCampaignS.isCWMissionsOrSiegesRunning()
 		GetOwningQuest().Stop()
 	endIf
 EndEvent
 
 Event OnEnterBleedout()
+	CWScript.Log("CWOSABETME3Monitor", " OnEnterBleedout()") 
 	if WerewolfQuest.IsRunning()
 		(WerewolfQuest as playerwerewolfchangescript).ShiftBack()
 	endIf
@@ -55,34 +57,11 @@ Event OnEnterBleedout()
 	game.DisablePlayerControls(true, true, true, true, true, true, true, false, 0)
 	PlayerRef.DamageAv("Health", 99999 as Float)
 	PlayerRef.SetUnconscious(true)
-
-
 	utility.wait(10 as Float)
 	game.enablefasttravel(true)
 	utility.wait(2 as Float)
 	PlayerRef.moveto(WhereweGoinTo, 0.000000, 0.000000, 0.000000, true)
 	utility.wait(2 as Float)
-	if (GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest == cws.CWSiegeS && CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 && !CWS.CWCampaignS.PlayerAllegianceLastStand() ;schofida - siege and capital are both running in final siege. Have capital take care of it
-		if CWPercentPoolRemainingAttacker.GetValueInt() > CWPercentPoolRemainingDefender.GetValueInt()
-			CWS.CWSiegeS.Setstage(50)
-			CWAttackCity.Setstage(50)
-		else
-			CWS.CWSiegeS.Setstage(200)
-		endIf
-	elseIf (GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest == cws.CWFortSiegeCapital && CWS.CWFortSiegeCapital.IsRunning() && CWS.CWFortSiegeCapital.GetStage() < 950
-		if CWPercentPoolRemainingAttacker.GetValueInt() > CWPercentPoolRemainingDefender.GetValueInt()
-			CWS.CWFortSiegeCapital.Setstage(1000)
-		else
-			CWS.CWFortSiegeCapital.Setstage(2000)
-		endIf
-	elseIf (GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest == cws.CWFortSiegeFort && CWS.CWFortSiegeFort.IsRunning() && CWS.CWFortSiegeFort.GetStage() < 950
-		if CWPercentPoolRemainingAttacker.GetValueInt() > CWPercentPoolRemainingDefender.GetValueInt()
-			CWS.CWFortSiegeFort.Setstage(1000)
-		else
-			CWS.CWFortSiegeFort.Setstage(2000)
-		endIf
-	endIf
-	utility.wait(3 as Float)
 	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 	game.DisablePlayerControls(true, true, false, false, false, true, true, false, 0)
 	PlayerRef.SetUnconscious(false)
@@ -96,6 +75,7 @@ Event OnEnterBleedout()
 endEvent
 
 function OnInit()
+	CWScript.Log("CWOSABETME3Monitor", " OnInit()") 
 	if !CWs.CWCampaignS.isCWMissionsOrSiegesRunning() || !FigureItOut()
 		GetOwningQuest().Stop()
 		return
@@ -103,6 +83,7 @@ function OnInit()
 endFunction
 
 bool function FigureItOut()
+	CWScript.Log("CWOSABETME3Monitor", " FigureItOut()") 
 	if CWS.PlayerAllegiance == CWS.iImperials
 		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
 			WhereweGoinTo = CWs.MilitaryCampWinterholdImperialMapMarker

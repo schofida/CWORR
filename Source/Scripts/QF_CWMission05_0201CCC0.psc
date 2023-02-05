@@ -25,7 +25,6 @@ function Fragment_10()
 	kmyQuest.FailAllObjectives()
 	kmyQuest.FlagFieldCOWithMissionResultFaction(5, true)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
-	self.stop()
 endFunction
 
 function Fragment_0()
@@ -38,7 +37,6 @@ function Fragment_0()
 	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 	kmyQuest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), false)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
-	self.stop()
 
 endFunction
 
@@ -53,6 +51,12 @@ function Fragment_5()
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
 	debug.traceConditional("CWMission05 stage 20", kmyquest.CWs.debugon.value)
+	Location currentHold = kmyQuest.CWs.GetMyCurrentHoldLocation(Alias_EnemyFieldCO.GetActorReference())
+	int aliasAllegiance = kmyQuest.CWs.GetActorAllgeiance(Alias_EnemyFieldCO.GetActorReference())
+	Actor FieldCOCamp = kmyQuest.CWs.GetAliasCampFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
+	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef()
+		kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+	endif
 endfunction
 
 function Fragment_4()
@@ -64,8 +68,7 @@ function Fragment_4()
 	;Just in case
 	Alias_EnemyFieldCO.TryToKill()
 	
-	kmyQuest.SetObjectiveCompleted(10, true)
-	kmyQuest.SetObjectiveDisplayed(100, true)
+	SetStage(200)
 endFunction
 
 ; Skipped compiler generated GotoState
@@ -104,6 +107,7 @@ function fragment_2()
 	Quest __temp = self as Quest
 	cwmission05script kmyQuest = __temp as cwmission05script
 	debug.traceConditional("CWMission05 stage 255", kmyquest.CWs.debugon.value)
+	kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 	Location currentHold = kmyQuest.CWs.GetMyCurrentHoldLocation(Alias_EnemyFieldCO.GetActorReference())
 	int aliasAllegiance = kmyQuest.CWs.GetActorAllgeiance(Alias_EnemyFieldCO.GetActorReference())
 	Actor FieldCOHQ = kmyQuest.CWs.GetAliasHQFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()

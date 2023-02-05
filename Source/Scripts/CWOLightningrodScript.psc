@@ -48,7 +48,9 @@ endFunction
 
 function OnEffectFinish(actor AkTarget, actor AkCaster)
 
-	ActivatorRef.Delete()
+	if ActivatorRef
+		ActivatorRef.Delete()
+	endif
 	self.UnregisterForUpdate()
 endFunction
 

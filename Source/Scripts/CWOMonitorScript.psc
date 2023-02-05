@@ -143,8 +143,32 @@ State WaitingToFinishWar
 			unregisterforupdate()
 			GetOwningQuest().Stop()
 		else
-			CWScript.log("CWScript", "WaitingToFinishWar, ...still waiting")
-			registerforsingleupdate(30)	
+			bool InCampLocation  = false
+			bool FieldCOInCampLocation  = false
+			Location CurrentHold
+			Actor FieldCO = CWs.GetRikkeOrGalmar(CWs.PlayerAllegiance)
+			bool SiegeIsRunning = StringUtil.GetLength(CWs.CWCampaignS.isCWSiegesRunning()) > 0
+			if !SiegeIsRunning && CWs.PlayerAllegiance == CWs.iImperials
+				InCampLocation = GetActorRef().IsInLocation(CWs.MilitaryCampEastmarchImperialLocation)
+				FieldCOInCampLocation = FieldCO.IsInLocation(CWs.MilitaryCampEastmarchImperialLocation)
+				CurrentHold = CwS.EastmarchHoldLocation
+			elseif !SiegeIsRunning
+				InCampLocation = GetActorRef().IsInLocation(CWs.MilitaryCampHaafingarSonsLocation)
+				FieldCOInCampLocation = FieldCO.IsInLocation(CWs.MilitaryCampHaafingarSonsLocation)
+				CurrentHold = CWs.HaafingarHoldLocation
+			endif
+			if !SiegeIsRunning && InCampLocation && !FieldCOInCampLocation
+				CWScript.log("CWScript", "WaitingToFinishWar, CO is not in Camp for some reason. Get em over there.")
+				CWs.MoveRikkeGalmarToCampIfNeeded()
+				registerforsingleupdate(5)
+			elseif !SiegeIsRunning && InCampLocation && !FieldCOInCampLocation
+				CWScript.log("CWScript", "WaitingToFinishWar, CO is in Camp but mission had not started. Starting mission.")
+				CWs.CreateMissions(CurrentHold, FieldCo)
+				registerforsingleupdate(30)
+			else
+				CWScript.log("CWScript", "WaitingToFinishWar, ...still waiting")
+				registerforsingleupdate(30)	
+			endif
 		endif
 	EndEvent
 
@@ -168,7 +192,7 @@ State WaitingForCampaignToFinish
 		DoPlayerLoadGameStuff()
 	endfunction
 	Event OnUpdate()
-		Actor player = Game.GetPlayer()
+		Actor player = GetActorRef()
 		if cws.CWCampaign.IsRunning() == False
 			GoToState("WaitingToStartNewCampaign")
 
@@ -178,6 +202,10 @@ State WaitingForCampaignToFinish
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
 			CWs.CWCampaignS.StartMissions()
 			registerforsingleupdate(10)
+		Elseif CWs.CWAttacker.GetValueInt() == CWs.playerAllegiance && Cws.CwCampaignS.FieldHQ.GetLocation() != none && player.IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation()) && CWs.FieldCO.GetActorRef() != none && !CWs.FieldCO.GetActorRef().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())
+			CWScript.log("CWScript", "WaitingForCampaignToFinish, CO is not in Camp for some reason. Get em over there.")
+			CWs.CWCampaignS.MoveRikkeGalmarToCampIfNeeded()
+			registerforsingleupdate(5)
 		Else
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, waiting for CWCampaign quest to stop.")
 			registerforsingleupdate(30)
@@ -275,6 +303,8 @@ function DoPlayerLoadGameStuff()
 	Utility.Wait(10)
 	actor player = Game.GetPlayer()
 	(CWS as CWScript).debugOn.setValue(1)
+	CWs.TutorialMissionComplete = 1
+	CWs.debugAllowNonAdjacentHolds = 1
 	if CWOVersion.GetValueInt() < 302
 		player.RemoveFromFaction(CWs.CWSonsFactionNPC)
 		player.RemoveFromFaction(CWs.CWImperialFactionNPC)
@@ -331,6 +361,14 @@ function DoPlayerLoadGameStuff()
 		CWAttackCityQuest = Game.GetForm(0x0004F8BF) as Quest
 		CWS.CWCampaignS.CWAttackCity = CWAttackCityQuest
 		CWOVersion.SetValueInt(10005)
+	endif
+	if CWOVersion.GetValueInt() < 10006
+		CWs.debugAllowNonAdjacentHolds = 1
+		if CWs.CWCampaign.IsRunning()
+			CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.UlfricRef)
+			CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.GeneralTulliusRef)
+		endif
+		CWOVersion.SetValueInt(10006)
 	endif
 	registerforsingleupdate(30)
 endfunction

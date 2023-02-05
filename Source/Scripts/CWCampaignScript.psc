@@ -410,9 +410,6 @@ Event OnInit()
 	CWs = CW as CWScript
 
 	CWScript.Log("CWCampaignScript", " OnInit() setting default property values.", 0, True, True)
-	
-	;CWO - No Tutorial Mission
-	CWs.TutorialMissionComplete = 1
 
 	AcceptDays = 5
 	MissionDays = 2
@@ -488,8 +485,6 @@ Function ResetCampaign()
 	;Re-intialize CWO stuff
 	SpanishInquisitionCompleted = false
 	CWMission01Or02Done = false
-	CWMission06Done = false
-	CWMission08Done = false
 	CWFortSiegeFortDone = false
 
 EndFunction
@@ -1571,6 +1566,10 @@ function ForceFieldHQAliases()
 	int iImperials = CWs.iImperials
 	int iSons = CWs.iSons
 	
+	debug.notification("ForceFieldHQAliases()")
+
+	debug.notification("ownerContestedHold: " + ownerContestedHold)
+	debug.notification("playerAllegiance: " + playerAllegiance)
 	
 	If PlayerAllegiance == ownerContestedHold
 		FieldHQ.ForceLocationTo(CapitalHQ.GetLocation())
@@ -2056,15 +2055,24 @@ bool function isCWMissionsOrSiegesRunning()
 		ret = "CWMission08Quest"
 	elseif CWMission09.IsRunning()
 		ret = "CWMission09"
-	elseif CWs.CWFortSiegeFort.IsRunning()
+	endif
+	if StringUtil.GetLength(ret) == 0
+		ret = isCWSiegesRunning()
+	endif
+	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
+	return StringUtil.GetLength(ret) > 0
+endFunction
+
+string function isCWSiegesRunning()
+	string ret = ""
+	if CWs.CWFortSiegeFort.IsRunning()
 		ret = "CWFortSiegeFort"
 	elseif (CWs.CWFortSiegeCapital as CWFortSiegeScript).GetMinorCityQuestStillRunning()
 		ret = "CWFortSiegeCapital"
 	elseif (CWSiege as CWSiegeScript).GetQuestStillRunning()
 		ret = "CWSiege"
 	endif
-	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
-	return StringUtil.GetLength(ret) > 0
+	return ret
 endFunction
 
 function ResolveCivilWarOffscreen()

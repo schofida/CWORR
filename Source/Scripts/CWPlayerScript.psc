@@ -46,7 +46,7 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 		LocToCheck = ShutDownQuestWhenPlayerLeavesThisLocationAlias.GetLocation()
 
 		if OwningQuest.GetStage() >= StageAfterWhichShutDownQuestWhenPlayerLeaves && Game.GetPlayer().IsInLocation(LocToCheck) == False
-; 			CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling Stop() on owning quest because player left the location (" + LocToCheck + ") after stage " + StageAfterWhichShutDownQuestWhenPlayerLeaves)
+ 			CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling Stop() on owning quest because player left the location (" + LocToCheck + ") after stage " + StageAfterWhichShutDownQuestWhenPlayerLeaves)
 
 			OwningQuest.stop()
 		
@@ -65,7 +65,7 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerLeaves) == False 
 			;CWO - Add Stage condition
 			if OwningQuest.GetStage() >= StageAfterWhichSetStageWhenPlayerLeaves && (!LocToCheck || Game.GetPlayer().IsInLocation(LocToCheck) == false) && (!LocToCheck2 || Game.GetPlayer().IsInLocation(LocToCheck2) == false)
-; 				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerLeaves +  ") on owning quest because player left location " + LocToCheck)
+				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerLeaves +  ") on owning quest because player left location " + LocToCheck)
 
 				OwningQuest.setStage(StageToSetWhenPlayerLeaves)
 			
@@ -84,7 +84,7 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 		if OwningQuest.GetStageDone(StageToSetWhenPlayerArrives) == False 
 			;CWO - Add Stage condition
 			if OwningQuest.GetStage() >= StageAfterWhichSetStageWhenPlayerArrives && ((LocToCheck && Game.GetPlayer().IsInLocation(LocToCheck)) || (LocToCheck2 && Game.GetPlayer().IsInLocation(LocToCheck2)))
-; 				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerArrives +  ") on owning quest because player arrived at either location " + LocToCheck + " or the other optional location" + LocToCheck2)
+ 				CWScript.Log("CWPlayerScript", self + "OnLocationChange() calling setStage(" + StageToSetWhenPlayerArrives +  ") on owning quest because player arrived at either location " + LocToCheck + " or the other optional location" + LocToCheck2)
 
 				OwningQuest.setStage(StageToSetWhenPlayerArrives)
 			

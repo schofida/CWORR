@@ -140,6 +140,7 @@ cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWMission01QuestFragment", self + "Stage 0" )
+SiegeFinished = false
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 ((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
 
@@ -191,7 +192,6 @@ Utility.Wait(1)
 
 kmyQuest.SetEnemyPools()
 
-((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_ReservationMarker.GetReference(), Alias_Garrison.GetLocation())
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -235,6 +235,9 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
+RegisterForUpdate(1)		;Needed for checking if the player has left the battle
+((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_ReservationMarker.GetReference(), Alias_Garrison.GetLocation())
+
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -259,6 +262,7 @@ kmyQuest.MUSCombatCivilWar.Add()
 
 kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 
 ;<TurnOnAliases>------------------
 kmyQuest.TurnOnEnemyAliases()
@@ -294,8 +298,6 @@ CWScript.Log("CWMission01QuestFragment", self + "Stage 51" )
 
 kmyquest.CWs.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
-
-((kmyquest as quest) as CWSiegePollPlayerLocation).PlayerHasBeenToLocationOfBattle = true
 
 kmyQuest.FriendlyShouldAttack = 0
 Alias_Ally1.TryToEvaluatePackage()
@@ -333,14 +335,16 @@ Quest __temp = self as Quest
 CWMission01Script kmyQuest = __temp as CWMission01Script
 ;END AUTOCAST
 ;BEGIN CODE
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
 ;Successfully complete quest
 CWScript.Log("CWMission01QuestFragment", self + "Stage 200" )
 
 kmyQuest.MUSCombatCivilWar.Remove()
 
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
-
-int WinningFaction = kmyQuest.CwS.playerAllegiance
 
 if PlayerIsAttacking
     kmyQuest.AttackersHaveWon = true
@@ -357,22 +361,14 @@ kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFort
 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 
-while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
-	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
-    utility.wait(5)
-endwhile
-
-if PlayerIsAttacking
-    kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
-    if WinningFaction == kmyQuest.CWs.iImperials
-        Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
-    Else
-        Alias_CWGarrisonEnableMarkerSons.TryToEnableNoWait()
-    endif
-endif
 kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
+while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
+    CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
+   utility.wait(5)
+endwhile
 stop()
 ;END CODE
 EndFunction
@@ -385,12 +381,14 @@ Quest __temp = self as Quest
 CWMission01Script kmyQuest = __temp as CWMission01Script
 ;END AUTOCAST
 ;BEGIN CODE
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
 ;Fail quest
 CWScript.Log("CWMission01QuestFragment", self + "Stage 205" )
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
 kmyQuest.MUSCombatCivilWar.Remove()
-
-int WinningFaction = kmyQuest.CwS.getOppositeFactionInt(kmyQuest.CwS.playerAllegiance)
 
 if PlayerIsAttacking
     kmyQuest.DefendersHaveWon = true
@@ -404,26 +402,16 @@ endif
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithPotentialMissionFactions(1, true)
 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
-
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-
-while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
- 	CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
-    utility.wait(5)
-endwhile
-
-if !PlayerIsAttacking
-    kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
-    if WinningFaction == kmyQuest.CWs.iImperials
-        Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
-    Else
-        Alias_CWGarrisonEnableMarkerSons.TryToEnableNoWait()
-    endif
-endif
+kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
-stop()  ;if unsuccessful, stop quest... quest is also stopped in CWMission04PrisonerScript if successful and he unloads
+while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
+    CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
+   utility.wait(5)
+endwhile
+stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -439,6 +427,10 @@ CWMission01Script kmyQuest = __temp as CWMission01Script
 ;NOTE: campaign should be advanced prior to this quest stage
 CWScript.Log("CWMission01QuestFragment", self + "Stage 255" )
 
+;delete created references
+;*** TO DO: When we have arrays, CreateMissionAliasedActor should put all created references to an array, then a new funciton should delete ALL of them
+kmyQuest.DisableAllAliases()
+
 kmyQuest.CWS.StopCWCitizensFlee()
 kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
 ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
@@ -451,17 +443,48 @@ kmyquest.CWStateAttackStarted.SetValue(0)
 kmyQuest.CWStateAttackerOutOfReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
-Alias_CWGarrisonEnableMarkerImperial.TryToDisable()
-Alias_CWGarrisonEnableMarkerSons.TryToDisable()
 ; ; debug.traceConditional("CWMission04 stage 255: turning on complex WI interactions", kmyquest.CWs.debugon.value)
 kmyquest.ToggleOffComplexWIInteractions(Alias_Garrison)
 kmyquest.CWs.UnregisterEventHappening(Alias_Garrison.GetLocation())
 
-;delete created references
-;*** TO DO: When we have arrays, CreateMissionAliasedActor should put all created references to an array, then a new funciton should delete ALL of them
-kmyQuest.DisableAllAliases()
+Alias_CWGarrisonEnableMarkerImperial.TryToDisable()
+Alias_CWGarrisonEnableMarkerSons.TryToDisable()
+
+bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
+int WinningFaction = 0 
+if (PlayerIsAttacking && kmyQuest.AttackersHaveWon) || (!PlayerIsAttacking && kmyQuest.DefendersHaveWon)
+    WinningFaction = kmyQuest.CWs.playerAllegiance
+else
+    WinningFaction = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)
+endif
+
+kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
+
+if WinningFaction == kmyQuest.CWs.iImperials
+    Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
+Else
+    Alias_CWGarrisonEnableMarkerSons.TryToEnableNoWait()
+endif
+
+kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier1)
+kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier2)
+kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier3)
+kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier4)
+kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier1)
+kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier2)
+kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier3)
+kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier4)
+kmyQuest.DeleteAliasWhenAble(Alias_Ally1)
+kmyQuest.DeleteAliasWhenAble(Alias_Ally2)
+kmyQuest.DeleteAliasWhenAble(Alias_Ally3)
+kmyQuest.DeleteAliasWhenAble(Alias_Ally4)
+kmyQuest.DeleteAliasWhenAble(Alias_Enemy1)
+kmyQuest.DeleteAliasWhenAble(Alias_Enemy2)
+kmyQuest.DeleteAliasWhenAble(Alias_Enemy3)
+kmyQuest.DeleteAliasWhenAble(Alias_Enemy4)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
+bool SiegeFinished = false

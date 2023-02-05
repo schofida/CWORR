@@ -14,10 +14,6 @@ LeveledItem Property CWORank3RewardSons Auto
 LeveledItem Property CWORank4RewardSons Auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListSons auto
 LeveledItem Property CWOFinaleFactionLeaderSwordListImperial auto
-ObjectReference property CW5SpawnAttackerRiften1 Auto
-ObjectReference property CW5SpawnAttackerRiften2 Auto
-ObjectReference property CW5SpawnAttackerRiften3 Auto
-ObjectReference property CW5SpawnAttackerRiften4 Auto
 ReferenceAlias Property PlayerAlias Auto
 
 Event OnInit()
@@ -38,16 +34,22 @@ Event OnInit()
 	CwS.CWRank4RewardSons = CWORank4RewardSons
 	;schofida - reset spawners that were given a bad 'Location Ref Type' in vanilla.
 	;will hopefully fix Riften battle if Riften exterior was already loaded into Palyer's game
-	CW5SpawnAttackerRiften1.Reset()
-	CW5SpawnAttackerRiften2.Reset()
-	CW5SpawnAttackerRiften3.Reset()
-	CW5SpawnAttackerRiften4.Reset()
+	
+	;CWO - No Tutorial Mission
+	CWs.TutorialMissionComplete = 1
+	CWs.debugAllowNonAdjacentHolds = 1
 
-	CWS.CWContestedHold.SetValueInt(4)
-	cws.ContestedHold = 4
-	CWS.CWAttacker.SetValueInt(2)
-	CWs.CWDefender.SetValueInt(1)
+	if !CWs.WhiterunSiegeFinished
+		CWS.CWContestedHold.SetValueInt(4)
+		cws.ContestedHold = 4
+		CWS.CWAttacker.SetValueInt(2)
+		CWs.CWDefender.SetValueInt(1)
+	else
+		CWs.CWDebugForceAttacker.Value = cws.PlayerAllegiance
+	endif
 	CWS.CWCampaignS.CWDebugSkipPurchase.SetValueInt(1)
+	CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.UlfricRef)
+	CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.GeneralTulliusRef)
 	;That's it for now...
     Debug.Notification("CWO version " + CWOVersion.GetValueInt() + " initialized :)")
 endevent

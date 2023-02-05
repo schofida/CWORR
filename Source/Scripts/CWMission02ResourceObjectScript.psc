@@ -59,7 +59,11 @@ Event OnHit(ObjectReference akAggressor, Form akWeapon, Projectile akProjectile,
 	
 	;if player hits me and i'm the primary object, consider me "discovered"
 	
-	if akAggressor == Game.GetPlayer()	;and the player has hit me
+	if akAggressor == Game.GetPlayer()	;and the player has hit 
+		if GetOwningQuest().GetStageDone(20) == False
+	; 			CWScript.Log("CWMission02ResourceObjectScript", self + " OnUpdate(): PlayerDistance to" + Self + " < DiscoverDistance, advancing quest")
+			GetOwningQuest().SetStage(20)
+		EndIf
 		CWMission02Script CWMission02 = GetOwningQuest() as CWMission02Script
 		CWMission02.CWs.GetFaction(CWMission02.CWs.getOppositeFactionInt(CWMission02.CWs.PlayerAllegiance), false).SendAssaultAlarm()
 	EndIf

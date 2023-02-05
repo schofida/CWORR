@@ -1346,6 +1346,14 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 ;DO NOT MAKE THIS A STARTUP STAGE!!!
 SiegeFinished = false
+
+;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
+CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
+kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
+
+if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege != 1
+	debug.notification("Siege is starting. Please wait until done before talking to Officer")
+endif
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
 ((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
@@ -1358,9 +1366,6 @@ if !kmyquest.cws.CWSiegeS.IsRunning()
 	kmyquest.CWs.CWCampaignS.StartDefense(Alias_Fort.GetLocation())
 endif
 
-;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
-CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
-kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
 ;IT IS CALLED IN THE CWFortSiegeMissionScript's OnStoryScript() event... essentially making it a startup stage.
 ;I do this because I need to set a variable based on what keyword started it, BEFORE i run this stage so I can test that variable
 
@@ -1454,7 +1459,11 @@ else
 	CWScript.Log("CWFortSiege", "Stage 0: Calling SetPoolAttacker/DefenderOnCWReinforcementScript()")
 
    	kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
+	if kmyQuest.WasThisAnAttack
+		debug.notification("Siege done setting up. You can talk to CO now")
+	endif
 endif
+
 ;END CODE
 EndFunction
 ;END FRAGMENT

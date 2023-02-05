@@ -130,6 +130,15 @@ function DisableAllAliases()
  	CWScript.Log("CWSiegeScript", self + "calling DisableAllAliases()")
 	DisableImperialSonsAliases()
 
+	tryToDisableAlias(Enemy1)
+	tryToDisableAlias(Enemy2)
+	tryToDisableAlias(Enemy3)
+	tryToDisableAlias(Enemy4)
+
+	tryToDisableAlias(Ally1)
+	tryToDisableAlias(Ally2)
+	tryToDisableAlias(Ally3)
+	tryToDisableAlias(Ally4)
 EndFunction
 
 Function SetUpAliases(Location garrisonLocation)
@@ -281,3 +290,14 @@ function EnableMapMarkerAlias(ReferenceAlias MapMarkerAlias)
 	EndIf
 
 EndFunction
+
+function DeleteAliasWhenAble(ReferenceAlias akAlias)
+	if akAlias == none
+		return
+	endif
+	objectreference ref = akAlias.GetRef()
+	if ref == none
+		return
+	endif
+	ref.DeleteWhenAble()
+endfunction

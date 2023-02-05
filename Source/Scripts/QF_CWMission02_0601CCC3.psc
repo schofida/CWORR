@@ -107,12 +107,21 @@ Function Fragment_11()
     ;NOTE: campaign should be advanced prior to this quest stage
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 255")
     
+    kmyQuest.CWCampaignS.StartDisguiseQuest()
+
     ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
     
     kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
-    
-    UnregisterForUpdate()
+
+    Alias_CWFortSiegeSons1.TryToDisable()
+    Alias_CWFortSiegeSons2.TryToDisable()
+    Alias_CWFortSiegeSons3.TryToDisable()
+    Alias_CWFortSiegeSons4.TryToDisable()
+    Alias_CWFortSiegeImperial1.TryToDisable()
+    Alias_CWFortSiegeImperial2.TryToDisable()
+    Alias_CWFortSiegeImperial3.TryToDisable()
+    Alias_CWFortSiegeImperial4.TryToDisable()
     
     if SmelterFix != None
         SmelterFix.DisableNoWait()
@@ -133,13 +142,22 @@ Function Fragment_11()
     endif
     
     kmyquest.ToggleOnComplexWIInteractions(Alias_ResourceLocation)
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
+
+    Alias_CWFortSiegeSons1.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeSons2.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeSons3.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeSons4.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeImperial1.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeImperial2.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeImperial3.GetRef().DeleteWhenAble()
+    Alias_CWFortSiegeImperial4.GetRef().DeleteWhenAble()
+;END CODE
+EndFunction
+;END FRAGMENT
     
-    ;BEGIN FRAGMENT Fragment_9
-    Function Fragment_9()
-    ;BEGIN AUTOCAST TYPE CWMission02Script
+;BEGIN FRAGMENT Fragment_9
+Function Fragment_9()
+;BEGIN AUTOCAST TYPE CWMission02Script
     Quest __temp = self as Quest
     CWMission02Script kmyQuest = __temp as CWMission02Script
     ;END AUTOCAST
@@ -149,19 +167,17 @@ Function Fragment_11()
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 200")
     
     ;Set in stage 120 but just in case..
-    kmyQuest.CWCampaignS.StartDisguiseQuest()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(2)
+
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
     
     kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
     kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), kmyQuest.CwS.playerAllegiance)
     
-    kmyQuest.FlagFieldCOWithPotentialMissionFactions(2, True)
-    
     kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
-    stop()
     ;END CODE
     EndFunction
     ;END FRAGMENT
@@ -177,29 +193,26 @@ Function Fragment_11()
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 100")
     kmyquest.objectiveCompleted = 1
     
-    setObjectiveCompleted(10)
-    setObjectiveDisplayed(20)
+    SetStage(200)
     
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
-    
-    ;BEGIN FRAGMENT Fragment_10
-    Function Fragment_10()
-    ;BEGIN AUTOCAST TYPE CWMission02Script
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_10
+Function Fragment_10()
+;BEGIN AUTOCAST TYPE CWMission02Script
     Quest __temp = self as Quest
     CWMission02Script kmyQuest = __temp as CWMission02Script
     ;END AUTOCAST
     ;BEGIN CODE
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 205")
-    
-    kmyQuest.CWCampaignS.StartDisguiseQuest()
+
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(2, MissionFailure = true)
     
     kmyQuest.CWCampaignS.AdvanceCampaignPhase()
-    
-    stop()
     ;END CODE
     EndFunction
     ;END FRAGMENT
@@ -219,14 +232,14 @@ Function Fragment_11()
     kmyquest.ResetCommonMissionProperties()
     
     kmyquest.ToggleOffComplexWIInteractions(Alias_ResourceLocation)
-    
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
-    
-    ;BEGIN FRAGMENT Fragment_1
-    Function Fragment_1()
-    ;BEGIN AUTOCAST TYPE CWMission02Script
+
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
+;BEGIN AUTOCAST TYPE CWMission02Script
     Quest __temp = self as Quest
     CWMission02Script kmyQuest = __temp as CWMission02Script
     ;END AUTOCAST
@@ -236,6 +249,8 @@ Function Fragment_11()
     kmyquest.FlagFieldCOWithActiveQuestFaction(2)
     
     kmyQuest.SetObjectiveDisplayed(10)
+
+    kmyQuest.FlagFieldCOWithPotentialMissionFactions(2, True)
     
     if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMine)
         OldSmelter = Alias_ResourceObject1.GetReference()
@@ -287,43 +302,27 @@ Function Fragment_11()
 
     
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
-    
-    ;BEGIN FRAGMENT Fragment_2
-    Function Fragment_2()
-    ;BEGIN AUTOCAST TYPE CWMission02Script
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWMission02Script
     Quest __temp = self as Quest
     CWMission02Script kmyQuest = __temp as CWMission02Script
     ;END AUTOCAST
     ;BEGIN CODE
-    ;Fail quest
     
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
     
     kmyQuest.CWCampaignS.StopDisguiseQuest()
 
+
+;END CODE
+EndFunction
+;END FRAGMENT
     
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
-    
-    ;BEGIN FRAGMENT Fragment_2
-    Function Fragment_12()
-    ;BEGIN AUTOCAST TYPE CWMission02Script
-    Quest __temp = self as Quest
-    CWMission02Script kmyQuest = __temp as CWMission02Script
-    ;END AUTOCAST
-    ;BEGIN CODE
-    
-    CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 120")
-    
-    kmyQuest.CWCampaignS.StartDisguiseQuest()
-    
-    ;END CODE
-    EndFunction
-    ;END FRAGMENT
         
     ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
     

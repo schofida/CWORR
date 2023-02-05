@@ -548,7 +548,7 @@ function OnPageReset(String a_page)
 		optionsReinforcementsBaseCapital = self.AddSlideroption("Capital Reinforcements Base", CWOCapitalReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
-		optionsReinforcementsBaseGarrison = self.AddSlideroption("Garrison Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
+		optionsReinforcementsBaseGarrison = self.AddSlideroption("Garrison Reinforcements Base", CWOGarrisonReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsPlayerAttackerScaleMult = self.AddSlideroption("Player Attacking Scale Mult", CWOPlayerAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
@@ -735,6 +735,10 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("CWO restores siege objectives outside of Solitude (instead of just waltzing up to the front door). This can cause issues if you install mods that drastically changes Solitude's exterior. Select to revert to vanilla.")
 	elseif a_option == optionsDisableFaint
 		self.SetInfoText("During a skirmish or siege, if your hitpoints drop to 0, you will instead 'take a knee' and will be whisked off to a nearby military camp allowing the battle to resolve offscreen. Check to disable this so you can just die and reload.")
+	elseif a_option == optionsCourierHoursMin
+		self.SetInfoText("The minimum number of hours to wait before getting delivered a message by the courier for the defense quest. Keep in mind that the courier kind of follows its own muse so this is not going to be exact.")
+	elseif a_option == optionsCourierHoursMin
+		self.SetInfoText("The maximum number of hours to wait before getting delivered a message by the courier for the defense quest. Keep in mind that the courier kind of follows its own muse so this is not going to be exact.")
 	endIf
 endFunction
 

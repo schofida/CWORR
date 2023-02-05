@@ -87,8 +87,15 @@ Function Fragment_10()
     
     debug.traceConditional("CWMission09 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
-
-
+    if Alias_DocumentsImperial.GetRef()
+        Alias_DocumentsImperial.GetRef().DeleteWhenAble()
+    endif
+    if Alias_DocumentsSons.GetRef()   
+        Alias_DocumentsSons.GetRef().DeleteWhenAble()
+    endif
+    if Alias_Document.GetRef()
+        Alias_Document.GetRef().DeleteWhenAble()
+    endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

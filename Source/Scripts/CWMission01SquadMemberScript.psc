@@ -1,4 +1,4 @@
-Scriptname CWMission01SquadMemberScript extends CWGarrisonObserverSoldierScript  
+Scriptname CWMission01SquadMemberScript extends ReferenceAlias  
 
 Event OnLoad()
 	CWScript.Log("CWMission01SquadMemberScript", self + "Onload()" )
