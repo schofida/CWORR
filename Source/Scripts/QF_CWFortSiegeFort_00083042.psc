@@ -1083,7 +1083,10 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 
 CWScript.Log("CWFortSiege", "Stage 1000: Defender wiped out, determined success or failure")
 ;CWO Battle is over stop essential player quest and start disguise quest
-kmyQuest.CWs.CWCampaignS.StopMonitors()
+Location FortLocation = Alias_Fort.GetLocation()
+if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+	kmyQuest.CWs.CWCampaignS.StopMonitors()
+endif
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Stop battle sounds and music
@@ -1155,7 +1158,10 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 
 CWScript.Log("CWFortSiege", "Stage 2000: Attacker wiped out, determined success or failure")
 ;CWO Battle is over stop essential player quest and start disguise quest
-kmyQuest.CWs.CWCampaignS.StopMonitors()
+Location FortLocation = Alias_Fort.GetLocation()
+if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+	kmyQuest.CWs.CWCampaignS.StopMonitors()
+endif
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Stop battle sounds and music
@@ -1361,12 +1367,20 @@ elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFor
 
 endif
 
-;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
-((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
-((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
-;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
-((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 101
+location FortLocation = Alias_Fort.GetLocation()
 
+if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+
+	;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+	;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
+	((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 101
+else
+	;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+endif
 ;<From Extended CWSiegeScript>
 CWScript.Log("CWFortSiege", "Stage 0: Registering aliases")
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
@@ -1556,7 +1570,10 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		setObjectiveDisplayed(200)
 	endif
 	;CWO Player is now up to enemy troops start player essential quest and stop disguise quest
-	kmyQuest.CWs.CWCampaignS.StartMonitors(self as Quest)
+	Location FortLocation = Alias_Fort.GetLocation()
+	if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+		kmyQuest.CWs.CWCampaignS.StartMonitors(self as Quest)
+	endif
 	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 endif

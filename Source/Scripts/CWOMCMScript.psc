@@ -118,10 +118,10 @@ function SetReinforcements()
 	SetReinforcementsBusy = True
 	Utility.Wait(5)
 	if CWFortsiegeFort.IsRunning() && CWFortsiegeFort.GetStage() < 50
-		CWs.CWCampaignS.SetReinforcementsFort(CWFortsiegeFort as CWsiegeScript)
+		CWs.CWCampaignS.SetReinforcementsFort(CWFortsiegeFort)
 	endif
 	if CWFortSiegeCapital.IsRunning() && CWFortSiegeCapital.GetStage() < 50 && (CWFortSiegeCapital as cwfortsiegemissionscript).SpecialNonFortSiege == 0
-		CWs.CWCampaignS.SetReinforcementsMinorCity(CWFortSiegeCapital as CWsiegeScript)
+		CWs.CWCampaignS.SetReinforcementsMinorCity(CWFortSiegeCapital)
 	endif
 	if CWSiege.IsRunning() && CWSiege.GetStage() < 10
         CWs.CWCampaignS.SetReinforcementsMajorCity(CWSiege as CWSiegeScript)

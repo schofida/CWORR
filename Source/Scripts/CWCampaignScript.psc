@@ -1830,8 +1830,13 @@ endfunction
 function SetReinforcementsFort(Quest kmyQuest)
 	CWScript.Log("CWCampaignScript", " SetReinforcementsFort()") 
 	;schofida - Set pools for whiterun, windhelm, rift, markath and solitude
+	Location FortLocation = (kmyQuest as CWFortSiegeScript).Fort.GetLocation()
 	if (kmyQuest as CWFortSiegeScript).IsPlayerAttacking()
-		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
+		if FortLocation == CWs.FortAmolLocation || FortLocation == CWs.FortHraggstadLocation 
+			(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(999, 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)			
+		else
+			(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
+		endif
 		(kmyQuest as CWFortSiegeScript).SetPoolDefenderOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOEnemyDefenderScaleMult.GetValue(), false)
 	else
 		(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOEnemyAttackerScaleMult.GetValue(), false)
