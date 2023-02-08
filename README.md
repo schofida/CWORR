@@ -30,3 +30,7 @@ This mod attempts to bring new life into the frankly bullshit Civil War questlin
 
 ## After the Civil War
 * The rest of the game should remain as though you completed the Civil War questline normally (but it was hopefully a lot more fun :) )
+
+# Additional Features
+* A compatibility section has been added to the MCM. Since several locations are now used as battlegrounds for the Civil War, heavily modded lists can see some issues. (particularly if you made significant changes to the exterior of Solitude and Windhelm)
+* A leveled patch has been added. The original CWO was unleveled so I added a patch to level gate some of the higher level NPC's that could be added to a siege. This patch only affects 2 leveled lists and is ESL'ified so it won't take a spot in your load order. If you want to stick with the original craziness, simply untick the CWOLeveled.esp file.
