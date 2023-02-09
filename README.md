@@ -1,4 +1,7 @@
 # Civil War Overhaul - Redux
+
+For Skyrim Special/Anniversay Edition
+
 This mod attempts to bring new life into the frankly bullshit Civil War questline. This mod is based off of the original Civil War Overhaul written by apollodown. I have gone and rebuilt the mod from the ground up, hopefully adding a lot of support and stability in addition to many enhancements to deliver an improved experience but also sticking to the vision of the original mod. Here are the changes:
 
 ## Before the Civil War questline
