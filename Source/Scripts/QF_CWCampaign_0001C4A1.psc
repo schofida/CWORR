@@ -362,6 +362,7 @@ kmyQuest.UpdateCWCampaignObjAliases()
 kmyQuest.PurchaseGarrisons()
 kmyQuest.ShuffleGarrisons()
 kmyQuest.ForceFieldHQAliases()
+kmyQuest.MoveRikkeGalmarToCampIfNeeded(CheckIfUnloaded = true)
 if kmyQuest.PlayerAllegianceLastStand()
     kmyQuest.AdvanceCampaignPhase(kmyQuest.ResolutionPhase)
 Else

@@ -69,7 +69,7 @@ Event OnCellAttach()
 			;In theory, this should only be hit in the last player attacking stage
 			CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
 		endif
-	elseif myEnableMarker.IsDisabled() == False
+	elseif myEnableMarker.IsDisabled() == False && !(myLinkedFieldCO as Actor).isDead()
 		myLinkedFieldCO.enable()
 	elseif myEnableMarker.IsDisabled() == True
 		myLinkedFieldCO.disable()

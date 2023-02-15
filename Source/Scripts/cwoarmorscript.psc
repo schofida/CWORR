@@ -96,7 +96,12 @@ event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 endEvent
 ; Reddit BugFix #8
 event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	EquipmentUpdate()
+	if (CWFinale as cwfinalescript).CWs.CWCampaignS.EnemyCamp.GetLocation() == akNewLoc
+		debug.notification("Your disguise does not work at the enemy camp.")
+		ReturnEnemyFaction().SetEnemy(PlayerFaction, false, false)
+	else
+		EquipmentUpdate()
+	endif
 	if CWFinale.IsRunning() && CWOStillABetterEndingGlobal.GetValueInt() < 1
 		CWODisguiseGlobal.SetValueInt(0)
 		self.GetOwningQuest().Stop()

@@ -1,25 +1,35 @@
 Scriptname qf_cwmission06_06055233 extends Quest Hidden 
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 14
+;NEXT FRAGMENT INDEX 15
+
+;BEGIN ALIAS PROPERTY DissaffectedSoldier03
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DissaffectedSoldier03 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CWCampEnemy
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_CWCampEnemy Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier08
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier08 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier07
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier07 Auto
+;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DissaffectedSoldier01
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_DissaffectedSoldier01 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY LoyalistSoldier06
+;BEGIN ALIAS PROPERTY LoyalistSoldier02
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier06 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CampaignStartMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampaignStartMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCO Auto
+ReferenceAlias Property Alias_LoyalistSoldier02 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier04
@@ -27,29 +37,9 @@ ReferenceAlias Property Alias_FieldCO Auto
 ReferenceAlias Property Alias_LoyalistSoldier04 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY MissionNumberRef
+;BEGIN ALIAS PROPERTY FieldCO
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MissionNumberRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier09
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier09 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DissaffectedSoldier02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DissaffectedSoldier02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier03 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DissaffectedSoldier03
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DissaffectedSoldier03 Auto
+ReferenceAlias Property Alias_FieldCO Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Hold
@@ -57,19 +47,34 @@ ReferenceAlias Property Alias_DissaffectedSoldier03 Auto
 LocationAlias Property Alias_Hold Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Player
+;BEGIN ALIAS PROPERTY MissionNumberRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
+ReferenceAlias Property Alias_MissionNumberRef Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY LoyalistSoldier05
+;BEGIN ALIAS PROPERTY DissaffectedSoldier02
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier05 Auto
+ReferenceAlias Property Alias_DissaffectedSoldier02 Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY CWCampEnemy
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_CWCampEnemy Auto
+;BEGIN ALIAS PROPERTY LoyalistSoldier11
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier11 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampaignStartMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampaignStartMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier06
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier06 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier09
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier09 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier01
@@ -82,29 +87,9 @@ ReferenceAlias Property Alias_LoyalistSoldier01 Auto
 ReferenceAlias Property Alias_CWCampEnemyMapMarker Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY LoyalistSoldier07
+;BEGIN ALIAS PROPERTY LoyalistSoldier03
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier07 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier08
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier08 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier02
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier02 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier10
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier10 Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY LoyalistSoldier11
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_LoyalistSoldier11 Auto
+ReferenceAlias Property Alias_LoyalistSoldier03 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY LoyalistSoldier12
@@ -112,9 +97,24 @@ ReferenceAlias Property Alias_LoyalistSoldier11 Auto
 ReferenceAlias Property Alias_LoyalistSoldier12 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY LoyalistSoldier10
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier10 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY LoyalistSoldier05
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_LoyalistSoldier05 Auto
+;END ALIAS PROPERTY
+
 ;BEGIN ALIAS PROPERTY CWCampEnemyLocationCenterMarker
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_CWCampEnemyLocationCenterMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN FRAGMENT Fragment_10
@@ -129,13 +129,28 @@ debug.traceConditional("CWMission06 stage 205 (Misson Failed)", kmyquest.CWs.deb
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
+kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
+
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
     utility.wait(5)
 endwhile
 
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-
 stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_14
+Function Fragment_14()
+;BEGIN AUTOCAST TYPE cwmission06script
+Quest __temp = self as Quest
+cwmission06script kmyQuest = __temp as cwmission06script
+;END AUTOCAST
+;BEGIN CODE
+ReferenceAlias EnemyFieldCO = kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance))
+if !EnemyFieldCO.GetActorRef().IsDead()
+    EnemyFieldCO.TryToDisable()
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -223,8 +238,9 @@ Alias_DissaffectedSoldier01.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier02.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 Alias_DissaffectedSoldier03.TryToAddToFaction(kmyQuest.CWPlayerAlly)
 
-if !kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
-    kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToDisable()
+ReferenceAlias EnemyFieldCO = kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance))
+if !EnemyFieldCO.GetActorRef().IsDead()
+    EnemyFieldCO.TryToDisable()
 endif
 
 kmyQuest.TurncoatLeader = Alias_DissaffectedSoldier01
@@ -283,10 +299,8 @@ SetObjectiveDisplayed(20)
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
-    kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
     kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
 Else
-    kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
     kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
 endif
 
@@ -302,11 +316,6 @@ Alias_LoyalistSoldier09.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
 Alias_LoyalistSoldier10.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
 Alias_LoyalistSoldier11.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
 Alias_LoyalistSoldier12.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-
-Alias_DissaffectedSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_DissaffectedSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_DissaffectedSoldier03.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-
 
 kmyQuest.KillLoyalists = 1
 Alias_LoyalistSoldier01.TryToEvaluatePackage()
@@ -353,12 +362,19 @@ Alias_LoyalistSoldier07.TryToReset()
 Alias_LoyalistSoldier08.TryToReset()
 Alias_LoyalistSoldier09.TryToReset()
 
+if kmyQuest.objectiveCompleted == 1
+    kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier01)
+    kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
+    kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
+endif
+
 Alias_DissaffectedSoldier01.TryToDisable()
 Alias_DissaffectedSoldier02.TryToDisable()
 Alias_DissaffectedSoldier03.TryToDisable()
 
-if !kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).GetActorRef().IsDead()
-    kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)).TryToEnable()
+ReferenceAlias EnemyFieldCO = kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance))
+if !EnemyFieldCO.GetActorRef().IsDead()
+    EnemyFieldCO.TryToEnable()
 endif
 ;END CODE
 EndFunction
@@ -378,9 +394,7 @@ kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFort
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier01)
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier02)
-kmyQuest.processPostRevoltFactions(Alias_DissaffectedSoldier03)
+kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 if Alias_DissaffectedSoldier01.GetActorReference() != none && !Alias_DissaffectedSoldier01.GetActorReference().IsDead()
     Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
@@ -436,8 +450,6 @@ endif
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
     utility.wait(5)
 endwhile
-
-kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 stop()
 ;END CODE

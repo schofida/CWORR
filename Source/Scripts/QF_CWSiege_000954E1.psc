@@ -3063,8 +3063,14 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Misc Set up")	;*** WRITE TO L
 
 if CommanderNewPositionX != 0.0 && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
 	Alias_AttackerImperial1.GetActorRef().SetPosition(CommanderNewPositionX, CommanderNewPositionY, CommanderNewPositionZ)
+	Alias_AttackerImperial1.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
+	Alias_AttackerImperial2.GetActorRef().SetPosition(FieldCONewPositionX, FieldCONewPositionY, FieldCONewPositionZ)
+	Alias_AttackerImperial2.GetActorRef().SetAngle(FieldCONewAngleX, FieldCONewAngleY, FieldCONewAngleZ)
 elseif CommanderNewPositionX != 0.0
 	Alias_AttackerSons1.GetActorRef().SetPosition(CommanderNewPositionX, CommanderNewPositionY, CommanderNewPositionZ)
+	Alias_AttackerSons1.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
+	Alias_AttackerSons2.GetActorRef().SetPosition(FieldCONewPositionX, FieldCONewPositionY, FieldCONewPositionZ)
+	Alias_AttackerSons2.GetActorRef().SetAngle(FieldCONewAngleX, FieldCONewAngleY, FieldCONewAngleZ)
 endif
 
 ;**** !!! IF YOU PUT SOMETHING HERE, CONSIDER IF IT NEEDS TO BE UNDONE IN THE SHUT DOWN PHASE 255 !!! ****
@@ -3764,6 +3770,15 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 0")	;*** WRITE TO LOG
 CommanderNewPositionX = 0.0
 CommanderNewPositionY = 0.0
 CommanderNewPositionZ = 0.0
+CommanderNewAngleX = 0.0
+CommanderNewAngleY = 0.0
+CommanderNewAngleZ = 0.0
+FieldCONewPositionX = 0.0
+FieldCONewPositionY = 0.0
+FieldCONewPositionZ = 0.0
+FieldCONewAngleX = 0.0
+FieldCONewAngleY = 0.0
+FieldCONewAngleZ = 0.0
 
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_City.GetLocation())
 
@@ -3821,9 +3836,18 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 		OldGeneral = Alias_AttackerImperial1.GetActorRef()
 		if OldGeneral != none
 			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius
-			CommanderNewPositionX = Alias_AttackerImperial2.GetRef().GetPositionX()
-			CommanderNewPositionY = Alias_AttackerImperial2.GetRef().GetPositionY()
-			CommanderNewPositionZ = Alias_AttackerImperial2.GetRef().GetPositionZ()
+			CommanderNewPositionX = Alias_AttackerImperial1.GetRef().GetPositionX()
+			CommanderNewPositionY = Alias_AttackerImperial1.GetRef().GetPositionY()
+			CommanderNewPositionZ = Alias_AttackerImperial1.GetRef().GetPositionZ()
+			CommanderNewAngleX = Alias_AttackerImperial1.GetRef().GetAngleX()
+			CommanderNewAngleY = Alias_AttackerImperial1.GetRef().GetAngleY()
+			CommanderNewAngleZ = Alias_AttackerImperial1.GetRef().GetAngleZ()
+			FieldCONewPositionX = Alias_AttackerImperial2.GetRef().GetPositionX()
+			FieldCONewPositionY = Alias_AttackerImperial2.GetRef().GetPositionY()
+			FieldCONewPositionZ = Alias_AttackerImperial2.GetRef().GetPositionZ()
+			FieldCONewAngleX = Alias_AttackerImperial2.GetRef().GetAngleX()
+			FieldCONewAngleY = Alias_AttackerImperial2.GetRef().GetAngleY()
+			FieldCONewAngleZ = Alias_AttackerImperial2.GetRef().GetAngleZ()
 			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
 		endif
@@ -3831,9 +3855,18 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 		OldGeneral = Alias_AttackerSons1.GetActorRef()
 		if OldGeneral != none
 			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
-			CommanderNewPositionX = Alias_AttackerSons2.GetRef().GetPositionX()
-			CommanderNewPositionY = Alias_AttackerSons2.GetRef().GetPositionY()
-			CommanderNewPositionZ = Alias_AttackerSons2.GetRef().GetPositionZ()
+			CommanderNewPositionX = Alias_AttackerSons1.GetRef().GetPositionX()
+			CommanderNewPositionY = Alias_AttackerSons1.GetRef().GetPositionY()
+			CommanderNewPositionZ = Alias_AttackerSons1.GetRef().GetPositionZ()
+			CommanderNewAngleX = Alias_AttackerSons1.GetRef().GetAngleX()
+			CommanderNewAngleY = Alias_AttackerSons1.GetRef().GetAngleY()
+			CommanderNewAngleZ = Alias_AttackerSons1.GetRef().GetAngleZ()
+			FieldCONewPositionX = Alias_AttackerSons2.GetRef().GetPositionX()
+			FieldCONewPositionY = Alias_AttackerSons2.GetRef().GetPositionY()
+			FieldCONewPositionZ = Alias_AttackerSons2.GetRef().GetPositionZ()
+			FieldCONewAngleX = Alias_AttackerSons2.GetRef().GetAngleX()
+			FieldCONewAngleY = Alias_AttackerSons2.GetRef().GetAngleY()
+			FieldCONewAngleZ = Alias_AttackerSons2.GetRef().GetAngleZ()
 			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 			Alias_AttackerSons2.ForceRefTo(OldGeneral)
 		endif
@@ -4572,3 +4605,12 @@ bool LydiaHasBeenDisabled = false
 Float CommanderNewPositionX = 0.0
 Float CommanderNewPositionY = 0.0
 Float CommanderNewPositionZ = 0.0
+Float CommanderNewAngleX = 0.0
+Float CommanderNewAngleY = 0.0
+Float CommanderNewAngleZ = 0.0
+Float FieldCONewPositionX = 0.0
+Float FieldCONewPositionY = 0.0
+Float FieldCONewPositionZ = 0.0
+Float FieldCONewAngleX = 0.0
+Float FieldCONewAngleY = 0.0
+Float FieldCONewAngleZ = 0.0

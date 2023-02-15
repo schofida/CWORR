@@ -440,9 +440,9 @@ Event OnInit()
 	endif
 
 	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
-		CWFortSiegeFortDone = 1
+		CWFortSiegeFortDone = true
 	else
-		CWFortSiegeFortDone = 0
+		CWFortSiegeFortDone = false
 	endif
 
 	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
@@ -1577,10 +1577,12 @@ function ForceFieldHQAliases()
 		;make the enemy camp as the EnemyFieldHQ
 		If playerAllegiance == iImperials 	;enemy is Sons
 			EnemyFieldHQ.ForceLocationTo(CampSons.GetLocation())
-		
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampSons.GetLocation())
 		Elseif playerAllegiance == iSons ;enemy is Imperials
 			EnemyFieldHQ.ForceLocationTo(CampImperial.GetLocation())
-		
+			;CWO - Useful for CWMission06
+			EnemyCamp.ForceLocationTo(CampImperial.GetLocation())
 		Else	;unexpected allegiance
  			CWScript.Log("CWCampaignScript", "ERROR: ForceFieldHQAliases() expected playerAllegiance to be 1 or 2, instead found " + playerAllegiance, 2)
 		
