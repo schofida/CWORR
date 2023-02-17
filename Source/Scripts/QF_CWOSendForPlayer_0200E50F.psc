@@ -57,11 +57,6 @@ endFunction
 
 function Fragment_7()
 	; Quest stage 20 (I guess this is a failsafe if the defense siege starts, called from capital/minor capital siege scripts)
-	Actor PlayerRef = Alias_Player.GetActorRef()
-	PlayerRef.RemoveItem(Alias_Note.GetReference().GetBaseObject())
-	PlayerRef.RemoveItem(Alias_NoteMinor.GetReference().GetBaseObject())
-	PlayerRef.RemoveItem(Alias_NoteFinalImperial.GetReference().GetBaseObject())
-	PlayerRef.RemoveItem(Alias_NoteFinalSons.GetReference().GetBaseObject())
 endFunction
 
 function Fragment_0()
