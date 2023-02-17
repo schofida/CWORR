@@ -5,7 +5,6 @@ For Skyrim Special/Anniversay Edition
 This mod attempts to bring new life into the frankly bullshit Civil War questline. This mod is based off of the original Civil War Overhaul written by apollodown. I have gone and rebuilt the mod from the ground up, hopefully adding a lot of support and stability in addition to many enhancements to deliver an improved experience but also sticking to the vision of the original mod. Here are the changes:
 
 ## Before the Civil War questline
-* City guards will wear armor that will reflect the hold's alliance.
 * Cities and military camps will have a small chance of containing spies. Spies will seek out an assassination target before vanishing into the night (or day...It doesn't matter they have a potion of invisiblity). Before the Civil War since you have not picked a side, you won't be selected as a target. But once you do... (Configurable in the MCM)
 * Added mages to the footsoldier/archer troops all around Skyrim
 
