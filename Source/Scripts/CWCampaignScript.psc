@@ -1566,11 +1566,6 @@ function ForceFieldHQAliases()
 	int iImperials = CWs.iImperials
 	int iSons = CWs.iSons
 	
-	debug.notification("ForceFieldHQAliases()")
-
-	debug.notification("ownerContestedHold: " + ownerContestedHold)
-	debug.notification("playerAllegiance: " + playerAllegiance)
-	
 	If PlayerAllegiance == ownerContestedHold
 		FieldHQ.ForceLocationTo(CapitalHQ.GetLocation())
 		
