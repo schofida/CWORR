@@ -447,7 +447,9 @@ if Alias_DissaffectedSoldier03.GetActorReference() != none && !Alias_Dissaffecte
     SonsOnly = false)
 endif
 
-while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
+Actor PlayerRef = Alias_Player.GetActorRef()
+
+while PlayerRef.IsInLocation(Alias_CWCampEnemy.GetLocation())
     utility.wait(5)
 endwhile
 

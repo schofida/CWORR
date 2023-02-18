@@ -2,134 +2,14 @@
 ;NEXT FRAGMENT INDEX 5
 Scriptname QF_CWMission05_0201CCC0 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY EnemyFieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_EnemyFieldCO Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialReachCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialReachCamp Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY FieldCOSonsFalkreathCamp
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_FieldCOSonsFalkreathCamp Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY FieldCOImperialHjaalmarchHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialHjaalmarchHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialWinterholdHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialWinterholdHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsWhiterunCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsWhiterunCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialWinterholdCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialWinterholdCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCO
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCO Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsWinterholdHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsWinterholdHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Hold
+;BEGIN ALIAS PROPERTY EnemyFieldHQ
 ;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_Hold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsReachCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsReachCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsPaleCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsPaleCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialWhiterunCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialWhiterunCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonRiftHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonRiftHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsHjaalmarchCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsHjaalmarchCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialReachHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialReachHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY MissionNumberRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_MissionNumberRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsWinterholdCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsWinterholdCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonPaleHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonPaleHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY CampaignStartMarker
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_CampaignStartMarker Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonWhiterunHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonWhiterunHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialRiftHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialRiftHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonsRiftCamp
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonsRiftCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialPaleHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialPaleHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonReachHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonReachHQ Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOImperialFalkreathHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialFalkreathHQ Auto
+LocationAlias Property Alias_EnemyFieldHQ Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY FieldCOSonHjaalmarchHQ
@@ -142,24 +22,19 @@ ReferenceAlias Property Alias_FieldCOSonHjaalmarchHQ Auto
 ReferenceAlias Property Alias_FieldCOImperialRiftCamp Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Player
+;BEGIN ALIAS PROPERTY FieldCOSonsHjaalmarchCamp
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
+ReferenceAlias Property Alias_FieldCOSonsHjaalmarchCamp Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY FieldCOImperiaWhiterunHQ
+;BEGIN ALIAS PROPERTY FieldCOImperialPaleHQ
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperiaWhiterunHQ Auto
+ReferenceAlias Property Alias_FieldCOImperialPaleHQ Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY FieldCOImperialFalkreathCamp
+;BEGIN ALIAS PROPERTY FieldCOSonsRiftCamp
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOImperialFalkreathCamp Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY FieldCOSonFalkreathHQ
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_FieldCOSonFalkreathHQ Auto
+ReferenceAlias Property Alias_FieldCOSonsRiftCamp Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY FieldCOImperialHjaalmarchCamp
@@ -167,68 +42,154 @@ ReferenceAlias Property Alias_FieldCOSonFalkreathHQ Auto
 ReferenceAlias Property Alias_FieldCOImperialHjaalmarchCamp Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY FieldCOSonFalkreathHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonFalkreathHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY CampaignStartMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_CampaignStartMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonsWinterholdCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonsWinterholdCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialFalkreathHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialFalkreathHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCamp
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_EnemyCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialWinterholdHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialWinterholdHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperiaWhiterunHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperiaWhiterunHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialReachHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialReachHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialHjaalmarchHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialHjaalmarchHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialFalkreathCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialFalkreathCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialWhiterunCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialWhiterunCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonsReachCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonsReachCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonsWinterholdHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonsWinterholdHQ Auto
+;END ALIAS PROPERTY
+
 ;BEGIN ALIAS PROPERTY FieldCOImperialPaleCamp
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_FieldCOImperialPaleCamp Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_4
-Function Fragment_4()
-;BEGIN AUTOCAST TYPE cwmission05script
-Quest __temp = self as Quest
-cwmission05script kmyQuest = __temp as cwmission05script
-;END AUTOCAST
-;BEGIN CODE
-debug.traceConditional("CWMission05 stage 100", kmyquest.CWs.debugon.value)
-	kmyQuest.objectiveCompleted = 1
-	;Just in case
-	Alias_EnemyFieldCO.TryToKill()
-	
-	SetStage(200)
-;END CODE
-EndFunction
-;END FRAGMENT
+;BEGIN ALIAS PROPERTY MissionNumberRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MissionNumberRef Auto
+;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_6
-Function Fragment_6()
-;BEGIN AUTOCAST TYPE cwmission05script
-Quest __temp = self as Quest
-cwmission05script kmyQuest = __temp as cwmission05script
-;END AUTOCAST
-;BEGIN CODE
-debug.traceConditional("CWMission05 stage 30", kmyquest.CWs.debugon.value)
-;END CODE
-EndFunction
-;END FRAGMENT
+;BEGIN ALIAS PROPERTY FieldCOImperialReachCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialReachCamp Auto
+;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN AUTOCAST TYPE cwmission05script
-Quest __temp = self as Quest
-cwmission05script kmyQuest = __temp as cwmission05script
-;END AUTOCAST
-;BEGIN CODE
-debug.traceConditional("CWMission05 stage 200", kmyquest.CWs.debugon.value)
-	kmyQuest.CompleteAllObjectives()
-	kmyQuest.FlagFieldCOWithMissionResultFaction(5, false)
-	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
-	kmyQuest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), false)
-	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
-;END CODE
-EndFunction
-;END FRAGMENT
+;BEGIN ALIAS PROPERTY Hold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_Hold Auto
+;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_10
-Function Fragment_10()
+;BEGIN ALIAS PROPERTY FieldCOSonRiftHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonRiftHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialWinterholdCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialWinterholdCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonsWhiterunCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonsWhiterunCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonsPaleCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonsPaleCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOImperialRiftHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOImperialRiftHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonReachHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonReachHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonWhiterunHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonWhiterunHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCO
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCO Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCOSonPaleHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCOSonPaleHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyFieldCO
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyFieldCO Auto
+;END ALIAS PROPERTY
+
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
 ;BEGIN AUTOCAST TYPE cwmission05script
 Quest __temp = self as Quest
 cwmission05script kmyQuest = __temp as cwmission05script
 ;END AUTOCAST
 ;BEGIN CODE
-debug.traceConditional("CWMission05 stage 201", kmyquest.CWs.debugon.value)
-	kmyQuest.FailAllObjectives()
-	kmyQuest.FlagFieldCOWithMissionResultFaction(5, true)
-	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+debug.traceConditional("CWMission05 stage 20", kmyquest.CWs.debugon.value)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -281,6 +242,41 @@ debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE cwmission05script
+Quest __temp = self as Quest
+cwmission05script kmyQuest = __temp as cwmission05script
+;END AUTOCAST
+;BEGIN CODE
+debug.traceConditional("CWMission05 stage 200", kmyquest.CWs.debugon.value)
+	kmyQuest.CompleteAllObjectives()
+	kmyQuest.FlagFieldCOWithMissionResultFaction(5, false)
+	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
+	kmyQuest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), false)
+	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+
+	Location currentHold = Alias_Hold.GetLocation()
+	int aliasAllegiance = kmyQuest.CWs.GetActorAllgeiance(Alias_EnemyFieldCO.GetActorReference())
+	Actor FieldCOHQ = kmyQuest.CWs.GetAliasHQFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
+	Actor FieldCOCamp = kmyQuest.CWs.GetAliasCampFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
+
+	Actor PlayerRef = Alias_Player.GetActorRef()
+
+	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef()
+		while PlayerRef.IsInLocation(Alias_EnemyCamp.GetLocation())
+			utility.wait(5)
+		endwhile
+	else
+		while PlayerRef.IsInLocation(Alias_EnemyFieldHQ.GetLocation())
+			utility.wait(5)
+		endwhile	
+	endif
+	Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN AUTOCAST TYPE cwmission05script
@@ -295,14 +291,64 @@ debug.traceConditional("CWMission05 stage 0", kmyquest.CWs.debugon.value)
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
+;BEGIN FRAGMENT Fragment_6
+Function Fragment_6()
 ;BEGIN AUTOCAST TYPE cwmission05script
 Quest __temp = self as Quest
 cwmission05script kmyQuest = __temp as cwmission05script
 ;END AUTOCAST
 ;BEGIN CODE
-debug.traceConditional("CWMission05 stage 20", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission05 stage 30", kmyquest.CWs.debugon.value)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_10
+Function Fragment_10()
+;BEGIN AUTOCAST TYPE cwmission05script
+Quest __temp = self as Quest
+cwmission05script kmyQuest = __temp as cwmission05script
+;END AUTOCAST
+;BEGIN CODE
+debug.traceConditional("CWMission05 stage 201", kmyquest.CWs.debugon.value)
+	kmyQuest.FailAllObjectives()
+	kmyQuest.FlagFieldCOWithMissionResultFaction(5, true)
+	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+
+	Location currentHold = Alias_Hold.GetLocation()
+	int aliasAllegiance = kmyQuest.CWs.GetActorAllgeiance(Alias_EnemyFieldCO.GetActorReference())
+	Actor FieldCOHQ = kmyQuest.CWs.GetAliasHQFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
+	Actor FieldCOCamp = kmyQuest.CWs.GetAliasCampFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
+
+	Actor PlayerRef = Alias_Player.GetActorRef()
+
+	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef()
+		while PlayerRef.IsInLocation(Alias_EnemyCamp.GetLocation())
+			utility.wait(5)
+		endwhile
+	else
+		while PlayerRef.IsInLocation(Alias_EnemyFieldHQ.GetLocation())
+			utility.wait(5)
+		endwhile	
+	endif
+	Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_4
+Function Fragment_4()
+;BEGIN AUTOCAST TYPE cwmission05script
+Quest __temp = self as Quest
+cwmission05script kmyQuest = __temp as cwmission05script
+;END AUTOCAST
+;BEGIN CODE
+debug.traceConditional("CWMission05 stage 100", kmyquest.CWs.debugon.value)
+	kmyQuest.objectiveCompleted = 1
+	;Just in case
+	Alias_EnemyFieldCO.TryToKill()
+	
+	SetStage(200)
 ;END CODE
 EndFunction
 ;END FRAGMENT
