@@ -1722,6 +1722,26 @@ ReferenceAlias Property Alias_WhiterunCaravanActor02 Auto
 ReferenceAlias Property Alias_WhiterunCompanionsTrigger02 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY MarkarthCaravanMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MarkarthCaravanMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY RiftenCaravanMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_RiftenCaravanMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SolitudeDisableNearbyGarrisonEnableMarker3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker3 Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_21
 Function Fragment_21()
 ;BEGIN AUTOCAST TYPE CWSiegeScript
@@ -3255,7 +3275,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	(Alias_MarkarthDisableNearbyGarrisonEnableMarker2.GetReference()).Disable()
 	(Alias_MarkarthDisableNearbyGarrisonEnableMarker3.GetReference()).Disable()
 	(Alias_MarkarthDisableNearbyGarrisonEnableMarker4.GetReference()).Disable()
-
+	Alias_MarkarthCaravanMarker.GetReference().Disable()
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
 
@@ -3282,7 +3302,7 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	(Alias_RiftenDisableNearbyGarrisonEnableMarker1.GetReference()).Disable()
 	(Alias_RiftenDisableNearbyGarrisonEnableMarker2.GetReference()).Disable()
-
+	Alias_RiftenCaravanMarker.GetReference().Disable()
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
@@ -3359,6 +3379,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 	(Alias_SolitudeDisableNearbyGarrisonEnableMarker1.GetReference()).Disable()
 	(Alias_SolitudeDisableNearbyGarrisonEnableMarker2.GetReference()).Disable()
+	(Alias_SolitudeDisableNearbyGarrisonEnableMarker3.GetReference()).Disable()
+	(Alias_SolitudeDisableNearbyGarrisonEnableMarker4.GetReference()).Disable()
 	Alias_SolitudeCaravanMarker.GetReference().Disable()
 
 
