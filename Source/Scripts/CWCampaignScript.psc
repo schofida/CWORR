@@ -276,6 +276,7 @@ GlobalVariable Property CWOPlayerDefenderScaleMult Auto
 GlobalVariable Property CWOEnemyAttackerScaleMult Auto
 GlobalVariable Property CWOEnemyDefenderScaleMult Auto
 GlobalVariable Property CWOCampaignPhaseMax Auto
+GlobalVariable Property CWODisableNotifications Auto
 ;New Packages for CO's
 Package Property CWGalmarAtCampWhiterun Auto
 Package Property CWRikkeAtCampWhiterun Auto
@@ -314,21 +315,6 @@ Actor Property CWBattleTullius Auto
 Actor Property CWBattleUlfric Auto
 ;Lydia
 Actor Property HousecarlWhiterunRef Auto
-;Enable markers for the military camps. Used in CWMission05
-objectreference property CWGarrisonEnableMarkerSonsCampRift auto
-objectreference property CWGarrisonEnableMarkerSonsCampWinterhold auto
-objectreference property CWGarrisonEnableMarkerSonsCampPale auto
-objectreference property CWGarrisonEnableMarkerSonsCampFalkreath auto
-objectreference property CWGarrisonEnableMarkerSonsCampWhiterun auto
-objectreference property CWGarrisonEnableMarkerSonsCampHjaalmarch auto
-objectreference property CWGarrisonEnableMarkerSonsCampReach auto
-objectreference property CWGarrisonEnableMarkerImperialCampRift auto
-objectreference property CWGarrisonEnableMarkerImperialCampWinterhold auto
-objectreference property CWGarrisonEnableMarkerImperialCampPale auto
-objectreference property CWGarrisonEnableMarkerImperialCampFalkreath auto
-objectreference property CWGarrisonEnableMarkerImperialCampWhiterun auto
-objectreference property CWGarrisonEnableMarkerImperialCampHjaalmarch auto
-objectreference property CWGarrisonEnableMarkerImperialCampReach auto
 ;Object references for Sieges
 ObjectReference Property CWSiegeBarricadeWindhelmA Auto
 ObjectReference Property CWSiegeBarricadeWindhelmB Auto
@@ -1764,7 +1750,9 @@ Function StartMissions()
 	If CWCampaignPhase.value < ResolutionPhase		;then start normal missions
 	
  		CWScript.Log("CWCampaignScript", " StartMissions() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
-		
+		if CWODisableNotifications.GetValueInt() == 0	
+			debug.Notification("CW Campaign Missions starting. Please wait...")
+		endif
 		bool cwMission1Started = CWMissionStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
 		utility.wait(2.0)
 		bool cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
@@ -1775,7 +1763,9 @@ Function StartMissions()
 		elseif !cwMission1Started || !cwMission2Started
 			AdvanceCampaignPhase()
 		endif
-		
+		if CWODisableNotifications.GetValueInt() == 0	
+			debug.Notification("CW Campaign Missions have been started.")
+		endif
 		;we used to offer three missiosn, now we are only offering two at a time
 		;CWMissionStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission3Ref)
 		
@@ -2442,54 +2432,51 @@ function failCWObj(Location HoldWhoseObjectiveToFail)
 	
 EndFunction
 
+bool function IsEnemyCampEnabled()
+	int iAllegiance = CWs.getOppositeFactionInt(Cws.PlayerAllegiance)
+	if iAllegiance == CWs.iSons
+		return CampEnableSons.GetReference().IsEnabled()
+	else
+		return CampEnableImperial.GetReference().IsEnabled()
+	endif
+endfunction
+
 function enableCamp()
 	Location HoldLoc = Hold.GetLocation()
 	int iAllegiance = CWs.getOppositeFactionInt(Cws.PlayerAllegiance)
 
 	if iAllegiance == CWs.iSons
+		CampEnableSons.GetReference().Enable()
 		if HoldLoc == CWs.RiftHoldLocation
-			CWGarrisonEnableMarkerSonsCampRift.Enable(false)
 			CWs.MilitaryCampRiftSonsMapMarker.AddToMap()
 		elseif HoldLoc == CWs.WinterholdHoldLocation
-			CWGarrisonEnableMarkerSonsCampWinterhold.Enable(false)
 			CWs.MilitaryCampWinterholdSonsMapMarker.AddToMap()
 		elseif holdLoc == CWs.PaleHoldLocation
-			CWGarrisonEnableMarkerSonsCampPale.Enable(false)
 			CWs.MilitaryCampPaleSonsMapMarker.AddToMap()
 		elseif holdLoc == CWs.FalkreathHoldLocation
-			CWGarrisonEnableMarkerSonsCampFalkreath.Enable(false)
 			CWs.MilitaryCampFalkreathSonsMapMarker.AddToMap()
 		elseif holdLoc == CWs.WhiterunHoldLocation
-			CWGarrisonEnableMarkerSonsCampWhiterun.Enable(false)
 			CWs.MilitaryCampWhiterunSonsMapMarker.AddToMap()
 		elseif holdLoc == CWs.HjaalmarchHoldLocation
-			CWGarrisonEnableMarkerSonsCampHjaalmarch.Enable(false)
 			CWs.MilitaryCampHjaalmarchSonsMapMarker.AddToMap()
 		elseif holdLoc == CWs.ReachHoldLocation
-			CWGarrisonEnableMarkerSonsCampReach.Enable(false)
 			CWs.MilitaryCampReachSonsMapMarker.AddToMap()
 		Endif
 	Elseif  iAllegiance == CWs.iImperials
+		CampEnableImperial.GetReference().Enable()
 		if holdLoc == CWs.RiftHoldLocation
-			CWGarrisonEnableMarkerImperialCampRift.Enable(false)
 			CWs.MilitaryCampRiftImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.WinterholdHoldLocation
-			CWGarrisonEnableMarkerImperialCampWinterhold.Enable(false)
 			CWs.MilitaryCampWinterholdImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.PaleHoldLocation
-			CWGarrisonEnableMarkerImperialCampPale.Enable(false)
 			CWs.MilitaryCampPaleImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.FalkreathHoldLocation
-			CWGarrisonEnableMarkerImperialCampFalkreath.Enable(false)
 			CWs.MilitaryCampFalkreathImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.WhiterunHoldLocation
-			CWGarrisonEnableMarkerImperialCampWhiterun.Enable(false)
 			CWs.MilitaryCampWhiterunImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.HjaalmarchHoldLocation
-			CWGarrisonEnableMarkerImperialCampHjaalmarch.Enable(false)
 			CWs.MilitaryCampHjaalmarchImperialMapMarker.AddToMap()
 		elseif holdLoc == CWs.ReachHoldLocation
-			CWGarrisonEnableMarkerImperialCampReach.Enable(false)
 			CWs.MilitaryCampReachImperialMapMarker.AddToMap()
 		Endif
 	endif

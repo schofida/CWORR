@@ -1351,7 +1351,7 @@ SiegeFinished = false
 CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
 
-if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege != 1
+if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege != 1 && (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
 	debug.notification("Siege is starting. Please wait until done before talking to Officer")
 endif
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
@@ -1459,7 +1459,7 @@ else
 	CWScript.Log("CWFortSiege", "Stage 0: Calling SetPoolAttacker/DefenderOnCWReinforcementScript()")
 
    	kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
-	if kmyQuest.WasThisAnAttack
+	if kmyQuest.WasThisAnAttack && (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
 		debug.notification("Siege done setting up. You can talk to CO now")
 	endif
 endif
@@ -1475,6 +1475,9 @@ Quest __temp = self as Quest
 CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
+	debug.Notification("Getting CW Siege into position. Pleae wait before fast traveling...")
+endif
 ;CWO Also happening in Stage 0 but double setting here just in case
 if Alias_Hold.GetLocation() == none && kmyQuest.CWs.CWContestedHold.GetValueInt() > 0
 	Alias_Hold.ForceLocationTo(kmyQuest.CWs.getLocationForHold(kmyQuest.CWs.CWContestedHold.GetValueInt()))
@@ -1609,6 +1612,10 @@ endIf
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
+
+if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
+	debug.Notification("Getting CW Siege soldiers are now in position. You may now fast travel.")
+endif
 
 ;END CODE
 EndFunction

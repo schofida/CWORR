@@ -51,6 +51,7 @@ GlobalVariable Property CWODisableFortSiegeFort Auto
 GlobalVariable Property CWODisableWindhelmSiege Auto
 GlobalVariable Property CWODisableSolitudeSiege Auto
 GlobalVariable Property CWODisableFaint Auto
+GlobalVariable Property CWODisableNotifications Auto
 LeveledItem Property LItemArmorCuirassLightSpecial Auto
 LeveledItem Property LItemArmorCuirassHeavySpecial Auto
 LeveledItem Property LItemArmorShieldLightSpecial Auto
@@ -97,6 +98,8 @@ int optionsCWODisableFortSiegeFort
 int optionsCWODisableWindhelmSiege
 int optionsCWODisableSolitudeSiege
 int optionsDisableFaint
+int optionsDisableNotifications
+int optionsPayCrimeFaction
 
 Float _sliderPercent = 100.000
 
@@ -106,6 +109,7 @@ Bool optionsCWOHelpToggle2 = false
 Bool optionsCWOUninstallToggle = false
 bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
+bool optionstogglePayCrimeFaction = false
 
 String[] gameDisguiseList
 String[] holdsList
@@ -312,6 +316,20 @@ function OnOptionSelect(Int a_option)
 			CWODisableFaint.SetValueInt(0)
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
+	elseif a_option == optionsDisableNotifications
+		if CWODisableNotifications.GetValueInt() == 0
+			CWODisableNotifications.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableNotifications.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsPayCrimeFaction
+		if !optionstogglePayCrimeFaction
+			optionstogglePayCrimeFaction = true
+			CWs.CWCampaignS.cwResetCrime()
+			self.SetToggleOptionValue(a_option, true, false)
+		endif
 	endIf
 endFunction
 
@@ -428,6 +446,13 @@ function OnPageReset(String a_page)
 			self.AddtextOption("CWCampaign Quest", "Is On Stage " + CWs.CWCampaign.Getstage() as String, 0)
 			AddtextOption("CWCampaignPhase Is", CWs.CWCampaignS.CWCampaignPhase.GetValueInt(), 0)
 		endIf
+
+	 	if CWs.PlayerAllegiance == CWs.iImperials && CWs.CrimeFactionImperial.GetCrimeGold() > 0
+			AddtextOption("CrimeFactionImperial Bounty Is Is", CWs.CrimeFactionImperial.GetCrimeGold(), 0)
+		elseif CWs.PlayerAllegiance == CWs.iSons && CWs.CrimeFactionSons.GetCrimeGold() > 0
+			AddtextOption("CrimeFactionSons Bounty Is Is", CWs.CrimeFactionSons.GetCrimeGold(), 0)
+		endif
+
 		if CWOArmorDisguise.IsRunning()
 			self.AddtextOption("CWOArmorDisguise", "Is On", 0)
 			if CWODisguiseGlobal.GetValueInt() > 0
@@ -545,6 +570,8 @@ function OnPageReset(String a_page)
 		self.AddtextOption("Eastmarch is owned by the", CWs.FactionName(CWs.GetHoldOwner(8)), 0)
 	elseIf a_page == "CWO Options"
 		self.SetCursorFillMode(self.LEFT_TO_RIGHT)
+		optionsDisableNotifications = self.AddToggleOption("Disable Notifications", CWODisableNotifications.GetValueInt() == 1, 0)
+		optionsPayCrimeFaction = self.AddToggleOption("Pay Faction Crimes", optionstogglePayCrimeFaction, 0)
 		optionsReinforcementsBaseCapital = self.AddSlideroption("Capital Reinforcements Base", CWOCapitalReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
@@ -737,8 +764,12 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("During a skirmish or siege, if your hitpoints drop to 0, you will instead 'take a knee' and will be whisked off to a nearby military camp allowing the battle to resolve offscreen. Check to disable this so you can just die and reload.")
 	elseif a_option == optionsCourierHoursMin
 		self.SetInfoText("The minimum number of hours to wait before getting delivered a message by the courier for the defense quest. Keep in mind that the courier kind of follows its own muse so this is not going to be exact.")
-	elseif a_option == optionsCourierHoursMin
+	elseif a_option == optionsCourierHoursMax
 		self.SetInfoText("The maximum number of hours to wait before getting delivered a message by the courier for the defense quest. Keep in mind that the courier kind of follows its own muse so this is not going to be exact.")
+	elseif a_option == optionsDisableNotifications
+		self.SetInfoText("Toggle helper notifications on or off. Skyrim's scripting engine is slow and terrible and things can get messed up if you teleport to quest markers too fast. These notifications are there during the start of sieges to guide players to let them know when its safe to continue.")	
+	elseif a_option == optionsPayCrimeFaction
+		SetInfoText("If you inadvertantly hit your teammates and incurred a bounty, click here to clear it. Please exit the MCM once clicked.")	
 	endIf
 endFunction
 

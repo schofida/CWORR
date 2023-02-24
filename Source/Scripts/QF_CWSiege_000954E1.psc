@@ -3010,6 +3010,9 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;Player gets quest from quest giver
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 starting")	
 
+if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
+	debug.Notification("Getting CW Siege into position. Pleae wait before fast traveling...")
+endif
 Alias_WhiterunCompanionsTrigger01.GetReference().Disable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Disable()
 
@@ -3532,6 +3535,9 @@ endif
 kmyquest.ToggleMapMarkersAndFastTravelStartBattle(kmyquest.IsAttack())	
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 done")
+if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
+	debug.Notification("Getting CW Siege soldiers are now in position. You may now fast travel.")
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -3762,9 +3768,9 @@ SiegeFinished = False
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsAttack()
-
-Debug.Notification("Siege is getting ready behind the scenes. Please wait before speaking to Officer.")
-
+if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
+	Debug.Notification("Siege is getting ready behind the scenes. Please wait before speaking to Officer.")
+endif
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 0")	;*** WRITE TO LOG
 ;CWO Start Courier Defense Quest
 CommanderNewPositionX = 0.0
@@ -4128,7 +4134,9 @@ if kmyquest.IsAttack() == false
 	kmyquest.CWs.CWPrepareCityStart.SendStoryEvent(Alias_City.GetLocation())
 endif
 
-Debug.Notification("Seige is done setting up. You may now speak to the CO.")
+if (kmyQuest.CWs.CwCampaignS.CWODisableNotifications.GetValueInt() == 0)
+	Debug.Notification("Seige is done setting up. You may now speak to the CO.")
+endif
 
 
 
