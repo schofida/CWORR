@@ -1,0 +1,12 @@
+{
+  "id": "cwoPatcher",
+  "name": "Civil War Overhaul Patcher",
+  "author": "schofida",
+  "version": "1.0.0",
+  "released": "8/16/2020",
+  "updated": "8/16/2020",
+  "description": "Configures soldiers on the battlefield and merges other mods that add Civil War troops.",
+  "requires": ["unifiedPatchingFramework"],
+  "moduleLoader": "UPF",
+  "canHotLoad": true
+}

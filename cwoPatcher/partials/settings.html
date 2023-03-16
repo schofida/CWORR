@@ -1,0 +1,67 @@
+<h2>CWO Settings</h2>
+<div class="tabs-container" tabindex="0" ng-keydown="onKeyDown($event)" style="width: 100%">
+    <div class="content-message" style="width: 98%">
+        <span>The following troop types make up the potential troops during sieges in Civil War Overhaul. Other mods introducing new troops are also available to add. You can adjust their frequency here. Set to 0 remove.
+        </span>
+    </div>
+    <div class="tabs-bar" style="margin-bottom: 0px;" ng-wheel="onWheel($event)">
+        <div class="tab" style="width: 200px; background-color: transparent;" ng-repeat="file in troopConfig">
+            {{file.fileName}}
+        </div>
+    </div>
+    <div class="tabs-bar" ng-wheel="onWheel($event)">
+        <div class="tab" style="width: 200px; padding: 0 0 0 0; border: none; margin: 0px; background-color: transparent;" ng-repeat="file in troopConfig">
+            <div class="tab" style="width: 100px; min-width: 100px; flex: 1; max-width: 100px;" ng-class="{'active' : activeTab === 0 && activeFile === $index}" ng-mousedown="selectTab($index, 0)">
+                Imperials
+            </div>
+            <div class="tab" style="width: 100px; min-width: 100px; flex: 1; max-width: 100px;" ng-class="{'active' : activeTab === 1 && activeFile === $index}" ng-mousedown="selectTab($index, 1)">
+                Stormcloaks
+            </div>
+        </div>
+    </div>
+    <form>
+        <div class="column-wrapper" ng-repeat="file in troopConfig" ng-show="activeFile === $index">
+            <div class="node-columns" style="margin-top: 0px" ng-repeat="(troopKey, troop) in troopConfig[activeFile].troops[activeTab]">
+                <div class="column">
+                    <div style="width: 100%">
+                        <span>{{troop.display}}</span>
+                    </div>
+                    <div style="width: 100%">
+                        <div style="display: inline-block; width: 25%;">
+                            <span>Form ID: {{troop.formID}}</span>
+                        </div>
+                        <div style="display: inline-block; width: 30%;">
+                            Race: {{troop.race}}
+                        </div>
+                        <div style="display: inline-block; width: 20%;">
+                            <span>Count: {{troop.oldCount}} 
+                                <input
+                                    style="width: 40px; margin-top: 8px;"
+                                    type="number"
+                                    min="0"
+                                    max="20"
+                                    ng-model="troop.count"
+                                    placeholder="New Count"
+                                    ng-change="onChange(file.fileName, troopKey, troop.reference, troop.count, troop.level)"
+                                >
+                            </span>
+                        </div>
+                        <div style="display: inline-block; width: 20%;">
+                            <span>Level: {{troop.oldLevel}}
+                                <input
+                                    style="width: 40px; margin-top: 8px;"
+                                    type="number"
+                                    min="1"
+                                    max="20"
+                                    ng-model="troop.level"
+                                    placeholder="New Level"
+                                    ng-change="onChange(file.fileName, troopKey, troop.reference, troop.count, troop.level)"
+                                >
+                            </span>
+                        </div> 
+                    </div>               
+                </div>
+            </div>           
+        </div>
+    </form>
+</div>
