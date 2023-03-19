@@ -128,7 +128,8 @@ Function PlayerEnteredCastle()
 	CWFortSiegeS.DisableAllAliases()
 	
 ; 	CWScript.Log("CWFinaleScript", "PlayerEnteredCastle() calling stop() on CWFortSiege")
-	CWFortSiegeS.stop()	;this doesn't finish shutting down until after the player leaves.
+	((CWFortSiegeS AS Quest) As CWReinforcementControllerScript).StopSpawning()
+	CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()	;this doesn't finish shutting down until after the player leaves.
 	
 	
 EndFunction
