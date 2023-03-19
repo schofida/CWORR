@@ -124,13 +124,83 @@ Quest Property CWCampaign auto
 CWCampaignScript Property CWCampaignS auto Hidden	;set in OnInit()
 CWscript Property CWs auto Hidden	;set in OnInit()
 
+ReferenceAlias[] RespawnSoldierArray
+int RespawnSoldierArray_Front
+int RespawnSoldierArray_Rear
 
+bool function RespawnSoldierArray_IsFull()
+	return RespawnSoldierArray_Rear >= 40 - 1
+EndFunction
+
+bool function RespawnSoldierArray_IsEmpty()
+	return RespawnSoldierArray_Front == -1
+EndFunction
+
+function RespawnSoldierArray_enQueue(ReferenceAlias DeadAlias)
+	while iterating
+		utility.Wait(0.1)
+	endwhile
+	iterating = true
+	if RespawnSoldierArray_IsFull()
+		iterating = false
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_enQueue(" + DeadAlias + ") Queue is FULL!")
+		return
+	endif
+	if RespawnSoldierArray_Front == -1
+		RespawnSoldierArray_Front = 0
+	endif
+	RespawnSoldierArray_Rear = RespawnSoldierArray_Rear +1
+	RespawnSoldierArray[RespawnSoldierArray_Rear] = DeadAlias
+	iterating = false
+	CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_enQueue(" + DeadAlias + ") Added to Queue")
+EndFunction
+
+ReferenceAlias function RespawnSoldierArray_deQueue()
+	while iterating
+		utility.Wait(0.1)
+	endwhile
+	iterating = true
+	if RespawnSoldierArray_IsEmpty()
+		iterating = false
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_deQueue() Queue is Empty!")
+		return none
+	endif
+	ReferenceAlias element = RespawnSoldierArray[RespawnSoldierArray_Front]
+	if RespawnSoldierArray_Front >= RespawnSoldierArray_Rear
+		RespawnSoldierArray_Front = -1
+		RespawnSoldierArray_Rear = -1
+	else
+		RespawnSoldierArray_Front = RespawnSoldierArray_Front +1
+	endif
+	iterating = false
+	CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_deQueue() Removing(" + element + ") from Queue")
+	return element
+EndFunction
+
+function RespawnSoldierArray_display()
+    int i = RespawnSoldierArray_Front
+    if RespawnSoldierArray_IsEmpty()
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_display() Empty Queue")
+    else
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_display() Front Index -> " + RespawnSoldierArray_Front + "")
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_display() Items -> ")
+		while i <= RespawnSoldierArray_Rear
+			CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_display() Item -> " + RespawnSoldierArray[i] + " at Index -> " + i)
+			i = i+1
+		endWhile
+		CWScript.Log("CWReinforcementControllerScript", self + "RespawnSoldierArray_display() Rear Index -> " + RespawnSoldierArray_Rear + "")
+	endif
+EndFunction
 
 Event OnInit()
 
 	CWCampaignS = CWCampaign as CWCampaignScript
 	CWs = CW as CWscript
 	
+	RespawnSoldierArray = new ReferenceAlias[40]
+	RespawnSoldierArray_Front = -1 
+	RespawnSoldierArray_Rear = -1
+	iterating = false
 ; 	CWScript.Log("CWReinforcementControllerScript", self + "OnInit()", 0, true, true)
 		
 EndEvent
@@ -152,15 +222,10 @@ State Respawning
 
 	Function registerDeath(ReferenceAlias DeadAlias)		;called in OnDeath event of the dying actor/ReferenceAlias
 			
+	
+		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and  currently iterating through 'array' respawning, so set flag that means iterate again immediately so we pick up this guy if we've already passed his positionin the array.")
 		
-		if iterating == True
- 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and  currently iterating through 'array' respawning, so set flag that means iterate again immediately so we pick up this guy if we've already passed his positionin the array.")
-			iterateAgain = True
-			
-		Else	
- 			CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'Respawning'] and not currently iterating through 'array' respawning, so doing nothing")
-		EndIf
-		
+		RespawnSoldierArray_enQueue(DeadAlias)
 
 	EndFunction
 
@@ -174,30 +239,23 @@ function StopSpawning()
 EndFunction
 
 function registerDeath(ReferenceAlias DeadAlias)			;called in OnDeath event of the dying actor/ReferenceAlias
+
+	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] gone to state 'Respawning'")
+
 	GoToState("Respawning")	
 
+	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] will now Wait(" + ReinforcementInterval + ") to spawn reinforcements")
 	
-	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] gone to state 'Respawning'")
-	
-	bool done = False
+	RespawnSoldierArray_enQueue(DeadAlias)
 
- 	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] will now Wait(" + ReinforcementInterval + ") to spawn reinforcements")
-	
 	utility.Wait(ReinforcementInterval)
 
  	CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'none'] is done waiting and will now try to respawn Aliass")
 
+		
 	
-	
-	while !done || iterateAgain		;iterateAgain is set in RegisterDeath() function in the "Respawning" state above
-		iterating = True			;see RegisterDeath() function in the "Respawning" state above
-		iterateAgain = False
-		
-		tryToRespawnAliass()
-		
-		done = True
-		
-		iterating = False			;see RegisterDeath() function in the "Respawning" state above
+	while !RespawnSoldierArray_IsEmpty()	;iterateAgain is set in RegisterDeath() function in the "Respawning" state above
+		tryToRespawnAlias(RespawnSoldierArray_Dequeue())
 	endwhile	
 
 	if GetState() != "StopSpawning" ;reminder case sensative
