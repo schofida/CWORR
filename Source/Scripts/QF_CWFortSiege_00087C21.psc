@@ -1241,6 +1241,20 @@ kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAtta
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase5A, Alias_RespawnDefenderPhase5B, Alias_RespawnDefenderPhase5C, Alias_RespawnDefenderPhase5D, Alias_RespawnDefenderPhase5FailSafe)
 kmyquest.CWBattlePhase.SetValue(5)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
+	Actor PlayerRef = Game.GetPlayer()
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender1, Alias_RespawnAttackerPhase5A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender2, Alias_RespawnAttackerPhase5B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender3, Alias_RespawnAttackerPhase5C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender4, Alias_RespawnAttackerPhase5D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender5, Alias_RespawnAttackerPhase5FailSafe, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender6, Alias_RespawnAttackerPhase5A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender7, Alias_RespawnAttackerPhase5B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender8, Alias_RespawnAttackerPhase5C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase5D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase5FailSafe, PlayerRef)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1272,9 +1286,6 @@ if kmyQuest.IsPlayerAttacking()
 Else
 	SetObjectiveFailed(210)	
 endif
-
-;CWO Clear hold crime just like major city sieges
-kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
 
 ;remove them from enemy faction
 ;CWO Account for player attacking or defending
@@ -1435,10 +1446,10 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
 	CWScript.Log("CWFortSiege", "Stage 0: SetInfinitePoolsOnCWReinforcementScript")
 	if kmyquest.CWs.IsPlayerAttacking(Alias_Fort.GetLocation())
 		;schofida - this is the finale. Since these are empty objectives nothing should show... I hope
-		kmyQuest.SetPoolAttackerOnCWReinforcementScript(999, 1.0, 1.0, false)
-		kmyQuest.SetPoolDefenderOnCWReinforcementScript(999, 1.0, 1.0, false)
-		((self as Quest) as cwreinforcementcontrollerscript).PoolRemainingDefenderObjective = 9999
-		((self as Quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 9999
+		((self as Quest) as cwreinforcementcontrollerscript).SetInfinitePools(true, true)
+		((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+		((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = false
+		((self as quest) as cwreinforcementcontrollerscript).ReinforcementInterval = 2
 	Else
 		kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
 	endif
@@ -1475,7 +1486,7 @@ Quest __temp = self as Quest
 CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
+if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
 	debug.Notification("Getting CW Siege into position. Pleae wait before fast traveling...")
 endif
 ;CWO Also happening in Stage 0 but double setting here just in case
@@ -1573,9 +1584,11 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 
 endif
 
-CWScript.Log("CWFortSiege", self + "Stage 10: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
-RegisterForUpdate(1)		;Needed for checking if the player has left the battle
-((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_CenterMarker.GetReference(), Alias_Fort.GetLocation())
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
+	CWScript.Log("CWFortSiege", self + "Stage 10: RegisterForUpdate() and RegisterBattleCenterMarkerAndLocation() so we can check if the player leaves the battle.")
+	RegisterForUpdate(1)		;Needed for checking if the player has left the battle
+	((kmyquest as quest) as CWSiegePollPlayerLocation).RegisterBattleCenterMarkerAndLocation(Alias_CenterMarker.GetReference(), Alias_Fort.GetLocation())
+endif
 
 CWScript.Log("CWFortSiege", "Stage 10: turning off complex WI interactions")
 ((self as quest) as CWFortSiegeMissionScript).ToggleOffComplexWIInteractions(Alias_Fort)
@@ -1613,7 +1626,7 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
-if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
+if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
 	debug.Notification("Getting CW Siege soldiers are now in position. You may now fast travel.")
 endif
 
@@ -1699,6 +1712,20 @@ kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAtta
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase3A, Alias_RespawnDefenderPhase3B, Alias_RespawnDefenderPhase3C, Alias_RespawnDefenderPhase3D, Alias_RespawnDefenderPhase3FailSafe)
 kmyquest.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
+	Actor PlayerRef = Game.GetPlayer()
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender1, Alias_RespawnAttackerPhase3A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender2, Alias_RespawnAttackerPhase3B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender3, Alias_RespawnAttackerPhase3C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender4, Alias_RespawnAttackerPhase3D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender5, Alias_RespawnAttackerPhase3FailSafe, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender6, Alias_RespawnAttackerPhase3A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender7, Alias_RespawnAttackerPhase3B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender8, Alias_RespawnAttackerPhase3C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase3D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase3FailSafe, PlayerRef)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1769,6 +1796,20 @@ kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAtta
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase4A, Alias_RespawnDefenderPhase4B, Alias_RespawnDefenderPhase4C, Alias_RespawnDefenderPhase4D, Alias_RespawnDefenderPhase4FailSafe)
 kmyquest.CWBattlePhase.SetValue(4)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+
+if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
+	Actor PlayerRef = Game.GetPlayer()
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender1, Alias_RespawnAttackerPhase4A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender2, Alias_RespawnAttackerPhase4B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender3, Alias_RespawnAttackerPhase4C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender4, Alias_RespawnAttackerPhase4D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender5, Alias_RespawnAttackerPhase4FailSafe, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender6, Alias_RespawnAttackerPhase4A, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender7, Alias_RespawnAttackerPhase4B, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender8, Alias_RespawnAttackerPhase4C, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase4D, PlayerRef)
+	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase4FailSafe, PlayerRef)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1803,8 +1844,6 @@ If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 
 	if kmyquest.IsPlayerAttacking()
-		;CWO Clear hold crime just like major city sieges
-		kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
 		setObjectiveCompleted(100)
 		setStage(9000) ;SUCCESS!
 	else 
@@ -1926,16 +1965,16 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 	endif
 
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
-if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
-	;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-	if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
-		kmyQuest.CWs.CWCampaign.SetStage(255)
-	endif
-	Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
-	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
-	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
+		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+			kmyQuest.CWs.CWCampaign.SetStage(255)
+		endif
+		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
+		CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
+		kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 
-endif
+	endif
 
 else	 ;its a normal fort battle
 	;Comment out below. Should not hit here but just in case....

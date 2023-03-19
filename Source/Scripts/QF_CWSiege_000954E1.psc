@@ -1780,6 +1780,8 @@ endif
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
+
 ;Unlocking Gate
 Alias_MainGateExterior.GetReference().Lock(false)
 
@@ -3084,16 +3086,9 @@ endif
 ;<MISC SET UP>----------------
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Misc Set up")	;*** WRITE TO LOG
 
-if CommanderNewPositionX != 0.0 && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-	Alias_AttackerImperial1.GetActorRef().SetPosition(CommanderNewPositionX, CommanderNewPositionY, CommanderNewPositionZ)
-	Alias_AttackerImperial1.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
-	Alias_AttackerImperial2.GetActorRef().SetPosition(FieldCONewPositionX, FieldCONewPositionY, FieldCONewPositionZ)
-	Alias_AttackerImperial2.GetActorRef().SetAngle(FieldCONewAngleX, FieldCONewAngleY, FieldCONewAngleZ)
-elseif CommanderNewPositionX != 0.0
-	Alias_AttackerSons1.GetActorRef().SetPosition(CommanderNewPositionX, CommanderNewPositionY, CommanderNewPositionZ)
-	Alias_AttackerSons1.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
-	Alias_AttackerSons2.GetActorRef().SetPosition(FieldCONewPositionX, FieldCONewPositionY, FieldCONewPositionZ)
-	Alias_AttackerSons2.GetActorRef().SetAngle(FieldCONewAngleX, FieldCONewAngleY, FieldCONewAngleZ)
+if CommanderNewPositionX != 0.0
+	Alias_Attacker1General.GetActorRef().SetPosition(CommanderNewPositionX, CommanderNewPositionY, CommanderNewPositionZ)
+	Alias_Attacker2.GetActorRef().SetPosition(FieldCONewPositionX, FieldCONewPositionY, FieldCONewPositionZ)
 endif
 
 ;**** !!! IF YOU PUT SOMETHING HERE, CONSIDER IF IT NEEDS TO BE UNDONE IN THE SHUT DOWN PHASE 255 !!! ****
@@ -3311,26 +3306,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		Alias_SolitudeGateLever1.TryToReset()
 		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Enable()
 		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Reset()
-		(Game.GetForm(0x00053B6B) as ObjectReference).SetPosition(-80234.523437, 96257.203125, -11244.417969)
-		Alias_AttackerSons1.GetReference().SetPosition(-80234.523437, 96257.203125, -11244.417969)
-		(Game.GetForm(0x00053B6E) as ObjectReference).SetPosition(-80504.234375, 95725.906250, -11490.605469)
-		Alias_AttackerSons2.GetReference().SetPosition(-80504.234375, 95725.906250, -11490.605469)
-		(Game.GetForm(0x00053B6F) as ObjectReference).SetPosition(-80398.601562, 96052.156250, -11392.137695)
-		Alias_AttackerSons3.GetReference().SetPosition(-80504.234375, 95725.906250, -11490.605469)
-		(Game.GetForm(0x00053B7A) as ObjectReference).SetPosition(-80488.335938, 96261.375000, -11281.050782)
-		Alias_AttackerSons4.GetReference().SetPosition(-80488.335938, 96261.375000, -11281.050782)
-		(Game.GetForm(0x00053B89) as ObjectReference).SetPosition(-80647.328125, 95899.398438, -11501.552734)
-		Alias_AttackerSons5.GetReference().SetPosition(-80647.328125, 95899.398438, -11501.552734)
-		(Game.GetForm(0x00053B8A) as ObjectReference).SetPosition(-80226.476562, 95899.585938, -11358.188476)
-		Alias_AttackerSons6.GetReference().SetPosition(-80226.476562, 95899.585938, -11358.188476)
-		(Game.GetForm(0x00053B8B) as ObjectReference).SetPosition(-80740.195312, 96388.632813, -11296.324218)
-		Alias_AttackerSons7.GetReference().SetPosition(-80740.195312, 96388.632813, -11296.324218)
-		(Game.GetForm(0x00053B94) as ObjectReference).SetPosition(-80873.140625, 96316.585938, -11388.634765)
-		Alias_AttackerSons8.GetReference().SetPosition(-80873.140625, 96316.585938, -11388.634765)
-		(Game.GetForm(0x00053B95) as ObjectReference).SetPosition(-80668.804687, 96142.679687, -11408.175781)
-		Alias_AttackerSons9.GetReference().SetPosition(-80668.804687, 96142.679687, -11408.175781)
-		(Game.GetForm(0x00053B96) as ObjectReference).SetPosition(-80921.898438, 95822.562500, -11509.023438)
-		Alias_AttackerSons10.GetReference().SetPosition(-80921.898438, 95822.562500, -11509.023438)
+		kmyQuest.CWs.CWCampaignS.UpdateStormcloakPositionsForFinalSiege()
 	endif
 	if kmyquest.IsAttack()
 		;If Attack
@@ -3397,26 +3373,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Enable()
 		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate01.Reset()
 		kmyQuest.CWs.CWCampaignS.WindhelmExteriorGate02.Reset()
-		(Game.GetForm(0x000AC1B0) as objectreference).SetPosition(145991.187500, 23779.458984, -10030.190430)
-		Alias_AttackerImperial1.GetReference().SetPosition(145991.187500, 23779.458984, -10030.190430)
-		(Game.GetForm(0x000AC1B1) as objectreference).SetPosition(146323.421875, 23779.458984, -9895.925781)
-		Alias_AttackerImperial2.GetReference().SetPosition(146323.421875, 23779.458984, -9895.925781)
-		(Game.GetForm(0x000AC226) as objectreference).SetPosition(146158.156250, 23651.888672, -9959.806641)
-		Alias_AttackerImperial3.GetReference().SetPosition(146158.156250, 23651.888672, -9959.806641)
-		(Game.GetForm(0x000AC227) as objectreference).SetPosition(146249.421875, 24043.863281, -9893.644531)
-		Alias_AttackerImperial4.GetReference().SetPosition(146249.421875, 24043.863281, -9893.644531)
-		(Game.GetForm(0x000AC228) as objectreference).SetPosition(146443.437500, 23938.630860, -9873.740234)
-		Alias_AttackerImperial5.GetReference().SetPosition(146443.437500, 23938.630860, -9873.740234)
-		(Game.GetForm(0x000AC229) as objectreference).SetPosition(146392.765625, 23561.357422, -9895.356445)
-		Alias_AttackerImperial6.GetReference().SetPosition(146392.765625, 23561.357422, -9895.356445)
-		(Game.GetForm(0x000AC22A) as objectreference).SetPosition(146051.468750, 24105.898437, -9953.388672)
-		Alias_AttackerImperial7.GetReference().SetPosition(146051.468750, 24105.898437, -9953.388672)
-		(Game.GetForm(0x000AC22B) as objectreference).SetPosition(146162.109375, 24226.847656, -9863.760742)
-		Alias_AttackerImperial8.GetReference().SetPosition(146162.109375, 24226.847656, -9863.760742)
-		(Game.GetForm(0x000AC22C) as objectreference).SetPosition(146512.203125, 23692.482422, -9876.414062)
-		Alias_AttackerImperial9.GetReference().SetPosition(146512.203125, 23692.482422, -9876.414062)
-		(Game.GetForm(0x000AC22D) as objectreference).SetPosition(146716.062500, 23584.332031, -9867.553711)
-		Alias_AttackerImperial10.GetReference().SetPosition(146716.062500, 23584.332031, -9867.553711)
+		kmyQuest.CWs.CWCampaignS.UpdateImperialPositionsForFinalSiege()
 	endif
 	if kmyquest.IsAttack()
 		;If Attack
@@ -3860,44 +3817,29 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases 
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
 if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
 	Actor OldGeneral
-	if  kmyQuest.CWs.playerAllegiance == kmyQuest.CWs.iImperials
-		OldGeneral = Alias_AttackerImperial1.GetActorRef()
-		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBAttleTullius
-			CommanderNewPositionX = Alias_AttackerImperial1.GetRef().GetPositionX()
-			CommanderNewPositionY = Alias_AttackerImperial1.GetRef().GetPositionY()
-			CommanderNewPositionZ = Alias_AttackerImperial1.GetRef().GetPositionZ()
-			CommanderNewAngleX = Alias_AttackerImperial1.GetRef().GetAngleX()
-			CommanderNewAngleY = Alias_AttackerImperial1.GetRef().GetAngleY()
-			CommanderNewAngleZ = Alias_AttackerImperial1.GetRef().GetAngleZ()
-			FieldCONewPositionX = Alias_AttackerImperial2.GetRef().GetPositionX()
-			FieldCONewPositionY = Alias_AttackerImperial2.GetRef().GetPositionY()
-			FieldCONewPositionZ = Alias_AttackerImperial2.GetRef().GetPositionZ()
-			FieldCONewAngleX = Alias_AttackerImperial2.GetRef().GetAngleX()
-			FieldCONewAngleY = Alias_AttackerImperial2.GetRef().GetAngleY()
-			FieldCONewAngleZ = Alias_AttackerImperial2.GetRef().GetAngleZ()
-			Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
-			Alias_AttackerImperial2.ForceRefTo(OldGeneral)
+
+	OldGeneral = Alias_Attacker1General.GetActorRef()
+	if OldGeneral != none
+		Actor CWBattleCommanderTemp
+		if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+			CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleTullius
+		else
+			CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
 		endif
-	else
-		OldGeneral = Alias_AttackerSons1.GetActorRef()
-		if OldGeneral != none
-			Actor CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
-			CommanderNewPositionX = Alias_AttackerSons1.GetRef().GetPositionX()
-			CommanderNewPositionY = Alias_AttackerSons1.GetRef().GetPositionY()
-			CommanderNewPositionZ = Alias_AttackerSons1.GetRef().GetPositionZ()
-			CommanderNewAngleX = Alias_AttackerSons1.GetRef().GetAngleX()
-			CommanderNewAngleY = Alias_AttackerSons1.GetRef().GetAngleY()
-			CommanderNewAngleZ = Alias_AttackerSons1.GetRef().GetAngleZ()
-			FieldCONewPositionX = Alias_AttackerSons2.GetRef().GetPositionX()
-			FieldCONewPositionY = Alias_AttackerSons2.GetRef().GetPositionY()
-			FieldCONewPositionZ = Alias_AttackerSons2.GetRef().GetPositionZ()
-			FieldCONewAngleX = Alias_AttackerSons2.GetRef().GetAngleX()
-			FieldCONewAngleY = Alias_AttackerSons2.GetRef().GetAngleY()
-			FieldCONewAngleZ = Alias_AttackerSons2.GetRef().GetAngleZ()
-			Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
-			Alias_AttackerSons2.ForceRefTo(OldGeneral)
-		endif
+		CommanderNewPositionX = Alias_Attacker1General.GetRef().GetPositionX()
+		CommanderNewPositionY = Alias_Attacker1General.GetRef().GetPositionY()
+		CommanderNewPositionZ = Alias_Attacker1General.GetRef().GetPositionZ()
+		CommanderNewAngleX = Alias_Attacker1General.GetRef().GetAngleX()
+		CommanderNewAngleY = Alias_Attacker1General.GetRef().GetAngleY()
+		CommanderNewAngleZ = Alias_Attacker1General.GetRef().GetAngleZ()
+		FieldCONewPositionX = Alias_Attacker2.GetRef().GetPositionX()
+		FieldCONewPositionY = Alias_Attacker2.GetRef().GetPositionY()
+		FieldCONewPositionZ = Alias_Attacker2.GetRef().GetPositionZ()
+		FieldCONewAngleX = Alias_Attacker2.GetRef().GetAngleX()
+		FieldCONewAngleY = Alias_Attacker2.GetRef().GetAngleY()
+		FieldCONewAngleZ = Alias_Attacker2.GetRef().GetAngleZ()
+		Alias_Attacker1General.ForceRefTo(CWBattleCommanderTemp)
+		Alias_Attacker2.ForceRefTo(OldGeneral)
 	endif
 endif
 
@@ -4277,7 +4219,7 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
 		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(10, 30)
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(6, 30)
 
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
@@ -4307,7 +4249,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		;CWO
 		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
 		;CWO
-		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(10, 30)
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(6, 30)
 
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
@@ -4363,7 +4305,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		;CWO
 		Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 		;CWO
-		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 30)
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(6, 30)
 
 	else
 		;Currently no defense planned
@@ -4412,9 +4354,6 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;Attack only - triggered by walking out of the Tent
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 8")	;*** WRITE TO LOG
 
-Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
-Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
-Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
 
 
 ;**CITY SPECIFIC:
@@ -4426,19 +4365,43 @@ kmyQuest.CWs.CWStateAttackStarted.SetValue(1)
 ;Adds this music to stack, at highest priority
 kmyQuest.MUSCombatCivilWar.Add()
 
+if CommanderNewPositionX != 0.0
+	Alias_Attacker1General.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
+	Alias_Attacker2.GetActorRef().SetAngle(FieldCONewAngleX, FieldCONewAngleY, FieldCONewAngleZ)
+endif
+
 if cityVar == kmyquest.CWs.WhiterunLocation
+	Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+	Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
+	Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
 	kmyQuest.WeatherWhiterun.setActive(True)
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
+	Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+	Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
+	Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
 	kmyQuest.WeatherMarkarth.setActive(True)
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
+	Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+	Alias_Attacker6.GetReference().Moveto(Alias_AttackerStartRun02.GetReference())
+	Alias_Attacker8.GetReference().Moveto(Alias_AttackerStartRun03.GetReference())
 	kmyQuest.WeatherRiften.setActive(True)
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
+	if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0
+		kmyQuest.CWs.CWCampaignS.UpdateStormcloakAnglesForFinalSiege()
+	else
+		Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+	endif
 	kmyQuest.WeatherSolitude.setActive(True)
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
+	if kmyQuest.CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0
+		kmyQuest.CWs.CWCampaignS.UpdateImperialAnglesForFinalSiege()
+	else
+		Alias_Attacker4.GetReference().Moveto(Alias_AttackerStartRun01.GetReference())
+	endif
 	kmyQuest.WeatherWindhelm.setActive(True)
 
 endif
@@ -4565,7 +4528,7 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 				;CWO
 				Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade2A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 				;CWO
-		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 40)
+		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(6, 40)
 
 
 	else
@@ -4603,9 +4566,9 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 		kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 		kmyquest.CWStateDefenderFallingBack.SetValue(1)
 						;CWO
-						Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.SolitudeExteriorGate01, 0.000000, 0.000000, 0.000000, true)
+						Alias_Attacker1General.GetReference().MoveTo(kmyQuest.CWs.CwCampaignS.WindhelmExteriorGate01, 0.000000, 0.000000, 0.000000, true)
 						;CWO
-						(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(10, 40)
+						(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(6, 40)
 
 	else
 		;Currently no defense planned

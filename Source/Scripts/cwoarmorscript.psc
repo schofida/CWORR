@@ -37,42 +37,42 @@ Bool wasImperial
 function EquipmentUpdate()
 	if CWODisguiseGameType.GetValueInt() == 2
 		CWODisguiseGlobal.SetValueInt(1)
-		ReturnEnemyFaction().SetEnemy(PlayerFaction, true, true)
+		ReturnEnemyFaction().SetPlayerEnemy(false)
 		return
 	endif
 	if (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iSons && PeaceTreaty == false
 		if CWODisguiseGameType.GetValueInt() == 1
 			if WhatArmor != none && (WhatArmor.HasKeyword(SonsKeyword) || WhatArmor.HasKeyword(SonsKeyword2))
 				CWODisguiseGlobal.SetValueInt(0)
-				CWImperialFactionNPC.SetEnemy(PlayerFaction, false, false)
+				CWImperialFactionNPC.SetPlayerEnemy(true)
 			else
 				CWODisguiseGlobal.SetValueInt(1)
-				CWImperialFactionNPC.SetEnemy(PlayerFaction, true, true)
+				CWImperialFactionNPC.SetPlayerEnemy(false)
 			endIf
 		else
 			if WhatArmor != none && (WhatArmor.HasKeyword(ImperialKeyword) || WhatArmor.HasKeyword(ImperialKeyword2) || WhatArmor.HasKeyword(ImperialKeyword3))
 				CWODisguiseGlobal.SetValueInt(1)
-				CWImperialFactionNPC.SetEnemy(PlayerFaction, true, true)
+				CWImperialFactionNPC.SetPlayerEnemy(true)
 			else
 				CWODisguiseGlobal.SetValueInt(0)
-				CWImperialFactionNPC.SetEnemy(PlayerFaction, false, false)
+				CWImperialFactionNPC.SetPlayerEnemy(false)
 			endIf
 		endif
 	elseIf (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iImperials && PeaceTreaty == false
 		if CWODisguiseGameType.GetValueInt() == 1
 			if WhatArmor != none && (WhatArmor.HasKeyword(ImperialKeyword) || WhatArmor.HasKeyword(ImperialKeyword2) || WhatArmor.HasKeyword(ImperialKeyword3))
 				CWODisguiseGlobal.SetValueInt(0)
-				CWSonsFactionNPC.SetEnemy(PlayerFaction, false, false)
+				CWSonsFactionNPC.SetPlayerEnemy(true)
 			else
 				CWODisguiseGlobal.SetValueInt(1)
-				CWSonsFactionNPC.SetEnemy(PlayerFaction, true, true)
+				CWSonsFactionNPC.SetPlayerEnemy(false)
 			endIf
 		else
 			if WhatArmor != none && (WhatArmor.HasKeyword(SonsKeyword) || WhatArmor.HasKeyword(SonsKeyword2))
-				CWSonsFactionNPC.SetEnemy(PlayerFaction, true, true)
+				CWSonsFactionNPC.SetPlayerEnemy(false)
 				CWODisguiseGlobal.SetValueInt(1)
 			else
-				CWSonsFactionNPC.SetEnemy(PlayerFaction, false, false)
+				CWSonsFactionNPC.SetPlayerEnemy(true)
 				CWODisguiseGlobal.SetValueInt(0)
 			endIf
 		endif
@@ -101,19 +101,15 @@ event OnLocationChange(Location akOldLoc, Location akNewLoc)
 		if CwCampaignS.CWODisableNotifications.GetValueInt() == 0
 			debug.notification("Your disguise does not work at the enemy camp.")
 		endif
-		ReturnEnemyFaction().SetEnemy(PlayerFaction, false, false)
+		ReturnEnemyFaction().SetPlayerEnemy(true)
 		CWODisguiseGlobal.SetValueInt(0)
 	else
 		EquipmentUpdate()
 	endif
-	if CWFinale.IsRunning() && CWOStillABetterEndingGlobal.GetValueInt() < 1
-		CWODisguiseGlobal.SetValueInt(0)
-		self.GetOwningQuest().Stop()
-	endIf
 	if MQ302.IsRunning()
 		if MQ302.GetStage() > 30
 			PeaceTreaty = true
-			self.ReturnEnemyFaction().SetEnemy(PlayerFaction, true, true)
+			self.ReturnEnemyFaction().SetPlayerEnemy(false)
 		else
 			PeaceTreaty = false
 		endIf

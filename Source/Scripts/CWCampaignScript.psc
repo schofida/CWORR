@@ -1868,7 +1868,7 @@ function StopDisguiseQuest()
 	CWScript.Log("CWCampaignScript", " StopDisguiseQuest()") 
 	;schofida - revert Disguise changes
 	CWOArmorDisguise.Stop()
-	CWs.PlayerFaction.SetEnemy(CWs.getPlayerAllegianceEnemyFaction(true), false, false)
+	CWs.getPlayerAllegianceEnemyFaction(true).SetPlayerEnemy(true)
 	CWODisguiseGlobal.SetValueInt(0)
 endfunction
 
@@ -2529,3 +2529,69 @@ function RemoveGeneralFromRewardFaction(Actor General)
 	General.RemoveFromFaction(CWs.CWRewardFactionReach)
 	General.RemoveFromFaction(CWs.CWRewardFactionHjaalmarch)
 endfunction
+
+function UpdateImperialPositionsForFinalSiege()
+	UpdateMarkerAndSoldierPositions(0x000AC1B0, 0x000BE335, 145991.187500, 23779.458984, -10030.190430)
+	UpdateMarkerAndSoldierPositions(0x000AC1B1, 0x000BE334, 146323.421875, 23779.458984, -9895.925781)
+	UpdateMarkerAndSoldierPositions(0x000AC226, 0x000BE333, 146158.156250, 23651.888672, -9959.806641)
+	UpdateMarkerAndSoldierPositions(0x000AC227, 0x000BE331, 146249.421875, 24043.863281, -9893.644531)
+	UpdateMarkerAndSoldierPositions(0x000AC228, 0x000BE336, 146443.437500, 23938.630860, -9873.740234)
+	UpdateMarkerAndSoldierPositions(0x000AC229, 0x000BE330, 146392.765625, 23561.357422, -9895.356445)
+	UpdateMarkerAndSoldierPositions(0x000AC22A, 0x000BE339, 146051.468750, 24105.898437, -9953.388672)
+	UpdateMarkerAndSoldierPositions(0x000AC22B, 0x000BE337, 146162.109375, 24226.847656, -9863.760742)
+	UpdateMarkerAndSoldierPositions(0x000AC22C, 0x000BE332, 146512.203125, 23692.482422, -9876.414062)
+	UpdateMarkerAndSoldierPositions(0x000AC22D, 0x000BE338, 146716.062500, 23584.332031, -9867.553711)
+endFunction
+
+function UpdateImperialAnglesForFinalSiege()
+	UpdateMarkerAndSoldierAngles(0x000AC1B0, 0x000BE335, 82.4923)
+	UpdateMarkerAndSoldierAngles(0x000AC1B1, 0x000BE334, 267.6053)
+	UpdateMarkerAndSoldierAngles(0x000AC226, 0x000BE333, 283.8652)
+	UpdateMarkerAndSoldierAngles(0x000AC227, 0x000BE331, 232.5133)
+	UpdateMarkerAndSoldierAngles(0x000AC228, 0x000BE336, 259.6231)
+	UpdateMarkerAndSoldierAngles(0x000AC229, 0x000BE330, 275.6162)
+	UpdateMarkerAndSoldierAngles(0x000AC22A, 0x000BE339, 194.9149)
+	UpdateMarkerAndSoldierAngles(0x000AC22B, 0x000BE337, 229.4276)
+	UpdateMarkerAndSoldierAngles(0x000AC22C, 0x000BE332, 271.8224)
+	UpdateMarkerAndSoldierAngles(0x000AC22D, 0x000BE338, 276.9576)
+endFunction
+
+function UpdateStormcloakPositionsForFinalSiege()
+	UpdateMarkerAndSoldierPositions(0x00053B6B, 0x00053C66, -80234.523437, 96257.203125, -11244.417969)
+	UpdateMarkerAndSoldierPositions(0x00053B6E, 0x00053BF9, -80504.234375, 95725.906250, -11490.605469)
+	UpdateMarkerAndSoldierPositions(0x00053B6F, 0x00053C64, -80398.601562, 96052.156250, -11392.137695)
+	UpdateMarkerAndSoldierPositions(0x00053B7A, 0x00053C68, -80488.335938, 96261.375000, -11281.050782)
+	UpdateMarkerAndSoldierPositions(0x00053B89, 0x00053BEA, -80647.328125, 95899.398438, -11501.552734)
+	UpdateMarkerAndSoldierPositions(0x00053B8A, 0x00053C67, -80226.476562, 95899.585938, -11358.188476)
+	UpdateMarkerAndSoldierPositions(0x00053B8B, 0x00053BF6, -80740.195312, 96388.632813, -11296.324218)
+	UpdateMarkerAndSoldierPositions(0x00053B94, 0x00053BFA, -80873.140625, 96316.585938, -11388.634765)
+	UpdateMarkerAndSoldierPositions(0x00053B95, 0x00053BFB, -80668.804687, 96142.679687, -11408.175781)
+	UpdateMarkerAndSoldierPositions(0x00053B96, 0x00053BFC, -80921.898438, 95822.562500, -11509.023438)
+endfunction
+
+function UpdateStormcloakAnglesForFinalSiege()
+	;UpdateMarkerAndSoldierAngles(0x00053B6B, 0x00053C66, 239.3928)
+	UpdateMarkerAndSoldierAngles(0x00053B6E, 0x00053BF9, 42.7016)
+	UpdateMarkerAndSoldierAngles(0x00053B6F, 0x00053C64, 45.6306)
+	UpdateMarkerAndSoldierAngles(0x00053B7A, 0x00053C68, 99.2571)
+	UpdateMarkerAndSoldierAngles(0x00053B89, 0x00053BEA, 56.8475)
+	UpdateMarkerAndSoldierAngles(0x00053B8A, 0x00053C67, 6.4740)
+	UpdateMarkerAndSoldierAngles(0x00053B8B, 0x00053BF6, 81.6520)
+	UpdateMarkerAndSoldierAngles(0x00053B94, 0x00053BFA, 82.0576)
+	;UpdateMarkerAndSoldierAngles(0x00053B95, 0x00053BFB, 63.0255)
+	UpdateMarkerAndSoldierAngles(0x00053B96, 0x00053BFC, 51.1073)
+endfunction
+
+function UpdateMarkerAndSoldierPositions(int MarkerID, int SoldierID, float posX, float posY, float posZ)
+	ObjectReference Marker = Game.GetForm(MarkerID) as ObjectReference
+	ObjectReference Soldier = Game.GetForm(SoldierID) as ObjectReference
+	Marker.SetPosition(posX, posY, posZ)
+	Soldier.SetPosition(posX, posY, posZ)
+endFunction
+
+function UpdateMarkerAndSoldierAngles(int MarkerID, int SoldierID, float rotZ)
+	ObjectReference Marker = Game.GetForm(MarkerID) as ObjectReference
+	ObjectReference Soldier = Game.GetForm(SoldierID) as ObjectReference
+	Marker.SetAngle(0.0, 0.0, rotZ)
+	Soldier.SetAngle(0.0, 0.0, rotZ)
+endFunction
