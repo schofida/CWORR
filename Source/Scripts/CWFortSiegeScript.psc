@@ -716,3 +716,11 @@ bool function GetMinorCityQuestStillRunning()
 	Location fortLoc = Fort.GetLocation()
 	return fortLoc != None && fortLoc.GetKeywordData(CWs.CWSiegeRunning) as int == 1
 endfunction
+
+function MoveSoldierToNextSpot(ReferenceAlias soldier, ReferenceAlias ToMarker, Actor PlayerRef)
+	ObjectReference SoldierRef = soldier.GetRef()
+	ObjectReference MarkerRef = ToMarker.GetRef()
+	if SoldierRef != none && MarkerRef != none && !Game.GetPlayer().HasLos(soldier.GetRef())
+		SoldierRef.MoveTo(MarkerRef)
+	endif
+EndFunction
