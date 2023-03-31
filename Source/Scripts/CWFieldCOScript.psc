@@ -49,6 +49,7 @@ Event OnLoad()
  			CWScript.Log("CWFieldCOScript", self + "OnLoad() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + CW03StageForWhiterunSiege + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
 			CWs.SetFieldCOAlias(self)	;for dialogue purposes
 			CWs.WhiterunSiegeStarted = True
+			CWs.CWCampaignS.SetMonitorWaitingToStartCampaign()
 			CWs.CreateMissions(CWs.GetMyCurrentHoldLocation(self), self, ForceFinalSiege = true)
 		
 		Else

@@ -18,7 +18,17 @@ Event init()
 	registerforsingleupdate(30)	
 EndEvent	
 
-auto State WaitingToStartNewCampaign
+Auto State DoNothing
+	function OnPlayerLoadGame()
+		DoPlayerLoadGameStuff()
+	endfunction
+
+	Event OnUpdate()
+		
+	endEvent
+endState
+
+State WaitingToStartNewCampaign
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -333,6 +343,9 @@ function DoPlayerLoadGameStuff()
 			cws.ContestedHold = 4
 			CWS.CWAttacker.SetValueInt(2)
 			CWs.CWDefender.SetValueInt(1)
+			GoToState("DoNothing")
+		else
+			GoToState("WaitingToStartNewCampaign")
 		endif
 		player.RemovePerk(perk1)
 		player.RemovePerk(perk2)
@@ -347,7 +360,6 @@ function DoPlayerLoadGameStuff()
 		cws.cwcampaigns.CWMission09.Stop()
 		unregisterforupdate()
 		CWOVersion.SetValueInt(10000)
-		GoToState("WaitingToStartNewCampaign")
 	endif
 	if CWOVersion.GetValueInt() < 10003
 		(GetOwningQuest() AS CWOQuestStarter).PlayerAlias.ForceRefTo(Player)
