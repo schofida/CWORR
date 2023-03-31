@@ -6,7 +6,7 @@ Potion Property FoodApple02  Auto
 ReferenceAlias Property Goldar Auto
 
 int DistanceFromCow = 2000				;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
-int DistanceFromPlayer = 6000				;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
+int DistanceFromPlayer = 3000				;how close does the player need to be to make the giant non-hostile (until he recieves the cow)
 
 int StopCheckingDistanceAtStage	= 20	;what quest stage to stop checking distance to cow (ie the player gave the cow to the giant)
 
