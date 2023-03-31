@@ -1756,6 +1756,11 @@ SiegeFinished = true
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;Fourth Objective is complete -- ATTACKERS HAVE WON
 
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
+
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50")	;*** WRITE TO LOG
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, setting CWBattlePhase to 0 IF the player isn't a defender")	;*** WRITE TO LOG
@@ -2386,6 +2391,11 @@ if SiegeFinished == true
 endif
 SiegeFinished = true
 kmyQuest.CWs.CWCampaignS.StopMonitors()
+
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
 ;Attackers ran out of respawn tickets and too many died
 ;-- OLD WAY kmyquest.AttackersHaveWon = False    ;Announces the Defenders as winner, causing the attackers to retreat
 kmyQuest.AttackersHaveWon = false
@@ -2651,7 +2661,7 @@ kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
 kmyquest.CWs.CWAlliesS.DeactivateAllies()
-kmyquest.CWs.CWCampaignS.CWMission06Done = false
+kmyquest.CWs.CWCampaignS.CWMission06Done = 0
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
 UnregisterForUpdate()
@@ -2761,11 +2771,15 @@ if LydiaHasBeenDisabled
 endif
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
-;if either attack or defense
+	if kmyQuest.AttackersHaveWon && kmyQuest.WasThisAnAttack
+		kmyQuest.CWs.AddCivilWarAchievment(2, kmyQuest.CWs.FortSungardLocation)
+	endif
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
 
-
+	if kmyQuest.AttackersHaveWon && kmyQuest.WasThisAnAttack
+		kmyQuest.CWs.AddCivilWarAchievment(2, kmyQuest.CWs.FortGreenwallLocation)
+	endif
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
@@ -2815,10 +2829,10 @@ kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 ;CWO - Shut down campaign if its running
-if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
-	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = true
+	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
 endif
 
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
