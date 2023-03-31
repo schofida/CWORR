@@ -1168,6 +1168,11 @@ kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.failedMission = 1
 ;CWO - Reset Troop crime
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
+
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
 ;CWO This stage is never hit in vanilla soo..... First is this not the final hold battles? (since interior solitude/windhelm spawn this quest)
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO - if not, flag CW main quest mission as a failure (should always be type 50)
@@ -1180,10 +1185,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 	;CWO - Force player to be the defender for the next campaign
 	kmyquest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)
-	;CWO - If this was a spanish inquisition, fail all running missions
-	if kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
-		kmyQuest.CWs.CWCampaignS.CompleteCWMissions(true)
-	endif
 	;CWO - Finally have opponent win/hold onto existing hold
 	((self as Quest) as CWFortSiegeScript).AttackersHaveWon = !((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	((self as Quest) as CWFortSiegeScript).DefendersHaveWon = ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
@@ -1255,6 +1256,29 @@ if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).Spe
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase5D, PlayerRef)
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase5FailSafe, PlayerRef)
 endif
+
+;EVP EVERYONE
+Alias_Attacker1.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1694,6 +1718,29 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 kmyquest.StartCombatSoundsLoop()
 
 kmyQuest.MUSCombatCivilWar.Add()
+
+;EVP EVERYONE
+Alias_Attacker1.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1726,6 +1773,29 @@ if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).Spe
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase3D, PlayerRef)
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase3FailSafe, PlayerRef)
 endif
+
+;EVP EVERYONE
+Alias_Attacker1.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1752,6 +1822,11 @@ kmyQuest.CWFortSiegeCapitalSurrenderScene.Stop()
 ;CWO Account for player attacking or defending
 kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
 
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
+
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO Set proper CW flags
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
@@ -1761,8 +1836,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	endif		
 
 	kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
-
-	kmyquest.CWs.AddCivilWarAchievment(2, Alias_Fort.GetLocation())
 
 	;CWO Player won, set as attacker in next Campaign
 	kmyQuest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.playerAllegiance
@@ -1810,6 +1883,29 @@ if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).Spe
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender9, Alias_RespawnAttackerPhase4D, PlayerRef)
 	kmyQuest.MoveSoldierToNextSpot(Alias_Defender10, Alias_RespawnAttackerPhase4FailSafe, PlayerRef)
 endif
+
+;EVP EVERYONE
+Alias_Attacker1.TryToEvaluatePackage()
+Alias_Attacker2.TryToEvaluatePackage()
+Alias_Attacker3.TryToEvaluatePackage()
+Alias_Attacker4.TryToEvaluatePackage()
+Alias_Attacker5.TryToEvaluatePackage()
+Alias_Attacker6.TryToEvaluatePackage()
+Alias_Attacker7.TryToEvaluatePackage()
+Alias_Attacker8.TryToEvaluatePackage()
+Alias_Attacker9.TryToEvaluatePackage()
+Alias_Attacker10.TryToEvaluatePackage()
+
+Alias_Defender1.TryToEvaluatePackage()
+Alias_Defender2.TryToEvaluatePackage()
+Alias_Defender3.TryToEvaluatePackage()
+Alias_Defender4.TryToEvaluatePackage()
+Alias_Defender5.TryToEvaluatePackage()
+Alias_Defender6.TryToEvaluatePackage()
+Alias_Defender7.TryToEvaluatePackage()
+Alias_Defender8.TryToEvaluatePackage()
+Alias_Defender9.TryToEvaluatePackage()
+Alias_Defender10.TryToEvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1967,13 +2063,14 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 			kmyQuest.CWs.CWCampaign.SetStage(255)
 		endif
 		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
-		CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
-		kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
-
+		if kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon
+			CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
+			kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+		endif
 	endif
 
 else	 ;its a normal fort battle

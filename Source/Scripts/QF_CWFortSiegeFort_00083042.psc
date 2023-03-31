@@ -1502,6 +1502,11 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 	if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
 
+		;CWO Stop defense courier quest if running
+		if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+			kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+		endIf
+
 		kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 		;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
@@ -1614,7 +1619,7 @@ CWScript.Log("CWFortSiege", "Stage 9999: Shutdown phase.")
 
 ;CWO Set Flag on Campaign
 if kmyQuest.CWs.CWCampaign.IsRunning()
-	kmyquest.CWs.CwCampaignS.CWFortSiegeFortDone = true
+	kmyquest.CWs.CwCampaignS.CWFortSiegeFortDone = 1
 endif
 
 kmyquest.CWBattlePhase.SetValue(0)
@@ -1894,8 +1899,13 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 	if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
 
-		kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+		kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 		kmyquest.CWs.AddCivilWarAchievment(2, Alias_Fort.GetLocation())
+
+		;CWO Stop defense courier quest if running
+		if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+			kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+		endIf
 
 		kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
@@ -1905,7 +1915,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 	else		;it's one of the final hold forts, so we need to generate a siege mission:
 	
-		kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;for purposes of this function, it's not a fort battle
+		kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;for purposes of this function, it's not a fort battle
 	
 		if fortLocation == kmyquest.CWs.FortAmolLocation
 			kmyquest.CWs.EastmarchFortBattleComplete = true
