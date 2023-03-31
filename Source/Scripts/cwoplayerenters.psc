@@ -30,7 +30,6 @@ endFunction
 
 function OnUpdate()
 
-	self.RegisterForSingleUpdate(1.50000)
 	if IsInArea == true
 		if PlayerRef.isinlocation(CityAlias.getLocation()) && self.GetOwningQuest().GetStage() == 10 ; Reddit BugFix #9
 			if PlayerRef.getworldspace() == RiftenMarker.getreference().getworldspace()
@@ -42,8 +41,14 @@ function OnUpdate()
 			elseIf PlayerRef.getworldspace() == WhiterunMarker.getreference().getworldspace()
 				GetOwningQuest().setstage(30)
 				self.UnRegisterForUpdate()
+			else
+				self.RegisterForSingleUpdate(1.50000)
 			endIf
+		else
+			self.RegisterForSingleUpdate(1.50000)
 		endIf
+	else
+		self.RegisterForSingleUpdate(1.50000)
 	endIf
 endFunction
 
