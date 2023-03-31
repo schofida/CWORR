@@ -63,11 +63,13 @@ Event OnCellAttach()
 
 		EndIf
 		;CWO If campaign running use campaign to start missions
-		if CW.CWCampaign.IsRunning()
-			CW.CWCampaignS.StartMissions()
-		Else
-			;In theory, this should only be hit in the last player attacking stage
-			CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
+		if RikkeOrGalmar.GetCurrentLocation() == myLocation
+			if CW.CWCampaign.IsRunning()
+				CW.CWCampaignS.StartMissions()
+			Else
+				;In theory, this should only be hit in the last player attacking stage
+				CW.CreateMissions(myHoldLocation, RikkeOrGalmar, CampaignStartMarker = Self)
+			endif
 		endif
 	elseif myEnableMarker.IsDisabled() == False && !(myLinkedFieldCO as Actor).isDead()
 		myLinkedFieldCO.enable()
