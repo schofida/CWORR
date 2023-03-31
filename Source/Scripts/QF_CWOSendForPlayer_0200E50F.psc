@@ -45,8 +45,6 @@ function Fragment_11()
 	CWOCourierSentGlobal.SetValueInt(0)
 	self.SetObjectiveCompleted(10, true)
 	if CWS.CWFortSiegeCapital.IsRunning()
-		CWS.WarIsActive = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
-		CWS.PlayerInvolved = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General	
 		CWS.CWFortSiegeCapital.SetStage(10)
 	elseif CWS.CWFortSiegeFort.IsRunning()
 		CWS.CWFortSiegeFort.SetStage(10)
@@ -64,6 +62,7 @@ function Fragment_0()
 	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
+	cws.setstage(4)
 	kmyQuest.RegisterForSingleUpdateGameTime(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue()))
 endFunction
 
@@ -92,8 +91,6 @@ function Fragment_10()
 	; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)
 	CWOCourierSentGlobal.SetValueInt(0)
 
-	CWS.WarIsActive = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
-	CWS.PlayerInvolved = 1	;schofida - This is in case player loses Whiterun at the start, if they win capital battle, they will not get next directive from General
 	utility.wait(8 as Float)
 	CWS.CWSiegeS.setstage(1)
 	self.SetObjectiveCompleted(0, true)
