@@ -178,7 +178,7 @@ Function Fragment_13()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(9)
     
-    kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
+    kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
     
     Alias_Player.GetActorRef().RemoveItem(Alias_Document.GetRef().GetBaseObject())
     Alias_FieldCO.GetActorRef().AddItem(Alias_Document.GetRef().GetBaseObject())

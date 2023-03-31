@@ -345,7 +345,7 @@ cwmission06script kmyQuest = __temp as cwmission06script
 debug.traceConditional("CWMission06 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 kmyQuest.ProcessFieldCOFactionsOnQuestShutDown()
 
-kmyQuest.CWs.CWCampaignS.CWMission06Done = true
+kmyQuest.CWs.CWCampaignS.CWMission06Done = 1
 debug.traceConditional("CWMission06 stage 255: turning on complex WI interactions", kmyquest.CWs.debugon.value)
 kmyquest.ToggleOffComplexWIInteractions(Alias_CWCampEnemy)
 kmyquest.CWs.UnregisterEventHappening(Alias_CWCampEnemy.GetLocation())
@@ -390,7 +390,7 @@ cwmission06script kmyQuest = __temp as cwmission06script
 debug.traceConditional("CWMission06 stage 200 (Misson Success)", kmyquest.CWs.debugon.value)
 kmyQuest.FlagFieldCOWithMissionResultFaction(6)
 
-kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 

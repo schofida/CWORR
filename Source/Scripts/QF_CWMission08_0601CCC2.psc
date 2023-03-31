@@ -250,6 +250,13 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission08 stage 40", kmyquest.CWs.debugon.value)
+
+Alias_SonsSoldier01.TryToStopCombat()
+Alias_SonsSoldier02.TryToStopCombat()
+Alias_SonsSoldier03.TryToStopCombat()
+
+Alias_Goldar.TryToStopCombat()
+
 Alias_SonsSoldier01.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
 Alias_SonsSoldier02.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
 Alias_SonsSoldier03.TryToRemoveFromFaction(kmyQuest.CWMission08EnemyToGiant)
@@ -261,12 +268,6 @@ Alias_SonsSoldier03.TryToAddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFacti
 Alias_Goldar.TryToAddToFaction(kmyQuest.CWs.CWSonsFactionNPC)
 
 Game.GetPlayer().AddToFaction(kmyQuest.CWMission08GiantPlayerAlliesFaction)
-
-Alias_SonsSoldier01.TryToStopCombat()
-Alias_SonsSoldier02.TryToStopCombat()
-Alias_SonsSoldier03.TryToStopCombat()
-
-Alias_Goldar.TryToStopCombat()
 
 Alias_SonsSoldier01.TryToEvaluatePackage()
 Alias_SonsSoldier02.TryToEvaluatePackage()
@@ -386,11 +387,11 @@ debug.traceConditional("CWMission08 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.
 
 kmyquest.FlagFieldCOWithMissionResultFaction(8)
 
-kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
+kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
 
 kmyQuest.CWs.CWAlliesS.AddPotentialAlly(Alias_Goldar.GetRef(), true, true, true, true, true, true, true, true, true, false, true)
 
-kmyQuest.CWs.CWCampaignS.CWMission08Done = true
+kmyQuest.CWs.CWCampaignS.CWMission08Done = 1
 
 kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 

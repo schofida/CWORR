@@ -363,6 +363,11 @@ kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
+
 kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
@@ -405,6 +410,11 @@ kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 
+;CWO Stop defense courier quest if running
+if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
+	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
+endIf
+
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
@@ -432,7 +442,7 @@ CWScript.Log("CWMission01QuestFragment", self + "Stage 255" )
 kmyQuest.DisableAllAliases()
 
 kmyQuest.CWS.StopCWCitizensFlee()
-kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
+kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
 ((self as quest) as CWFortSiegeMissionScript).ProcessFieldCOFactionsOnQuestShutDown()
 
