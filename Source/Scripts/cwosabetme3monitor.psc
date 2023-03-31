@@ -22,6 +22,7 @@ ObjectReference property pTG05TransitionAudio auto
 ObjectReference property TG05UnconsciousAudioRef auto
 imagespacemodifier property pStrikeandFall auto
 idle property pKnockdown auto
+Quest property VampireQuest auto
 
 ;-- Variables ---------------------------------------
 Bool WeBeImperials
@@ -52,7 +53,10 @@ Event OnEnterBleedout()
 	CWScript.Log("CWOSABETME3Monitor", " OnEnterBleedout()") 
 	if WerewolfQuest.IsRunning()
 		(WerewolfQuest as playerwerewolfchangescript).ShiftBack()
+	elseif VampireQuest.IsRunning()
+		(VampireQuest as DLC1PlayerVampireChangeScript).ShiftBack()
 	endIf
+	((GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest as CWReinforcementControllerScript).StopSpawning()
 	pStrikeandFall.Apply(1.00000)
 	game.DisablePlayerControls(true, true, true, true, true, true, true, false, 0)
 	PlayerRef.DamageAv("Health", 99999 as Float)
