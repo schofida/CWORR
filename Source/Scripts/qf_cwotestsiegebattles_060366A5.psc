@@ -1,6 +1,97 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 4
+;NEXT FRAGMENT INDEX 7
 Scriptname qf_cwotestsiegebattles_060366A5 Extends Quest Hidden
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier10Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier1Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier2Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier3Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier4Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier5Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier6Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier7Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier8Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier9Instance)
+kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier10Instance)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_5
+Function Fragment_5()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+if CWOBeast1Instance == none
+    CWOBeast1Instance = kmyQuest.CWOSiegeImperialSoldier1.PlaceAtMe(kmyQuest.CWOImperialHound) As Actor
+else
+    CWOBeast1Instance.Reset(kmyQuest.CWOSiegeImperialSoldier1)
+endif
+if CWOBeast2Instance == none
+    CWOBeast2Instance = kmyQuest.CWOSiegeSonsSoldier1.PlaceAtMe(kmyQuest.CWOWhiteWolf) As Actor
+else
+    CWOBeast2Instance.Reset(kmyQuest.CWOSiegeSonsSoldier1)
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_6
+Function Fragment_6()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+if CWOBeast1Instance == none
+    CWOBeast1Instance = kmyQuest.CWOSiegeImperialSoldier1.PlaceAtMe(kmyQuest.CWOImperialHound) As Actor
+else
+    CWOBeast1Instance.Disable()
+    CWOBeast1Instance.Resurrect()
+    CWOBeast1Instance.MoveTo(kmyQuest.CWOSiegeImperialSoldier1)
+    CWOBeast1Instance.Enable()
+endif
+if CWOBeast2Instance == none
+    CWOBeast2Instance = kmyQuest.CWOSiegeSonsSoldier1.PlaceAtMe(kmyQuest.CWOWhiteWolf) As Actor
+else
+    CWOBeast2Instance.Disable()
+    CWOBeast2Instance.Resurrect()
+    CWOBeast2Instance.MoveTo(kmyQuest.CWOSiegeSonsSoldier1)
+    CWOBeast2Instance.Enable()
+endif
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_4
+Function Fragment_4()
+;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
+Quest __temp = self as Quest
+CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
+;END AUTOCAST
+;BEGIN CODE
+Game.GetPlayer().MoveTo(kmyQuest.CWOSiegeImperialSoldier1)
+;END CODE
+EndFunction
+;END FRAGMENT
 
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
@@ -55,37 +146,6 @@ CWOSiegeSonsSoldier10Instance = kmyQuest.CWOSiegeSonsSoldier10.PlaceAtMe(kmyQues
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN AUTOCAST TYPE CWOTestSiegeBattlesScript
-Quest __temp = self as Quest
-CWOTestSiegeBattlesScript kmyQuest = __temp as CWOTestSiegeBattlesScript
-;END AUTOCAST
-;BEGIN CODE
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier1Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier2Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier3Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier4Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier5Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier6Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier7Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier8Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier9Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeImperialSoldier10Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier1Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier2Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier3Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier4Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier5Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier6Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier7Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier8Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier9Instance)
-kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier10Instance)
-;END CODE
-EndFunction
-;END FRAGMENT
-
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 Actor CWOSiegeImperialSoldier1Instance
 Actor CWOSiegeImperialSoldier2Instance
@@ -107,3 +167,6 @@ Actor CWOSiegeSonsSoldier7Instance
 Actor CWOSiegeSonsSoldier8Instance
 Actor CWOSiegeSonsSoldier9Instance
 Actor CWOSiegeSonsSoldier10Instance
+
+Actor CWOBeast1Instance
+Actor CWOBeast2Instance

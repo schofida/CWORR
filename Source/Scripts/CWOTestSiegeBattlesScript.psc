@@ -23,10 +23,12 @@ ObjectReference Property CWOSiegeSonsSoldier10 Auto
 
 ActorBase Property CWSiegeImperialSoldier Auto
 ActorBase Property CWSiegeSonsSoldier Auto
+ActorBase Property CWOWhiteWolf  Auto  
+ActorBase Property CWOImperialHound  Auto 
 
 Function CleanUpInstanceIfExists(Actor instance)
     if instance != none
         instance.Disable()
         instance.SetCriticalStage(instance.CritStage_DisintegrateEnd)
     endif
-endFunction
+endFunction 
