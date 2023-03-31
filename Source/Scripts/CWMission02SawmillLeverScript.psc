@@ -1,11 +1,17 @@
-Scriptname CWMission02SawmillLeverScript extends ReferenceAlias
+Scriptname CWMission02SawmillLeverScript extends TrapLever
 
-ReferenceAlias Property ResourceObjectSawMill Auto
+Quest Property CW Auto
+CWScript Property CWs Auto Hidden
 
-Event onActivate ( objectReference triggerRef )
+event OnInit()
+    CWs = CW as CWScript
+endevent
+
+function onActivate ( objectReference triggerRef )
     ; if activated by an actor, do nothing special. If activated by non-actor, assume trying to saw
     if triggerRef == Game.GetPlayer()
         ; show BUSY message
-        (ResourceObjectSawMill.GetReference() As ResourceObjectSawMillScript).TryToSabotage(triggerRef)
+        (CWs.CWCampaignS.CWMission02 as CWMission02Script).ResourceObject1.GetRef().DamageObject(9999)
+        CWs.GetFaction(CWs.getOppositeFactionInt(CWs.PlayerAllegiance), false).SendAssaultAlarm()
     endif
-EndEvent
+endfunction

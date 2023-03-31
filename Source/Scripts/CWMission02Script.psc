@@ -7,6 +7,21 @@ Activator Property ResourceObjectGrainMill Auto
 
 ReferenceAlias Property ResourceObject1 Auto
 
+Location[] Property MillLocations Auto
+ObjectReference[] Property MillLevers Auto
+
+ObjectReference function GetMillLever(Location GarrisonToCheck)
+	int i = MillLocations.Length
+
+	while i
+		i = i - 1
+		if MillLocations[i] == GarrisonToCheck
+			return MillLevers[i]
+		endif
+	endWhile
+	return none
+EndFunction
+
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission02 quest")
 	if GetStage() == 0

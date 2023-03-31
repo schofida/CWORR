@@ -4,7 +4,7 @@ CWMission02Script property CWMission02S auto Hidden
 
 int Property myType auto Hidden
 int Property primaryResourceType auto Hidden
-int Property DiscoverDistance = 1000 auto Hidden
+int Property DiscoverDistance = 2000 auto Hidden
 
 ;#### Pointers to things in master file
 

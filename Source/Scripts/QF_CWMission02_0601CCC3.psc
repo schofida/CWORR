@@ -2,11 +2,6 @@
 ;NEXT FRAGMENT INDEX 27
 Scriptname QF_CWMission02_0601CCC3 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY SawmillLever
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SawmillLever Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY Hold
 ;ALIAS PROPERTY TYPE LocationAlias
 LocationAlias Property Alias_Hold Auto
@@ -112,7 +107,7 @@ Function Fragment_11()
     ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
     
-    kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = true
+    kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 
     Alias_CWFortSiegeSons1.TryToDisable()
     Alias_CWFortSiegeSons2.TryToDisable()
@@ -171,12 +166,12 @@ Function Fragment_9()
     kmyquest.FlagFieldCOWithMissionResultFaction(2)
 
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
+
+    kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
-    kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+    kmyquest.CWs.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
     kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), kmyQuest.CwS.playerAllegiance)
-    
-    kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
     ;END CODE
     EndFunction
@@ -267,11 +262,9 @@ Function Fragment_1()
         OldSmelter.Disable()
         SmelterFix = OldSmelter.PlaceAtMe(kmyQuest.ResourceObjectSawMill)
         Alias_ResourceObject1.ForceRefTo(SmelterFix) 
-        if Alias_SawmillLever.GetReference() != None
-            OldSawMillLever = Alias_SawmillLever.GetReference()
-            OldSawMillLever.Disable()
-            SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
-        endif
+        OldSawMillLever = kmyQuest.GetMillLever(Alias_ResourceLocation.GetLocation())
+        OldSawMillLever.Disable()
+        SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
     else
         Alias_ResourceObject1.TryToEnable()
     endif
@@ -279,6 +272,24 @@ Function Fragment_1()
     
     
     (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
+
+    
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWMission02Script
+    Quest __temp = self as Quest
+    CWMission02Script kmyQuest = __temp as CWMission02Script
+    ;END AUTOCAST
+    ;BEGIN CODE
+    
+    CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
+    
+    kmyQuest.CWCampaignS.StopDisguiseQuest()
 
     if kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
         Alias_CWFortSiegeSons1.TryToEnableNoWait()
@@ -299,26 +310,6 @@ Function Fragment_1()
         Alias_CWFortSiegeImperial3.TryToEvaluatePackage()
         Alias_CWFortSiegeImperial4.TryToEvaluatePackage()
     endif
-
-    
-    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN AUTOCAST TYPE CWMission02Script
-    Quest __temp = self as Quest
-    CWMission02Script kmyQuest = __temp as CWMission02Script
-    ;END AUTOCAST
-    ;BEGIN CODE
-    
-    CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
-    
-    kmyQuest.CWCampaignS.StopDisguiseQuest()
-
-
 ;END CODE
 EndFunction
 ;END FRAGMENT
