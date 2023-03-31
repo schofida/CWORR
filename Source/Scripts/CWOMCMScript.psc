@@ -113,6 +113,7 @@ bool optionstogglePayCrimeFaction = false
 
 String[] gameDisguiseList
 String[] holdsList
+Int[] holdsID
 ;-- Functions ---------------------------------------
 
 function SetReinforcements()
@@ -222,8 +223,7 @@ function OnOptionSelect(Int a_option)
 	elseIf a_option == optionsWinSiege
 		optionsToggleCWWinBattle = !optionsToggleCWWinBattle
 		self.SetToggleOptionValue(a_option, optionsToggleCWWinBattle, false)
-		CWs.CWCampaignS.CompleteCWMissions()
-		CWs.CWCampaignS.CompleteCWSieges()
+		CompleteRunningCampaign()
 	elseIf a_option == optionsCWOHelp
 		optionsCWOHelpToggle = !optionsCWOHelpToggle
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle, false)
@@ -295,9 +295,15 @@ function OnOptionSelect(Int a_option)
 	elseif a_option == optionsCWODisableFortSiegeFort
 		if CWODisableFortSiegeFort.GetValueInt() == 0
 			CWODisableFortSiegeFort.SetValueInt(1)
+			CWs.CWCampaignS.CWFortSiegeFortDone = 1
 			self.SetToggleOptionValue(a_option, true, false)
 		else
 			CWODisableFortSiegeFort.SetValueInt(0)
+			if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath)
+				CWs.CWCampaignS.CWFortSiegeFortDone = 1
+			else
+				CWs.CWCampaignS.CWFortSiegeFortDone = 0
+			endif
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
 	elseif a_option == optionsCWODisableSolitudeSiege
@@ -543,7 +549,7 @@ function OnPageReset(String a_page)
 		if CWFortSiegeCapital.IsRunning()
 			self.AddtextOption("CWO thinks a capital quest", "Is On", 0)
 		endIf
-		if CWFortSiegeCapital.IsRunning()
+		if CWFortSiegeCapital.IsRunning() && !CWSiege.IsRunning()
 			self.AddtextOption("Siege Attacker Pool is:", (CWFortSiegeCapital as CWReinforcementControllerScript).PoolAttacker as String, 0)
 			self.AddtextOption("Siege Defender Pool is:", (CWFortSiegeCapital as CWReinforcementControllerScript).PoolDefender as String, 0)
 		endIf
@@ -554,6 +560,9 @@ function OnPageReset(String a_page)
 		if CWSiege.IsRunning()
 			self.AddtextOption("Siege Attacker Pool is:", (CWSiege as CWReinforcementControllerScript).PoolAttacker as String, 0)
 			self.AddtextOption("Siege Defender Pool is:", (CWSiege as CWReinforcementControllerScript).PoolDefender as String, 0)
+		endIf
+		if CWs.CWCampaignS.CWMission01.IsRunning()
+			self.AddtextOption("Garrison Pool is:", (CWSiege as CWReinforcementControllerScript).PoolDefender as String, 0)
 		endIf
 		if CWFortSiegeCapital.IsRunning() || CWFortSiegeFort.IsRunning() || CWSiege.IsRunning()
 			self.AddtextOption("CWPercentPoolRemainingAttacker is at", CWPercentPoolRemainingAttacker.GetValueInt() as String, 0)
@@ -587,10 +596,10 @@ function OnPageReset(String a_page)
 		optionsCourierHoursMin = self.AddSlideroption("Courier Hours Min", CWOCourierHoursMin.GetValueInt() as Float, "{0}", 0)
 		optionsCourierHoursMax = self.AddSlideroption("Courier Hours Max", CWOCourierHoursMax.GetValueInt() as Float, "{0}", 0)
 		optionsDisguiseGameType = self.AddMenuOption("Disguise Mechanic:", " ", 0)
-		optionsDisableFaint = self.AddToggleOption("Disable 'Take a Knee':", CWODisableFaint.GetValueInt() == 1, 0)
-		optionsStartSiege = self.AddMenuOption("Force start siege here:", " ", 0)
+		optionsDisableFaint = self.AddToggleOption("Disable Player 'Bleedout':", CWODisableFaint.GetValueInt() == 1, 0)
+		optionsStartSiege = self.AddMenuOption("Force campaign here:", " ", 0)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
-		optionsWinHold = self.AddMenuOption("Win hold here:", " ", 0)
+		optionsWinHold = self.AddMenuOption("Switch sides here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
 		if CWs.CWCampaignS.CWMission05.IsRunning() || CWs.CWCampaignS.CWMission06.IsRunning() || CWs.CWCampaignS.CWMission08Quest.IsRunning() || CWs.CWCampaignS.CWMission09.IsRunning()
@@ -619,6 +628,11 @@ Int function GetVersion()
 	return CWOVersion.GetValueInt()
 endFunction
 
+function OnConfigOpen()
+
+	return OnConfigInit()
+endFunction
+
 function OnConfigInit()
 
 	Pages = new String[3]
@@ -626,16 +640,23 @@ function OnConfigInit()
 	Pages[1] = "CWO Options"
 	Pages[2] = "Compatibility"
 
-	holdsList = new String[9]
-	holdsList[0] = "Solitude"
-	holdsList[1] = "Markarth"
-	holdsList[2] = "Morthal"
-	holdsList[3] = "Whiterun"
-	holdsList[4] = "Falkreath"
-	holdsList[5] = "Dawnstar"
-	holdsList[6] = "Winterhold"
-	holdsList[7] = "Windhelm"
-	holdsList[8] = "Riften"
+	holdsList = new String[7]
+	holdsList[0] = "Markarth"
+	holdsList[1] = "Morthal"
+	holdsList[2] = "Whiterun"
+	holdsList[3] = "Falkreath"
+	holdsList[4] = "Dawnstar"
+	holdsList[5] = "Winterhold"
+	holdsList[6] = "Riften"
+
+	holdsID = new Int[7]
+	holdsID[0] = 2
+	holdsID[1] = 3
+	holdsID[2] = 4
+	holdsID[3] = 5
+	holdsID[4] = 6
+	holdsID[5] = 7
+	holdsID[6] = 9
 
 	gameDisguiseList = new String[3]
 	gameDisguiseList[0] = "Default"
@@ -677,14 +698,20 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 {Called when the user accepts a new menu entry}
 
 	if a_option == optionsStartSiege
+		int holdID = holdsID[a_index]
+		CWs.CWDebugForceHold.SetValueInt(holdID)
 		if !CWs.CWCampaign.IsRunning()
-			CWs.CWDebugForceHold.SetValueInt(a_index + 1)
 			CWs.StartNewCampaign()
 		else
-
+			CompleteRunningCampaign()
 		endif
 	elseIf a_option == optionsWinHold
-		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.GetLocationForHold(a_index + 1), true, false)
+		int holdID = holdsID[a_index]
+		if CWS.CWcontestedHold.GetValueInt() == holdID
+			CompleteRunningCampaign()
+		else
+			CWS.SetHoldOwnerByInt(holdID, CWs.getOppositeFactionInt(CWs.GetHoldOwner(holdID)))
+		endif
 	elseif a_option == optionsDisguiseGameType
 		CWODisguiseGameType.SetValueInt(a_index)
 		if CWOArmorDisguise.IsRunning()
@@ -778,6 +805,7 @@ function UninstallCWO()
 	CWOBAController.Stop()
 	CWOBAQuest.Stop()
 	CWs.CWCampaignS.CompleteCWMissions()
+	CWs.CWCampaignS.StartResolutionMission()
 	Utility.Wait(10)
 	CWs.CWCampaignS.CompleteCWSieges()
 	Utility.Wait(10)
@@ -843,6 +871,17 @@ function UninstallCWO()
 	endif	
 	Debug.notification("CWO Uninstalled.")
 	self.Stop()
+endfunction
+
+function CompleteRunningCampaign()
+	debug.notification("Completing Missions if there any running")
+	CWs.CWCampaignS.CompleteCWMissions()
+	debug.notification("Starting Hold Siege")
+	CWs.CWCampaignS.StartResolutionMission()
+	Utility.Wait(20.0)
+	debug.notification("Completing Hold Siege")
+	CWs.CWCampaignS.CompleteCWSieges()
+	debug.notification("Hold Siege Completed")
 endfunction
 
 ; Skipped compiler generated GetState
