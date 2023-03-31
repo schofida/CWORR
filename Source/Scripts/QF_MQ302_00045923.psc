@@ -398,6 +398,8 @@ if kmyQuest.KickOutFlag
 		sCW.SetPlayerAllegiance(sCW.iImperials)
 	endif
 endif
+sCW.CWObj.SetStage(253)
+sCW.CWObj.Stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT

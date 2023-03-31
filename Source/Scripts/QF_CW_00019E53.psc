@@ -260,7 +260,34 @@ CWScript kmyQuest = __temp as CWScript
 ;END AUTOCAST
 ;BEGIN CODE
 ; debug.trace("CW stage 255, Civil War stopping. Calling StopCivilWar()")
-kmyquest.stopCivilWar()
+kmyQuest.WarIsActive = -1
+kmyQuest.PlayerInvolved = 1
+
+;STOP ANY CIVIL WAR MISSION QUESTS / FORT BATTLES
+kmyQuest.CWCampaignS.CompleteCWMissions()
+Utility.Wait(10.0)
+if kmyQuest.CWSiegeS.IsRunning()
+	kmyQuest.cwsiegeS.stop()
+endif
+if kmyQuest.CWFortSiegeCapital.IsRunning()
+	kmyQuest.CWFortSiegeCapital.stop()
+endif
+kmyQuest.CWCampaignS.SetMonitorDoNothing()
+kmyQuest.CWCampaign.stop()
+;		;If player's side is attacking "FAIL" the CWCampaign, if player's side is defending "COMPLETE" the CWCampaign
+;		if playerAllegiance == Attacker
+;			CWCampaignObj.setStage(300)
+;		Else
+;			CWCampaignObj.setStage(200)
+;		EndIf
+;		
+;		CWCampaign.stop()
+;			
+;		(CWCampaign as CWCampaignScript).ResetCampaign()
+;		(CWCampaign as CWCampaignPollForMissionAcceptScript).StopPolling()
+;		setHoldOwner(ContestedHold, ownerContestedHold)
+	
+;		CWCampaignTruce.show()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -317,7 +344,18 @@ CWScript kmyQuest = __temp as CWScript
 ;END AUTOCAST
 ;BEGIN CODE
 ; restart civil war
-kmyquest.restartCivilWar()
+	kmyQuest.SetStage(kmyQuest.playerAllegiance) ;sets stage 1 or 2, which calls setplayeAllegience and sets PlayerInvolved to be 1
+
+	if kmyQuest.getStageDone(4) ;makes sure the player has completed a campaign before setting warIsActive (in case you haven't finished the Whiterun battle yet)
+		kmyQuest.WarIsActive = 1
+	
+	Else
+		kmyQuest.WarIsActive = 0  ;in case it was set to -1 due to peace treaty
+		
+	endif
+	
+	kmyQuest.CWCampaignS.SetMonitorWaitingToStartCampaign()
+	kmyQuest.displayFactionLeaderObjective()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -411,6 +449,10 @@ debug.trace("CW Stage 4 started")
 
 kmyquest.WarIsActive = 1
 kmyquest.PlayerInvolved = 1
+
+if kmyquest.CWDefender.GetValueInt() == kmyQuest.PlayerAllegiance
+	return
+endif
 
 kmyquest.CWObj.SetObjectiveCompleted(1001)
 kmyquest.CWObj.SetObjectiveCompleted(1002)

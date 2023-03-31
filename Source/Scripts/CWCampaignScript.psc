@@ -331,11 +331,11 @@ objectreference property WinterholdMapMarker auto
 Int Property CanDoCWMission03 Auto Hidden Conditional
 Int Property CanDoCWMission04 Auto Hidden Conditional
 Int Property CanDoCWMission07 Auto Hidden Conditional
-Bool Property CWFortSiegeFortDone Auto Hidden Conditional
-Bool Property CWMission01Or02Done Auto Hidden Conditional
-Bool Property CWMission06Done Auto Hidden Conditional
-Bool Property CWMission08Done Auto Hidden Conditional
-Bool Property SpanishInquisitionCompleted Auto Hidden Conditional
+Int Property CWFortSiegeFortDone Auto Hidden Conditional
+Int Property CWMission01Or02Done Auto Hidden Conditional
+Int Property CWMission06Done Auto Hidden Conditional
+Int Property CWMission08Done Auto Hidden Conditional
+Int Property SpanishInquisitionCompleted Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
@@ -425,12 +425,6 @@ Event OnInit()
 		candocwmission07 = 0
 	endif
 
-	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
-		CWFortSiegeFortDone = true
-	else
-		CWFortSiegeFortDone = false
-	endif
-
 	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
 	ResourceObjectFarm = Game.GetForm(0X0001DA07)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
 	ResourceObjectMill = Game.GetForm(0X00071C47)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
@@ -469,9 +463,13 @@ Function ResetCampaign()
 	resolveOffscreen = 0						;reset variable
 	
 	;Re-intialize CWO stuff
-	SpanishInquisitionCompleted = false
-	CWMission01Or02Done = false
-	CWFortSiegeFortDone = false
+	SpanishInquisitionCompleted = 0
+	CWMission01Or02Done = 0
+	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
+		CWFortSiegeFortDone = 1
+	else
+		CWFortSiegeFortDone = 0
+	endif
 
 EndFunction
 
@@ -1868,7 +1866,7 @@ function StopDisguiseQuest()
 	CWScript.Log("CWCampaignScript", " StopDisguiseQuest()") 
 	;schofida - revert Disguise changes
 	CWOArmorDisguise.Stop()
-	CWs.getPlayerAllegianceEnemyFaction(true).SetPlayerEnemy(true)
+	CWs.PlayerFaction.SetEnemy(CWs.getPlayerAllegianceEnemyFaction(true), false, false)
 	CWODisguiseGlobal.SetValueInt(0)
 endfunction
 
@@ -2024,6 +2022,10 @@ function CompleteCWMissions(bool failMission = false)
 			endif
 		endIf
 	endif
+	Rikke.GetActorReference().removeFromFaction(CWs.CWFieldCOActiveMissionFaction)
+	Galmar.GetActorReference().removeFromFaction(cws.CWFieldCOActiveMissionFaction)		
+	Rikke.GetActorReference().removeFromFaction(cws.CWFieldCOSuccessfulMissionFaction)
+	Galmar.GetActorReference().removeFromFaction(cws.CWFieldCOSuccessfulMissionFaction)
 endFunction
 
 bool function isCWMissionsOrSiegesRunning()
@@ -2173,7 +2175,7 @@ function registerMissionSuccess(Location HoldLocation, bool isFortBattle = False
 	;NOTE:
 	;If isFortBattle is true, then we should skip displaying the Hold Objective, UNLESS we decide put reimplement the final battles at the capitals
 	
-	if isFortBattle == False
+	if isFortBattle == False && CWs.CWDefender.GetValueInt() != CWs.PlayerAllegiance
 		DisplayHoldObjective()
 	EndIf
 	
@@ -2335,6 +2337,15 @@ function SetMonitorMajorCitySiegeStopped()
 	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForSiegeToStop")
 endfunction
 
+function SetMonitorWaitingToStartCampaign()
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingToStartNewCampaign")
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).RegisterForSingleUpdate(30.0)
+endfunction
+
+function SetMonitorDoNothing()
+	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("DoNothing")
+endfunction
+
 function StartCWOBAControllerQuest()
 	CWOBAController.Start()
 endfunction
@@ -2398,8 +2409,8 @@ function updateObjective(location HoldLocationWhoseObjectiveWeShouldUpdate, bool
 			GlobalToResetDueToFailure.SetValue(0)
 			
 			;reshow it
-			Cws.CWObj.SetObjectiveFailed(Obj, True)
-			Cws.CWObj.SetObjectiveDisplayed(Obj, abDisplayed = true, abForce = true)
+			;Cws.CWObj.SetObjectiveFailed(Obj, True)
+			;Cws.CWObj.SetObjectiveDisplayed(Obj, abDisplayed = true, abForce = true)
 
 			;displayFactionLeaderObjective()
 		
@@ -2415,18 +2426,19 @@ EndFunction
 
 ;OBSOLETE - from when there was multiple campaigns running at the same time
 function failCWObj(Location HoldWhoseObjectiveToFail)
+	CWScript.log("CWScript", "failCWObj() New CWCampFailObjective" )
+		
 	int myHoldID = CWs.GetHoldID(HoldWhoseObjectiveToFail)
 	GlobalVariable myCWObjGlobal = CWs.GetCWObjGlobal(myHoldID)
 
 	;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
 	if CWs.WhiterunSiegeFinished == False
 		CWs.WhiterunSiegeFinished = True
-		CWs.displayFactionLeaderObjective()
+		;CWs.displayFactionLeaderObjective()
 		
 	else
 		updateObjective(HoldWhoseObjectiveToFail, FailObjective = True, GlobalToResetDueToFailure = myCWObjGlobal)
 		myCWObjGlobal.setValue(0)
-		CWs.updateObjective(HoldWhoseObjectiveToFail)
 		
 	EndIf
 	
