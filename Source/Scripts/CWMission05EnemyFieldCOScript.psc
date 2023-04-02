@@ -9,9 +9,9 @@ Event OnDeath(Actor akKiller)
 	Actor FieldCOCamp = (GetOwningQuest() as cwmission05script).CWs.GetAliasCampFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
 	
 	if FieldCOHQ.IsDead() == false
-		FieldCOHQ.KillEssential()
+		FieldCOHQ.Kill(Game.GetPlayer())
 	endif
 	if FieldCOCamp.IsDead() == false
-		FieldCOCamp.KillEssential()
+		FieldCOCamp.Kill(Game.GetPlayer())
 	endif
 EndEvent
