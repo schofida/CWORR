@@ -114,6 +114,7 @@ bool optionstogglePayCrimeFaction = false
 String[] gameDisguiseList
 String[] holdsList
 Int[] holdsID
+String[] campaignPhaseChoices
 ;-- Functions ---------------------------------------
 
 function SetReinforcements()
@@ -589,7 +590,7 @@ function OnPageReset(String a_page)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyDefenderScaleMult = self.AddSlideroption("Enemy Defending Scale Mult", CWOEnemyDefenderScaleMult.GetValue() as Float, "{1}", 0)
-		optionsCampaignPhaseMax = self.AddSlideroption("Campaign Phase Max", CWOCampaignPhaseMax.GetValue() as Float, "{0}", 0)
+		optionsCampaignPhaseMax = self.AddMenuOption("Campaign Phase Max", CWOCampaignPhaseMax.GetValueInt() as string, 0)
 		optionsPartyCrashersChance = self.AddSlideroption("PARTY CRASHERS chance", CWOPCChance.GetValueInt() as Float, "{0}%", 0)
 		optionsBAChance = self.AddSlideroption("Benedict Arnold Spies Chance", CWOBAChance.GetValueInt() as Float, "{0}%", 0)
 		optionsSiChance = self.AddSlideroption("Spanish Inquisition Chance", CWOSiChance.GetValueInt() as Float, "{0}%", 0)
@@ -663,6 +664,11 @@ function OnConfigInit()
 	gameDisguiseList[1] = "Realistic"
 	gameDisguiseList[2] = "Disabled"
 
+	campaignPhaseChoices = new String[3]
+	campaignPhaseChoices[0] = 1
+	campaignPhaseChoices[1] = 3
+	campaignPhaseChoices[2] = 5
+
 endFunction
 
 function OnOptionColorAccept(Int a_option, Int a_color)
@@ -678,8 +684,11 @@ endFunction
 
 function OnOptionMenuOpen(Int a_option)
 {Called when the user selects a menu option}
-
-	if a_option == optionsStartSiege
+	if a_option == optionsCampaignPhaseMax
+		self.SetMenuDialogStartIndex(campaignPhaseChoices.Find(CWOCampaignPhaseMax.GetValueInt() as string))
+		self.SetMenuDialogDefaultIndex(1)
+		self.SetMenuDialogOptions(campaignPhaseChoices)
+	elseif a_option == optionsStartSiege
 		self.SetMenuDialogStartIndex(0)
 		self.SetMenuDialogDefaultIndex(0)
 		self.SetMenuDialogOptions(holdsList)
@@ -697,19 +706,31 @@ endFunction
 function OnOptionMenuAccept(Int a_option, Int a_index)
 {Called when the user accepts a new menu entry}
 
-	if a_option == optionsStartSiege
+	if a_option == optionsCampaignPhaseMax
+		CWOCampaignPhaseMax.SetValueInt(campaignPhaseChoices[a_index] as int)
+	elseif a_option == optionsStartSiege
 		int holdID = holdsID[a_index]
-		CWs.CWDebugForceHold.SetValueInt(holdID)
-		if !CWs.CWCampaign.IsRunning()
-			CWs.StartNewCampaign()
-		else
-			CompleteRunningCampaign()
+		if CWs.CWcontestedHold.GetValueInt() == holdID
+			Debug.Notification("Cannot set to current contested hold.")
+		elseif CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
+			Debug.Notification("You are on the final contested hold. Cannot set to .")
+			return
+		elseif CWs.GetHoldOwner(holdID) == CWs.PlayerAllegiance
+			Debug.Notification("Cannot set to a hold you already own.")
+			return
 		endif
+		CWs.CWDebugForceHold.SetValueInt(holdID)
+		Debug.Notification("Setting next campagin hold to " + holdsList[a_index])
 	elseIf a_option == optionsWinHold
 		int holdID = holdsID[a_index]
+		if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
+			Debug.Notification("You are on the final contested hold. switch owners.")
+			return
+		endif
 		if CWS.CWcontestedHold.GetValueInt() == holdID
 			CompleteRunningCampaign()
 		else
+			Debug.Notification("Switching owner of " + holdsList[a_index])
 			CWS.SetHoldOwnerByInt(holdID, CWs.getOppositeFactionInt(CWs.GetHoldOwner(holdID)))
 		endif
 	elseif a_option == optionsDisguiseGameType
