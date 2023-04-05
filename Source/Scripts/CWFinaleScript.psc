@@ -86,6 +86,8 @@ LeveledItem Property CWFinaleFactionLeaderSwordList Auto
 
 Faction Property CWFinaleTemporaryAllies  Auto  
 
+ReferenceAlias Property SABETME3Soldier  Auto  
+
 Function PlayerEnteredCastle()
 	setStage(100)
 	
@@ -100,6 +102,7 @@ Function PlayerEnteredCastle()
 	makeMeStopCombat(Second)
 	makeMeStopCombat(EnemyLeader)
 	makeMeStopCombat(EnemySecond)
+	makeMeStopCombat(SABETME3Soldier)
 	
 	PlayerActor.StopCombat()
 	PlayerActor.StopCombatAlarm()
@@ -119,6 +122,19 @@ Function PlayerEnteredCastle()
 	Game.DisablePlayerControls()
 
 	Utility.Wait(PauseBeforeScene)
+
+	bool sabetme3 = CWs.CWcampaignS.PlayerAllegianceLastStand()
+
+	if sabetme3
+		; Have the statue face the player
+		ObjectReference SABETME3SoldierRef = SABETME3Soldier.GetRef()
+		Actor PlayerRef = Game.GetPlayer()
+		float zOffset = SABETME3SoldierRef.GetHeadingAngle(PlayerRef)
+		SABETME3SoldierRef.SetAngle(SABETME3SoldierRef.GetAngleX(), SABETME3SoldierRef.GetAngleY(), SABETME3SoldierRef.GetAngleZ() + zOffset)
+		ObjectReference LeaderRef = Leader.GetRef()
+		zOffset = PlayerRef.GetHeadingAngle(LeaderRef)
+		PlayerRef.SetAngle(PlayerRef.GetAngleX(), PlayerRef.GetAngleY(), PlayerRef.GetAngleZ() + zOffset)
+	endif
 	
 	startSceneA()
 	
@@ -162,15 +178,20 @@ function EnemySecondDied()
 	makeMeStopCombat(Leader)
 	makeMeStopCombat(Second)
 	makeMeStopCombat(EnemyLeader)
+	makeMeStopCombat(SABETME3Soldier)
 	
 	PlayerActor.StopCombat()
 	PlayerActor.StopCombatAlarm()
 
 	CWFinaleSolitudeSceneA.stop()
 	
+	if CWs.CwCampaignS.PlayerAllegianceLastStand()
+		EnemyLeader.GetActorRef().Kill()
+	else
 	Utility.Wait(PauseBeforeScene)
 	
 	startSceneB()
+	endif
 	
 EndFunction
 
@@ -226,7 +247,9 @@ EndFunction
 function makeMeStopCombat(ReferenceAlias ActorAliasToChillOut)
 
 	Actor ActorToChillOut = ActorAliasToChillOut.GetActorReference()
-
+	if ActorToChillOut == None
+		return
+	endif
 	ActorToChillOut.EvaluatePackage()	;should eval to a ignore combat package	
 	ActorToChillOut.stopCombat()
 	ActorToChillOut.StopCombatAlarm()

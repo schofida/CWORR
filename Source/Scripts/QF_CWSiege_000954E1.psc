@@ -1941,9 +1941,12 @@ else
 	;schofida - Oh yes we are
 	;START ESCORT JARL TO SAFETY QUEST (this also happens in stage 100)
 	;schofida - The jarl safety quest does not happen :( but it sets other needed stuff
- 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
-	kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
-
+ 	if !kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand() || ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
+		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, calling FailDefenseQuest()")	;*** WRITE TO LOG
+		kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
+	else
+		kmyQuest.CwSiegeObj.SetObjectiveDisplayed(4200)
+	endif
 
 
 

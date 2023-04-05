@@ -1468,11 +1468,11 @@ kmyquest.DisableInteriorDefenders()
 ;and start the CWCitizensFlee quest to put the citizens in their editor locations
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
 	CWScript.Log("CWFortSiege", "Stage 0: SetInfinitePoolsOnCWReinforcementScript")
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = false
 	if kmyquest.CWs.IsPlayerAttacking(Alias_Fort.GetLocation())
 		;schofida - this is the finale. Since these are empty objectives nothing should show... I hope
 		((self as Quest) as cwreinforcementcontrollerscript).SetInfinitePools(true, true)
-		((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
-		((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = false
 		((self as quest) as cwreinforcementcontrollerscript).ReinforcementInterval = 2
 	Else
 		kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
@@ -1719,6 +1719,14 @@ kmyquest.StartCombatSoundsLoop()
 
 kmyQuest.MUSCombatCivilWar.Add()
 
+if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
+	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
+	Alias_SpecialCityDoorExterior.GetReference().BlockActivation()
+	Alias_JarlsHouseDoor.GetReference().BlockActivation()
+endif
+
 ;EVP EVERYONE
 Alias_Attacker1.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
@@ -1827,7 +1835,12 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
-if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
+if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	Alias_SpecialCityDoorExterior.GetReference().BlockActivation(false)
+	Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
+endif
+
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ( ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 && kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand())
 	;CWO Set proper CW flags
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
 		((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(99)
@@ -2034,6 +2047,9 @@ kmyQuest.CWs.CWCampaignS.WinterholdMapMarker.Enable()
 
 if Alias_JarlsHouseDoor.GetReference()
 Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
+endif
+if Alias_SpecialCityDoorExterior.GetReference()
+	Alias_SpecialCityDoorExterior.GetReference().BlockActivation(false)
 endif
 
 kmyquest.CWs.UnregisterEventHappening(Alias_Fort.GetLocation())

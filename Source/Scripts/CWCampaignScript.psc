@@ -2607,3 +2607,7 @@ function UpdateMarkerAndSoldierAngles(int MarkerID, int SoldierID, float rotZ)
 	Marker.SetAngle(0.0, 0.0, rotZ)
 	Soldier.SetAngle(0.0, 0.0, rotZ)
 endFunction
+
+function CWOMonitorRecover()
+	(CWOStillABetterEndingMonitor.GetAlias(0) As CWOSABETME3Monitor).Recover()
+EndFunction

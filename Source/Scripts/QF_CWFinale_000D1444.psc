@@ -502,13 +502,47 @@ ReferenceAlias Property Alias_Door9 Auto
 ReferenceAlias Property Alias_Door10 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY SABETME3SonsSoldier
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SABETME3SonsSoldier Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SABETME3ImperialSolder
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SABETME3ImperialSolder Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SABETME3SolitudeMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SABETME3SolitudeMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SABETME3WindhelmMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SABETME3WindhelmMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SABETME3ImperialSolder
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SABETME3Soldier Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_8
 Function Fragment_8()
+;BEGIN AUTOCAST TYPE CWFinaleScript
+Quest __temp = self as Quest
+CWFinaleScript kmyQuest = __temp as CWFinaleScript
+;END AUTOCAST
 ;BEGIN CODE
 ;SECOND DIED
 ;-- see SecondDied()
 
-; CWScript.Log("CWFinale", "Stage 200")
+CWScript.Log("CWFinale", "Stage 200")
+
+kmyquest.CWs.CWCampaignS.StopDisguiseQuest()
+utility.WAIT(1.0)
+kmyquest.CWs.PlayerFaction.SetEnemy(kmyquest.CWs.getPlayerAllegianceEnemyFaction(true), true, true)
+
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -547,6 +581,10 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 
 CWScript.Log("CWFinale", "Stage 210")
 
+if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	return
+endif
+
 ;complete the "Force EnemyLeader to surrender" objectives
 kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4001)
 kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4002)
@@ -569,6 +607,8 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;SCENE END COMBAT WITH ENEMY SECOND
 ;ALSO SET IF PLAYER HITS EnemyLeader or EnemySecond
 
+bool sabetme3 = kmyQuest.CWs.CWcampaignS.PlayerAllegianceLastStand()
+
 CWScript.Log("CWFinale", "Stage 150")
 
 kmyquest.CWFinaleSolitudeSceneA.stop()
@@ -587,11 +627,21 @@ Alias_Second.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
 Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
+Alias_SABETME3Soldier.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
+
+if sabetme3
+EnemySecondActor.StartCombat(Alias_SABETME3Soldier.GetActorReference())
+else
 EnemySecondActor.StartCombat(Game.GetPlayer())
+endif
 EnemySecondActor.StartCombat(Alias_Leader.GetActorReference())
 EnemySecondActor.StartCombat(Alias_Second.GetActorReference())
 
+if sabetme3
+EnemyLeaderActor.StartCombat(Alias_SABETME3Soldier.GetActorReference())
+else
 EnemyLeaderActor.StartCombat(Game.GetPlayer())
+endif
 EnemyLeaderActor.StartCombat(Alias_Second.GetActorReference())
 EnemyLeaderActor.StartCombat(Alias_Leader.GetActorReference())
 
@@ -632,22 +682,24 @@ if !kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
 	;COMPLETE THE SIEGE QUEST
 	kmyquest.CWs.CWSiegeObj.setStage(9000)
 
-	if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
-
-		kmyquest.CWFinaleSolitudeSceneC.Start()
-	
-	else		;assume Windhelm
-	
-		kmyquest.CWFinaleWindhelmSceneC.Start()
-	
-	endif
 else
+	;COMPLETE THE SIEGE QUEST
+	kmyquest.CWs.CWSiegeObj.setStage(8999)
 	SetStage(340)
 endif
 
+if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
+
+	kmyquest.CWFinaleSolitudeSceneC.Start()
+
+else		;assume Windhelm
+
+	kmyquest.CWFinaleWindhelmSceneC.Start()
+
+endif
 ;END CODE
 EndFunction
-;END FRAGMENT
+;END FRAGMENT	
 
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
@@ -658,8 +710,13 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 CWScript.Log("CWFinale", "Stage 10")
 
+bool sabetme3 = kmyQuest.CWs.CWcampaignS.PlayerAllegianceLastStand()
+
+if !sabetme3
+alias_sabetme3soldier.TryToDisable()
 Alias_Leader.GetActorReference().IgnoreFriendlyHits()
 Alias_Second.GetActorReference().IgnoreFriendlyHits()
+endif
 
 Alias_Leader.TryToMoveTo(Alias_LeaderMarker1.GetReference())
 Alias_Second.TryToMoveTo(Alias_Leader.GetReference())
@@ -667,8 +724,9 @@ Alias_Second.TryToMoveTo(Alias_Leader.GetReference())
 Alias_EnemyLeader.TryToMoveTo(Alias_EnemyLeaderMarker.GetReference())
 Alias_EnemySecond.TryToMoveTo(Alias_EnemySecondMarker.GetReference())
 
-Alias_EnemyLeader.GetActorReference().SetCrimeFaction(None)
-Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
+if sabetme3
+return
+endif
 
 if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
@@ -676,7 +734,7 @@ if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
 else
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
 	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListSons
-endif	
+endif
 
 ;END CODE
 EndFunction
@@ -691,10 +749,12 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 ;leader told player to come out and give speech with him
 if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	kmyQuest.SetStage(400)
 	kmyquest.CWs.CWObj.SetStage(254)
 	kmyquest.CWs.CWCampaignS.StopDisguiseQuest()
 	utility.WAIT(3.0)
 	kmyquest.CWs.PlayerFaction.SetEnemy(kmyquest.CWs.getPlayerAllegianceEnemyFaction(true), true, true)
+	kmyquest.CWs.CWCampaignS.CWOMonitorRecover()
 	kmyquest.CWs.CWFin.Start()   ;start the post questline dialogue quest
 else
 	;give player sword if not given it to him before to kill the enemy leader
@@ -724,11 +784,7 @@ if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 	kmyquest.CWs.SolitudeLocation.SetKeywordData(kmyquest.CWs.CWOwner, kmyQuest.CWs.CWDebugForceAttacker.GetValueInt())
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(kmyquest.CWs.HaafingarHoldLocation, true, false)
 	Alias_JarlSolitude.GetActorReference().MoveTo(Alias_DefeatedJarlMarker.GetReference())
-	if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
-		kmyQuest.SetStage(400)
-	else
-		kmyquest.CWFinaleSolitudeSceneD.Start()
-	endif
+	kmyquest.CWFinaleSolitudeSceneD.Start()
 
 	
 	
@@ -747,12 +803,7 @@ else		;assume windhelm
 		EndIf
 	EndIf
 	
-	if kmyquest.CWs.CWCampaignS.PlayerAllegianceLastStand()
-		kmyQuest.SetStage(400)
-	else
-		kmyquest.CWFinaleWindhelmSceneD.Start()
-	endif
-
+	kmyquest.CWFinaleWindhelmSceneD.Start()
 
 
 
@@ -816,12 +867,17 @@ EndFunction
 
 ;BEGIN FRAGMENT Fragment_20
 Function Fragment_20()
+;BEGIN AUTOCAST TYPE CWFinaleScript
+Quest __temp = self as Quest
+CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 ;Scene Done
+bool sabetme3 = kmyQuest.CWs.CWcampaignS.PlayerAllegianceLastStand()
 
+if !sabetme3
 Alias_Leader.GetActorReference().IgnoreFriendlyHits(false)
 Alias_Second.GetActorReference().IgnoreFriendlyHits(false)
-
+endif
 
 ;stop() -- now happens in CWFinalePlayerScript
 ;END CODE
@@ -839,13 +895,16 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;DOORS SHOULD NOW BE LOCKED UNTIL THE SCENE IS DONE
 ;-- see CWFinaleScript PlayerEnteredCastle() and CWFinaleDoorScript OnActivate()
 
-; CWScript.Log("CWFinale", "Stage 100")
+CWScript.Log("CWFinale", "Stage 100")
+
+Alias_EnemyLeader.GetActorReference().SetCrimeFaction(None)
+Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
 
 sound.StopInstance(kmyQuest.CWFortSiegeS.AMBDistantBattleSoundInstance)
 ;END CODE
 EndFunction
 ;END FRAGMENT
-
+	
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 Faction Property Favor104QuestGiverFaction Auto ; USKP 2.0.4

@@ -23,6 +23,8 @@ ObjectReference property TG05UnconsciousAudioRef auto
 imagespacemodifier property pStrikeandFall auto
 idle property pKnockdown auto
 Quest property VampireQuest auto
+ObjectReference property WindhelmMarker auto
+ObjectReference property SolitudeMarker auto
 
 ;-- Variables ---------------------------------------
 Bool WeBeImperials
@@ -42,21 +44,20 @@ Float HealthPercentage
 
 ; Skipped compiler generated GotoState
 
-Event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	CWScript.Log("CWOSABETME3Monitor", " OnLocationChange()") 
-	if !CWs.CWCampaignS.isCWMissionsOrSiegesRunning()
-		GetOwningQuest().Stop()
-	endIf
-EndEvent
-
 Event OnEnterBleedout()
 	CWScript.Log("CWOSABETME3Monitor", " OnEnterBleedout()") 
+	((GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest as CWReinforcementControllerScript).StopSpawning()
+	ThisIsFinale = false
+	if !FigureItOut()
+		PlayerRef.KillEssential()
+		GetOwningQuest().Stop()
+		return
+	endif
 	if WerewolfQuest.IsRunning()
 		(WerewolfQuest as playerwerewolfchangescript).ShiftBack()
 	elseif VampireQuest.IsRunning()
 		(VampireQuest as DLC1PlayerVampireChangeScript).ShiftBack()
 	endIf
-	((GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest as CWReinforcementControllerScript).StopSpawning()
 	pStrikeandFall.Apply(1.00000)
 	game.DisablePlayerControls(true, true, true, true, true, true, true, false, 0)
 	PlayerRef.DamageAv("Health", 99999 as Float)
@@ -65,6 +66,14 @@ Event OnEnterBleedout()
 	game.enablefasttravel(true)
 	utility.wait(2 as Float)
 	PlayerRef.moveto(WhereweGoinTo, 0.000000, 0.000000, 0.000000, true)
+	if !ThisIsFinale
+		Recover()
+	else
+		CWF.PlayerEnteredCastle()
+	endif
+endEvent
+
+function Recover()
 	utility.wait(2 as Float)
 	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 	game.DisablePlayerControls(true, true, false, false, false, true, true, false, 0)
@@ -76,15 +85,7 @@ Event OnEnterBleedout()
 	utility.wait(1.50000)
 	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 	self.GetOwningQuest().Stop()
-endEvent
-
-function OnInit()
-	CWScript.Log("CWOSABETME3Monitor", " OnInit()") 
-	if !CWs.CWCampaignS.isCWMissionsOrSiegesRunning() || !FigureItOut()
-		GetOwningQuest().Stop()
-		return
-	endIf
-endFunction
+EndFunction
 
 bool function FigureItOut()
 	CWScript.Log("CWOSABETME3Monitor", " FigureItOut()") 
@@ -92,7 +93,12 @@ bool function FigureItOut()
 		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
 			WhereweGoinTo = CWs.MilitaryCampWinterholdImperialMapMarker
 		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
-			WhereweGoinTo = CWs.MilitaryCampHjaalmarchImperialMapMarker ; schofida Edit
+			if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
+				WhereweGoinTo = SolitudeMarker
+				ThisIsFinale = true
+			else
+				WhereweGoinTo = CWs.MilitaryCampHjaalmarchImperialMapMarker ; schofida Edit
+			endif
 		elseIf PlayerRef.IsInLocation(CWS.HjaalmarchHoldLocation)
 			WhereweGoinTo = CWS.MilitaryCampReachImperialMapMarker		; schofida Edit
 		elseIf PlayerRef.IsInLocation(CWS.WhiterunHoldLocation)
@@ -112,7 +118,12 @@ bool function FigureItOut()
 		endIf
 	elseIf CWS.PlayerAllegiance == CWS.iSons
 		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
-			WhereweGoinTo = CWs.MilitaryCampWinterholdSonsMapMarker ; schofida - final scene no longer occurs for losing battle
+			if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
+				WhereweGoinTo = WindhelmMarker
+				ThisIsFinale = true
+			else
+				WhereweGoinTo = CWs.MilitaryCampWinterholdSonsMapMarker ; schofida - final scene no longer occurs for losing battle
+			endif
 		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
 			WhereweGoinTo = CWs.MilitaryCampHjaalmarchSonsMapMarker
 		elseIf PlayerRef.IsInLocation(CWS.WinterholdHoldLocation)
