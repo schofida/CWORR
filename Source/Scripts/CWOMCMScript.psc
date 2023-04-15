@@ -115,6 +115,8 @@ String[] gameDisguiseList
 String[] holdsList
 Int[] holdsID
 String[] campaignPhaseChoices
+
+string CWOCampaignPhaseMaxVal = ""
 ;-- Functions ---------------------------------------
 
 function SetReinforcements()
@@ -437,6 +439,9 @@ endevent
 function OnPageReset(String a_page)
 {Called when a new page is selected, including the initial empty page}
 	optionsCWOUninstallToggle = !CWOQuestMonitor.IsRunning()
+	if CWOCampaignPhaseMaxVal == ""
+		CWOCampaignPhaseMaxVal = CWOCampaignPhaseMax.GetValueInt() as string
+	endif
 	if a_page == "CWO Debug"
 		SetCursorFillMode(self.LEFT_TO_RIGHT)
 		if CW.IsRunning()
@@ -590,7 +595,7 @@ function OnPageReset(String a_page)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyDefenderScaleMult = self.AddSlideroption("Enemy Defending Scale Mult", CWOEnemyDefenderScaleMult.GetValue() as Float, "{1}", 0)
-		optionsCampaignPhaseMax = self.AddMenuOption("Campaign Phase Max", CWOCampaignPhaseMax.GetValueInt() as string, 0)
+		optionsCampaignPhaseMax = self.AddMenuOption("Campaign Phase Max", CWOCampaignPhaseMaxVal, 0)
 		optionsPartyCrashersChance = self.AddSlideroption("PARTY CRASHERS chance", CWOPCChance.GetValueInt() as Float, "{0}%", 0)
 		optionsBAChance = self.AddSlideroption("Benedict Arnold Spies Chance", CWOBAChance.GetValueInt() as Float, "{0}%", 0)
 		optionsSiChance = self.AddSlideroption("Spanish Inquisition Chance", CWOSiChance.GetValueInt() as Float, "{0}%", 0)
@@ -685,7 +690,7 @@ endFunction
 function OnOptionMenuOpen(Int a_option)
 {Called when the user selects a menu option}
 	if a_option == optionsCampaignPhaseMax
-		self.SetMenuDialogStartIndex(campaignPhaseChoices.Find(CWOCampaignPhaseMax.GetValueInt() as string))
+		self.SetMenuDialogStartIndex(campaignPhaseChoices.Find(CWOCampaignPhaseMaxVal))
 		self.SetMenuDialogDefaultIndex(1)
 		self.SetMenuDialogOptions(campaignPhaseChoices)
 	elseif a_option == optionsStartSiege
@@ -708,6 +713,8 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 
 	if a_option == optionsCampaignPhaseMax
 		CWOCampaignPhaseMax.SetValueInt(campaignPhaseChoices[a_index] as int)
+		CWOCampaignPhaseMaxVal = campaignPhaseChoices[a_index]
+		ForcePageReset()
 	elseif a_option == optionsStartSiege
 		int holdID = holdsID[a_index]
 		if CWs.CWcontestedHold.GetValueInt() == holdID
@@ -728,7 +735,7 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 			return
 		endif
 		if CWS.CWcontestedHold.GetValueInt() == holdID
-			CompleteRunningCampaign()
+			CompleteRunningCampaign(true)
 		else
 			Debug.Notification("Switching owner of " + holdsList[a_index])
 			CWS.SetHoldOwnerByInt(holdID, CWs.getOppositeFactionInt(CWs.GetHoldOwner(holdID)))
@@ -894,14 +901,20 @@ function UninstallCWO()
 	self.Stop()
 endfunction
 
-function CompleteRunningCampaign()
+function CompleteRunningCampaign(bool failQuests = false)
 	debug.notification("Completing Missions if there any running")
-	CWs.CWCampaignS.CompleteCWMissions()
+	CWs.CWCampaignS.CompleteCWMissions(failQuests)
 	debug.notification("Starting Hold Siege")
 	CWs.CWCampaignS.StartResolutionMission()
-	Utility.Wait(20.0)
+	while !CWs.CWSiegeS.IsRunning() && !CWs.CWFortSiegeCapital.IsRunning()
+		Utility.Wait(1.0)
+	endWhile
 	debug.notification("Completing Hold Siege")
-	CWs.CWCampaignS.CompleteCWSieges()
+	if failQuests
+		CWs.CWCampaignS.FailCWSieges()
+	else
+		CWs.CWCampaignS.CompleteCWSieges()
+	endif
 	debug.notification("Hold Siege Completed")
 endfunction
 
