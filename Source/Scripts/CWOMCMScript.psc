@@ -906,9 +906,14 @@ function CompleteRunningCampaign(bool failQuests = false)
 	CWs.CWCampaignS.CompleteCWMissions(failQuests)
 	debug.notification("Starting Hold Siege")
 	CWs.CWCampaignS.StartResolutionMission()
-	while !CWs.CWSiegeS.IsRunning() && !CWs.CWFortSiegeCapital.IsRunning()
+	int wait = 0
+	while !CWs.CWSiegeS.IsRunning() && !CWs.CWFortSiegeCapital.IsRunning() && wait < 30
 		Utility.Wait(1.0)
+		wait = wait + 1
 	endWhile
+	if wait >= 30
+		debug.notification("Waited 30 seconds to start the hold siege put it never started. Please notify author.")
+	endif
 	debug.notification("Completing Hold Siege")
 	if failQuests
 		CWs.CWCampaignS.FailCWSieges()
