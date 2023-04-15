@@ -1474,8 +1474,6 @@ function FailDefenseQuest(locationAlias CityAlias)
 	;Fail the campaign
 	CWs.CWCampaignS.FailedMission = 1
 
-	
-	
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
 	if !cws.cwfinale.isrunning()
 		CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
