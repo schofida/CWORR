@@ -1781,7 +1781,7 @@ Function StartMissions()
 		utility.wait(2.0)
 		bool cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
 		if !cwMission1Started && !cwMission2Started
-			Debug.Notification("Warning! Could not start any radient missions. Commencing with city siege.")
+			Debug.Notification("Warning! Could not start any radiant missions. Commencing with city siege.")
 			AdvanceCampaignPhase(ResolutionPhase)
 			StartResolutionMission()
 		elseif !cwMission1Started || !cwMission2Started

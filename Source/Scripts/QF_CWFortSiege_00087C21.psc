@@ -1522,7 +1522,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
-	debug.Notification("Getting CW Siege into position. Pleae wait before fast traveling...")
+	debug.Notification("Getting CW Siege into position. Please wait before fast traveling...")
 endif
 ;CWO Also happening in Stage 0 but double setting here just in case
 if Alias_Hold.GetLocation() == none && kmyQuest.CWs.CWContestedHold.GetValueInt() > 0

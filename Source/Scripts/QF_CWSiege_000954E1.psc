@@ -3041,7 +3041,7 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 1 starting")	
 
 if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
-	debug.Notification("Getting CW Siege into position. Pleae wait before fast traveling...")
+	debug.Notification("Getting CW Siege into position. Please wait before fast traveling...")
 endif
 Alias_WhiterunCompanionsTrigger01.GetReference().Disable()
 Alias_WhiterunCompanionsTrigger02.GetReference().Disable()
