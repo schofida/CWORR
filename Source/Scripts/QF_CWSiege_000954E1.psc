@@ -3309,7 +3309,7 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 elseif cityVar == kmyquest.CWs.SolitudeLocation
 
-	if kmyQuest.CWS.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0 || !kmyQuest.IsAttack()
+	if kmyQuest.CWS.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0
 		Alias_SolitudeGateLever1.TryToEnable()
 		Alias_SolitudeGateLever1.TryToReset()
 		kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Enable()
@@ -3370,7 +3370,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
-	if kmyQuest.CWS.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0 || !kmyQuest.IsAttack()
+	if kmyQuest.CWS.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 0
 		Alias_WindhelmGateLever1.TryToEnable()
 		Alias_WindhelmGateLever1.TryToReset()
 		Alias_WindhelmGateLever2A.TryToEnable()

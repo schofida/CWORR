@@ -1616,6 +1616,15 @@ function setupInteriorSiege(Location SiegeLocation, ObjectReference FieldCORef, 
 	CWs.CWFortSiegeSpecialStart.SendStoryEventAndWait(SiegeLocation, FieldCORef, CityCenterMarker, aiValue1 = 3)
 	CWs.CWFinaleStart.SendStoryEvent(SiegeLocation)
 
+	if CWs.CWCampaignS.PlayerAllegianceLastStand()
+		if CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 1 && SiegeLocation == CWs.SolitudeLocation
+			SetStage(50)
+		elseif CWs.CWCampaignS.CWODisableWindhelmSiege.GetValueInt() == 1 && SiegeLocation == CWs.WindhelmLocation
+			SetStage(50)
+		endif
+	endif
+
+
 EndFunction
 
 function ToggleOffComplexWIInteractions(LocationAlias LocationAliasToToggle)

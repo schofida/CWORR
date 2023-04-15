@@ -1734,6 +1734,9 @@ if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand() && !kmyQuest.CWs.CWSiege
 	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
+	if kmyQuest.CWs.CWSiegeS.GetStage() != 60
+		kmyQuest.CWs.CWFinale.SetStage(10)
+	endif
 	(kmyQuest.CWs.CWFinale as CWFinaleScript).LockDoors()
 endif
 
