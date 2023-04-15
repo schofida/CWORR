@@ -208,7 +208,6 @@ debug.traceConditional("CWMission05 stage 255", kmyquest.CWs.debugon.value)
 	Actor FieldCOHQ = kmyQuest.CWs.GetAliasHQFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
 	Actor FieldCOCamp = kmyQuest.CWs.GetAliasCampFieldCOForHold(currentHold, aliasAllegiance).GetActorReference()
 	FieldCOHQ.Disable(false)
-	FieldCOCamp.Disable(false)
 
 	kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
 ;END CODE
@@ -235,7 +234,7 @@ debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
 
 	Alias_EnemyFieldCO.GetActorReference().GetActorBase().SetEssential(false)
 
-	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef()
+	if FieldCOCamp == Alias_EnemyFieldCO.GetActorRef() && !kmyQuest.CWs.CWCampaignS.IsEnemyCampEnabled()
 		kmyQuest.CWs.CWCampaignS.EnableCamp()
 	endif
 ;END CODE
@@ -310,7 +309,7 @@ Quest __temp = self as Quest
 cwmission05script kmyQuest = __temp as cwmission05script
 ;END AUTOCAST
 ;BEGIN CODE
-debug.traceConditional("CWMission05 stage 201", kmyquest.CWs.debugon.value)
+debug.traceConditional("CWMission05 stage 205", kmyquest.CWs.debugon.value)
 	kmyQuest.FailAllObjectives()
 	kmyQuest.FlagFieldCOWithMissionResultFaction(5, true)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
