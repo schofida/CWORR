@@ -7,7 +7,9 @@ Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
 GetOwningQuest().setStage(50)
-(GetOwningQuest() as CWScript).CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
+if (GetOwningQuest() as CWScript).CWCampaignS.CWOSendForPlayerQuest.GetStage() == 10
+    (GetOwningQuest() as CWScript).CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

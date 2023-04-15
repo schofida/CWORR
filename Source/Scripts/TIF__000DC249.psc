@@ -14,7 +14,7 @@ Endif
 if CWs.CW03.IsRunning()
 	CWs.CW03.SetStage(210)
 endif
-if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning() && (GetOwningQuest() as CWScript).CWCampaignS.CWOSendForPlayerQuest.GetStage() == 10
 	CWs.CWCampaignS.CWOSendForPlayerQuest.SetStage(30)
 Else
 	CWs.CWSiegeS.SetStage(1)

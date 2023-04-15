@@ -1,7 +1,7 @@
 Scriptname CWSiegeGeneralScript extends ReferenceAlias  
 
 ;-- Properties --------------------------------------
-int DistanceToPlayerNeeded = 500
+int DistanceToPlayerNeeded = 250
 int stageToSetWhenPlayerNear = 10
 
 bool FightingForAwhile
@@ -15,19 +15,20 @@ state CheckDistanceToPlayer
 
 		Quest myOwningQuest = GetOwningQuest()
 		CWSiegeScript CWSiegeS = (myOwningQuest as CWSiegeScript)
-		ObjectReference SelfRef = GetReference()
+		Actor SelfRef = GetActorReference()
+		ActorBase SelfRefBase = SelfRef.GetActorBase()
 		
-		ReferenceAlias Tullius = CWSiegeS.CWs.Tullius
-		ReferenceAlias Rikke = CWSiegeS.CWs.Rikke
-		ReferenceAlias Ulfric = CWSiegeS.CWs.Ulfric
-		ReferenceAlias Galmar = CWSiegeS.CWs.Galmar
-		if selfRef == Rikke.getactorreference() || SelfRef == Galmar.getactorreference() || selfRef == Ulfric.GetActorReference() || selfRef == Tullius.GetActorReference() 	; Reddit BugFix #14
+		ActorBase Tullius = CWSiegeS.CWs.CWCampaignS.CWBattleTulliusBase
+		ActorBase Rikke = CWSiegeS.CWs.CWCampaignS.CWBattleRikkeBase
+		ActorBase Ulfric = CWSiegeS.CWs.CWCampaignS.CWBattleUlfricBase
+		ActorBase Galmar = CWSiegeS.CWs.CWCampaignS.CWBattleGalmarBase
+		if SelfRefBase == Rikke || SelfRefBase == Galmar || SelfRefBase == Ulfric || SelfRefBase == Tullius	; Reddit BugFix #14
 			self.UnregisterForUpdate()
 		else
 			if SelfRef.GetDistance(Game.GetPlayer()) <= DistanceToPlayerNeeded
 			; If the player is near the General then set stage 10
-	; 			CWScript.Log("CWSiegeGeneralScript", self + "OnUpdate() - player within distance to general, setting stage:" + stageToSetWhenPlayerNear)
-				;myOwningQuest.setStage(stageToSetWhenPlayerNear)
+	 			CWScript.Log("CWSiegeGeneralScript", self + "OnUpdate() - player within distance to general, setting stage:" + stageToSetWhenPlayerNear)
+				myOwningQuest.setStage(stageToSetWhenPlayerNear)
 				
 				UnregisterForUpdate()
 			EndIf

@@ -9,6 +9,7 @@ ReferenceAlias property CityCenterMarkerAlias auto
 locationalias property CapitalHQ auto
 ReferenceAlias property RiftenMarker auto
 actor property PlayerRef auto
+ReferenceAlias Property FieldCO Auto
 
 ;-- Variables ---------------------------------------
 Objectreference CWOMarker
@@ -19,43 +20,33 @@ Location CWOMarkerLocation
 
 function OnLocationChange(Location akOldLoc, Location akNewLoc)
 
-	if akNewLoc == CityAlias.getLocation()
-		if CWS.CWSiegeS.isRunning()
-			IsInArea = true
-		endIf
+	if akNewLoc == CityAlias.getLocation() && CWS.CWSiegeS.isRunning() && FieldCO.GetActorRef().IsDead()
+		IsInArea = true
+		self.RegisterForSingleUpdate(1.50000)
 	else
 		IsInArea = false
+		self.UnRegisterForUpdate()
 	endIf
 endFunction
 
 function OnUpdate()
 
 	if IsInArea == true
-		if PlayerRef.isinlocation(CityAlias.getLocation()) && self.GetOwningQuest().GetStage() == 10 ; Reddit BugFix #9
-			if PlayerRef.getworldspace() == RiftenMarker.getreference().getworldspace()
-				GetOwningQuest().setstage(30)
-				self.UnRegisterForUpdate()
-			elseIf PlayerRef.getworldspace() == MarkarthMarker.getreference().getworldspace()
-				GetOwningQuest().setstage(30)
-				self.UnRegisterForUpdate()
-			elseIf PlayerRef.getworldspace() == WhiterunMarker.getreference().getworldspace()
-				GetOwningQuest().setstage(30)
-				self.UnRegisterForUpdate()
-			else
-				self.RegisterForSingleUpdate(1.50000)
-			endIf
+		if PlayerRef.isinlocation(CityAlias.getLocation()) && \
+			self.GetOwningQuest().GetStage() == 10 && \
+			(PlayerRef.getworldspace() == RiftenMarker.getreference().getworldspace() || \
+				PlayerRef.getworldspace() == MarkarthMarker.getreference().getworldspace() || \
+				PlayerRef.getworldspace() == WhiterunMarker.getreference().getworldspace())
+			GetOwningQuest().setstage(30)
+			self.UnRegisterForUpdate()
 		else
 			self.RegisterForSingleUpdate(1.50000)
 		endIf
 	else
-		self.RegisterForSingleUpdate(1.50000)
+		self.UnRegisterForUpdate()
 	endIf
 endFunction
 
 ; Skipped compiler generated GetState
-
-function OnInit()
-	self.RegisterForSingleUpdate(10 as Float)
-endFunction
 
 ; Skipped compiler generated GotoState
