@@ -721,9 +721,6 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 CWScript.Log("CWFinale", "Stage 10")
 
-kmyQuest.MainGateInterior = Alias_MainGateInterior
-kmyQuest.DisableFastTravelTrigger = Alias_DisableFastTravelTrigger
-
 bool sabetme3 = kmyQuest.CWs.CWcampaignS.PlayerAllegianceLastStand()
 
 if !sabetme3
