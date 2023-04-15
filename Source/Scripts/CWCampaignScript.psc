@@ -313,6 +313,11 @@ ReferenceAlias Property Garrison4EnableSons Auto
 ;There is a chance that Ulfric or Tullius will join the sieges. These references are the unused defensive references outside of Solitude and Windhelm
 Actor Property CWBattleTullius Auto
 Actor Property CWBattleUlfric Auto
+;Bases for the Battle Actors
+ActorBase Property CWBattleTulliusBase Auto
+ActorBase Property CWBattleUlfricBase Auto
+ActorBase Property CWBattleRikkeBase Auto
+ActorBase Property CWBattleGalmarBase Auto
 ;Lydia
 Actor Property HousecarlWhiterunRef Auto
 ;Object references for Sieges
@@ -1169,7 +1174,7 @@ EndFunction
 
 
 
-Function StartResolutionMission()
+Function StartResolutionMission(LocationAlias paramCapitalToStart = none, ObjectREference paramCampaignStartMarkerToStart = none, ObjectReference paramFieldCoToStart = none)
 {Starts the proper resolution mission, checking if the Capital is a city or not, and whether the player should be attacking or defending.}
 	
 	;start an Attack the Capital Settlement resolution quest
@@ -1178,9 +1183,30 @@ Function StartResolutionMission()
 	;start a Defend the Capital Settlement resolution quest
 	;createEvent CWResolution02Start  zBogusLocation FieldCO CampaignStartMarker 
 
-	If Capital.GetLocation().HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
+	Location CapitalToStart
+	ObjectReference CampaignStartMarkerToStart
+	ObjectReference FieldCOToStart
+
+	If paramCapitalToStart != none
+		CapitalToStart = paramCapitalToStart.GetLocation()
+	else
+		CapitalToStart = Capital.GetLocation()
+	endif
+	If paramCampaignStartMarkerToStart != none
+		CampaignStartMarkerToStart = paramCampaignStartMarkerToStart
+	else
+		CampaignStartMarkerToStart = CampaignStartMarker.GetReference()
+	endif
+	If paramFieldCoToStart != none
+		FieldCOToStart = paramFieldCoToStart
+	else
+		FieldCOToStart = CWs.FieldCO.GetReference()
+	endif
+
+	If CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
 		;CWO - This might not have worked before. Added FieldCO
-		CWSiegeStart.SendStoryEvent(Capital.GetLocation(), CWs.FieldCO.GetReference())	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
+		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart)
+		CWSiegeStart.SendStoryEvent(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
 	
 	;	if Capital.GetLocation() == CWs.WhiterunLocation 	;ADD || OTHER CITY HERE
 ; 	;		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting attack on Whiterun.")
@@ -1196,8 +1222,8 @@ Function StartResolutionMission()
 	Else
 		; code	;start an Attack the Capital Settlement resolution quest
 		;CWO - Resolution Quests do not really work so kicking off the CWFortSiegeMinorCapitalStart
- 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + Capital.Getlocation())
-		CWs.CWFortSiegeMinorCapitalStart.SendStoryEvent(Capital.Getlocation(), CWs.FieldCO.GetReference(), CampaignStartMarker.GetReference()) 
+ 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + CapitalToStart)
+		CWs.CWFortSiegeMinorCapitalStart.SendStoryEvent(CapitalToStart, FieldCOToStart, CampaignStartMarkerToStart) 
 	
 	EndIf
 
@@ -2049,6 +2075,8 @@ bool function isCWMissionsOrSiegesRunning()
 		ret = "CWMission08Quest"
 	elseif CWMission09.IsRunning()
 		ret = "CWMission09"
+	elseif CWs.CWFortSiegeFort.IsRunning()
+		ret = "CWFortSiegeFort"
 	endif
 	if StringUtil.GetLength(ret) == 0
 		ret = isCWSiegesRunning()
@@ -2059,9 +2087,7 @@ endFunction
 
 string function isCWSiegesRunning()
 	string ret = ""
-	if CWs.CWFortSiegeFort.IsRunning()
-		ret = "CWFortSiegeFort"
-	elseif (CWs.CWFortSiegeCapital as CWFortSiegeScript).GetMinorCityQuestStillRunning()
+	if (CWs.CWFortSiegeCapital as CWFortSiegeScript).GetMinorCityQuestStillRunning()
 		ret = "CWFortSiegeCapital"
 	elseif (CWSiege as CWSiegeScript).GetQuestStillRunning()
 		ret = "CWSiege"
@@ -2144,14 +2170,9 @@ Function StartSpanishInquisition(LocationAlias holdToStart)
 	ObjectReference SAFieldCO = CWs.GetReferenceHQFieldCOForHold(SAHoldLoc, CWs.playerAllegiance)
 	ObjectReference SACampaignStartMarker =  CWs.getCampaignStartMarker(CWs.getIntForHoldLocation(SAHoldLoc))
 
-	If Capital.GetLocation().HasKeyword(LocTypeCity) && CWs.debugTreatCityCapitalsAsTowns == 0 && CWSiegeStart.SendStoryEventAndWait(holdToStart.GetLocation(), SAFieldCO);capital is a city (note the debugTreatCityCapitalsAsTowns)
-		while CWSiege.GetStageDone(0) == False
-			Utility.Wait(1)
-		EndWhile
-		(SAFieldCO As Actor).AddToFaction(CWODefensiveFaction)
-		SetStage(200)
-	EndIf
+	StartResolutionMission(holdToStart, SACampaignStartMarker, SAFieldCO)
 
+	SetStage(200)
 endfunction
 
 function DisplayHoldObjective()
@@ -2318,6 +2339,26 @@ function CompleteCWSieges()
 		endIf
 	elseIf CWS.CWFortSiegeCapital.IsRunning() && CWS.CWFortSiegeCapital.GetStage() < 1000
 		if CWS.IsPlayerAttacking((CWS.CWFortSiegeCapital as CWFortSiegeScript).Fort.GetLocation())
+			CWS.CWFortSiegeCapital.Setstage(1000)
+		else
+			CWS.CWFortSiegeCapital.Setstage(2000)
+		endIf
+	endIf
+endfunction
+
+function FailCWSieges()
+	CWScript.Log("CWScript", "FailCWSieges()")
+	if CWS.CWSiegeS.IsRunning() && CWS.CWSiegeS.GetStage() < 50 ;schofida - siege and capital are both running in final siege. Have capital take care of it
+		if !CWS.IsPlayerAttacking(CWS.CWSiegeS.City.GetLocation())
+			CWS.CWSiegeS.Setstage(50)
+			if CWS.CWFinale.IsRunning()
+				ResolveCivilWarOffscreen()
+			endif
+		else
+			CWS.CWSiegeS.Setstage(200)
+		endIf
+	elseIf CWS.CWFortSiegeCapital.IsRunning() && CWS.CWFortSiegeCapital.GetStage() < 1000
+		if !CWS.IsPlayerAttacking((CWS.CWFortSiegeCapital as CWFortSiegeScript).Fort.GetLocation())
 			CWS.CWFortSiegeCapital.Setstage(1000)
 		else
 			CWS.CWFortSiegeCapital.Setstage(2000)
