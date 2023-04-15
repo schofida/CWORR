@@ -331,25 +331,54 @@ EndFunction
 function RemoveCrowd()
 
 ; 	CWScript.Log("CWFinaleScript", self + "MakeCrowd() will delete crowd aliases.")
-
-	CrowdMember1.GetReference().Delete()
-	CrowdMember2.GetReference().Delete()
-	CrowdMember3.GetReference().Delete()
-	CrowdMember4.GetReference().Delete()
-	CrowdMember5.GetReference().Delete()
-	CrowdMember6.GetReference().Delete()
-	CrowdMember7.GetReference().Delete()
-	CrowdMember8.GetReference().Delete()
-	CrowdMember9.GetReference().Delete()
-	CrowdMember10.GetReference().Delete()
-	CrowdMember11.GetReference().Delete()
-	CrowdMember12.GetReference().Delete()
-	CrowdMember13.GetReference().Delete()
-	CrowdMember14.GetReference().Delete()
-	CrowdMember15.GetReference().Delete()
-	
-	SABETME3Soldier.GetReference().Delete()
-
+	if CrowdMember1.GetReference() != none
+		CrowdMember1.GetReference().Delete()
+	endif	
+	if CrowdMember2.GetReference() != none
+		CrowdMember2.GetReference().Delete()
+	endif	
+	if CrowdMember3.GetReference() != none
+		CrowdMember3.GetReference().Delete()
+	endif	
+	if CrowdMember4.GetReference() != none
+		CrowdMember4.GetReference().Delete()
+	endif	
+	if CrowdMember5.GetReference() != none
+		CrowdMember5.GetReference().Delete()
+	endif	
+	if CrowdMember6.GetReference() != none
+		CrowdMember6.GetReference().Delete()
+	endif	
+	if CrowdMember7.GetReference() != none
+		CrowdMember7.GetReference().Delete()
+	endif	
+	if CrowdMember8.GetReference() != none
+		CrowdMember8.GetReference().Delete()
+	endif	
+	if CrowdMember9.GetReference() != none
+		CrowdMember9.GetReference().Delete()
+	endif	
+	if CrowdMember10.GetReference() != none
+		CrowdMember10.GetReference().Delete()
+	endif	
+	if CrowdMember11.GetReference() != none
+		CrowdMember11.GetReference().Delete()
+	endif	
+	if CrowdMember12.GetReference() != none
+		CrowdMember12.GetReference().Delete()
+	endif	
+	if CrowdMember13.GetReference() != none
+		CrowdMember13.GetReference().Delete()
+	endif	
+	if CrowdMember14.GetReference() != none
+		CrowdMember14.GetReference().Delete()
+	endif	
+	if CrowdMember15.GetReference() != none
+		CrowdMember15.GetReference().Delete()
+	endif	
+	if SABETME3Soldier.GetReference() != none
+		SABETME3Soldier.GetReference().Delete()	
+	endif
 EndFunction
 
 Function MakeCrowdMember(ReferenceAlias MarkerAlias, ReferenceAlias MemberAlias)

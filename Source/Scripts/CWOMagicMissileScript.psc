@@ -118,15 +118,30 @@ endFunction
 
 function Cleanup()
 
-	Quad1.Delete()
-	Quad2.Delete()
-	Quad3.Delete()
-	Quad4.Delete()
-	Light1.Delete()
-	Light2.Delete()
-	Light3.Delete()
-	Light4.Delete()
-	self.UnRegisterForUpdate()
+	if Quad1 != none
+		Quad1.Delete()
+	endif
+	if Quad2 != none
+		Quad2.Delete()
+	endif
+	if Quad3 != none
+		Quad3.Delete()
+	endif
+	if Quad4 != none
+		Quad4.Delete()
+	endif
+	if Light1 != none
+		Light1.Delete()
+	endif
+	if Light2 != none
+		Light2.Delete()
+	endif
+	if Light3 != none
+		Light3.Delete()
+	endif
+	if Light4 != none
+		Light4.Delete()
+	endif
 endFunction
 
 ; Skipped compiler generated GetState
