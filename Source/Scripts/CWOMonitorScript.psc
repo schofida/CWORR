@@ -229,8 +229,9 @@ State WaitingForPlayerToBeOutOfMajorCity
 		DoPlayerLoadGameStuff()
 	endfunction
 	Event OnUpdate()
-	
-		if !CWs.CWSiegeS.PlayerInMajorCity(self.GetActorRef())
+		CWScript.log("CWScript", "WaitingForPlayerToBeOutOfMajorCity, OnUpdate()")
+		if !CWs.CWSiegeS.PlayerInMajorCity(self.GetActorRef()) || !CWSiegeQuest.IsRunning()
+			CWScript.log("CWScript", "WaitingForPlayerToBeOutOfMajorCity, going to state WaitingForSiegeToStop.")
 			GoToState("WaitingForSiegeToStop")
 			CWSiegeQuest.Stop()
 			CWAttackCityQuest.Stop()
@@ -264,7 +265,7 @@ State WaitingForSiegeToStop
 		if cws.CWCampaign.IsRunning() == False
 			GoToState("WaitingToStartNewCampaign")
 
-			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == False, going to state WaitingToStartNewCampaign.")
+			CWScript.log("CWScript", "WaitingForSiegeToStop, going to state WaitingToStartNewCampaign.")
 			registerforsingleupdate(5)
 		else
 			registerforsingleupdate(5)
@@ -381,6 +382,15 @@ function DoPlayerLoadGameStuff()
 			CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.GeneralTulliusRef)
 		endif
 		CWOVersion.SetValueInt(10006)
+	endif
+	if CWOVersion.GetValueInt() < 10007
+		CWOVersion.SetValueInt(10007)
+	endif
+	if CWOVersion.GetValueInt() < 10008
+		if Game.GetPlayer().IsInFaction((CWs.CWFinale as CWFinaleScript).CWFinaleTemporaryAllies)
+			Game.GetPlayer().RemoveFromFaction((CWs.CWFinale as CWFinaleScript).CWFinaleTemporaryAllies)
+		endif
+		CWOVersion.SetValueInt(10008)
 	endif
 	registerforsingleupdate(30)
 endfunction

@@ -97,7 +97,7 @@ endEvent
 ; Reddit BugFix #8
 event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	CWCampaignScript CWCampaignS = (CWFinale as cwfinalescript).CWs.CWCampaignS
-	if CwCampaignS.EnemyCamp.GetLocation() == akNewLoc && CwCampaignS.IsEnemyCampEnabled()
+	if CwCampaignS.IsRunning() && CwCampaignS.EnemyCamp.GetLocation() == akNewLoc && CwCampaignS.IsEnemyCampEnabled()
 		if CwCampaignS.CWODisableNotifications.GetValueInt() == 0
 			debug.notification("Your disguise does not work at the enemy camp.")
 		endif
