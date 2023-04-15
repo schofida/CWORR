@@ -5,13 +5,6 @@ Event OnActivate(ObjectReference akActionRef)
 
 	CWScript CWs = (GetOwningQuest() as CWFinaleScript).CWs
 	ObjectReference PlayerRef = Game.GetPlayer()
-	if CWs.CWCampaignS.PlayerAllegianceLastStand()&& (akActionRef == PlayerRef)
-		GetOwningQuest().Stop()
-		CWs.CWSiegeS.Stop()
-		CWs.CWFortSiegeCapital.Stop()
-		CWs.CWCampaignS.SetMonitorMajorCitySiegeStopped()
-		return
-	endif
 
 	if GetOwningQuest().GetStageDone(100) == False
 	
@@ -33,6 +26,9 @@ Event OnActivate(ObjectReference akActionRef)
 			(GetOwningQuest() as CWFinaleScript).PlayerEnteredCastle()
 			
 		EndIf
+	elseif GetOwningQuest().GetStageDone(100) && CWs.CWCampaignS.PlayerAllegianceLastStand() && akActionRef == PlayerRef
+		CWs.CWSiegeS.Stop()
+		CWs.CWFortSiegeCapital.Stop()
 	Else
 	
 ; 		CWScript.Log("CWFinaleDoorScript", self + "Player activated door. But stage 100 is done, not doing anything.")

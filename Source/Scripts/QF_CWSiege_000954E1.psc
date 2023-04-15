@@ -1774,13 +1774,7 @@ if kmyquest.CWs.PlayersFactionIsAttacker(Alias_City.GetLocation()) || kmyQuest.C
 
 else
 
-	; 	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an defender, NOT setting CWBattlePhase to 0")	;*** WRITE TO LOG
-	;schofida - Player lost so now the enemy gets to attack
-	kmyQuest.CWs.CWDebugForceAttacker.SetValueInt(kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance))
-	;if this was a spanish inquisition, fail any running CW Missions
-	if kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
-		kmyQuest.CWs.CWCampaignS.CompleteCWMissions(true)
-	endif
+	CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Player is an defender, NOT setting CWBattlePhase to 0")	;*** WRITE TO LOG
 endif
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
@@ -1946,6 +1940,7 @@ else
 		kmyquest.FailDefenseQuest(Alias_City)		;CWSiegeScript
 	else
 		kmyQuest.CwSiegeObj.SetObjectiveDisplayed(4200)
+		kmyQuest.CWs.CWFortSiegeCapital.SetStage(10)
 	endif
 
 
@@ -2218,9 +2213,9 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	else
 		if (kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 1  || kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.GetOpenState() == 2)	; Reddit BugFix #15
 			;CWO Stuff
-				kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
+			kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.activate(kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01); Open the gate
 		
-			endif
+		endif
 	endif
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyQuest.WeatherWindhelm.ForceActive(True)
@@ -2347,7 +2342,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 endif
 
 ;schofida - This happens at all locations now. Move down here
-if kmyquest.IsAttack()
+if kmyquest.IsAttack() || kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
 	;If Attack
 ;as a safety precaution, disable all the exterior guys
 Alias_Attacker1General.TryToDisable()
@@ -2557,7 +2552,6 @@ else ;defenders are victorious
 
 	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
 	kmyquest.SucceedDefenseQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
-
 endif
 ;END CODE
 EndFunction
@@ -2706,72 +2700,72 @@ Alias_CampEnableMarkerImperial.GetReference().Disable()
 Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
 
-;PATCH 1.9 -- #73449
-;turn on random dragons if the MQ doesn't want them off
-if MQ106.getStage() >= 5 && MQ106.getStage() < 160
-	;do nothing, MQ still wants them off
-else
-	MQ106TurnOffRandomDragons.SetValue(0)
-endif
-
-
-if kmyquest.WasThisAnAttack
-	Alias_WhiterunDrawbridge.GetReference().Disable()
-	Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
-	Alias_WhiterunDrawbridgeAfter.GetReference().Enable()
-endif
-
-;if either attack or defense
-
-Alias_WhiterunBridgeLever1.GetReference().Disable()
-Alias_WhiterunBridgeLever2.GetReference().Disable()
-
-sound.StopInstance(kmyQuest.AMBDistantBattleSoundInstance)
-sound.StopInstance(kmyQuest.AMBDistantBattleStartInstance)
-sound.StopInstance(kmyQuest.AMBCloseBattleSoundInstance)
-kmyquest.WhiterunAmbExt01.Disable()
-kmyquest.WhiterunAmbExt02.Disable()
-kmyquest.WhiterunAmbExt03.Disable()
-
-;(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(FALSE) - USKP 2.0.1 - Stop access to this as it's part of the cut portions of DA08.
-
-
-;release reservations
-if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
-	if ((kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials && kmyQuest.CWs.CWCampaignS.failedMission == 1) || (kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iSons && kmyQuest.CWs.CWCampaignS.failedMission == 0))
-		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
-		Alias_WhiterunHeimskrNewHome.GetReference().Enable()
-
-		;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
-		
-		;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
-		RiverwoodStormcloaksMarker.Enable()
-		RiverwoodImperialsMarker.Disable()
-		
-		;schofida - Whiterun has repeating sieges
-		;schofida - Heimskr released from Jail :)
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Disable()
-		USLEEPHeimskrPreachJail.SetStage(8)
+	;PATCH 1.9 -- #73449
+	;turn on random dragons if the MQ doesn't want them off
+	if MQ106.getStage() >= 5 && MQ106.getStage() < 160
+		;do nothing, MQ still wants them off
 	else
-		;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
-		Alias_WhiterunHeimskrNewHome.GetReference().Disable()
-		;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
-		
-		;schofida - Whiterun has repeating sieges
-		Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Disable()
-		RiverwoodStormcloaksMarker.Disable()
-		RiverwoodImperialsMarker.Enable()
+		MQ106TurnOffRandomDragons.SetValue(0)
+	endif
 
-		;USKP 2.0.1 - Heimskr goes to Jail :(
-		USLEEPHeimskrPreachJail.SetStage(3)
-	EndIf
-endif
-if LydiaHasBeenDisabled
-	kmyQuest.CWs.CWCampaignS.EnableLydiaAfterSiege()
-	LydiaHasBeenDisabled = false
-endif
+
+	if kmyquest.WasThisAnAttack
+		Alias_WhiterunDrawbridge.GetReference().Disable()
+		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
+		Alias_WhiterunDrawbridgeAfter.GetReference().Enable()
+	endif
+
+	;if either attack or defense
+
+	Alias_WhiterunBridgeLever1.GetReference().Disable()
+	Alias_WhiterunBridgeLever2.GetReference().Disable()
+
+	sound.StopInstance(kmyQuest.AMBDistantBattleSoundInstance)
+	sound.StopInstance(kmyQuest.AMBDistantBattleStartInstance)
+	sound.StopInstance(kmyQuest.AMBCloseBattleSoundInstance)
+	kmyquest.WhiterunAmbExt01.Disable()
+	kmyquest.WhiterunAmbExt02.Disable()
+	kmyquest.WhiterunAmbExt03.Disable()
+
+	;(kmyquest.DA08 as DA08QuestScript).WhiterunSiegeHappening(FALSE) - USKP 2.0.1 - Stop access to this as it's part of the cut portions of DA08.
+
+
+	;release reservations
+	if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
+		if ((kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iImperials && kmyQuest.CWs.CWCampaignS.failedMission == 1) || (kmyQuest.CWs.Playerallegiance == kmyQuest.CWs.iSons && kmyQuest.CWs.CWCampaignS.failedMission == 0))
+			;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+			Alias_WhiterunHeimskrNewHome.GetReference().Enable()
+
+			;USKP 2.0.1 - Stormcloaks have Whiterun. Enable their Watchtower guards.
+			Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Enable()
+			
+			;USKP 2.0.4 - Stormcloaks activate in Riverwood. This has proven unreliable for some reason so do it manually.
+			RiverwoodStormcloaksMarker.Enable()
+			RiverwoodImperialsMarker.Disable()
+			
+			;schofida - Whiterun has repeating sieges
+			;schofida - Heimskr released from Jail :)
+			Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Disable()
+			USLEEPHeimskrPreachJail.SetStage(8)
+		else
+			;USKP 1.3.2 moved Heimskr's new home enabler here. He is in jail if Imperials take Whiterun.
+			Alias_WhiterunHeimskrNewHome.GetReference().Disable()
+			;USKP 2.0.1 - Imperials have Whiterun. Enable their Watchtower guards.
+			Alias_WhiterunDisableNearbyGarrisonEnableMarker5.GetReference().Enable()
+			
+			;schofida - Whiterun has repeating sieges
+			Alias_WhiterunDisableNearbyGarrisonEnableMarker6.GetReference().Disable()
+			RiverwoodStormcloaksMarker.Disable()
+			RiverwoodImperialsMarker.Enable()
+
+			;USKP 2.0.1 - Heimskr goes to Jail :(
+			USLEEPHeimskrPreachJail.SetStage(3)
+		EndIf
+	endif
+	if LydiaHasBeenDisabled
+		kmyQuest.CWs.CWCampaignS.EnableLydiaAfterSiege()
+		LydiaHasBeenDisabled = false
+	endif
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
 	if kmyQuest.AttackersHaveWon && kmyQuest.WasThisAnAttack
@@ -2838,6 +2832,10 @@ elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage()
 	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
 endif
 
+if kmyQuest.CWs.CWFinale.isRunning()
+	kmyQuest.CWs.CWFinale.Stop()
+endif
+
 ; CWScript.Log("CWSiegeQuestFragmentScript", self + "setting CWSiegeRunning keyword data to 0")  ;*** WRITE TO LOG
 Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 
@@ -2879,10 +2877,6 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 9 starting")	
-
-;CWO - Stop Disguise Quest
-kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
-kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 
 ;Gets called at the end of CWAttackerStartingScene, sets Phase 1, then sets stage 10.
  	CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting initial CWBattlePhase")	
@@ -3032,9 +3026,6 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 endif
 
-if kmyQuest.CWs.CWCampaign.GetStage() == 200
-	Alias_FieldCO.GetActorRef().RemoveFromFaction(kmyQuest.CWs.CWCampaignS.CWODefensiveFaction)
-endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -3696,6 +3687,9 @@ Alias_Defender8.TryToEvaluatePackage()
 Alias_Defender9.TryToEvaluatePackage()
 Alias_Defender10.TryToEvaluatePackage()
 
+;CWO - Stop Disguise Quest
+kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 ;CWO - Start Player Essential Quest
 kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 
@@ -3764,7 +3758,7 @@ SiegeFinished = False
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsAttack()
-if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0)
+if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0 && kmyQuest.WasThisAnAttack)
 	Debug.Notification("Siege is getting ready behind the scenes. Please wait before speaking to Officer.")
 endif
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 0")	;*** WRITE TO LOG
@@ -4115,7 +4109,7 @@ if kmyquest.IsAttack() == false
 	kmyquest.CWs.CWPrepareCityStart.SendStoryEvent(Alias_City.GetLocation())
 endif
 
-if (kmyQuest.CWs.CwCampaignS.CWODisableNotifications.GetValueInt() == 0)
+if (kmyQuest.CWs.CwCampaignS.CWODisableNotifications.GetValueInt() == 0 && kmyQuest.WasThisAnAttack)
 	Debug.Notification("Seige is done setting up. You may now speak to the CO.")
 endif
 

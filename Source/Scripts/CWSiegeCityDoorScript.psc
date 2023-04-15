@@ -100,14 +100,16 @@ EVENT onActivate(objectReference triggerRef)
 
 		else
 
-			if (GetOwningQuest().GetStage() > 0) && (GetOwningQuest().GetStage() < DoorBlockedUntilStageDuringDefense) && (triggerRef == game.GetPlayer())
+			if (GetOwningQuest().GetStageDone(DoorBlockedUntilStageDuringAttack) == True && CWs.CWCampaignS.PlayerAllegianceLastStand() && triggerRef == game.GetPlayer())
+					;allow player activation of main gate into city
+					GetReference().BlockActivation(false)
+					GetReference().Activate(triggerRef, abDefaultProcessingOnly = TRUE)
+
+					GetOwningQuest().SetStage(AttackQuestStageToSetOnEnter)
+			elseif (GetOwningQuest().GetStage() > 0) && (GetOwningQuest().GetStage() < DoorBlockedUntilStageDuringDefense) && (triggerRef == game.GetPlayer())
 
 				CWSiegeDoorDefendMessage.show()
 
-			elseif CWs.CWCampaignS.PlayerAllegianceLastStand() && GetOwningQuest().GetStageDone(DoorBlockedUntilStageDuringDefense) && (triggerRef == game.GetPlayer())
-				GetOwningQuest().Stop()
-				CWs.CWFortSiegeCapital.Stop()
-				CWs.CWCampaignS.SetMonitorMajorCitySiegeStopped()
 			endif
 
 		endif

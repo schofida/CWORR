@@ -66,18 +66,22 @@ Event OnEnterBleedout()
 	game.enablefasttravel(true)
 	utility.wait(2 as Float)
 	PlayerRef.moveto(WhereweGoinTo, 0.000000, 0.000000, 0.000000, true)
+	Utility.Wait(2.0)
+	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
+	game.DisablePlayerControls(true, true, false, false, false, true, true, false, 0)
+	PlayerRef.SetUnconscious(false)
 	if !ThisIsFinale
 		Recover()
 	else
+		while PlayerRef.IsInInterior() == False
+			utility.Wait(0.5)
+		EndWhile
+		PlayerRef.moveto(WhereweGoinTo, 0.000000, 0.000000, 0.000000, true)
 		CWF.PlayerEnteredCastle()
 	endif
 endEvent
 
 function Recover()
-	utility.wait(2 as Float)
-	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
-	game.DisablePlayerControls(true, true, false, false, false, true, true, false, 0)
-	PlayerRef.SetUnconscious(false)
 	PlayerRef.RestoreAv("Health", 9999 as Float)
 	PlayerRef.PlayIdle(pIdleReset)
 	utility.wait(5 as Float)

@@ -88,6 +88,8 @@ Faction Property CWFinaleTemporaryAllies  Auto
 
 ReferenceAlias Property SABETME3Soldier  Auto  
 
+Bool Property DefenseSuccessful = false Auto Hidden
+
 Function PlayerEnteredCastle()
 	setStage(100)
 	
@@ -96,7 +98,9 @@ Function PlayerEnteredCastle()
 	CWScript.Log("CWFinaleScript", self + "PlayerEnteredCastle() Moving actors, setting up scene, and locking doors.")
 	
 	;schofida - call helper function instead
-   LockDoors()
+	LockDoors()
+
+	bool sabetme3 = CWs.CWcampaignS.PlayerAllegianceLastStand()
 	
 	makeMeStopCombat(Leader)
 	makeMeStopCombat(Second)
@@ -106,9 +110,14 @@ Function PlayerEnteredCastle()
 	
 	PlayerActor.StopCombat()
 	PlayerActor.StopCombatAlarm()
-
-	Leader.TryToMoveTo(PlayerActor)
-	Second.TryToMoveTo(PlayerActor)
+	
+	if sabetme3
+		Leader.TryToMoveTo(EnemyLeader.GetRef())
+		Second.TryToMoveTo(EnemySecond.GetRef())
+	else
+		Leader.TryToMoveTo(PlayerActor)
+		Second.TryToMoveTo(PlayerActor)
+	endif
 	
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionHaafingar)
 	EnemyLeader.TryToRemoveFromFaction(CrimeFactionEastmarch)
@@ -123,8 +132,6 @@ Function PlayerEnteredCastle()
 
 	Utility.Wait(PauseBeforeScene)
 
-	bool sabetme3 = CWs.CWcampaignS.PlayerAllegianceLastStand()
-
 	if sabetme3
 		; Have the statue face the player
 		ObjectReference SABETME3SoldierRef = SABETME3Soldier.GetRef()
@@ -137,18 +144,34 @@ Function PlayerEnteredCastle()
 	endif
 	
 	startSceneA()
-	
 	;TURN OFF THE FORT SIEGE
-	CWFortSiegeS.AttackersHaveWon = true
-	CWFortSiegeS.DefendersHaveWon = false
 	CWFortSiegeS.DisableAllAliases()
+
+	;CWO Reset Troop crime in case of friendly fire
+	CWs.CWCampaignS.cwResetCrime()
 	
 ; 	CWScript.Log("CWFinaleScript", "PlayerEnteredCastle() calling stop() on CWFortSiege")
 	((CWFortSiegeS AS Quest) As CWReinforcementControllerScript).StopSpawning()
-	CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()	;this doesn't finish shutting down until after the player leaves.
-	
+	((CWs.CWFortSiegeCapital AS Quest) As CWReinforcementControllerScript).StopSpawning()
+	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()	;this doesn't finish shutting down until after the player leaves.
 	
 EndFunction
+
+Function PlayerLastStandWasSuccessful()
+	CWScript.Log("CWFinaleScript", self + "PlayerLastStandWasSuccessful() completing the quest and siege.")
+	DefenseSuccessful = true
+	setStage(100)
+
+	;CWO Reset Troop crime in case of friendly fire
+	CWs.CWCampaignS.cwResetCrime()
+
+; 	CWScript.Log("CWFinaleScript", "PlayerEnteredCastle() calling stop() on CWFortSiege")
+	((CWFortSiegeS AS Quest) As CWReinforcementControllerScript).StopSpawning()
+	((CWs.CWFortSiegeCapital AS Quest) As CWReinforcementControllerScript).StopSpawning()
+	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()	;this doesn't finish shutting down until after the player leaves.
+	
+	SetStage(330)
+endfunction
 
 function EnemySecondDied()
 ; 	CWScript.Log("CWFinaleScript", self + "EnemySecondDied() waiting for leader to be in bleedout, then will stop combat and start scene.")
@@ -186,7 +209,7 @@ function EnemySecondDied()
 	CWFinaleSolitudeSceneA.stop()
 	
 	if CWs.CwCampaignS.PlayerAllegianceLastStand()
-		EnemyLeader.GetActorRef().Kill()
+		EnemyLeader.GetActorRef().KillEssential()
 	else
 	Utility.Wait(PauseBeforeScene)
 	
@@ -325,6 +348,7 @@ function RemoveCrowd()
 	CrowdMember14.GetReference().Delete()
 	CrowdMember15.GetReference().Delete()
 	
+	SABETME3Soldier.GetReference().Delete()
 
 EndFunction
 
@@ -332,11 +356,11 @@ Function MakeCrowdMember(ReferenceAlias MarkerAlias, ReferenceAlias MemberAlias)
 	ObjectReference MarkerRef = MarkerAlias.GetReference()
 	
 	if MarkerRef
-	
-		if CWs.PlayerAllegiance == CWs.iImperials
+		bool sabetme3 = CWs.CWCampaignS.PlayerAllegianceLastStand()
+		if (CWs.PlayerAllegiance == CWs.iImperials && !sabetme3) || (CWs.PlayerAllegiance == CWs.iSons && sabetme3)
 			MemberAlias.ForceRefTo(MarkerRef.PlaceActorAtMe(CWFinaleSoldierImperial))
 		
-		Elseif CWs.PlayerAllegiance == CWs.iSons
+		Elseif (CWs.PlayerAllegiance == CWs.iSons && !sabetme3) || (CWs.PlayerAllegiance == CWs.iImperials && sabetme3)
 			MemberAlias.ForceRefTo(MarkerRef.PlaceActorAtMe(CWFinaleSoldierSons))
 			
 		Else

@@ -22,7 +22,9 @@ EndFunction
 Function Fragment_0()
 ;BEGIN CODE
 ; debug.trace(self + "End")
-game.enablePlayerControls()
+if!(GetOwningQuest() as CWFinaleScript).CWs.CWCampaignS.PlayerAllegianceLastStand()
+    game.enablePlayerControls()
+endif
 GetOwningQuest().setStage(150)
 ;END CODE
 EndFunction
@@ -31,7 +33,9 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
 ;BEGIN CODE
-game.enablePlayerControls(true, false)
+if!(GetOwningQuest() as CWFinaleScript).CWs.CWCampaignS.PlayerAllegianceLastStand()
+    game.enablePlayerControls(true, false)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

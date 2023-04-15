@@ -1124,8 +1124,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 	JarlActor.moveTo(Alias_JarlMarker.GetReference())
 	HousecarlActor.moveTo(JarlActor)
 
-	;CWO Set objective based off player attacking/defending
-	if kmyquest.IsPlayerAttacking()
 	SetObjectiveDisplayed(110)
 
 	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
@@ -1135,9 +1133,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 	JarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
 	HousecarlActor.AddToFaction(kmyquest.CWs.GetPlayerAllegianceEnemyFaction(ReturnNPCFaction = true))
 	JarlActor.setOutfit(kmyquest.CWS.CWCampaignS.CWArmorBalgruufSteelPlateNoHelmetOutfit)
-Elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
-	SetObjectiveDisplayed(210)
-endif
 
 	;mod their aggression
 	(Alias_Jarl as DefaultAliasModAggression).ModAggression()			;values set in properties of scrip attached to alias
@@ -1162,8 +1157,6 @@ CWScript.Log("CWFortSiege", "Stage 9200: FAILURE!!! Calling Stop() on quest.")
 if ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	kmyQuest.CWs.CWCampaignS.failCWObj(Alias_hold.getlocation())
 endif
-;CWO - Stop player essential quest
-kmyQuest.CWs.CWCampaignS.StopMonitors()
 ;CWO - Set Failed Mission in Campaign
 kmyQuest.CWs.CWCampaignS.failedMission = 1
 ;CWO - Reset Troop crime
@@ -1186,8 +1179,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO - Force player to be the defender for the next campaign
 	kmyquest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)
 	;CWO - Finally have opponent win/hold onto existing hold
-	((self as Quest) as CWFortSiegeScript).AttackersHaveWon = !((self as Quest) as CWFortSiegeScript).WasThisAnAttack
-	((self as Quest) as CWFortSiegeScript).DefendersHaveWon = ((self as Quest) as CWFortSiegeScript).WasThisAnAttack
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), !((self as Quest) as CWFortSiegeScript).WasThisAnAttack, ((self as Quest) as CWFortSiegeScript).WasThisAnAttack)
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_hold.getlocation(), ((self as Quest) as CWFortSiegeScript).AttackersHaveWon, ((self as Quest) as CWFortSiegeScript).DefendersHaveWon)
 endif
@@ -1210,16 +1201,27 @@ if SiegeFinished == true
 endif
 SiegeFinished = true
 CWScript.Log("CWFortSiege", "Stage 2000: Attacker wiped out, determined success or failure")
+
+;CWO restart disguise and stop player essential quest
+kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StopMonitors()
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Stop ambience
 kmyquest.StopCombatSoundsLoop()
 ;CWO Stop music
 kmyQuest.MUSCombatCivilWar.Remove()
 ;CWO Set CW Contested Hold Winner to the Dfender
 kmyQuest.CWs.ContestedHoldWinner = kmyQuest.CWs.GetDefender(Alias_Fort.GetLocation())
+kmyQuest.AttackersHaveWon = false
+kmyQuest.DefendersHaveWon = true
 
 if kmyquest.IsPlayerAttacking()
 	SetObjectiveFailed(100)
 	setStage(9200) ;FAILURE!
+elseif kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	kmyQuest.CWs.CWSiegeS.AttackersHaveWon = false
+	kmyQuest.CWs.CWSiegeS.DefendersHaveWon = true
+	(kmyQuest.CWs.CWFinale as CWFinaleScript).PlayerLastStandWasSuccessful()
 else
 	SetObjectiveCompleted(200)
 	setStage(9000) ;SUCCESS!
@@ -1291,7 +1293,16 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;Jarl Surrenders
+if SiegeFinished == true
+	return
+endif
+SiegeFinished = true
 CWScript.Log("CWFortSiege", "Stage 950: Jarl Surrenders")
+
+;CWO restart disguise and stop player essential quest
+kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+kmyQuest.CWs.CWCampaignS.StopMonitors()
+kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 ;CWO Account for player attacking or defending
 if kmyQuest.IsPlayerAttacking()
@@ -1719,12 +1730,11 @@ kmyquest.StartCombatSoundsLoop()
 
 kmyQuest.MUSCombatCivilWar.Add()
 
-if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand() && !kmyQuest.CWs.CWSiegeS.GetStageDone(200)
 	kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 	kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 	kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
-	Alias_SpecialCityDoorExterior.GetReference().BlockActivation()
-	Alias_JarlsHouseDoor.GetReference().BlockActivation()
+	(kmyQuest.CWs.CWFinale as CWFinaleScript).LockDoors()
 endif
 
 ;EVP EVERYONE
@@ -1818,10 +1828,6 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;SUCCESS!
 CWScript.Log("CWFortSiege", "Stage 9000: SUCCESS! Calling Stop() on quest.")
 
-;CWO restart disguise and stop player essential quest
-kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-kmyQuest.CWs.CWCampaignS.StopMonitors()
-kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 ;CWO Reset Troop crime in case of friendly fire
 kmyQuest.CWs.CWCampaignS.cwResetCrime()
 
@@ -1835,12 +1841,7 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
 
-if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
-	Alias_SpecialCityDoorExterior.GetReference().BlockActivation(false)
-	Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
-endif
-
-if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ( ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 && kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand())
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO Set proper CW flags
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
 		((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(99)
@@ -1854,8 +1855,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ( (
 	kmyQuest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.playerAllegiance
 
 	;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
-	kmyQuest.AttackersHaveWon = kmyQuest.WasThisAnAttack
-	kmyQuest.DefendersHaveWon = !kmyQuest.WasThisAnAttack
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyQuest.IsPlayerAttacking(), !kmyQuest.IsPlayerAttacking())
 
 ;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
@@ -1931,26 +1930,37 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 ;DEFENDER WIPED OUT!
+if kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand()
+	return
+endif
+
 if SiegeFinished == true
 	return
 endif
-SiegeFinished = true
+
 CWScript.Log("CWFortSiege", "Stage 1000: Defender wiped out, determined success or failure")
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
 ;CWO Set attacker as hold winner (for finalizing routines)
 kmyQuest.CWs.ContestedHoldWinner = kmyQuest.CWs.GetAttacker(Alias_Fort.GetLocation())
+kmyQuest.AttackersHaveWon = true
+kmyQuest.DefendersHaveWon = false
 ;CWO Test for jarl alias to make sure it exists
 Actor JarlActor = Alias_Jarl.GetActorReference()
 
 If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1 && Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation()) && kmyquest.IsPlayerAttacking() && JarlActor != none
 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
-	
+
 	setObjectiveCompleted(100)
 	setStage(950)
-
+	SiegeFinished = true
 elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+	SiegeFinished = true
+	;CWO restart disguise and stop player essential quest
+	kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
+	kmyQuest.CWs.CWCampaignS.StopMonitors()
+	kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 	if kmyquest.IsPlayerAttacking()
 		setObjectiveCompleted(100)
@@ -1958,6 +1968,10 @@ elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFor
 	else 
 		SetObjectiveFailed(200)
 		setStage(9200) ;FAILURE!
+	endif
+
+	if kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+		kmyQuest.CWs.CWCampaignS.CompleteCWMissions(true)
 	endif
 
 	Alias_Defender1.TryToEvaluatePackage()
@@ -2081,6 +2095,8 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
 		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 			kmyQuest.CWs.CWCampaign.SetStage(255)
+		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
 		endif
 		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
 		if kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon
@@ -2093,7 +2109,7 @@ else	 ;its a normal fort battle
 	;Comment out below. Should not hit here but just in case....
 ; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): setting owner of fort based on who is")
 	;kmyquest.SetNewOwnerOfFort(1000, 2000)
-
+	
 endif
 
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): removing aliases from CWSurrentTemporaryAllies faction")

@@ -1473,6 +1473,8 @@ function FailDefenseQuest(locationAlias CityAlias)
 	
 	;Fail the campaign
 	CWs.CWCampaignS.FailedMission = 1
+
+	
 	
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
 	if !cws.cwfinale.isrunning()
@@ -1480,6 +1482,11 @@ function FailDefenseQuest(locationAlias CityAlias)
 	endif
 	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
+
+	;if this was a spanish inquisition, fail any running CW Missions
+	if CWs.CWCampaign.IsRunning() && CWs.CWCampaign.GetStage() == 200
+		CWs.CWCampaignS.CompleteCWMissions(true)
+	endif
 
 	if CWs.CWCampaignS.PlayerAllegianceLastStand()
 		CWs.CWCampaignS.ResolveCivilWarOffscreen()
@@ -1527,7 +1534,7 @@ CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
 
 if cws.CWFinale.IsRunning()
-	cws.CWFinale.Stop()
+	(cws.CWFinale as CWFinaleScript).PlayerLastStandWasSuccessful()
 Else
 	cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
 endif
@@ -1704,10 +1711,12 @@ function TryToFixQuest()
 endfunction
 
 bool function GetQuestStillRunning()
+	CWScript.Log("CWSiegeScript", self + "GetQuestStillRunning()")
 	Location cityLoc = City.GetLocation() 
 	return cityLoc != None && cityLoc.GetKeywordData(CWs.CWSiegeRunning) as int == 1
 endfunction
 
 bool function PlayerInMajorCity(Actor PlayerRef)
+	CWScript.Log("CWSiegeScript", self + "PlayerInMajorCity()")
 	return PlayerRef.IsInLocation(City.GetLocation())
 endfunction
