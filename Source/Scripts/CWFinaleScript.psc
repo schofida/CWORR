@@ -209,7 +209,7 @@ function EnemySecondDied()
 	CWFinaleSolitudeSceneA.stop()
 	
 	if CWs.CwCampaignS.PlayerAllegianceLastStand()
-		EnemyLeader.GetActorRef().KillEssential()
+		SetStage(310)
 	else
 	Utility.Wait(PauseBeforeScene)
 	

@@ -2,18 +2,20 @@
 ;NEXT FRAGMENT INDEX 4
 Scriptname SF_CWFinaleWindhelmSceneA_000659E5 Extends Scene Hidden
 
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN CODE
-;game.disablePlayerControls()
-;END CODE
-EndFunction
-;END FRAGMENT
-
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
 ;BEGIN CODE
 ; debug.trace(self + "Begin")
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN CODE
+if!(GetOwningQuest() as CWFinaleScript).CWs.CWCampaignS.PlayerAllegianceLastStand()
+    game.enablePlayerControls(true, false)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -26,16 +28,6 @@ if!(GetOwningQuest() as CWFinaleScript).CWs.CWCampaignS.PlayerAllegianceLastStan
     game.enablePlayerControls()
 endif
 GetOwningQuest().setStage(150)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_3
-Function Fragment_3()
-;BEGIN CODE
-if!(GetOwningQuest() as CWFinaleScript).CWs.CWCampaignS.PlayerAllegianceLastStand()
-    game.enablePlayerControls(true, false)
-endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
