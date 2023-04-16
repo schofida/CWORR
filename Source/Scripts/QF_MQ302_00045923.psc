@@ -392,9 +392,11 @@ MQ302Script kmyQuest = __temp as MQ302Script
 CWScript sCW = CW as CWScript
 ; actually switch sides if appropriate
 if kmyQuest.KickOutFlag
-	if sCW.playerAllegiance == 1
+	if sCW.playerAllegiance == sCW.iImperials
+		Game.GetPlayer().AddItem(CWRankRewardSons)
 		sCW.SetPlayerAllegiance(sCW.iSons)
 	else
+		Game.GetPlayer().AddItem(CWRankRewardImperial)
 		sCW.SetPlayerAllegiance(sCW.iImperials)
 	endif
 endif
