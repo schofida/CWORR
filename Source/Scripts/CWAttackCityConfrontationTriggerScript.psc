@@ -8,8 +8,11 @@ int Property StageToCallToStartConfrontationScene Auto
 
 Actor Property GalmarRef Auto
 Actor Property RalofRef Auto
+Actor Property RikkeRef Auto
+Actor Property HadvarRef Auto
 
 Faction Property CWImperialFaction Auto
+Faction Property CWSonsFaction Auto
 
 Event OnTriggerEnter(ObjectReference akActionRef)
 
@@ -22,16 +25,19 @@ Event OnTriggerEnter(ObjectReference akActionRef)
 		GetOwningQuest().setStage(StageToCallToStartConfrontationScene)
 	endif
 	
-	; fix OCW 2.3.3
-	if !(GalmarRef.IsInFaction(CWImperialFaction) || RalofRef.IsInFaction(CWImperialFaction)) || CWs.playerAllegiance == CWs.iImperials
-		return
+	if CWs.playerAllegiance == CWs.iImperials
+		;***ASSUMES THIS IS WHITERUN BECAUSE THATS THE ONLY PLACE FOR SIEGES NOW***
+		;See - CWAttackCityDragonReachDoor for why we are doing this
+		PlayerRef.RemoveFromFaction(CWSonsFaction)
+		RikkeRef.RemoveFromFaction(CWSonsFaction)
+		HadvarRef.RemoveFromFaction(CWSonsFaction)
+	else
+		;***ASSUMES THIS IS WHITERUN BECAUSE THATS THE ONLY PLACE FOR SIEGES NOW***
+		;See - CWAttackCityDragonReachDoor for why we are doing this
+		PlayerRef.RemoveFromFaction(CWImperialFaction)
+		GalmarRef.RemoveFromFaction(CWImperialFaction)
+		RalofRef.RemoveFromFaction(CWImperialFaction)
 	endIf	
-	
-	;***ASSUMES THIS IS WHITERUN BECAUSE THATS THE ONLY PLACE FOR SIEGES NOW***
-	;See - CWAttackCityDragonReachDoor for why we are doing this
-	PlayerRef.RemoveFromFaction(CWImperialFaction)
-	GalmarRef.RemoveFromFaction(CWImperialFaction)
-	RalofRef.RemoveFromFaction(CWImperialFaction)
 	
 EndEvent
 

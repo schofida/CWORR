@@ -757,6 +757,16 @@ ReferenceAlias Property Alias_Citizen5 Auto
 ReferenceAlias Property Alias_Citizen69 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY DragonreachDoor
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_MistveilKeepDoor Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DragonreachDoor
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_UnderstoneKeepDoor Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN AUTOCAST TYPE CWAttackCityScript
@@ -1062,7 +1072,8 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 ;A CONDITION ON FRIEND PACKAGES... SET BY DOOR INTO WORLD SPACE
 CWScript.Log("AttackCity", "Stage 10: moving friend into city.")
-Alias_Friend.GetReference().MoveTo(Alias_SpawnAttacker1.GetReference())
+Alias_Friend.GetReference().MoveTo(Alias_Player.GetReference())
+Alias_Friend.TryToEnable()
 kmyQuest.SkyrimOvercastWar.ForceActive(1)
 Alias_Friend.GetActorReference().EvaluatePackage()
 ;END CODE
