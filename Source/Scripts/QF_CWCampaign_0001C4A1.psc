@@ -362,7 +362,13 @@ kmyQuest.UpdateCWCampaignObjAliases()
 kmyQuest.PurchaseGarrisons()
 kmyQuest.ShuffleGarrisons()
 kmyQuest.ForceFieldHQAliases()
+if kmyquest.CWs.IsPlayerAttacking(kmyquest.Hold.Getlocation())
+    kmyQuest.SetCWCampaignFieldCOAliases()
+endif
 kmyQuest.MoveRikkeGalmarToCampIfNeeded(CheckIfUnloaded = true)
+if Alias_Fort != none
+    kmyQuest.CWs.AddGarrisonBackToWar(Alias_Fort.GetLocation())
+endif
 if kmyQuest.PlayerAllegianceLastStand()
     kmyQuest.AdvanceCampaignPhase(kmyQuest.ResolutionPhase)
 Else

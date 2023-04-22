@@ -476,6 +476,9 @@ Function ResetCampaign()
 		CWFortSiegeFortDone = 0
 	endif
 
+	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
+	ResolutionPhase = CWOCampaignPhaseMax.GetValueInt()
+
 EndFunction
 
 Function PurchaseGarrisons()
@@ -1050,21 +1053,21 @@ Function SetCWCampaignFieldCOAliases()
 			if CWs.playerInvolved == 0
 	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() Player Allegience == 1 and PlayerInvolved == 0, so we are Forcing GenericFieldCOImperial into FieldCo, GenericFieldCOSons into EnemyFieldCO, and enabling them both.")
 				
-				FieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
-				EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+				;FieldCO.ForceRefTo(CWs.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.iImperials))
+				EnemyFieldCO.ForceRefTo(CWs.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.iSons))
 	
-				GenericFieldCOImperial.GetReference().Enable()
-				EnemyFieldCO.GetReference().Enable()
+				;GenericFieldCOImperial.GetReference().Enable()
+				;EnemyFieldCO.GetReference().Enable()
 	
 			Elseif CWs.playerInvolved == 1
 		
 	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Rikke into FieldCo, GenericFieldCOSons into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOImperial.")
 	
-				FieldCO.ForceRefTo(Rikke.GetReference())
-				EnemyFieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+				;FieldCO.ForceRefTo(Rikke.GetReference())
+				EnemyFieldCO.ForceRefTo(CWs.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.iSons))
 	
-				EnemyFieldCO.GetReference().Enable()
-				GenericFieldCOImperial.GetReference().Disable()
+				;EnemyFieldCO.GetReference().Enable()
+				;GenericFieldCOImperial.GetReference().Disable()
 				
 			Else
 	; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
@@ -1077,21 +1080,21 @@ Function SetCWCampaignFieldCOAliases()
 			if CWs.playerInvolved == 0
 	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() playerAllegiance == 2 and PlayerInvolved == 0, so we are Forcing GenericFieldCOSons into FieldCo, GenericFieldCOImperial into EnemyFieldCO, and enabling them both.")
 				
-				FieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
-				EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
+				;FieldCO.ForceRefTo(GenericFieldCOSons.GetReference())
+				EnemyFieldCO.ForceRefTo(CWs.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.iImperials))
 	
-				GenericFieldCOImperial.GetReference().Enable()
-				EnemyFieldCO.GetReference().Enable()
+				;GenericFieldCOImperial.GetReference().Enable()
+				;EnemyFieldCO.GetReference().Enable()
 	
 			Elseif CWs.playerInvolved == 1
 	
 	; 			CWScript.Log("CWCampaignScript", " SetCWCampaignFieldCOAliases() is Forcing Galmar into FieldCo, GenericFieldCOImperial into EnemyFieldCO, enabling EnemyFieldCO, and disabling GenericFieldCOSons.")
 	
-				FieldCO.ForceRefTo(Galmar.GetReference())
-				EnemyFieldCO.ForceRefTo(GenericFieldCOImperial.GetReference())
+				;FieldCO.ForceRefTo(Galmar.GetReference())
+				EnemyFieldCO.ForceRefTo(CWs.GetReferenceHQFieldCOForHold(Hold.GetLocation(), CWs.iImperials))
 	
-				EnemyFieldCO.GetReference().Enable()
-				GenericFieldCOSons.GetReference().Disable()
+				;EnemyFieldCO.GetReference().Enable()
+				;GenericFieldCOSons.GetReference().Disable()
 	
 			Else
 	; 			CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases() expected 0 or 1 for CWScript PlayerInvolved, instead found:" + CWs.playerInvolved, 2)
