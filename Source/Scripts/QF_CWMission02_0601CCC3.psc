@@ -162,6 +162,8 @@ Function Fragment_9()
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 200")
     
     ;Set in stage 120 but just in case..
+
+    kmyQuest.CompleteAllObjectives()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(2)
 
@@ -202,6 +204,8 @@ Function Fragment_10()
     ;END AUTOCAST
     ;BEGIN CODE
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 205")
+
+    kmyQuest.FailAllObjectives()
 
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
     

@@ -126,6 +126,8 @@ Function Fragment_8()
     ;BEGIN CODE
     ;Fail quest
     debug.traceConditional("CWMission09 stage 205 FAILURE!!!", kmyquest.CWs.debugon.value)
+
+    kmyQuest.FailAllObjectives()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(9, True)
     
@@ -175,6 +177,8 @@ Function Fragment_13()
     ;Successfully complete quest
     
     debug.traceConditional("CWMission09 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
+
+    kmyQuest.CompleteAllObjectives()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(9)
     

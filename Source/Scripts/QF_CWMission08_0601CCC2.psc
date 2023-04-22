@@ -385,6 +385,8 @@ cwmission08script kmyQuest = __temp as cwmission08script
 
 debug.traceConditional("CWMission08 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
+kmyQuest.CompleteAllObjectives()
+
 kmyquest.FlagFieldCOWithMissionResultFaction(8)
 
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())

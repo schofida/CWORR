@@ -125,6 +125,9 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission06 stage 205 (Misson Failed)", kmyquest.CWs.debugon.value)
+
+kmyQuest.FailAllObjectives()
+
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(6, MissionFailure = true)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
@@ -388,6 +391,9 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission06 stage 200 (Misson Success)", kmyquest.CWs.debugon.value)
+
+kmyQuest.CompleteAllObjectives()
+
 kmyQuest.FlagFieldCOWithMissionResultFaction(6)
 
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
