@@ -714,6 +714,7 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 	if a_option == optionsCampaignPhaseMax
 		CWOCampaignPhaseMax.SetValueInt(campaignPhaseChoices[a_index] as int)
 		CWOCampaignPhaseMaxVal = campaignPhaseChoices[a_index]
+		CWs.CWCampaignS.ResolutionPhase = CWOCampaignPhaseMaxVal as int
 		ForcePageReset()
 	elseif a_option == optionsStartSiege
 		int holdID = holdsID[a_index]
