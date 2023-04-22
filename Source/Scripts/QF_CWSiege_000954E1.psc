@@ -3182,8 +3182,10 @@ MQ106TurnOffRandomDragons.SetValue(1)
 if cityVar == kmyquest.CWs.WhiterunLocation
 
 	Alias_WhiterunBridgeLever1.GetReference().Enable(false)
+	Alias_WhiterunBridgeLever1.GetReference().Reset()
 	(Alias_WhiterunBridgeLever1.GetReference() as WRDrawBridge01SCRIPT).GotoState("ReadyForOpen") ; schofida - Reset state so drawbridge can reopen in the event Imperials try to reclaim Whiterun
 	Alias_WhiterunBridgeLever2.GetReference().Enable(false)
+	Alias_WhiterunBridgeLever2.GetReference().Reset()
 	(Alias_WhiterunBridgeLever2.GetReference() as WRDrawBridge01SCRIPT).GotoState("ReadyForOpen") ; schofida - Reset state so drawbridge can reopen in the event Imperials try to reclaim Whiterun
 
 	if kmyquest.IsAttack()
@@ -3960,35 +3962,42 @@ Alias_Barricade1A.TryToReset()
 if Alias_Barricade1A.GetReference() != none
 	Alias_Barricade1A.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade1A.TryToDisableNoWait()
 Alias_Barricade1B.TryToReset()
 if Alias_Barricade1B.GetReference() != none
 	Alias_Barricade1B.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade1B.TryToDisableNoWait()
 Alias_Barricade2A.TryToReset() ;Reddit bugfix #15
 if Alias_Barricade2A.GetReference() != none
 	Alias_Barricade2A.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade2A.TryToDisableNoWait()
 Alias_Barricade2B.TryToReset() ;Reddit bugfix #15
 if Alias_Barricade2B.GetReference() != none
 	Alias_Barricade2B.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade2B.TryToDisableNoWait()
 Alias_Barricade3A.TryToReset() ;Reddit bugfix #15
 if Alias_Barricade3A.GetReference() != none
 	Alias_Barricade3A.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade3A.TryToDisableNoWait()
 Alias_Barricade3B.TryToReset()  ;Reddit bugfix #15
 if Alias_Barricade3B.GetReference() != none
 	Alias_Barricade3B.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_Barricade3B.TryToDisableNoWait()
 Alias_BarricadeGeneric1.TryToReset() ;Reddit bugfix #15
 if Alias_BarricadeGeneric1.GetReference() != none
 	Alias_BarricadeGeneric1.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
+Alias_BarricadeGeneric1.TryToDisableNoWait()
 Alias_BarricadeGeneric2.TryToReset() ;Reddit bugfix #15
 if Alias_BarricadeGeneric2.GetReference() != none
 	Alias_BarricadeGeneric2.GetReference().ClearDestruction() ;Reddit bugfix #15
 endif
-
+Alias_BarricadeGeneric2.TryToDisableNoWait()
 ;<Respawn set up>-----------------------
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Setting up Reinforcement Controller Script")	;*** WRITE TO LOG
