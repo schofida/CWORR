@@ -62,7 +62,7 @@ Quest __temp = self as Quest
 CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveDisplayed(50)
+;setObjectiveDisplayed(50)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -74,7 +74,7 @@ Quest __temp = self as Quest
 CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveCompleted(20)
+;setObjectiveCompleted(20)
 
 stop()
 ;END CODE
@@ -88,7 +88,7 @@ Quest __temp = self as Quest
 CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;END AUTOCAST
 ;BEGIN CODE
-setObjectiveCompleted(30)
+;setObjectiveCompleted(30)
 
 stop()
 ;END CODE
@@ -111,8 +111,8 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_13
 Function Fragment_13()
 ;BEGIN CODE
-setObjectiveCompleted(50)
-setObjectiveDisplayed(30) ;pop it again as a reminder
+;setObjectiveCompleted(50)
+;setObjectiveDisplayed(30) ;pop it again as a reminder
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -126,7 +126,7 @@ CWCampaignObjScript kmyQuest = __temp as CWCampaignObjScript
 ;BEGIN CODE
 ;Alias_FactionLeader.ForceRefTo((kmyquest.CW as CWScript).AliasFactionLeader.GetReference())
 ;Alias_FieldCO.ForceRefTo((kmyquest.CWCampaign as CWCampaignScript).FieldCO.GetReference())
-setObjectiveDisplayed(10)
+;setObjectiveDisplayed(10)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -141,8 +141,8 @@ QF_CWCampaignObj_00026F45 kmyQuest = __temp as QF_CWCampaignObj_00026F45
 ;Called by CWEscapeCity when it notices the player has left the area
 ;Fail objective
 
-setObjectiveFailed(50)
-setObjectiveDisplayed(30) ;pop it again as a reminder
+;setObjectiveFailed(50)
+;setObjectiveDisplayed(30) ;pop it again as a reminder
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -150,8 +150,8 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_8
 Function Fragment_8()
 ;BEGIN CODE
-setObjectiveCompleted(10)
-setObjectiveDisplayed(15)
+;setObjectiveCompleted(10)
+;setObjectiveDisplayed(15)
 ;END CODE
 EndFunction
 ;END FRAGMENT

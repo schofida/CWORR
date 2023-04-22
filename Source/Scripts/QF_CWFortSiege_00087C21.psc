@@ -2085,36 +2085,6 @@ kmyquest.DisableAllAliases()
 kmyquest.DisableInteriorDefenders()
 kmyquest.DisableBarricades()
 
-
-if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
-	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript StopCWCitizensFlee()")
-	kmyquest.CWs.StopCWCitizensFlee()
-	if Alias_CWFortSiegeClutterToggle.GetReference() != none
-		Alias_CWFortSiegeClutterToggle.GetReference().Disable()
-	endif
-
-	;CWO Comment out below lines. Hold should change hands in 9000/9200
-	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
-		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
-			kmyQuest.CWs.CWCampaign.SetStage(255)
-		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
-			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
-		endif
-		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
-		if kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon
-			CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
-			kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
-		endif
-	endif
-
-else	 ;its a normal fort battle
-	;Comment out below. Should not hit here but just in case....
-; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): setting owner of fort based on who is")
-	;kmyquest.SetNewOwnerOfFort(1000, 2000)
-	
-endif
-
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): removing aliases from CWSurrentTemporaryAllies faction")
 ;make them temporarily allies
 Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
@@ -2207,6 +2177,35 @@ CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): turning on complex WI 
 ;until DeleteWhenAble() is threaded, this needs to happen LAST:
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling DeleteWhenAbleInteriorDefenders()")
 kmyquest.DeleteWhenAbleInteriorDefenders()
+
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript StopCWCitizensFlee()")
+	kmyquest.CWs.StopCWCitizensFlee()
+	if Alias_CWFortSiegeClutterToggle.GetReference() != none
+		Alias_CWFortSiegeClutterToggle.GetReference().Disable()
+	endif
+
+	;CWO Comment out below lines. Hold should change hands in 9000/9200
+	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
+		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
+		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+			kmyQuest.CWs.CWCampaign.SetStage(255)
+		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
+		endif
+		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
+		if kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon
+			CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
+			kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+		endif
+	endif
+
+else	 ;its a normal fort battle
+	;Comment out below. Should not hit here but just in case....
+; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): setting owner of fort based on who is")
+	;kmyquest.SetNewOwnerOfFort(1000, 2000)
+	
+endif
 
 ;END CODE
 EndFunction
