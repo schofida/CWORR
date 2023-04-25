@@ -61,7 +61,7 @@ Function Fragment_1()
     ;BEGIN CODE
     debug.traceConditional("CWMission09 stage 10", kmyquest.CWs.debugon.value)
     
-    kmyQuest.FlagFieldCOWithPotentialMissionFactions(9, true)
+    kmyQuest.FlagFieldCOWithActiveQuestFaction(9)
     
     Alias_Document.TryToEnable()
     if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials

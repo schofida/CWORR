@@ -13,13 +13,20 @@ game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 kmyQuest.MUSCombatCivilWar.remove()
 CWScript CWs = kmyQuest.CWs
 CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
-if CWCampaignS.CWMission05.IsRunning()
-	(CWCampaignS.CWMission05 as CWMission05Script).TryToFixQuest()
+if CWCampaignS.CWMission01.IsRunning()
+	debug.notification("Trying to fix CWMission01")
+	(CWCampaignS.CWMission01 as CWMission01Script).TryToFixQuest()
 	Stop()
-	return
+	Return
 endif
-if CWCampaignS.CWMission06.IsRunning()
-	(CWCampaignS.CWMission06 as CWMission06Script).TryToFixQuest()
+if CWCampaignS.CWMission02.IsRunning()
+	debug.notification("Trying to fix CWMission02")
+	(CWCampaignS.CWMission02 as CWMission02Script).TryToFixQuest()
+	Stop()
+	Return
+endif
+if CWs.CWMission04.IsRunning()
+	(CWs.CWMission04 as CWMission04Script).TryToFixQuest()
 	Stop()
 	return
 endif
@@ -28,10 +35,11 @@ if CWCampaignS.CWMission08Quest.IsRunning()
 	Stop()
 	return
 endif
-if CWCampaignS.CWMission09.IsRunning()
-	(CWCampaignS.CWMission09 as CWMission09Script).TryToFixQuest()
+if CWS.CWFortSiegeFort.IsRunning()
+	debug.notification("Trying to fix CWFortSiegeFort")		
+	(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
 	Stop()
-	return
+	Return
 endif
 debug.notification("Nothing to fix....")
 Stop()
@@ -68,7 +76,7 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 	kmyQuest.MUSCombatCivilWar.remove()
 	CWScript CWs = kmyQuest.CWs
 	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
-	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
+	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && !CWs.WhiterunSiegeFinished && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
 		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
 		debug.notification("Trying to start Whiterun Siege")
 	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
@@ -106,17 +114,20 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 			Return
 		endif
 	endif
-	if CWCampaignS.CWMission01.IsRunning()
-		debug.notification("Trying to fix CWMission01")
-		(CWCampaignS.CWMission01 as CWMission01Script).TryToFixQuest()
+	if CWs.CWMission03.IsRunning()
+		(CWs.CWMission03 as CWMission03Script).TryToFixQuest()
 		Stop()
-		Return
+		return
 	endif
-	if CWCampaignS.CWMission02.IsRunning()
-		debug.notification("Trying to fix CWMission02")
-		(CWCampaignS.CWMission02 as CWMission02Script).TryToFixQuest()
+	if CWCampaignS.CWMission05.IsRunning()
+		(CWCampaignS.CWMission05 as CWMission05Script).TryToFixQuest()
 		Stop()
-		Return
+		return
+	endif
+	if CWCampaignS.CWMission06.IsRunning()
+		(CWCampaignS.CWMission06 as CWMission06Script).TryToFixQuest()
+		Stop()
+		return
 	endif
 	if CWs.CWMission07.IsRunning()
 		debug.notification("Trying to fix CWMission07")
@@ -124,8 +135,13 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		Stop()
 		Return
 	endif
-	if CWS.CWFortSiegeFort.IsRunning() || cws.CWFortSiegeCapital.IsRunning()
-		debug.notification("Trying to fix CWFortSiegeFort or CWFortSiegeCapital")		
+	if CWCampaignS.CWMission09.IsRunning()
+		(CWCampaignS.CWMission09 as CWMission09Script).TryToFixQuest()
+		Stop()
+		return
+	endif
+	if cws.CWFortSiegeCapital.IsRunning()
+		debug.notification("Trying to fix CWFortSiegeCapital")		
 		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
 		Stop()
 		Return

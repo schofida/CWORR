@@ -187,7 +187,8 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission06 stage 10", kmyquest.CWs.debugon.value)
-kmyQuest.FlagFieldCOWithPotentialMissionFactions(6, true)
+
+kmyQuest.FlagFieldCOWithActiveQuestFaction(6)
 
 kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
 
@@ -302,8 +303,10 @@ SetObjectiveDisplayed(20)
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
     kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
 Else
+    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
     kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
 endif
 

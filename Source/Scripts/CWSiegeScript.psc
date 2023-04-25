@@ -1670,9 +1670,6 @@ GlobalVariable Property CWDistantCatapultsAMB  Auto
 function TryToFixQuest()
 	debug.notification("Trying to fix CWSiege quest")
 	if GetStage() == 0
-		if CWs.GetStageDone(50) == false
-			CWs.setStage(50)
-		Endif
 		if CWs.CW03.IsRunning()
 			CWs.CW03.SetStage(210)
 		endif

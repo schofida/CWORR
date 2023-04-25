@@ -220,6 +220,9 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission08 stage 10", kmyquest.CWs.debugon.value)
+
+kmyQuest.FlagFieldCOWithActiveQuestFaction(8)
+
 Alias_Cow.TryToReset()
 Alias_Cow.TryToEnable()
 Alias_CowHand.TryToEnable()
@@ -234,8 +237,6 @@ Alias_CWMission08ImperialSolder3.TryToEnable()
 Alias_CWMission08ImperialSolder3.TryToReset()
 Alias_CWMission08ImperialSolder4.TryToEnable()
 Alias_CWMission08ImperialSolder4.TryToReset()
-
-kmyQuest.FlagFieldCOWithPotentialMissionFactions(8, true)
 
 kmyQuest.SetObjectiveDisplayed(10)
 ;END CODE

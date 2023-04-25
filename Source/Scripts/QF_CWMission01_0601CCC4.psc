@@ -151,7 +151,9 @@ kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_Garrison)
 
-kmyQuest.CWs.CwCampaignS.StartDefense(Alias_Garrison.GetLocation())
+Location garrisonLocation = Alias_Garrison.GetLocation()
+
+kmyQuest.CWs.CwCampaignS.StartDefense(garrisonLocation)
 
 kmyQuest.RegisterImperialAliases(Alias_ImperialSoldier1, Alias_ImperialSoldier2, Alias_ImperialSoldier3, Alias_ImperialSoldier4)
 kmyQuest.RegisterSonsAliases(Alias_SonsSoldier1, Alias_SonsSoldier2, Alias_SonsSoldier3, Alias_SonsSoldier4)
@@ -167,20 +169,20 @@ endif
 
 Utility.Wait(1)
 
-kmyQuest.SetUpAliases(Alias_Garrison.GetLocation())
+kmyQuest.SetUpAliases(garrisonLocation)
 
 while !kmyQuest.DoneSettingUpAliases
     Utility.Wait(1)
 endwhile
 
-kmyQuest.RegisterAliasesWithCWReinforcementScript(Alias_Garrison.GetLocation())
+kmyQuest.RegisterAliasesWithCWReinforcementScript(garrisonLocation)
 
 CWScript.Log("CWMission01QuestFragment", "Stage 0: Calling RegisterSpawnDefenderAliasesWithCWReinforcementScript()")
-if kmyQuest.cws.CWAttacker.GetValueInt() == kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+if kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
     kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
-elseif kmyQuest.cws.CWAttacker.GetValueInt() == kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
+elseif kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
     kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
-elseif kmyQuest.cws.CWAttacker.GetValueInt() != kmyQuest.cws.PlayerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+elseif kmyQuest.CWs.GetDefender(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
     kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
 else
     kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
@@ -212,9 +214,6 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 kmyquest.CWs.StartCWCitizensFlee(Alias_Garrison.GetLocation())
 kmyquest.CWs.RegisterEventHappening(Alias_Garrison.GetLocation())
-
-Alias_CWGarrisonEnableMarkerImperial.TryToDisable()
-Alias_CWGarrisonEnableMarkerSons.TryToDisable()
 
 kmyQuest.EnableMapMarkerAlias(Alias_MapMarkerGarrison)
 
@@ -355,7 +354,6 @@ Else
 endif
 
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(1)
-((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithPotentialMissionFactions(1, true)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
@@ -404,7 +402,6 @@ else
 endif
 
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(1, MissionFailure = true)
-((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithPotentialMissionFactions(1, true)
 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
@@ -457,9 +454,6 @@ kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 kmyquest.ToggleOffComplexWIInteractions(Alias_Garrison)
 kmyquest.CWs.UnregisterEventHappening(Alias_Garrison.GetLocation())
 
-Alias_CWGarrisonEnableMarkerImperial.TryToDisable()
-Alias_CWGarrisonEnableMarkerSons.TryToDisable()
-
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
 int WinningFaction = 0 
 if (PlayerIsAttacking && kmyQuest.AttackersHaveWon) || (!PlayerIsAttacking && kmyQuest.DefendersHaveWon)
@@ -469,12 +463,6 @@ else
 endif
 
 kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
-
-if WinningFaction == kmyQuest.CWs.iImperials
-    Alias_CWGarrisonEnableMarkerImperial.TryToEnableNoWait()
-Else
-    Alias_CWGarrisonEnableMarkerSons.TryToEnableNoWait()
-endif
 
 kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier1)
 kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier2)
