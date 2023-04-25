@@ -107,6 +107,7 @@ Function Fragment_11()
     ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
     
+    kmyQuest.CWS.StopCWCitizensFlee()
     kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 
     Alias_CWFortSiegeSons1.TryToDisable()
@@ -246,11 +247,12 @@ Function Fragment_1()
     CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 10")
     
     kmyquest.FlagFieldCOWithActiveQuestFaction(2)
-    
+
+    kmyquest.CWs.StartCWCitizensFlee(Alias_ResourceLocation.GetLocation())
+    kmyquest.CWs.RegisterEventHappening(Alias_ResourceLocation.GetLocation())
+
     kmyQuest.SetObjectiveDisplayed(10)
 
-    kmyQuest.FlagFieldCOWithPotentialMissionFactions(2, True)
-    
     if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMine)
         OldSmelter = Alias_ResourceObject1.GetReference()
         OldSmelter.Disable()
