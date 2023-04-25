@@ -552,7 +552,7 @@ Function Fragment_14()
 ;BEGIN CODE
 ;player said he won't execute EnemyLeader
 ;Leader will do it.
-
+Alias_Leader.TryToEvaluatePackage()
 setStage(300)
 ;END CODE
 EndFunction
