@@ -124,7 +124,7 @@ cwmission05script kmyQuest = __temp as cwmission05script
 ;BEGIN CODE
 debug.traceConditional("CWMission05 stage 0", kmyquest.CWs.debugon.value)
 	kmyQuest.ResetCommonMissionProperties()
-	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5, false)
+	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -162,7 +162,7 @@ cwmission05script kmyQuest = __temp as cwmission05script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
-	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5, true)
+	kmyQuest.FlagFieldCOWithActiveQuestFaction(5)
 	self.SetObjectiveDisplayed(10, 1 as Bool, false)
 	;Reddit Bugfix #5
 
