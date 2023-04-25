@@ -2039,6 +2039,10 @@ Quest __temp = self as Quest
 CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+if StoppingSiege
+	return
+endif
+StoppingSiege = true
 CWScript.Log("CWFortSiege", "Stage 9999: Shutdown phase.")
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
@@ -2226,3 +2230,4 @@ Location Property WindhelmPalaceOfTheKingsLocation  Auto
 ReferenceAlias Property Alias_QuestGiver Auto
 
 Bool SiegeFinished = false
+Bool StoppingSiege = false

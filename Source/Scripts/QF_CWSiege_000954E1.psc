@@ -2564,6 +2564,11 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
+if StoppingSiege
+	return
+endif
+StoppingSiege = true
+
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255 shutdown phase.")  ;*** WRITE TO LOG
 
 Alias_WhiterunCompanionsTrigger01.GetReference().Enable()
@@ -4614,6 +4619,7 @@ ObjectReference Property RiverwoodStormcloaksMarker Auto ; USKP 2.0.4 - Activate
 ObjectReference Property RiverwoodImperialsMarker Auto
 
 bool SiegeFinished = false
+bool StoppingSiege = false
 bool LydiaHasBeenDisabled = false
 Float CommanderNewPositionX = 0.0
 Float CommanderNewPositionY = 0.0
