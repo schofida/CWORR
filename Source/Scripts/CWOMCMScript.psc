@@ -608,7 +608,7 @@ function OnPageReset(String a_page)
 		optionsWinHold = self.AddMenuOption("Switch sides here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
-		if CWs.CWCampaignS.CWMission05.IsRunning() || CWs.CWCampaignS.CWMission06.IsRunning() || CWs.CWCampaignS.CWMission08Quest.IsRunning() || CWs.CWCampaignS.CWMission09.IsRunning()
+		if CWs.CWCampaignS.CWMission01.IsRunning() || CWs.CWCampaignS.CWMission02.IsRunning()  || CWs.CWMission04.IsRunning() || CWs.CWCampaignS.CWMission08Quest.IsRunning() || CWs.CWFortSiegeFort.IsRunning()
 			optionsCWOHelp2 = self.AddToggleOption("Help get additional CW Missions unstuck", optionsCWOHelpToggle2, 0)
 		endif
 		optionsCWOUninstall = self.AddToggleOption("Uninstall CWO", optionsCWOUninstallToggle, 0)
@@ -728,7 +728,7 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 			return
 		endif
 		CWs.CWDebugForceHold.SetValueInt(holdID)
-		Debug.Notification("Setting next campagin hold to " + holdsList[a_index])
+		Debug.Notification("Setting next campaign hold to " + holdsList[a_index])
 	elseIf a_option == optionsWinHold
 		int holdID = holdsID[a_index]
 		if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
@@ -787,7 +787,7 @@ function OnOptionHighlight(Int a_option)
 	elseif a_option == optionsSIChance
 		self.SetInfoText("Sets the Spanish Inquisition chance. CWO will periodically poll and may start a defense quest if you are in a city your side controls.")
 	elseif a_option == optionsStartSiege
-		self.SetInfoText("Starts a campagin at a hold of your choice. Use this if you are not getting a quest from the general. Please close MCM after selecting.")
+		self.SetInfoText("Starts a campaign at a hold of your choice. Use this if you are not getting a quest from the general. Please close MCM after selecting.")
 	elseif a_option == optionsWinSiege
 		self.SetInfoText("Wins a fort or major/minor capital siege already in progress. Use this if the siege did not finish for some reason. Please do not use this at the battle of Solitude or Windhelm. Please close MCM after selecting.")
 	elseif a_option == optionsWinHold
