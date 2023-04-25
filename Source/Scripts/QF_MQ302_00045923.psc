@@ -399,6 +399,7 @@ if kmyQuest.KickOutFlag
 		Game.GetPlayer().AddItem(CWRankRewardImperial)
 		sCW.SetPlayerAllegiance(sCW.iImperials)
 	endif
+	scW.setPlayerFactionRank(0)
 endif
 sCW.CWObj.SetStage(253)
 sCW.CWObj.Stop()
