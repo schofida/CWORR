@@ -1095,7 +1095,7 @@ kmyQuest.CWs.CWDebugForceAttacker.SetValueInt(kmyQuest.CWs.PlayerAllegiance)
 if GetStageDone(9000) == false
 	;CWO - Fire up disguise quest since this siege is done
 	kmyQuest.CWCampaignS.StartDisguiseQuest()
-	;CWO - Set contested hold winner for campagin
+	;CWO - Set contested hold winner for campaign
 	kmyQuest.CWs.contestedHoldWinner = kmyQuest.CWs.PlayerAllegiance
 
 	kmyquest.jarlHasSurrendered = 1
