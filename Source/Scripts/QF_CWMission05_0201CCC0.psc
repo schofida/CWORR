@@ -47,6 +47,21 @@ ReferenceAlias Property Alias_Player Auto
 ReferenceAlias Property Alias_EnemyFieldCO Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY EnemyCampSonsEnable
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyCampSonsEnable Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCampImperialEnable
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyCampImperialEnable Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCampEnable
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyCampEnable Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_4
 Function Fragment_4()
 ;BEGIN AUTOCAST TYPE cwmission05script
