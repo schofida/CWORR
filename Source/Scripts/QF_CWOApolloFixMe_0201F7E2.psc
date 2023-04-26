@@ -10,7 +10,6 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 ;END AUTOCAST
 ;BEGIN CODE
 game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
-kmyQuest.MUSCombatCivilWar.remove()
 CWScript CWs = kmyQuest.CWs
 CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
 if CWCampaignS.CWMission01.IsRunning()
@@ -73,7 +72,7 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 ;	self.setstage(20)
 	CWScript.Log("CWScript", "GetCWOUnstuck()")
 	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
-	kmyQuest.MUSCombatCivilWar.remove()
+
 	CWScript CWs = kmyQuest.CWs
 	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
 	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && !CWs.WhiterunSiegeFinished && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
@@ -88,6 +87,13 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		CWs.SetStage(4)
 		Stop()
 		Return
+	endif
+	if kmyQuest.WhiterunDrawbridgeNavCollision.IsEnabled() && (!CWs.CWSiegeS.IsRunning() || CWs.CWSiegeS.GetStage() > 200)
+		debug.notification("Whiterun bridge is still up after quest.")
+		kmyQuest.WhiterunDrawbridge.PlayGamebryoAnimation("Backward", TRUE)
+		kmyQuest.WhiterunDrawbridgeNavCollision.Disable()
+		Stop()
+		return
 	endif
 	if CWs.PlayerAllegiance == CWs.iImperials && CWs.WarIsActive == 1 && !CWs.CWCampaign.IsRunning() && CWs.FactionOwnsAll(cws.playerAllegiance)
 		if !CWs.CWFortSiegeFort.IsRunning() && !CWS.EastmarchFortBattleComplete

@@ -10,7 +10,8 @@ Quest Property CWCampaignObj Auto
 CWScript Property CWs Auto hidden
 CWCampaignScript Property CWCampaignS Auto hidden
 
-MusicType Property MUSCombatCivilWar Auto
+ObjectReference Property WhiterunDrawbridge Auto
+ObjectReference Property WhiterunDrawbridgeNavCollision Auto
 
 Event OnInit()
 	
