@@ -1089,6 +1089,8 @@ if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs
 endif
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
+
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
@@ -1164,6 +1166,8 @@ if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs
 endif
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
+
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
 ;CWO Stop battle sounds and music
 kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()

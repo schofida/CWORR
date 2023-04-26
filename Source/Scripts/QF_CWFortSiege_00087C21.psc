@@ -1215,6 +1215,8 @@ kmyQuest.CWs.ContestedHoldWinner = kmyQuest.CWs.GetDefender(Alias_Fort.GetLocati
 kmyQuest.AttackersHaveWon = false
 kmyQuest.DefendersHaveWon = true
 
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
+
 if kmyquest.IsPlayerAttacking()
 	SetObjectiveFailed(100)
 	setStage(9200) ;FAILURE!
@@ -1484,7 +1486,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
 	if kmyquest.CWs.IsPlayerAttacking(Alias_Fort.GetLocation())
 		;schofida - this is the finale. Since these are empty objectives nothing should show... I hope
 		((self as Quest) as cwreinforcementcontrollerscript).SetInfinitePools(true, true)
-		((self as quest) as cwreinforcementcontrollerscript).ReinforcementInterval = 2
 	Else
 		kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
 	endif
@@ -1951,6 +1952,8 @@ kmyQuest.AttackersHaveWon = true
 kmyQuest.DefendersHaveWon = false
 ;CWO Test for jarl alias to make sure it exists
 Actor JarlActor = Alias_Jarl.GetActorReference()
+
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
 
 If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1 && Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation()) && kmyquest.IsPlayerAttacking() && JarlActor != none
 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
