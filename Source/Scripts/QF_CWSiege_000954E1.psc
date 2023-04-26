@@ -1833,6 +1833,8 @@ if kmyquest.CWs.WhiterunSiegeFinished == False
 	kmyquest.CWs.WhiterunSiegeFinished = True
 endif
 
+((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
+
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, checking Attack/Defense and starting follow up quests")	;*** WRITE TO LOG
 
 ;**ATTACK/DEFEND SPECIFIC
@@ -3761,7 +3763,9 @@ Quest __temp = self as Quest
 CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
-SiegeFinished = False
+SiegeFinished = false
+StoppingSiege = false
+LydiaHasBeenDisabled = false
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsAttack()
@@ -3826,38 +3830,39 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 	Alias_RespawnDefenderPhase5C.ForceRefTo(Game.GetForm(0x0008BED9) as objectreference)
 	Alias_RespawnDefenderPhase5D.ForceRefTo(Game.GetForm(0x0008BEDA) as objectreference)
 endif
-Alias_DisableMapMarkerForBattle13.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF)
-Alias_DisableMapMarkerForBattle14.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.FalkreathMapMarker)
-Alias_DisableMapMarkerForBattle15.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef)
-Alias_DisableMapMarkerForBattle16.ForceRefIfEmpty(kmyQuest.CWs.CWCampaignS.WinterholdMapMarker)
-
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
 if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
 	Actor OldGeneral
-
-	OldGeneral = Alias_Attacker1General.GetActorRef()
-	if OldGeneral != none
-		Actor CWBattleCommanderTemp
-		if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-			CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleTullius
-		else
-			CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
-		endif
-		CommanderNewPositionX = Alias_Attacker1General.GetRef().GetPositionX()
-		CommanderNewPositionY = Alias_Attacker1General.GetRef().GetPositionY()
-		CommanderNewPositionZ = Alias_Attacker1General.GetRef().GetPositionZ()
-		CommanderNewAngleX = Alias_Attacker1General.GetRef().GetAngleX()
-		CommanderNewAngleY = Alias_Attacker1General.GetRef().GetAngleY()
-		CommanderNewAngleZ = Alias_Attacker1General.GetRef().GetAngleZ()
-		FieldCONewPositionX = Alias_Attacker2.GetRef().GetPositionX()
-		FieldCONewPositionY = Alias_Attacker2.GetRef().GetPositionY()
-		FieldCONewPositionZ = Alias_Attacker2.GetRef().GetPositionZ()
-		FieldCONewAngleX = Alias_Attacker2.GetRef().GetAngleX()
-		FieldCONewAngleY = Alias_Attacker2.GetRef().GetAngleY()
-		FieldCONewAngleZ = Alias_Attacker2.GetRef().GetAngleZ()
-		Alias_Attacker1General.ForceRefTo(CWBattleCommanderTemp)
-		Alias_Attacker2.ForceRefTo(OldGeneral)
+	Actor OldAttacker2
+	Actor CWBattleCommanderTemp
+	if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+		CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleTullius
+		OldGeneral = Alias_AttackerImperial1.GetActorReference()
+		OldAttacker2 = Alias_AttackerImperial2.GetActorReference()
+	else
+		CWBattleCommanderTemp = kmyQuest.CWs.CWCampaignS.CWBattleUlfric
+		OldGeneral = Alias_AttackerSons1.GetActorReference()
+		OldAttacker2 = Alias_AttackerSons2.GetActorReference()
+	endif
+	CommanderNewPositionX = OldGeneral.GetPositionX()
+	CommanderNewPositionY = OldGeneral.GetPositionY()
+	CommanderNewPositionZ = OldGeneral.GetPositionZ()
+	CommanderNewAngleX = OldGeneral.GetAngleX()
+	CommanderNewAngleY = OldGeneral.GetAngleY()
+	CommanderNewAngleZ = OldGeneral.GetAngleZ()
+	FieldCONewPositionX = OldAttacker2.GetPositionX()
+	FieldCONewPositionY = OldAttacker2.GetPositionY()
+	FieldCONewPositionZ = OldAttacker2.GetPositionZ()
+	FieldCONewAngleX = OldAttacker2.GetAngleX()
+	FieldCONewAngleY = OldAttacker2.GetAngleY()
+	FieldCONewAngleZ = OldAttacker2.GetAngleZ()
+	if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+		Alias_AttackerImperial1.ForceRefTo(CWBattleCommanderTemp)
+		Alias_AttackerImperial2.ForceRefTo(OldGeneral)
+	else
+		Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
+		Alias_AttackerSons2.ForceRefTo(OldGeneral)
 	endif
 endif
 
