@@ -124,6 +124,11 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+if MissionFinished == true
+    return
+endif
+MissionFinished = true
+
 debug.traceConditional("CWMission06 stage 205 (Misson Failed)", kmyquest.CWs.debugon.value)
 
 kmyQuest.FailAllObjectives()
@@ -166,6 +171,9 @@ cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission06 stage 0", kmyquest.CWs.debugon.value)
+
+MissionFinished = false
+
 kmyQuest.ResetCommonMissionProperties()
 
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
@@ -393,6 +401,11 @@ Quest __temp = self as Quest
 cwmission06script kmyQuest = __temp as cwmission06script
 ;END AUTOCAST
 ;BEGIN CODE
+if MissionFinished == true
+    return
+endif
+MissionFinished = true
+
 debug.traceConditional("CWMission06 stage 200 (Misson Success)", kmyquest.CWs.debugon.value)
 
 kmyQuest.CompleteAllObjectives()
@@ -468,3 +481,4 @@ EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
+bool MissionFinished = false
