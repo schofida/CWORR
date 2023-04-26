@@ -100,6 +100,7 @@ int optionsCWODisableSolitudeSiege
 int optionsDisableFaint
 int optionsDisableNotifications
 int optionsPayCrimeFaction
+int optionsStopMusic
 
 Float _sliderPercent = 100.000
 
@@ -110,6 +111,7 @@ Bool optionsCWOUninstallToggle = false
 bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
 bool optionstogglePayCrimeFaction = false
+bool optionsStopMusicToggle = false
 
 String[] gameDisguiseList
 String[] holdsList
@@ -339,6 +341,10 @@ function OnOptionSelect(Int a_option)
 			CWs.CWCampaignS.cwResetCrime()
 			self.SetToggleOptionValue(a_option, true, false)
 		endif
+	elseif a_option == optionsStopMusic
+		optionsStopMusicToggle = !optionsStopMusicToggle
+		CWs.CWSiegeS.MUSCombatCivilWar.remove()
+		self.SetToggleOptionValue(a_option, optionsStopMusicToggle, false)
 	endIf
 endFunction
 
@@ -465,6 +471,10 @@ function OnPageReset(String a_page)
 			AddtextOption("CrimeFactionSons Bounty Is Is", CWs.CrimeFactionSons.GetCrimeGold(), 0)
 		endif
 
+		if CWOQuestMonitor.IsRunning()
+			AddtextOption("Mon", (CWOQuestMonitor.GetAlias(0) as CWOMonitorScript).GetState(), 0)
+		endif
+
 		if CWOArmorDisguise.IsRunning()
 			self.AddtextOption("CWOArmorDisguise", "Is On", 0)
 			if CWODisguiseGlobal.GetValueInt() > 0
@@ -587,6 +597,7 @@ function OnPageReset(String a_page)
 		self.SetCursorFillMode(self.LEFT_TO_RIGHT)
 		optionsDisableNotifications = self.AddToggleOption("Disable Notifications", CWODisableNotifications.GetValueInt() == 1, 0)
 		optionsPayCrimeFaction = self.AddToggleOption("Pay Faction Crimes", optionstogglePayCrimeFaction, 0)
+		optionsStopMusic = self.AddToggleOption("Stop Siege Music", optionsStopMusicToggle, 0)
 		optionsReinforcementsBaseCapital = self.AddSlideroption("Capital Reinforcements Base", CWOCapitalReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
@@ -826,6 +837,8 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("Toggle helper notifications on or off. Skyrim's scripting engine is slow and terrible and things can get messed up if you teleport to quest markers too fast. These notifications are there during the start of sieges to guide players to let them know when its safe to continue.")	
 	elseif a_option == optionsPayCrimeFaction
 		SetInfoText("If you inadvertantly hit your teammates and incurred a bounty, click here to clear it. Please exit the MCM once clicked.")	
+	elseif a_option == optionsStopMusic
+		SetInfoText("Stops the siege music in case the CW siege music does not stop (Vanilla Bug). Close MCM after selecting.")
 	endIf
 endFunction
 
