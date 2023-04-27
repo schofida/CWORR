@@ -110,6 +110,15 @@ Function Fragment_11()
     kmyQuest.CWS.StopCWCitizensFlee()
     kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 
+    int WinningFaction = 0 
+    if (kmyQuest.objectiveCompleted == 1)
+        WinningFaction = kmyQuest.CWs.playerAllegiance
+    else
+        WinningFaction = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)
+    endif
+
+    kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), WinningFaction)
+
     Alias_CWFortSiegeSons1.TryToDisable()
     Alias_CWFortSiegeSons2.TryToDisable()
     Alias_CWFortSiegeSons3.TryToDisable()
@@ -120,12 +129,13 @@ Function Fragment_11()
     Alias_CWFortSiegeImperial4.TryToDisable()
     
     if SmelterFix != None
-        SmelterFix.DisableNoWait()
+        SmelterFix.ClearDestruction()
+        SmelterFix.Disable()
         SmelterFix.Delete()
         SmelterFix = None
         OldSmelter.Enable()
         if NewSawMillLever != None
-            NewSawMillLever.DisableNoWait()
+            NewSawMillLever.Disable()
             NewSawMillLever.Delete()
             NewSawMillLever = None
             OldSawMillLever.Enable()
@@ -174,8 +184,11 @@ Function Fragment_9()
     
     kmyquest.CWs.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
-    kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), kmyQuest.CwS.playerAllegiance)
-    
+    while Game.GetPlayer().IsInLocation(Alias_ResourceLocation.GetLocation())
+        CWScript.Log("CWCWMission02ScriptFragment", self + "SucceedQuest() Waiting for player to leave City before stopping quest")
+       utility.wait(5)
+    endwhile
+    stop()
     ;END CODE
     EndFunction
     ;END FRAGMENT
@@ -213,6 +226,12 @@ Function Fragment_10()
     kmyquest.FlagFieldCOWithMissionResultFaction(2, MissionFailure = true)
     
     kmyQuest.CWCampaignS.AdvanceCampaignPhase()
+
+    while Game.GetPlayer().IsInLocation(Alias_ResourceLocation.GetLocation())
+        CWScript.Log("CWCWMission02ScriptFragment", self + "FailQuest() Waiting for player to leave City before stopping quest")
+       utility.wait(5)
+    endwhile
+    stop()
     ;END CODE
     EndFunction
     ;END FRAGMENT
@@ -270,7 +289,7 @@ Function Fragment_1()
         Alias_ResourceObject1.ForceRefTo(SmelterFix) 
         OldSawMillLever = kmyQuest.GetMillLever(Alias_ResourceLocation.GetLocation())
         OldSawMillLever.Disable()
-        SmelterFix = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
+        NewSawMillLever = OldSawMillLever.PlaceAtMe(kmyQuest.ResourceObjectSawMillLever)
     else
         Alias_ResourceObject1.TryToEnable()
     endif
