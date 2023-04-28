@@ -806,7 +806,7 @@ function OnOptionHighlight(Int a_option)
 	elseif a_option == optionsCWOHelp
 		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. Please close MCM after selecting.")
 	elseif a_option == optionsCWOHelp2
-		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. This option pertains to the following quests: 'X's Last Battle', 'Defector Collector', 'Can't Lead a Cow to Goldar' and 'X Marks the Docs'. Please close MCM after selecting.")
+		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. This option pertains to the following quests: 'Skirmish at X', 'Sabotage at X', 'Rescue from Fort X', 'Can't Lead a Cow to Goldar' and 'Battle at Fort X'. Please close MCM after selecting.")
 	elseif a_option == optionsCWOUninstall
 		self.SetInfoText("Uninstalls CWO. Before selecting this option, make sure that you do a hard save and make sure that you are indoors Make sure you use the console to remove any unique items that you received in CW Rewards. Make another hard save after uninstallation is complete. Once uninstallation has completed, remove CWO and any patches and restart the game. Please close MCM after selecting.")
 	elseif a_option == optionsCWODisableCWMission01
