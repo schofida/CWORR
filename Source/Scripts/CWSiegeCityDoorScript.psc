@@ -41,7 +41,7 @@ EVENT onActivate(objectReference triggerRef)
 		if (GetOwningQuest() as CWSiegeScript).IsAttack()
 
 				;pop a messagebox and prevent player entering if the siege hasn't progressed up to the gate
-			if (GetOwningQuest().GetStage() < DoorBlockedUntilStageDuringAttack) && (triggerRef == game.GetPlayer())
+			if ((GetOwningQuest().GetStage() < DoorBlockedUntilStageDuringAttack) || (GetOwningQuest() as CWSiegeScript).DefendersHaveWon) && (triggerRef == game.GetPlayer())
 			
 				CWSiegeDoorAttackMessage.show()
 
