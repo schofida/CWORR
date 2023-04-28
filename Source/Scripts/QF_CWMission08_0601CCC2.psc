@@ -392,7 +392,7 @@ kmyquest.FlagFieldCOWithMissionResultFaction(8)
 
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
 
-kmyQuest.CWs.CWAlliesS.AddPotentialAlly(Alias_Goldar.GetRef(), true, true, true, true, true, true, true, true, true, false, true)
+kmyQuest.CWs.CWAlliesS.AddPotentialAlly(Alias_Goldar.GetRef(), false, true, true, true, true, true, true, false, true, false, true)
 
 kmyQuest.CWs.CWCampaignS.CWMission08Done = 1
 
