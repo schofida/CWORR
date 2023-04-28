@@ -533,5 +533,23 @@ function DeactivateAllies()
 	ActiveAlly9.Clear()
 	ActiveAlly10.Clear()
 
+	;CWO - Remove Disaffected Soldiers/Goldar from Aliases and disable since they don't have Go Home scripts
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly3)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly4)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly5)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly6)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly7)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly8)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly9)
+	DisableAllyIfNotRalofOrHadvarAndClear(PotentialAlly10)
+	
 EndFunction
+
+function DisableAllyIfNotRalofOrHadvarAndClear(ReferenceAlias refAlias)
+	Actor ref = refAlias.GetActorRef()
+	if ref != cws.HadvarRef && ref != cws.RalofRef
+		refAlias.TryToDisable()
+	endif
+	refAlias.Clear()
+endfunction
 
