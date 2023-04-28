@@ -231,6 +231,25 @@ ObjectReference function GetCampMapMarker(Location Hold)
 
 endfunction
 
+function AddDisaffectedSoldierToPotentialAlly(ReferenceAlias refAlias)
+	if refAlias.GetActorReference() != none && !refAlias.GetActorReference().IsDead()
+		refAlias.GetActorRef().ResetHealthAndLimbs()
+		giveNewOutfit(refAlias.GetActorRef())
+		cws.CWAlliesS.AddPotentialAlly(refAlias.GetActorRef(), \
+			AllowedInHaafingar = False, \
+			AllowedInReach = True, \
+			AllowedInHjaalmarch = True, \
+			AllowedInWhiterun = True, \
+			AllowedInFalkreath = True, \
+			AllowedInPale = True, \
+			AllowedInWinterhold = True, \
+			AllowedInEastmarch = False, \
+			AllowedInRift = True, \
+			ImperialsOnly = CWs.PlayerAllegiance == CWs.iImperials, \
+			SonsOnly = CWs.PlayerAllegiance == CWs.iSons)
+	endif
+EndFunction
+
 function TryToFixQuest()
 	debug.notification("Trying to fix CWMission06 quest")
 	if GetStage() == 0

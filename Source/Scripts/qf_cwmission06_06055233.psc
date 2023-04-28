@@ -276,6 +276,14 @@ cwmission06script kmyQuest = __temp as cwmission06script
 debug.traceConditional("CWMission06 stage 100", kmyquest.CWs.debugon.value)
 kmyQuest.objectiveCompleted = 1
 
+;CWO Repacify soldiers so they don't start attacking the wounded
+kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
+kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
+
+Alias_DissaffectedSoldier01.TryToEvaluatePackage()
+Alias_DissaffectedSoldier02.TryToEvaluatePackage()
+Alias_DissaffectedSoldier03.TryToEvaluatePackage()
+
 ;Just In Case
 Alias_LoyalistSoldier01.TryToKill()
 Alias_LoyalistSoldier02.TryToKill()
@@ -418,56 +426,9 @@ kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
 kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
-if Alias_DissaffectedSoldier01.GetActorReference() != none && !Alias_DissaffectedSoldier01.GetActorReference().IsDead()
-    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier01.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier01.GetActorRef(), \
-    AllowedInHaafingar = False, \
-    AllowedInReach = True, \
-    AllowedInHjaalmarch = True, \
-    AllowedInWhiterun = True, \
-    AllowedInFalkreath = True, \
-    AllowedInPale = True, \
-    AllowedInWinterhold = True, \
-    AllowedInEastmarch = False, \
-    AllowedInRift = True, \
-    ImperialsOnly = False, \
-    SonsOnly = false)
-endif
-
-if Alias_DissaffectedSoldier02.GetActorReference() != none && !Alias_DissaffectedSoldier02.GetActorReference().IsDead()
-    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier02.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier02.GetActorRef(), \
-    AllowedInHaafingar = False, \
-    AllowedInReach = True, \
-    AllowedInHjaalmarch = True, \
-    AllowedInWhiterun = True, \
-    AllowedInFalkreath = True, \
-    AllowedInPale = True, \
-    AllowedInWinterhold = True, \
-    AllowedInEastmarch = False, \
-    AllowedInRift = True, \
-    ImperialsOnly = False, \
-    SonsOnly = false)
-endif
-
-if Alias_DissaffectedSoldier03.GetActorReference() != none && !Alias_DissaffectedSoldier03.GetActorReference().IsDead()
-    Alias_DissaffectedSoldier03.GetActorRef().ResetHealthAndLimbs()
-    kmyQuest.giveNewOutfit(Alias_DissaffectedSoldier03.GetActorRef())
-    kmyQuest.cws.CWAlliesS.AddPotentialAlly(Alias_DissaffectedSoldier03.GetActorRef(), \
-    AllowedInHaafingar = False, \
-    AllowedInReach = True, \
-    AllowedInHjaalmarch = True, \
-    AllowedInWhiterun = True, \
-    AllowedInFalkreath = True, \
-    AllowedInPale = True, \
-    AllowedInWinterhold = True, \
-    AllowedInEastmarch = False, \
-    AllowedInRift = True, \
-    ImperialsOnly = False, \
-    SonsOnly = false)
-endif
+kmyQuest.AddDisaffectedSoldierToPotentialAlly(Alias_DissaffectedSoldier01)
+kmyQuest.AddDisaffectedSoldierToPotentialAlly(Alias_DissaffectedSoldier02)
+kmyQuest.AddDisaffectedSoldierToPotentialAlly(Alias_DissaffectedSoldier03)
 
 Actor PlayerRef = Alias_Player.GetActorRef()
 
