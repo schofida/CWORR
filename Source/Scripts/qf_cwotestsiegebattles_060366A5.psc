@@ -122,26 +122,26 @@ kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier8Instance)
 kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier9Instance)
 kmyQuest.CleanUpInstanceIfExists(CWOSiegeSonsSoldier10Instance)
 debug.Notification("CWO Test Siege Battles. Creating new soldiers")
-CWOSiegeImperialSoldier1Instance = kmyQuest.CWOSiegeImperialSoldier1.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier2Instance = kmyQuest.CWOSiegeImperialSoldier2.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier3Instance = kmyQuest.CWOSiegeImperialSoldier3.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier4Instance = kmyQuest.CWOSiegeImperialSoldier4.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier5Instance = kmyQuest.CWOSiegeImperialSoldier5.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier6Instance = kmyQuest.CWOSiegeImperialSoldier6.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier7Instance = kmyQuest.CWOSiegeImperialSoldier7.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier8Instance = kmyQuest.CWOSiegeImperialSoldier8.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier9Instance = kmyQuest.CWOSiegeImperialSoldier9.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeImperialSoldier10Instance = kmyQuest.CWOSiegeImperialSoldier10.PlaceAtMe(kmyQuest.CWSiegeImperialSoldier) As Actor
-CWOSiegeSonsSoldier1Instance = kmyQuest.CWOSiegeSonsSoldier1.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier2Instance = kmyQuest.CWOSiegeSonsSoldier2.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier3Instance = kmyQuest.CWOSiegeSonsSoldier3.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier4Instance = kmyQuest.CWOSiegeSonsSoldier4.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier5Instance = kmyQuest.CWOSiegeSonsSoldier5.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier6Instance = kmyQuest.CWOSiegeSonsSoldier6.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier7Instance = kmyQuest.CWOSiegeSonsSoldier7.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier8Instance = kmyQuest.CWOSiegeSonsSoldier8.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier9Instance = kmyQuest.CWOSiegeSonsSoldier9.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
-CWOSiegeSonsSoldier10Instance = kmyQuest.CWOSiegeSonsSoldier10.PlaceAtMe(kmyQuest.CWSiegeSonsSoldier) As Actor
+CWOSiegeImperialSoldier1Instance = kmyQuest.CWOSiegeImperialSoldier1.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier2Instance = kmyQuest.CWOSiegeImperialSoldier2.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier3Instance = kmyQuest.CWOSiegeImperialSoldier3.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier4Instance = kmyQuest.CWOSiegeImperialSoldier4.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier5Instance = kmyQuest.CWOSiegeImperialSoldier5.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier6Instance = kmyQuest.CWOSiegeImperialSoldier6.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier7Instance = kmyQuest.CWOSiegeImperialSoldier7.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier8Instance = kmyQuest.CWOSiegeImperialSoldier8.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier9Instance = kmyQuest.CWOSiegeImperialSoldier9.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeImperialSoldier10Instance = kmyQuest.CWOSiegeImperialSoldier10.PlaceActorAtMe(kmyQuest.CWSiegeImperialSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier1Instance = kmyQuest.CWOSiegeSonsSoldier1.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier2Instance = kmyQuest.CWOSiegeSonsSoldier2.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier3Instance = kmyQuest.CWOSiegeSonsSoldier3.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier4Instance = kmyQuest.CWOSiegeSonsSoldier4.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier5Instance = kmyQuest.CWOSiegeSonsSoldier5.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier6Instance = kmyQuest.CWOSiegeSonsSoldier6.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier7Instance = kmyQuest.CWOSiegeSonsSoldier7.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier8Instance = kmyQuest.CWOSiegeSonsSoldier8.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier9Instance = kmyQuest.CWOSiegeSonsSoldier9.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
+CWOSiegeSonsSoldier10Instance = kmyQuest.CWOSiegeSonsSoldier10.PlaceActorAtMe(kmyQuest.CWSiegeSonsSoldier, 4, kmyQuest.CWOTESTEZ)
 ;END CODE
 EndFunction
 ;END FRAGMENT

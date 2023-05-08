@@ -26,6 +26,8 @@ ActorBase Property CWSiegeSonsSoldier Auto
 ActorBase Property CWOWhiteWolf  Auto  
 ActorBase Property CWOImperialHound  Auto 
 
+EncounterZone Property CWOTESTEZ Auto
+
 Function CleanUpInstanceIfExists(Actor instance)
     if instance != none
         instance.Disable()
