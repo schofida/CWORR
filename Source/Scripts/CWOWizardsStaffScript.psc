@@ -22,7 +22,7 @@ endFunction
 
 function OnEquipped(Actor AkActor)
 
-	if (AkActor.GetAv("Destruction") > SkillMin as Float && AkActor.GetAv("Conjuration") > SkillMin as Float && AkActor.GetAv("Restoration") > SkillMin as Float && AkActor.GetAv("Alteration") > SkillMin as Float && AkActor.GetAv("Illusion") > SkillMin as Float) || AkActor.GetAv("Destruction") > SkillMax as Float || AkActor.GetAv("Illusion") > SkillMax as Float || AkActor.GetAv("Conjuration") > SkillMax as Float || AkActor.GetAv("Alteration") > SkillMax as Float || AkActor.GetAv("Restoration") > SkillMax as Float
+	if AkActor != Game.GetPlayer() || ((AkActor.GetAv("Destruction") > SkillMin as Float && AkActor.GetAv("Conjuration") > SkillMin as Float && AkActor.GetAv("Restoration") > SkillMin as Float && AkActor.GetAv("Alteration") > SkillMin as Float && AkActor.GetAv("Illusion") > SkillMin as Float) || AkActor.GetAv("Destruction") > SkillMax as Float || AkActor.GetAv("Illusion") > SkillMax as Float || AkActor.GetAv("Conjuration") > SkillMax as Float || AkActor.GetAv("Alteration") > SkillMax as Float || AkActor.GetAv("Restoration") > SkillMax as Float)
 		AkActor.AddSpell(SpellToAdd, true)
 	else
 ;		AkActor.UnequipItem(AkActor.GetEquippedObject(0), false, true)
