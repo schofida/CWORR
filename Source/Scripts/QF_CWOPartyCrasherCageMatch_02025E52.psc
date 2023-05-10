@@ -35,6 +35,10 @@ EndFunction
 
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
+;BEGIN AUTOCAST TYPE CWOPartyCrasherCageMatchScript
+Quest __temp = self as Quest
+CWOPartyCrasherCageMatchScript kmyQuest = __temp as CWOPartyCrasherCageMatchScript
+;END AUTOCAST
 ;BEGIN CODE
 if utility.randomint(0, 100) < 50
 		Alias_CWODragon1.TryToEnable()
@@ -42,7 +46,7 @@ if utility.randomint(0, 100) < 50
 	else
 		Alias_CWODragon1.TryToEnable()
 		Alias_CWODragon2.TryToEnable()
-		Alias_CWODragon1.TryToRemoveFromFaction(DragonFaction)
+		Alias_CWODragon1.TryToRemoveFromFaction(kmyQuest.DragonFaction)
 		Alias_CWODragon2.GetActorReference().StartCombat(Alias_CWODragon1.GetActorReference())
 		Alias_CWODragon1.GetActorReference().StartCombat(Alias_CWODragon2.GetActorReference())
 	endIf
@@ -51,5 +55,3 @@ EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
-
-Faction Property DragonFaction Auto
