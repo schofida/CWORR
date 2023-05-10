@@ -2481,13 +2481,16 @@ else
 		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
 
 	endif
+	;schofida Whiterun defense can happen more than once. Only play scene on first one.
 	if !scenePlayedBefore
 ;	debug.messageBox("START SPEECH SCENE")
 
-	kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
-	Alias_Jarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
-	Alias_HouseCarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
-	kmyquest.CWSiegeWhiterunDefendedScene.start()
+		kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
+		ObjectReference SpeechMarker = Alias_SpeechMarker.GetReference()
+		;schofida MoveTo is not working. Set to SetPosition
+		Alias_Jarl.GetReference().SetPosition(SpeechMarker.GetPositionX(), SpeechMarker.GetPositionY(), SpeechMarker.GetPositionZ())
+		Alias_HouseCarl.GetReference().SetPosition(SpeechMarker.GetPositionX(), SpeechMarker.GetPositionY(), SpeechMarker.GetPositionZ())
+		kmyquest.CWSiegeWhiterunDefendedScene.start()
 	endif
 
 endif
@@ -2705,15 +2708,16 @@ Alias_CampEnableMarkerImperial.GetReference().Disable()
 
 ;**CITY SPECIFIC
 Location cityVar = Alias_City.GetLocation()
-if cityVar == kmyquest.CWs.WhiterunLocation
 
-	;PATCH 1.9 -- #73449
-	;turn on random dragons if the MQ doesn't want them off
-	if MQ106.getStage() >= 5 && MQ106.getStage() < 160
-		;do nothing, MQ still wants them off
-	else
-		MQ106TurnOffRandomDragons.SetValue(0)
-	endif
+;PATCH 1.9 -- #73449
+;turn on random dragons if the MQ doesn't want them off
+if MQ106.getStage() >= 5 && MQ106.getStage() < 160
+	;do nothing, MQ still wants them off
+else
+	MQ106TurnOffRandomDragons.SetValue(0)
+endif
+
+if cityVar == kmyquest.CWs.WhiterunLocation
 
 
 	if kmyquest.WasThisAnAttack
