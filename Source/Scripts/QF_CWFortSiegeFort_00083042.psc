@@ -1099,7 +1099,7 @@ If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 ; 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
 	
 	if  kmyquest.IsPlayerAttacking()
-		setObjectiveCompleted(100)
+		setObjectiveCompleted(101)
 	endif
 
 	setStage(950)
@@ -1107,10 +1107,10 @@ If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 else
 
 if kmyquest.IsPlayerAttacking()
-	setObjectiveCompleted(100)
+	setObjectiveCompleted(101)
 	setStage(9000) ;SUCCESS!
 else 
-	SetObjectiveFailed(200)
+	SetObjectiveFailed(201)
 	setStage(9200) ;FAILURE!
 endif
 
@@ -1173,10 +1173,10 @@ kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
 
 if kmyquest.IsPlayerAttacking()
-	SetObjectiveFailed(100)
+	SetObjectiveFailed(101)
 	setStage(9200) ;FAILURE!
 else
-	SetObjectiveCompleted(200)
+	SetObjectiveCompleted(201)
 	setStage(9000) ;SUCCESS!
 endif
 ;END CODE
@@ -1568,7 +1568,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		else
 			setObjectiveFailed(10)
 		endif
-		setObjectiveDisplayed(100)
+		setObjectiveDisplayed(101)
 
 	else ;player is defending
 		if kmyquest.IsPlayerIsNearAFriendly(PlayerIsAttacking = false)	;the player hit the trigger near his allies
@@ -1576,7 +1576,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		else
 			setObjectiveFailed(20)
 		endif
-		setObjectiveDisplayed(200)
+		setObjectiveDisplayed(201)
 	endif
 	;CWO Player is now up to enemy troops start player essential quest and stop disguise quest
 	Location FortLocation = Alias_Fort.GetLocation()
