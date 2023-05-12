@@ -784,6 +784,13 @@ if Alias_ClutterEnableToggle.GetReference()
 	Alias_ClutterEnableToggle.GetReference().Enable()
 endif
 
+;CWO If player has SKSE, get Jarl's outfit
+if 	SKSE.GetVersionRelease() > 0
+	JarlDefaultOutfit = Alias_Jarl.GetActorReference().GetActorBase().GetOutfit()
+else
+	JarlDefaultOutfit = none
+endif
+
 kmyquest.CWSiegeObjJarl.ForceRefTo(Alias_Jarl.GetReference())
 kmyquest.CWSiegeObj.setObjectiveCompleted(1050)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1200)
@@ -1387,8 +1394,13 @@ kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier6)
 CWScript.Log("AttackCity", self + "Stage 9999: Shutdown stage, Giving Jarl his normal outfit")
 ;WE DONT YET HAVE FUNCTIONALITY TO GET OUTFIT
 ;if we get that function I should change this to store the outfit the jarl is currently wearing
-;for now assume this is Balgruuf, because we only do sieges at whiterun now
-Alias_Jarl.GetActorReference().setOutfit(kmyquest.JarlClothesBalgruuf)
+;CWO - Luckily SKSE implemented GetOutfit. But if user does not have SKSE, default to Jarl's clothes
+if JarlDefaultOutfit != none
+	Alias_Jarl.GetActorReference().setOutfit(JarlDefaultOutfit)
+else
+	;for now assume this is Balgruuf, because we only do sieges at whiterun now
+	Alias_Jarl.GetActorReference().setOutfit(kmyquest.JarlClothesBalgruuf)
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1415,3 +1427,4 @@ EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
+Outfit JarlDefaultOutfit ;CWO If player has SKSE, get Jarl's outfit

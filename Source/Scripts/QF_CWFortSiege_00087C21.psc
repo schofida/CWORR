@@ -1509,6 +1509,13 @@ else
 	if kmyQuest.WasThisAnAttack && (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
 		debug.notification("Siege done setting up. You can talk to CO now")
 	endif
+	Actor JarlActor = Alias_Jarl.GetActorReference()
+	;CWO If player has SKSE, get Jarl's outfit
+	if JarlActor != none &&	SKSE.GetVersionRelease() > 0
+		JarlDefaultOutfit = Alias_Jarl.GetActorReference().GetActorBase().GetOutfit()
+	else
+		JarlDefaultOutfit = none
+	endif
 endif
 
 ;END CODE
@@ -2205,6 +2212,16 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 			CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
 			kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 		endif
+
+		Actor JarlActor = Alias_Jarl.GetActorReference()
+		if JarlActor != none && JarlActor.GetActorBase() != kmyQuest.CWs.CWCampaignS.JarlIdgrodRavencrone as ActorBase && JarlActor.GetActorBase() != kmyQuest.CWs.CWCampaignS.JarlSiddgeir as ActorBase
+			if JarlDefaultOutfit != none
+				Alias_Jarl.GetActorReference().setOutfit(JarlDefaultOutfit)
+			else
+				;for now assume this is Balgruuf, because we only do sieges at whiterun now
+				Alias_Jarl.GetActorReference().setOutfit(kmyquest.CWs.CWCampaignS.JarlClothesOutfit02)
+			endif
+		endif
 	endif
 
 else	 ;its a normal fort battle
@@ -2234,3 +2251,4 @@ ReferenceAlias Property Alias_QuestGiver Auto
 
 Bool SiegeFinished = false
 Bool StoppingSiege = false
+Outfit JarlDefaultOutfit

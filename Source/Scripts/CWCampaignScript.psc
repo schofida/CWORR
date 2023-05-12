@@ -299,6 +299,7 @@ Faction Property CurrentFollowerFaction Auto
 Faction Property CWODefensiveFaction Auto
 ;Outfit for Jarl Fight in Minor Cities
 Outfit Property CWArmorBalgruufSteelPlateNoHelmetOutfit Auto
+Outfit Property JarlClothesOutfit02 Auto
 ;Enemy Camp Helpful for CWMission06
 LocationAlias Property EnemyCamp Auto
 ;Enable Garrison Markers
