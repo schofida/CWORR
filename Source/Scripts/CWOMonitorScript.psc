@@ -12,6 +12,7 @@ perk property Perk2 auto
 perk property Perk6 auto
 GlobalVariable property CWOVersion auto
 GlobalVariable property CWOCurrentHold auto
+Quest Property DialogueWhiterunCaptainOfTheGuard auto
 
 Event init()
 	;used by CWHoldManagerScript attached to this quest
@@ -391,6 +392,12 @@ function DoPlayerLoadGameStuff()
 			Game.GetPlayer().RemoveFromFaction((CWs.CWFinale as CWFinaleScript).CWFinaleTemporaryAllies)
 		endif
 		CWOVersion.SetValueInt(10008)
+	endif
+	if CWOVersion.GetValueInt() < 10009
+		if !DialogueWhiterunCaptainOfTheGuard.IsRunning()
+			DialogueWhiterunCaptainOfTheGuard.Start()
+		endif
+		CWOVersion.SetValueInt(10009)
 	endif
 	registerforsingleupdate(30)
 endfunction
