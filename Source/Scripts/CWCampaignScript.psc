@@ -342,6 +342,7 @@ Int Property CWMission01Or02Done Auto Hidden Conditional
 Int Property CWMission06Done Auto Hidden Conditional
 Int Property CWMission08Done Auto Hidden Conditional
 Int Property SpanishInquisitionCompleted Auto Hidden Conditional
+Int Property CanDoCWMission05 Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
@@ -412,24 +413,6 @@ Event OnInit()
 	
 	AttackDeltaBonusForKillingCapitalGarrison = 2
 	AttackDeltaGarrisonValueModifierForDestroyingResource = 0.50	;destroying the resource object at a garrison halves it value
-	
-	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission03Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iPale) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iHjaalmarch))
-		candocwmission03 = 1
-	Else
-		candocwmission03 = 0
-	endif
-
-	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission04Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iWinterhold) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iFalkreath))
-		candocwmission04 = 1
-	Else
-		candocwmission04 = 0
-	endif
-
-	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission07Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iRift) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iReach))
-		candocwmission07 = 1
-	Else
-		candocwmission07 = 0
-	endif
 
 	;*** !!! *** !!! TEMPORARY HACK UNTIL WE GET ACTIVATORS IN AS OBJECT TYPES -- these should be set in editor
 	ResourceObjectFarm = Game.GetForm(0X0001DA07)	;**** !!!! **** !!!!! THIS IS TEMPORARY WORK AROUND UNTIL WE GET ACTIVATOR OBJECTS IN PAPYRUS -- when that happens this property will be set in the editor in the CWCampaign quest
@@ -471,10 +454,30 @@ Function ResetCampaign()
 	;Re-intialize CWO stuff
 	SpanishInquisitionCompleted = 0
 	CWMission01Or02Done = 0
+	CanDoCWMission05 = 0
+	
 	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1
 		CWFortSiegeFortDone = 1
 	else
 		CWFortSiegeFortDone = 0
+	endif
+
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission03Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iPale) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iHjaalmarch))
+		candocwmission03 = 1
+	Else
+		candocwmission03 = 0
+	endif
+
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission04Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iWinterhold) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iFalkreath))
+		candocwmission04 = 1
+	Else
+		candocwmission04 = 0
+	endif
+
+	if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.CWMission07Done == 0 && ((CWs.PlayerAllegiance == CWs.iImperials && CWs.contestedHold == CWs.iRift) || (CWs.PlayerAllegiance == CWs.iSons && CWs.contestedHold == CWs.iReach))
+		candocwmission07 = 1
+	Else
+		candocwmission07 = 0
 	endif
 
 	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
@@ -1106,6 +1109,10 @@ Function SetCWCampaignFieldCOAliases()
 	; 		CWScript.Log("CWCampaignScript", "WARNING: SetCWCampaignFieldCOAliases expected playerAllegience to be 1 or 2, got " + CWs.playerAllegiance, 2)
 	
 		EndIf
+
+		if EnemyFieldCO.GetActorRef() != none && !EnemyFieldCO.GetActorRef().IsDead()
+			CanDoCWMission05 = 1
+		endif
 		
 	EndFunction
 
