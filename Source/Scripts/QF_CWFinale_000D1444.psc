@@ -616,6 +616,7 @@ kmyquest.CWFinaleWindhelmSceneA.stop()
 
 actor EnemySecondActor = Alias_EnemySecond.GetActorReference()
 actor EnemyLeaderActor = Alias_EnemyLeader.GetActorReference()
+actor SABETME3Soldier = Alias_SABETME3Soldier.GetActorReference()
 
 EnemySecondActor.GetActorBase().setEssential(false)
 
@@ -625,28 +626,19 @@ EnemyLeaderActor.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 Alias_Leader.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 Alias_Second.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
 
-if !sabetme3
+if sabetme3
+	SABETME3Soldier.RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
+	kmyQuest.makeMeStartCombat(EnemySecondActor, SABETME3Soldier)
+	kmyQuest.makeMeStartCombat(EnemyLeaderActor, SABETME3Soldier)
+else
 	Game.GetPlayer().RemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
+	kmyQuest.makeMeStartCombat(EnemySecondActor, Game.GetPlayer())
+	kmyQuest.makeMeStartCombat(EnemyLeaderActor, Game.GetPlayer())
 endif
-
-Alias_SABETME3Soldier.TryToRemoveFromFaction(kmyquest.CWFinaleTemporaryAllies)
-
-if sabetme3
-	EnemySecondActor.StartCombat(Alias_SABETME3Soldier.GetActorReference())
-	Alias_SABETME3Soldier.GetActorReference().StartCombat(EnemySecondActor)
-else
-	EnemySecondActor.StartCombat(Game.GetPlayer())
-endif
-EnemySecondActor.StartCombat(Alias_Leader.GetActorReference())
-EnemySecondActor.StartCombat(Alias_Second.GetActorReference())
-
-if sabetme3
-EnemyLeaderActor.StartCombat(Alias_SABETME3Soldier.GetActorReference())
-else
-EnemyLeaderActor.StartCombat(Game.GetPlayer())
-endif
-EnemyLeaderActor.StartCombat(Alias_Second.GetActorReference())
-EnemyLeaderActor.StartCombat(Alias_Leader.GetActorReference())
+kmyQuest.makeMeStartCombat(EnemySecondActor, Alias_Leader.GetActorReference())
+kmyQuest.makeMeStartCombat(EnemySecondActor, Alias_Second.GetActorReference())
+kmyQuest.makeMeStartCombat(EnemyLeaderActor, Alias_Leader.GetActorReference())
+kmyQuest.makeMeStartCombat(EnemyLeaderActor, Alias_Second.GetActorReference())
 
 EnemyLeaderActor.SetNoBleedoutRecovery(true)
 ;END CODE

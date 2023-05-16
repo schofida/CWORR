@@ -136,6 +136,7 @@ Function PlayerEnteredCastle()
 		; Have the statue face the player
 		ObjectReference SABETME3SoldierRef = SABETME3Soldier.GetRef()
 		Actor PlayerRef = Game.GetPlayer()
+		PlayerRef.MoveTo(SABETME3SoldierRef)
 		float zOffset = SABETME3SoldierRef.GetHeadingAngle(PlayerRef)
 		SABETME3SoldierRef.SetAngle(SABETME3SoldierRef.GetAngleX(), SABETME3SoldierRef.GetAngleY(), SABETME3SoldierRef.GetAngleZ() + zOffset)
 		ObjectReference LeaderRef = Leader.GetRef()
@@ -207,13 +208,13 @@ function EnemySecondDied()
 	PlayerActor.StopCombatAlarm()
 
 	CWFinaleSolitudeSceneA.stop()
-	
-	if CWs.CwCampaignS.PlayerAllegianceLastStand()
+
+	if CWs.CwCampaignS.PlayerAllegianceLastStand() && CWs.playerAllegiance == CWs.iSons
 		SetStage(310)
 	else
-	Utility.Wait(PauseBeforeScene)
-	
-	startSceneB()
+		Utility.Wait(PauseBeforeScene)
+
+		startSceneB()
 	endif
 	
 EndFunction
@@ -278,6 +279,15 @@ function makeMeStopCombat(ReferenceAlias ActorAliasToChillOut)
 	ActorToChillOut.StopCombatAlarm()
 
 	
+
+EndFunction
+
+function makeMeStartCombat(Actor Actor1, Actor Actor2)
+
+	Actor1.EvaluatePackage()	
+	Actor2.EvaluatePackage()
+	Actor1.StartCombat(Actor2)
+	Actor2.StartCombat(Actor1)
 
 EndFunction
 
