@@ -1557,11 +1557,6 @@ CWScript.Log("CWFortSiege", "Stage 10: Disabling normal garrison markers")
 Alias_GarrisonEnableMarkerImperial.GetReference().Disable()
 Alias_GarrisonEnableMarkerSons.GetReference().Disable()
 
-kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF.Disable()
-kmyQuest.CWs.CWCampaignS.FalkreathMapMarker.Disable()
-kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef.Disable()
-kmyQuest.CWs.CWCampaignS.WinterholdMapMarker.Disable()
-
 ; Block below added by USKP to terminate Captain Aldis' quests if he's been disabled
 if CWGarrisonEnableMarkerImperialSolitude.IsDisabled() == 1
 	if Favor110.IsObjectiveDisplayed(10) == 1
@@ -1614,6 +1609,11 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 	CWScript.Log("CWFortSiege", "Stage 10: temporarily disabling map markers until I have a function to turn off fast travel or move the marker that you fast travel to")
 ;	debug.messagebox("TEMP: Disabling Map marker, until I can disable fast travel or move heading marker.")
 	Alias_MapMarker.GetReference().disable()
+	if Alias_Fort.GetLocation() == kmyQuest.CWs.WinterholdLocation
+		kmyQuest.Cws.CWCampaignS.WinterholdMapMarker.disable() ;CWO Winterhold College Map Marker
+	elseif Alias_Fort.GetLocation() == kmyQuest.CWs.DawnstarLocation
+		kmyQuest.Cws.CWCampaignS.DawnstarMapMarkerREF.disable() ; CWO Dawnstar Sanctuary Map Marker
+	endif
 
 	Alias_Jarl.TryToDisable()
 	Alias_HouseCarl.TryToDisable()
@@ -2066,10 +2066,11 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 ; debug.trace("TEMP: Enabling Map marker, until I can disable/enable fast travel or move heading marker.")
 Alias_MapMarker.GetReference().enable()
 
-kmyQuest.CWs.CWCampaignS.DawnstarMapMarkerREF.Enable()
-kmyQuest.CWs.CWCampaignS.FalkreathMapMarker.Enable()
-kmyQuest.CWs.CWCampaignS.MorthalMapMarkerRef.Enable()
-kmyQuest.CWs.CWCampaignS.WinterholdMapMarker.Enable()
+if Alias_Fort.GetLocation() == kmyQuest.CWs.WinterholdLocation
+	kmyQuest.Cws.CWCampaignS.WinterholdMapMarker.enable() ;CWO Winterhold College Map Marker
+elseif Alias_Fort.GetLocation() == kmyQuest.CWs.DawnstarLocation
+	kmyQuest.Cws.CWCampaignS.DawnstarMapMarkerREF.enable() ; CWO Dawnstar Sanctuary Map Marker
+endif
 
 ;while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
 ;	utility.wait(5)	
