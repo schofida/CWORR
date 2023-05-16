@@ -29,11 +29,14 @@ GlobalVariable property CWOCourierHoursMax auto
 ;-- Functions ---------------------------------------
 
 function Fragment_1()
+	Quest __temp = self as Quest
+	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 	; Quest stage 10 (after reading city note, but player is not yet in Riften/Markarth/Whiterun)
 	self.SetObjectiveCompleted(10, true)
-	self.setobjectivedisplayed(0, 1 as Bool, false)
+	self.setobjectivedisplayed(0, true, false)
 	Alias_FieldCO.getactorreference().addtofaction(CWODefensiveFaction)
 	CWOCourierSentGlobal.SetValueInt(0)
+	kmyQuest.UnregisterForUpdate()
 endFunction
 
 ; Skipped compiler generated GotoState
@@ -67,6 +70,10 @@ function Fragment_0()
 endFunction
 
 function Fragment_3()
+	Quest __temp = self as Quest
+	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+
+	kmyQuest.UnregisterForUpdate()
 	if !CWS.CWCampaignS.PlayerAllegianceLastStand()
 		If CWS.CWSiegeS.isrunning()
 			CourierS.AddAliasToContainer(Alias_Note)
@@ -90,9 +97,12 @@ endfunction
 function Fragment_10()
 	; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)
 	CWOCourierSentGlobal.SetValueInt(0)
-
-	utility.wait(8 as Float)
-	CWS.CWSiegeS.setstage(1)
 	self.SetObjectiveCompleted(0, true)
+	utility.wait(8 as Float)
+	if CWS.CWFortSiegeCapital.IsRunning()
+		CWS.CWFortSiegeCapital.SetStage(10)
+	else
+		CWS.CWSiegeS.setstage(1)
+	endif
 	Alias_FieldCO.getactorreference().removefromfaction(CWODefensiveFaction)
 endFunction

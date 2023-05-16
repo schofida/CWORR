@@ -436,10 +436,22 @@ if wait >= 30
 endif
 
 if kmyQuest.CWS.CWsiegeS.IsRunning()
-    kmyQuest.CWS.CWsiegeS.SetStage(1)
+    kmyQuest.CWODefendingStart.sendstoryeventandwait(kmyQuest.CWS.CWsiegeS.City.GetLocation(), kmyQuest.Cws.GetReferenceHQFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.PlayerAllegiance), none, 0, 0)	
 elseIf kmyQuest.CWS.CWFortSiegeCapital.IsRunning()
-    kmyQuest.CWS.CWFortSiegeCapital.SetStage(10)
+    kmyQuest.CWODefendingStart.sendstoryeventandwait((kmyQuest.CWS.CWFortSiegeCapital as CWFortSiegeScript).Fort.GetLocation(), kmyQuest.Cws.GetReferenceHQFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.PlayerAllegiance), none, 0, 0)	
 endIf
+
+wait = 0
+while !kmyquest.CWOSendForPlayerQuest.IsRunning()
+    Utility.Wait(1.0)
+    wait = wait + 1
+endWhile
+
+if wait >= 30
+    debug.notification("Tried waiting for the 30 seconds but defense quest never started. Please notify author.")
+endif
+
+kmyQuest.CWOSendForPlayerQuest.SetStage(10)
 ;END CODE
 EndFunction
 ;END FRAGMENT
