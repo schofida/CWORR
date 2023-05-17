@@ -2505,47 +2505,6 @@ bool function IsEnemyCampEnabled()
 	endif
 endfunction
 
-function enableCamp()
-	Location HoldLoc = Hold.GetLocation()
-	int iAllegiance = CWs.getOppositeFactionInt(Cws.PlayerAllegiance)
-
-	if iAllegiance == CWs.iSons
-		CampEnableSons.GetReference().Enable()
-		if HoldLoc == CWs.RiftHoldLocation
-			CWs.MilitaryCampRiftSonsMapMarker.AddToMap()
-		elseif HoldLoc == CWs.WinterholdHoldLocation
-			CWs.MilitaryCampWinterholdSonsMapMarker.AddToMap()
-		elseif holdLoc == CWs.PaleHoldLocation
-			CWs.MilitaryCampPaleSonsMapMarker.AddToMap()
-		elseif holdLoc == CWs.FalkreathHoldLocation
-			CWs.MilitaryCampFalkreathSonsMapMarker.AddToMap()
-		elseif holdLoc == CWs.WhiterunHoldLocation
-			CWs.MilitaryCampWhiterunSonsMapMarker.AddToMap()
-		elseif holdLoc == CWs.HjaalmarchHoldLocation
-			CWs.MilitaryCampHjaalmarchSonsMapMarker.AddToMap()
-		elseif holdLoc == CWs.ReachHoldLocation
-			CWs.MilitaryCampReachSonsMapMarker.AddToMap()
-		Endif
-	Elseif  iAllegiance == CWs.iImperials
-		CampEnableImperial.GetReference().Enable()
-		if holdLoc == CWs.RiftHoldLocation
-			CWs.MilitaryCampRiftImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.WinterholdHoldLocation
-			CWs.MilitaryCampWinterholdImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.PaleHoldLocation
-			CWs.MilitaryCampPaleImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.FalkreathHoldLocation
-			CWs.MilitaryCampFalkreathImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.WhiterunHoldLocation
-			CWs.MilitaryCampWhiterunImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.HjaalmarchHoldLocation
-			CWs.MilitaryCampHjaalmarchImperialMapMarker.AddToMap()
-		elseif holdLoc == CWs.ReachHoldLocation
-			CWs.MilitaryCampReachImperialMapMarker.AddToMap()
-		Endif
-	endif
-endfunction
-
 bool function DisableLydiaDuringSiege()
 	if HousecarlWhiterunRef.IsEnabled() && !HousecarlWhiterunRef.IsInFaction(CurrentFollowerFaction) && (HousePurchase as HousePurchaseScript).whiterunhousevar == 0
 		HousecarlWhiterunRef.Disable()
