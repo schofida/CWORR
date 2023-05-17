@@ -1845,7 +1845,9 @@ kmyQuest.CWs.CWCampaignS.cwResetCrime()
 kmyQuest.CWFortSiegeCapitalSurrenderScene.Stop()
 
 ;CWO Account for player attacking or defending
-kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
+if !kmyQuest.CWs.CWCampaign.IsRunning() || !kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1
+	kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
+endif
 
 ;CWO Stop defense courier quest if running
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
@@ -1861,16 +1863,17 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	endif		
 
 	kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+	if !kmyquest.CWs.CWCampaign.IsRunning() || !kmyquest.CWs.CWCampaign.GetStageDone(200) || kmyquest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1
+		;CWO Player won, set as attacker in next Campaign
+		kmyQuest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.playerAllegiance
 
-	;CWO Player won, set as attacker in next Campaign
-	kmyQuest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.playerAllegiance
+		;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
+		;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyQuest.IsPlayerAttacking(), !kmyQuest.IsPlayerAttacking())
 
-	;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
-	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyQuest.IsPlayerAttacking(), !kmyQuest.IsPlayerAttacking())
-
-;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
-	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
-	kmyQuest.CWs.CWCampaignS.AddGeneralToRewardFaction(Alias_Fort.GetLocation())
+	;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
+		kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+		kmyQuest.CWs.CWCampaignS.AddGeneralToRewardFaction(Alias_Fort.GetLocation())
+	endif
 endif
 
 kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
@@ -2203,13 +2206,15 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-		if kmyQuest.CWs.CWCampaign.IsRunning() && (kmyQuest.CWs.CWCampaign.GetStage() < 200 || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+		bool WasSpanishInquisition = false
+		if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 			kmyQuest.CWs.CWCampaign.SetStage(255)
-		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStage() == 200
+		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStageDone(200)
 			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
+			WasSpanishInquisition = true
 		endif
 		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
-		if kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon
+		if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon) && !WasSpanishInquisition
 			CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript WinHoldAndSetOwner() *ASSUMING* the attackers won")
 			kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 		endif

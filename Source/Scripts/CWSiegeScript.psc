@@ -1521,33 +1521,35 @@ CWs.CWSiegeObj.setStage(9000)
 CWs.CWCampaignS.StartDisguiseQuest()
 CWs.CWCampaignS.StartCWOBAControllerQuest()
 
-;schofida - Player is defender and defender won. Now the player can attak
-CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
+if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCampaignS.SpanishInquisitionCompleted == 1
 
-;obsolete:
-CWs.CompleteCWObj(Hold.GetLocation())
+	;schofida - Player is defender and defender won. Now the player can attak
+	CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
 
-CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
+	;obsolete:
+	CWs.CompleteCWObj(Hold.GetLocation())
 
-CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+	CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
-if cws.CWFinale.IsRunning()
-	(cws.CWFinale as CWFinaleScript).PlayerLastStandWasSuccessful()
-Else
-	cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
+	CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+
+	if cws.CWFinale.IsRunning()
+		(cws.CWFinale as CWFinaleScript).PlayerLastStandWasSuccessful()
+	Else
+		cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
+	endif
+	;CWs.registerMissionSuccess()	- NOT counting final sieges as successful missions, since those are what increase the CWObj global values
+
+	;CWs.CWCampaign.setStage(255) -- OBSOLETE
+
+	;while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
+	; 	CWScript.Log("CWSiegeScript", self + "SucceedDefenseQuest(): Waiting for player to leave City before stoping Siege quest")
+	;	utility.wait(5)
+	;endwhile
+	;stop()
+
+	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 endif
-;CWs.registerMissionSuccess()	- NOT counting final sieges as successful missions, since those are what increase the CWObj global values
-
-;CWs.CWCampaign.setStage(255) -- OBSOLETE
-
-;while Game.GetPlayer().IsInLocation(CityAlias.GetLocation())
-; 	CWScript.Log("CWSiegeScript", self + "SucceedDefenseQuest(): Waiting for player to leave City before stoping Siege quest")
-;	utility.wait(5)
-;endwhile
-;stop()
-
-CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
-
 EndFunction
 
 ;CWO - This is a failsafe in case CWAttackCity fails to start for some reason
