@@ -202,11 +202,11 @@ kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
     kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
 Else
     kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
 endif
+
+kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.CWMission06LoyalistSoldierFaction, true, true)
 
 kmyquest.CWs.RegisterEventHappening(Alias_CWCampEnemy.GetLocation())
 
@@ -277,8 +277,7 @@ debug.traceConditional("CWMission06 stage 100", kmyquest.CWs.debugon.value)
 kmyQuest.objectiveCompleted = 1
 
 ;CWO Repacify soldiers so they don't start attacking the wounded
-kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
-kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
+kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.CWMission06LoyalistSoldierFaction, true, true)
 
 Alias_DissaffectedSoldier01.TryToEvaluatePackage()
 Alias_DissaffectedSoldier02.TryToEvaluatePackage()
@@ -318,13 +317,7 @@ SetObjectiveDisplayed(20)
 
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 
-if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, true, true)
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, false, false)
-Else
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWSonsFactionNPC, true, true)
-    kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.cws.CWImperialFactionNPC, false, false)
-endif
+kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.CWMission06LoyalistSoldierFaction, false, false)
 
 Alias_LoyalistSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
 Alias_LoyalistSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)

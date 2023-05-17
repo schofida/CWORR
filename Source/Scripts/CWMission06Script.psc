@@ -31,6 +31,8 @@ ActorBase Property CWMission06DissaffectSoldierSons1 auto
 Outfit Property CWMission06TurncoatGuardSonsOutfit auto
 Outfit Property CWMission06TurncoatGuardImperialOutfit auto
 
+Faction Property CWMission06LoyalistSoldierFaction Auto
+
 Event OnUpdate()
 
 ; ;	debug.trace("TurncoatLeader.GetReference():" + TurncoatLeader.GetReference())
