@@ -1585,7 +1585,7 @@ CWs.ClearHoldCrimeGold(Hold.GetLocation())
 
 CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
 
-CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
 cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
 
 CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
