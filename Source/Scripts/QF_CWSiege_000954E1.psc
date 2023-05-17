@@ -1915,7 +1915,18 @@ if kmyquest.IsAttack()
 	if cityVar != kmyquest.CWs.SolitudeLocation && cityVar != kmyquest.CWs.WindhelmLocation 
 		CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, starting CWAttackCity quest via story manager script event")	;*** WRITE TO LOG
 	   	kmyquest.CWs.CWAttackCityStart.SendStoryEvent(Alias_City.GetLocation(), kmyquest.CWs.GetRikkeOrGalmar())
-	   	if ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
+
+		;CWO - In case CWattack City does not start
+		int wait = 0
+		while !kmyquest.CWs.CWCampaignS.CWAttackCity.IsRunning() && wait < 30
+			Utility.Wait(1.0)
+			wait = wait + 1
+		endWhile
+		;CWO - If unable to start attack quest, run new SucceedAttackQuest routine.
+		if wait >= 30
+			debug.notification("Tried waiting for the 30 seconds but CWAttackCity never started. Finishing siege.")
+			kmyQuest.SucceedAttackQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
+		elseif ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
 			while kmyQuest.CWs.CWCampaignS.CWAttackCity.GetStageDone(0) == false
 				Utility.Wait(1)

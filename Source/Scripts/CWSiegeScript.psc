@@ -1550,6 +1550,48 @@ CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 
 EndFunction
 
+;CWO - This is a failsafe in case CWAttackCity fails to start for some reason
+;This should not be hit under normal circumstances.
+Function SucceedAttackQuest(LocationAlias HoldAlias, LocationAlias CityAlias, ReferenceAlias MainGateExteriorAlias)
+;SUCCESS!!! Attackers Win 
+CWScript.Log("CWSiegeScript", self + "SucceedAttackQuest()")
+
+;Removes this music from the stack
+MUSCombatCivilWar.Remove()
+
+;Prevent player activation of main gate into city
+MainGateExteriorAlias.GetReference().BlockActivation(FALSE)
+
+;Set Global Dialog Stuff
+CWs.CWStateAttackStarted.SetValue(0)
+CWs.CWStateAttackerBrokeThrough.SetValue(0)
+CWs.CWStateDefenderFallingBack.SetValue(0)
+CWs.CWStateDefenderLastStand.SetValue(0)
+CWs.CWStateAttackerAtGate.SetValue(0)
+CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
+
+CWs.CWSiegeObj.setStage(9000)
+
+CWs.CWCampaignS.StartDisguiseQuest()
+CWs.CWCampaignS.StartCWOBAControllerQuest()
+
+;schofida - Player is attacker and attacker won. Now the player can attak
+CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
+
+;obsolete:
+CWs.CompleteCWObj(Hold.GetLocation())
+
+CWs.ClearHoldCrimeGold(Hold.GetLocation())
+
+CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
+
+CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
+
+CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
+
+EndFunction
+
 
 function TryToTurnOnCatapultAlias(ReferenceAlias CatapultAlias)
 	ObjectReference CatapultRef = CatapultAlias.GetReference()
