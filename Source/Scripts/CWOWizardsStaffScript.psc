@@ -29,6 +29,6 @@ function OnEquipped(Actor AkActor)
 ;		AkActor.UnequipItem(AkActor.GetEquippedObject(1), false, true)
 ;		debug.notification("You are not worthy")
 		akActor.UnequipItem(ThisItem)
-		debug.notification("You are not worthy")
+		debug.notification("You are not worthy.")
 	endIf
 endFunction
