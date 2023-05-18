@@ -1133,6 +1133,8 @@ Alias_BodyGuard3.GetActorReference().setAV("Aggression", 1)
 if( Alias_Justiciar.GetActorReference() != None )
 	Alias_Justiciar.GetActorReference().setAV("Aggression", 1)
 	Alias_Justiciar.GetActorReference().EvaluatePackage()
+	;CWO Set Justiciar to essential so his death does not break scene
+	Alias_Justiciar.GetActorReference().GetActorBase().SetEssential(true)
 EndIf
 
 Alias_Jarl.GetActorReference().EvaluatePackage()
@@ -1178,6 +1180,11 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_BodyGuard5)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_BodyGuard6)
 
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Justiciar)
+
+if( Alias_Justiciar.GetActorReference() != None )
+	;CWO Set Justiciar to not-essential so Galmar can properly dispatch
+	Alias_Justiciar.GetActorReference().GetActorBase().SetEssential(false)
+endif
 
 kmyquest.CWs.pacifyAliasForSurrender(Alias_EnemySoldier1)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_EnemySoldier2)
