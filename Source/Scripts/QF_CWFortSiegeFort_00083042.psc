@@ -1099,7 +1099,7 @@ If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 ; 	CWScript.Log("CWFortSiege", "Stage 1000: setting stage 950 the Jarl Surrenders ")
 	
 	if  kmyquest.IsPlayerAttacking()
-		setObjectiveCompleted(101)
+		SetObjectiveCompleted(100)
 	endif
 
 	setStage(950)
@@ -1107,9 +1107,13 @@ If ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSie
 else
 
 if kmyquest.IsPlayerAttacking()
+	;CWO Objective is now 101 but also complete 100 in case of mod conflict
+	SetObjectiveCompleted(100)
 	setObjectiveCompleted(101)
 	setStage(9000) ;SUCCESS!
 else 
+	;CWO Objective is now 201 but also complete 200 in case of mod conflict
+	SetObjectiveFailed(200)
 	SetObjectiveFailed(201)
 	setStage(9200) ;FAILURE!
 endif
@@ -1173,9 +1177,13 @@ kmyquest.StopCombatSoundsLoop()
 kmyQuest.MUSCombatCivilWar.Remove()
 
 if kmyquest.IsPlayerAttacking()
+	;CWO Objective is now 101 but also complete 100 in case of mod conflict
+	SetObjectiveFailed(100)
 	SetObjectiveFailed(101)
 	setStage(9200) ;FAILURE!
 else
+	;CWO Objective is now 201 but also complete 200 in case of mod conflict
+	SetObjectiveCompleted(200)
 	SetObjectiveCompleted(201)
 	setStage(9000) ;SUCCESS!
 endif
@@ -1568,6 +1576,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		else
 			setObjectiveFailed(10)
 		endif
+		;CWO Objective is now 101
 		setObjectiveDisplayed(101)
 
 	else ;player is defending
@@ -1576,6 +1585,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		else
 			setObjectiveFailed(20)
 		endif
+		;CWO Objective is now 201
 		setObjectiveDisplayed(201)
 	endif
 	;CWO Player is now up to enemy troops start player essential quest and stop disguise quest
