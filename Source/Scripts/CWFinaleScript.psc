@@ -178,6 +178,9 @@ function EnemySecondDied()
 ; 	CWScript.Log("CWFinaleScript", self + "EnemySecondDied() waiting for leader to be in bleedout, then will stop combat and start scene.")
 	
 	int waitingFor
+
+	;CWO Unregister for update. Scene gonna start
+	UnregisterForUpdate()
 	
 	Actor EnemyLeaderActor = EnemyLeader.GetActorReference()
 	
@@ -409,6 +412,17 @@ Function MakeCrowdMember(ReferenceAlias MarkerAlias, ReferenceAlias MemberAlias)
 	EndIf
 
 EndFunction
+
+Event OnUpdate()
+	;CWO Adding onUpdate routine to kick NPCs in case they stop combat
+	Leader.TryToEvaluatePackage()
+	Second.TryToEvaluatePackage()
+	EnemyLeader.TryToEvaluatePackage()
+	EnemySecond.TryToEvaluatePackage()
+	if CWs.CWCampaignS.CWs.CWCampaignS.PlayerAllegianceLastStand()
+		SABETME3Soldier.TryToEvaluatePackage()
+	endif
+EndEvent
 
 Function TryToFixQuest()
 	debug.notification("Trying to fix CWFinale quest")

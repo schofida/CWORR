@@ -641,6 +641,9 @@ kmyQuest.makeMeStartCombat(EnemyLeaderActor, Alias_Leader.GetActorReference())
 kmyQuest.makeMeStartCombat(EnemyLeaderActor, Alias_Second.GetActorReference())
 
 EnemyLeaderActor.SetNoBleedoutRecovery(true)
+
+;CWO Run update routine to make sure NPC's don't freeze during combat scene
+kmyQuest.RegisterForUpdate(3.0)
 ;END CODE
 EndFunction
 ;END FRAGMENT
