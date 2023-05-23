@@ -3849,7 +3849,7 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 endif
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Register and process aliases with functions declared in CWSiegeScript")  ;*** WRITE TO LOG
 ;schofida - Add FieldCO's and potentially generals to sieges. TODO Move to CWCampaignS
-if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50) || (cityVar == kmyQuest.CWs.WhiterunLocation && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials))
+if kmyQuest.IsAttack() && ((cityVar == kmyquest.CWs.MarkarthLocation || cityVar == kmyquest.CWs.RiftenLocation) && utility.randomint(0, 100) < 50)
 	Actor OldGeneral
 	Actor OldAttacker2
 	Actor CWBattleCommanderTemp
@@ -3881,6 +3881,12 @@ if kmyQuest.IsAttack() && (((cityVar == kmyquest.CWs.MarkarthLocation || cityVar
 		Alias_AttackerSons1.ForceRefTo(CWBattleCommanderTemp)
 		Alias_AttackerSons2.ForceRefTo(OldGeneral)
 	endif
+elseif kmyQuest.CWs.CWCampaignS.PlayerAllegianceLastStand() 
+	if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+		Alias_DefenderImperial1.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWFieldCOImperialHaafingar)
+	else
+		Alias_DefenderSons1.ForceRefTo((kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWFieldCOSonsEastmarch)
+	endif	
 endif
 
 ;<Aliases> --- Register and process aliases with functions declared in CWSiegeScript.psc

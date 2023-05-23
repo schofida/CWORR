@@ -399,5 +399,15 @@ function DoPlayerLoadGameStuff()
 		endif
 		CWOVersion.SetValueInt(10009)
 	endif
+	if CWOVersion.GetValueInt() < 10014
+		if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWs.CwSiegeS.GetStage() == 0
+			if CWs.PlayerAllegiance == CWs.iImperials
+				(CWs.CWSiegeS as CWSiegeScript).SetDefenderImperialV14((GetOwningQuest() as CWOQuestStarter).CWFieldCOImperialHaafingar)
+			else
+				(CWs.CWSiegeS as CWSiegeScript).SetDefenderSonsV14((GetOwningQuest() as CWOQuestStarter).CWFieldCOSonsEastmarch)
+			endif	
+		endif
+		CWOVersion.SetValueInt(10014)
+	endif
 	registerforsingleupdate(30)
 endfunction

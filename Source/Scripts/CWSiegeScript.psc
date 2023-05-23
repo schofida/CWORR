@@ -1768,3 +1768,13 @@ bool function PlayerInMajorCity(Actor PlayerRef)
 	CWScript.Log("CWSiegeScript", self + "PlayerInMajorCity()")
 	return PlayerRef.IsInLocation(City.GetLocation())
 endfunction
+
+function SetDefenderImperialV14(Actor NewDefender)
+	ImperialDefender1.ForceRefTo(NewDefender)
+	Defender1.ForceRefTo(ImperialDefender1.GetActorReference())
+endFunction
+
+function SetDefenderSonsV14(Actor NewDefender)
+	SonsDefender1.ForceRefTo(NewDefender)
+	Defender1.ForceRefTo(ImperialDefender1.GetActorReference())
+endFunction
