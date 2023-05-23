@@ -1772,9 +1772,11 @@ endfunction
 function SetDefenderImperialV14(Actor NewDefender)
 	ImperialDefender1.ForceRefTo(NewDefender)
 	Defender1.ForceRefTo(ImperialDefender1.GetActorReference())
+	CWSiegeObjGeneral.ForceRefTo(NewDefender)
 endFunction
 
 function SetDefenderSonsV14(Actor NewDefender)
 	SonsDefender1.ForceRefTo(NewDefender)
 	Defender1.ForceRefTo(ImperialDefender1.GetActorReference())
+	CWSiegeObjGeneral.ForceRefTo(NewDefender)
 endFunction
