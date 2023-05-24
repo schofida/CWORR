@@ -63,6 +63,10 @@ endFunction
 function Fragment_0()
 	Quest __temp = self as Quest
 	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+	;CWO - This should happen during Spanish Inquisition
+	if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance
+		return
+	endif
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
 	cws.setstage(4)

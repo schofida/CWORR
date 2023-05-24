@@ -1531,8 +1531,6 @@ if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCam
 
 	CWs.ContestedHoldWinner = CWs.GetDefender(CityAlias.GetLocation())
 
-	CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
-
 	if cws.CWFinale.IsRunning()
 		(cws.CWFinale as CWFinaleScript).PlayerLastStandWasSuccessful()
 	Else
@@ -1547,9 +1545,10 @@ if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCam
 	;	utility.wait(5)
 	;endwhile
 	;stop()
-
-	CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 endif
+CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
+
+CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
 EndFunction
 
 ;CWO - This is a failsafe in case CWAttackCity fails to start for some reason

@@ -2378,24 +2378,41 @@ function FailCWSieges()
 endfunction
 
 function SetMonitorMajorCitySiegeStopping()
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMajorCity")
+	if CWOMonitorQuest.IsRunning()
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMajorCity")
+	endif
 endfunction
 
 function SetMonitorMinorCitySiegeStopping()
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMinorCity")
+	if CWOMonitorQuest.IsRunning()
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForPlayerToBeOutOfMinorCity")
+	endif
 endfunction
 
 function SetMonitorMajorCitySiegeStopped()
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForSiegeToStop")
+	if CWOMonitorQuest.IsRunning()
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingForSiegeToStop")
+	endif
 endfunction
 
 function SetMonitorWaitingToStartCampaign()
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingToStartNewCampaign")
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).RegisterForSingleUpdate(30.0)
+	if CWOMonitorQuest.IsRunning()
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingToStartNewCampaign")
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).RegisterForSingleUpdate(30.0)
+	endif
 endfunction
 
 function SetMonitorDoNothing()
-	(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("DoNothing")
+	if CWOMonitorQuest.IsRunning()
+		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("DoNothing")
+	endif
+endfunction
+
+string function GetMonitorState()
+	if CWOMonitorQuest.IsRunning()
+		return (CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GetState()
+	endif
+	return ""
 endfunction
 
 function StartCWOBAControllerQuest()
