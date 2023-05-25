@@ -44,7 +44,7 @@ State WaitingToStartNewCampaign
 			return
 		endif
 	 
-		if cws.debugForceOffscreenResult == 1 && !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning()
+		if cws.debugForceOffscreenResult == 1
 			GoToState("StartingNewCampaignOffscreenMode")
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaignOffscreenMode.")
 			
@@ -99,8 +99,9 @@ State WaitingToStartNewCampaign
 				cws.cwcampaigns.SetLastStand(0)
 				;### START NEW CAMPAIGN
 				cws.StartNewCampaign()
-			
-		
+		elseif CWS.CWCampaign.IsRunning()
+			GoToState("StartingNewCampaign")
+			CWScript.log("CWScript", "WaitingToStartNewCampaign, Campaign is already running. Moving forward to StartingNewCampaign")
 		Else
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 0, keep waiting.")
 		
