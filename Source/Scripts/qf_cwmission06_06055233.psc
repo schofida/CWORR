@@ -133,7 +133,9 @@ debug.traceConditional("CWMission06 stage 205 (Misson Failed)", kmyquest.CWs.deb
 
 kmyQuest.FailAllObjectives()
 
-((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(6, MissionFailure = true)
+kmyQuest.FlagFieldCOWithMissionResultFaction(6, MissionFailure = true)
+
+kmyQuest.CleanUpLoyalistFactions(Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, Alias_LoyalistSoldier10, Alias_LoyalistSoldier11, Alias_LoyalistSoldier12)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
@@ -202,8 +204,10 @@ kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials
     kmyquest.cws.cwcampaigns.CampEnableSons.TryToEnable()
+    kmyQuest.CWCampEnemyEnable = kmyquest.cws.cwcampaigns.CampEnableSons.GetReference()
 Else
     kmyquest.cws.cwcampaigns.CampEnableImperial.TryToEnable()
+    kmyQuest.CWCampEnemyEnable = kmyquest.cws.cwcampaigns.CampEnableImperial.GetReference()
 endif
 
 kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.CWMission06LoyalistSoldierFaction, true, true)
@@ -319,32 +323,17 @@ kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
 
 kmyquest.cws.CWDisaffectedSoldierFaction.setEnemy(kmyQuest.CWMission06LoyalistSoldierFaction, false, false)
 
-Alias_LoyalistSoldier01.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier02.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier03.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier04.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier05.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier06.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier07.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier08.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier09.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier10.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier11.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
-Alias_LoyalistSoldier12.TryToRemoveFromFaction(kmyQuest.CWPlayerAlly)
+kmyQuest.CleanUpLoyalistFactions(Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, Alias_LoyalistSoldier10, Alias_LoyalistSoldier11, Alias_LoyalistSoldier12)
 
 kmyQuest.KillLoyalists = 1
-Alias_LoyalistSoldier01.TryToEvaluatePackage()
-Alias_LoyalistSoldier02.TryToEvaluatePackage()
-Alias_LoyalistSoldier03.TryToEvaluatePackage()
-Alias_LoyalistSoldier04.TryToEvaluatePackage()
-Alias_LoyalistSoldier05.TryToEvaluatePackage()
-Alias_LoyalistSoldier06.TryToEvaluatePackage()
-Alias_LoyalistSoldier07.TryToEvaluatePackage()
-Alias_LoyalistSoldier08.TryToEvaluatePackage()
-Alias_LoyalistSoldier09.TryToEvaluatePackage()
 Alias_DissaffectedSoldier01.TryToEvaluatePackage()
 Alias_DissaffectedSoldier02.TryToEvaluatePackage()
 Alias_DissaffectedSoldier03.TryToEvaluatePackage()
+
+ReferenceAlias EnemyFieldCO = kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance))
+if !EnemyFieldCO.GetActorRef().IsDead()
+    EnemyFieldCO.TryToDisable()
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -414,6 +403,8 @@ kmyQuest.CompleteAllObjectives()
 kmyQuest.FlagFieldCOWithMissionResultFaction(6)
 
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+
+kmyQuest.CleanUpLoyalistFactions(Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, Alias_LoyalistSoldier10, Alias_LoyalistSoldier11, Alias_LoyalistSoldier12)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 

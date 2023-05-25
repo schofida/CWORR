@@ -33,6 +33,8 @@ Outfit Property CWMission06TurncoatGuardImperialOutfit auto
 
 Faction Property CWMission06LoyalistSoldierFaction Auto
 
+ObjectReference Property CWCampEnemyEnable Auto
+
 Event OnUpdate()
 
 ; ;	debug.trace("TurncoatLeader.GetReference():" + TurncoatLeader.GetReference())
@@ -231,6 +233,45 @@ ObjectReference function GetCampMapMarker(Location Hold)
 
 	EndIf
 
+endfunction
+
+function CleanUpLoyalistFactions(ReferenceAlias Loyalist1, \
+		ReferenceAlias Loyalist2, \
+		ReferenceAlias Loyalist3, \
+		ReferenceAlias Loyalist4, \
+		ReferenceAlias Loyalist5, \
+		ReferenceAlias Loyalist6, \
+		ReferenceAlias Loyalist7, \
+		ReferenceAlias Loyalist8, \
+		ReferenceAlias Loyalist9, \
+		ReferenceAlias Loyalist10, \
+		ReferenceAlias Loyalist11, \
+		ReferenceAlias Loyalist12 )
+	Loyalist1.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist2.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist3.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist4.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist5.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist6.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist7.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist8.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist9.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist10.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist11.TryToRemoveFromFaction(CWPlayerAlly)
+	Loyalist12.TryToRemoveFromFaction(CWPlayerAlly)
+
+	Loyalist1.TryToEvaluatePackage()
+	Loyalist2.TryToEvaluatePackage()
+	Loyalist3.TryToEvaluatePackage()
+	Loyalist4.TryToEvaluatePackage()
+	Loyalist5.TryToEvaluatePackage()
+	Loyalist6.TryToEvaluatePackage()
+	Loyalist7.TryToEvaluatePackage()
+	Loyalist8.TryToEvaluatePackage()
+	Loyalist9.TryToEvaluatePackage()
+	Loyalist10.TryToEvaluatePackage()
+	Loyalist11.TryToEvaluatePackage()
+	Loyalist12.TryToEvaluatePackage()
 endfunction
 
 function AddDisaffectedSoldierToPotentialAlly(ReferenceAlias refAlias)
