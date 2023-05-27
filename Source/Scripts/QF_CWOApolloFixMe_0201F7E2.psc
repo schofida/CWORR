@@ -24,21 +24,10 @@ if CWCampaignS.CWMission02.IsRunning()
 	Stop()
 	Return
 endif
-if CWs.CWMission04.IsRunning()
-	(CWs.CWMission04 as CWMission04Script).TryToFixQuest()
-	Stop()
-	return
-endif
 if CWCampaignS.CWMission08Quest.IsRunning()
 	(CWCampaignS.CWMission08Quest as CWMission08Script).TryToFixQuest()
 	Stop()
 	return
-endif
-if CWS.CWFortSiegeFort.IsRunning()
-	debug.notification("Trying to fix CWFortSiegeFort")		
-	(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
-	Stop()
-	Return
 endif
 debug.notification("Nothing to fix....")
 Stop()
@@ -125,6 +114,11 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		Stop()
 		return
 	endif
+	if CWs.CWMission04.IsRunning()
+		(CWs.CWMission04 as CWMission04Script).TryToFixQuest()
+		Stop()
+		return
+	endif
 	if CWCampaignS.CWMission05.IsRunning()
 		(CWCampaignS.CWMission05 as CWMission05Script).TryToFixQuest()
 		Stop()
@@ -145,6 +139,12 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		(CWCampaignS.CWMission09 as CWMission09Script).TryToFixQuest()
 		Stop()
 		return
+	endif
+	if CWS.CWFortSiegeFort.IsRunning()
+		debug.notification("Trying to fix CWFortSiegeFort")		
+		(CWS.CWFortSiegeFort as CWFortSiegeScript).TryToFixQuest()
+		Stop()
+		Return
 	endif
 	if cws.CWFortSiegeCapital.IsRunning()
 		debug.notification("Trying to fix CWFortSiegeCapital")		
