@@ -207,8 +207,8 @@ Keyword Property CWPurchasedByAttacker Auto
 Keyword Property CWMissionStart Auto
 Keyword Property CWResolution01Start  Auto		;attack settlement capital resolution mission
 Keyword Property CWResolution02Start  Auto		;defend settlement capital resolution mission
-Keyword Property CWMissionTutorialStart Auto
-Keyword Property CWSiegeStart Auto		;used to start siege attack and defend quests for cities
+Keyword Property CWVanillaMissionsStart Auto	;used to start cwmission03 cwmission04 and cwmission07
+Keyword Property CWFortSiegeFortStart Auto		;used to start fort siege quest
 
 
 Keyword Property LocTypeCity Auto
@@ -406,8 +406,8 @@ Event OnInit()
 
 	AcceptDays = 5
 	MissionDays = 2
-	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
-	ResolutionPhase = CWOCampaignPhaseMax.GetValueInt()
+	;CWO - Set Resolution Phase to 5. Will eventually be to change but should always be an odd number
+	ResolutionPhase = 5
 	
 	MissionAcceptancePollWait = 5	;wait this many seconds inside the while loop in PollForMissionAcceptance() function
 	
@@ -1217,7 +1217,7 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 	If CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
 		;CWO - This might not have worked before. Added FieldCO
 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart)
-		CWSiegeStart.SendStoryEvent(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
+		CWs.CWSiegeStart.SendStoryEvent(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
 	
 	;	if Capital.GetLocation() == CWs.WhiterunLocation 	;ADD || OTHER CITY HERE
 ; 	;		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting attack on Whiterun.")
@@ -1659,7 +1659,7 @@ Function startTutorialMission()
 	int tutorial = CWs.TutorialMissionComplete
 
 ; 	CWScript.Log("CWCampaignScript", " StartTutorialMission()")	
-	CWMissionTutorialStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission1Ref)
+	CWVanillaMissionsStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission1Ref)
 	
 EndFunction
 
@@ -1788,16 +1788,53 @@ Function StartMissions()
 		if CWODisableNotifications.GetValueInt() == 0	
 			debug.Notification("CW Campaign Missions starting. Please wait...")
 		endif
-		bool cwMission1Started = CWMissionStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
-		utility.wait(2.0)
-		bool cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
-		if !cwMission1Started && !cwMission2Started
-			Debug.Notification("Warning! Could not start any radiant missions. Commencing with city siege.")
-			AdvanceCampaignPhase(ResolutionPhase)
-			StartResolutionMission()
-		elseif !cwMission1Started || !cwMission2Started
-			AdvanceCampaignPhase()
+
+		bool cwVanillaMissionStarted
+		bool cwMission1Started
+		bool cwMission2Started
+		bool CWFortSiegeFortStarted
+		bool cwVanillaMissionFailedToStart
+		bool cwMission1FailedToStart
+		bool cwMission2FailedToStart
+		if CWCampaignPhase.value == 1
+			cwVanillaMissionStarted = CWVanillaMissionsStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
+			utility.wait(2.0)
 		endif
+		if CWCampaignPhase.value == 1 && !cwVanillaMissionStarted
+			AdvanceCampaignPhase()
+			utility.wait(2.0)
+			cwVanillaMissionFailedToStart = true
+		endif
+		if CWCampaignPhase.value == 2 && (cwVanillaMissionFailedToStart || CWOCampaignPhaseMax.GetValueInt() == 5)
+			cwMission1Started = CWMissionStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
+			utility.wait(2.0)
+			cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
+			utility.wait(2.0)
+		endif
+		if CWCampaignPhase.value == 2
+			if !cwMission1Started
+				AdvanceCampaignPhase()
+				cwMission1FailedToStart = true
+				utility.wait(2.0)
+			endif
+			if !cwMission2Started
+				AdvanceCampaignPhase()
+				cwMission2FailedToStart = true
+				utility.wait(2.0)
+			endif
+		endif
+		if CWCampaignPhase.value == 4 || (cwMission1FailedToStart && cwMission2FailedToStart)
+			CWFortSiegeFortStarted = CWFortSiegeFortStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
+			utility.wait(2.0)
+		endif
+		if CWCampaignPhase.value == 4 && !CWFortSiegeFortStarted
+			AdvanceCampaignPhase()
+			utility.wait(2.0)
+		endif
+		if CWCampaignPhase.value == 5
+			StartResolutionMission()
+		endif
+
 		if CWODisableNotifications.GetValueInt() == 0	
 			debug.Notification("CW Campaign Missions have been started.")
 		endif
@@ -1853,9 +1890,16 @@ function SetReinforcementsFort(Quest kmyQuest)
 	CWScript.Log("CWCampaignScript", " SetReinforcementsFort()") 
 	;schofida - Set pools for whiterun, windhelm, rift, markath and solitude
 	Location FortLocation = (kmyQuest as CWFortSiegeScript).Fort.GetLocation()
+
+	;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
 	if (kmyQuest as CWFortSiegeScript).IsPlayerAttacking()
 		if FortLocation == CWs.FortAmolLocation || FortLocation == CWs.FortHraggstadLocation 
-			(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(999, 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)			
+			(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(999, 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)	
+			;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+			((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+			((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true		
 		else
 			(kmyQuest as CWFortSiegeScript).SetPoolAttackerOnCWReinforcementScript(CWOFortReinforcements.GetValueInt(), 1.0, CWOPlayerAttackerScaleMult.GetValue(), false)
 		endif

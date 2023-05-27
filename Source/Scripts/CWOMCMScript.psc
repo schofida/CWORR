@@ -371,11 +371,6 @@ function OnOptionSliderOpen(Int a_option)
 		self.SetSliderDialogDefaultValue(10 as Float)
 		self.SetSliderDialogRange(0 as Float, 20 as Float)
 		self.SetSliderDialogInterval(1 as Float)
-	elseIf a_option == optionsCampaignPhaseMax
-		self.SetSliderDialogStartValue(CWOCampaignPhaseMax.GetValueInt() as Float)
-		self.SetSliderDialogDefaultValue(3 as Float)
-		self.SetSliderDialogRange(1 as Float, 5 as Float)
-		self.SetSliderDialogInterval(2 as Float)
 	elseIf a_option == optionsPlayerAttackerScaleMult
 		self.SetSliderDialogStartValue(CWOPlayerAttackerScaleMult.GetValue() as Float)
 		self.SetSliderDialogDefaultValue(0.8 as Float)
@@ -472,7 +467,7 @@ function OnPageReset(String a_page)
 		endif
 
 		if CWOQuestMonitor.IsRunning()
-			AddtextOption("Mon", (CWOQuestMonitor.GetAlias(0) as CWOMonitorScript).GetState(), 0)
+			AddtextOption("Mon", CWs.CWCampaignS.GetMonitorState(), 0)
 		endif
 
 		if CWOArmorDisguise.IsRunning()
