@@ -708,6 +708,8 @@ kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = Fal
 
 kmyquest.CWs.SetOwner(Alias_AttackPoint.GetLocation(), kmyQuest.CWs.playerAllegiance, SetKeywordDataImmediately = true)	
 
+kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
+
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 ;NOTE: quest stopped in CWMission04PrisonerScript to make sure he keeps his packages until he unloads
 ;END CODE
@@ -788,6 +790,8 @@ debug.traceConditional("CWMission04 stage 205 FAILURE!!!", kmyquest.CWs.debugon.
 kmyquest.FlagFieldCOWithMissionResultFaction(4, MissionFailure = true)
 
 UnregisterForUpdate()
+
+kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 

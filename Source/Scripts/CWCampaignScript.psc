@@ -1805,7 +1805,7 @@ Function StartMissions()
 			utility.wait(2.0)
 			cwVanillaMissionFailedToStart = true
 		endif
-		if CWCampaignPhase.value == 2 && (cwVanillaMissionFailedToStart || CWOCampaignPhaseMax.GetValueInt() == 5)
+		if (CWCampaignPhase.value == 2 || CWCampaignPhase.value == 3) && (cwVanillaMissionFailedToStart || CWOCampaignPhaseMax.GetValueInt() == 5)
 			cwMission1Started = CWMissionStart.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 1)
 			utility.wait(2.0)
 			cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
