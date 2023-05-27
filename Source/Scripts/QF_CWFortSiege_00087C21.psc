@@ -1394,13 +1394,6 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 ;DO NOT MAKE THIS A STARTUP STAGE!!!
 SiegeFinished = false
-
-;This is to fix some users where Skyrim was not filling the hold alias for some reason
-if Alias_Hold.GetLocation() == none && kmyQuest.CWs.CWContestedHold.GetValueInt() > 0
-	Alias_Hold.ForceLocationTo(kmyQuest.CWs.getLocationForHold(kmyQuest.CWs.CWContestedHold.GetValueInt()))
-endIf
-kmyQuest.Hold = Alias_Hold
-
 ;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
 CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
@@ -1532,10 +1525,6 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
 	debug.Notification("Getting CW Siege into position. Please wait before fast traveling...")
-endif
-;CWO Also happening in Stage 0 but double setting here just in case
-if Alias_Hold.GetLocation() == none && kmyQuest.CWs.CWContestedHold.GetValueInt() > 0
-	Alias_Hold.ForceLocationTo(kmyQuest.CWs.getLocationForHold(kmyQuest.CWs.CWContestedHold.GetValueInt()))
 endif
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0

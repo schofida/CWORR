@@ -1216,7 +1216,7 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 
 	If CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
 		;CWO - This might not have worked before. Added FieldCO
-		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart)
+		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart + " FieldCO " + FieldCOToStart)
 		CWs.CWSiegeStart.SendStoryEvent(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
 	
 	;	if Capital.GetLocation() == CWs.WhiterunLocation 	;ADD || OTHER CITY HERE
@@ -1233,7 +1233,7 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 	Else
 		; code	;start an Attack the Capital Settlement resolution quest
 		;CWO - Resolution Quests do not really work so kicking off the CWFortSiegeMinorCapitalStart
- 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + CapitalToStart)
+ 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + CapitalToStart + " FieldCO " + FieldCOToStart + " CampaignStartMarker " + CampaignStartMarkerToStart)
 		CWs.CWFortSiegeMinorCapitalStart.SendStoryEvent(CapitalToStart, FieldCOToStart, CampaignStartMarkerToStart) 
 	
 	EndIf
