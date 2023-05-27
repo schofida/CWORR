@@ -2107,6 +2107,8 @@ function CompleteCWMissions(bool failMission = false)
 	Galmar.GetActorReference().removeFromFaction(cws.CWFieldCOActiveMissionFaction)		
 	Rikke.GetActorReference().removeFromFaction(cws.CWFieldCOSuccessfulMissionFaction)
 	Galmar.GetActorReference().removeFromFaction(cws.CWFieldCOSuccessfulMissionFaction)
+	Rikke.GetActorReference().removeFromFaction(cws.CWFieldCOFailedMissionFaction)
+	Galmar.GetActorReference().removeFromFaction(cws.CWFieldCOFailedMissionFaction)
 endFunction
 
 bool function isCWMissionsOrSiegesRunning()
