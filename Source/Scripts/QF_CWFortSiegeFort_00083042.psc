@@ -1376,7 +1376,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1		;We are a final resolution battle at a minor hold
 
 	((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
-
+	if !kmyQuest.IsPlayerAttacking() && Alias_Jarl.GetActorReference() != none
+		Alias_Jarl.GetActorReference().AddToFaction(kmyquest.cws.cwcampaigns.CWODefensiveFaction)
+	endif
 endif
 
 ;<From Extended CWSiegeScript>
@@ -1636,6 +1638,10 @@ endwhile
 
 if Alias_JarlsHouseDoor.GetReference()
 Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
+endif
+
+if Alias_Jarl.GetActorReference() != none
+	Alias_Jarl.GetActorReference().RemoveFromFaction(kmyquest.cws.cwcampaigns.CWODefensiveFaction)
 endif
 
 kmyquest.CWs.UnregisterEventHappening(Alias_Fort.GetLocation())
