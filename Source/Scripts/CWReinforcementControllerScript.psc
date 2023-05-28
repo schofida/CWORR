@@ -1010,6 +1010,11 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
  			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolAttacker() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
 			
 		EndIf
+
+		;CWO - I think that setting the starting pool below the count threshold is causing issues. Default to 11
+		if pool < 11
+			pool = 11
+		endif
 		
 		PoolAttacker = pool as int
 		StartingPoolAttacker = pool as int
@@ -1057,6 +1062,11 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
  			CWScript.Log("CWReinforcementControllerScript", self + "SetPoolDefender() Pool[" + Pool +  "] = BasePool[" + BasePool + "] * scaleMult[" + scaleMult + "]" )
 
 		EndIf
+
+		;CWO - I think that setting the starting pool below the count threshold is causing issues. Default to 15
+		if pool < 15
+			pool = 15
+		endif
 		
 		PoolDefender = pool as int
 		StartingPoolDefender = pool as int
