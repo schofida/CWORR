@@ -1811,7 +1811,7 @@ Function StartMissions()
 			cwMission2Started = CWOMissionStart2.SendStoryEventAndWait(Hold.Getlocation(), CWs.FieldCO.GetActorRef(), CampaignStartMarker.GetReference(), aiValue1 = 2)
 			utility.wait(2.0)
 		endif
-		if CWCampaignPhase.value == 2
+		if CWCampaignPhase.value == 2 || CWCampaignPhase.value == 3
 			if !cwMission1Started
 				AdvanceCampaignPhase()
 				cwMission1FailedToStart = true
