@@ -706,11 +706,12 @@ kmyquest.CWs.CWMission04Done = 1 ;used to conditionalize story manager node
 
 kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
-kmyquest.CWs.SetOwner(Alias_AttackPoint.GetLocation(), kmyQuest.CWs.playerAllegiance, SetKeywordDataImmediately = true)	
-
 kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
+
+kmyquest.CWs.SetOwner(Alias_AttackPoint.GetLocation(), kmyQuest.CWs.playerAllegiance, SetKeywordDataImmediately = true)	
+
 ;NOTE: quest stopped in CWMission04PrisonerScript to make sure he keeps his packages until he unloads
 ;END CODE
 EndFunction
