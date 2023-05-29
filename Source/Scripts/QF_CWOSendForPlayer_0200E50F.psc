@@ -24,7 +24,7 @@ ReferenceAlias Property Alias_Letter Auto
 
 ;BEGIN ALIAS PROPERTY NoteSiege
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_NoteSiege Auto
+ReferenceAlias Property Alias_Note Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY NoteFinalSons
