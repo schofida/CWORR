@@ -1,112 +1,144 @@
-scriptName QF_CWOSendForPlayer_0200E50F extends Quest hidden
+;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
+;NEXT FRAGMENT INDEX 15
+Scriptname QF_CWOSendForPlayer_0200E50F Extends Quest Hidden
 
-;-- Properties --------------------------------------
-Quest property CourierQuest auto
-referencealias property Alias_NoteFinalImperial auto
-Quest property CourierQuestScript auto
-referencealias property Alias_FieldCO auto
-Quest property NewProperty auto
-referencealias property Alias_NoteMinor auto
-faction property CWODefensiveFaction auto
-locationalias property Alias_CapitalHQ auto
-referencealias property Alias_NoteFinalSons auto
-referencealias property Alias_RiftenMarker auto
-referencealias property Alias_WhiterunMarker auto
-referencealias property Alias_Player auto
-cwscript property CWS auto
-wicourierscript property CourierS auto
-locationalias property Alias_CityOrFortOrGarrison auto
-referencealias property Alias_Note auto
-referencealias property Alias_MarkarthMarker auto
-referencealias property Alias_CityCenterMarker auto
-Quest property CWOSiegeObj auto
-GlobalVariable property CWOCourierSentGlobal auto
-GlobalVariable property CWOCourierHoursMin auto
-GlobalVariable property CWOCourierHoursMax auto
+;BEGIN ALIAS PROPERTY CityOrFortOrGarrison
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_CityOrFortOrGarrison Auto
+;END ALIAS PROPERTY
 
-;-- Variables ---------------------------------------
+;BEGIN ALIAS PROPERTY NoteMinor
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NoteMinor Auto
+;END ALIAS PROPERTY
 
-;-- Functions ---------------------------------------
+;BEGIN ALIAS PROPERTY NoteFinalImperial
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NoteFinalImperial Auto
+;END ALIAS PROPERTY
 
-function Fragment_1()
-	Quest __temp = self as Quest
-	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
-	; Quest stage 10 (after reading city note, but player is not yet in Riften/Markarth/Whiterun)
+;BEGIN ALIAS PROPERTY Letter
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Letter Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NoteSiege
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NoteSiege Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY NoteFinalSons
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_NoteFinalSons Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY FieldCO
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_FieldCO Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
+;BEGIN FRAGMENT Fragment_14
+Function Fragment_14()
+;BEGIN AUTOCAST TYPE CWOSendForPlayerQuestScript
+Quest __temp = self as Quest
+CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;END AUTOCAST
+;BEGIN CODE
+; Quest stage 10 (after reading city note, but player is not yet in Riften/Markarth/Whiterun)
 	self.SetObjectiveCompleted(10, true)
 	self.setobjectivedisplayed(0, true, false)
-	Alias_FieldCO.getactorreference().addtofaction(CWODefensiveFaction)
-	CWOCourierSentGlobal.SetValueInt(0)
+	Alias_FieldCO.getactorreference().addtofaction(kmyQuest.CWODefensiveFaction)
+	kmyQuest.CWOCourierSentGlobal.SetValueInt(0)
 	kmyQuest.UnregisterForUpdate()
-endFunction
+;END CODE
+EndFunction
+;END FRAGMENT
 
-; Skipped compiler generated GotoState
-
-; Skipped compiler generated GetState
-
-function Fragment_11()
-	; Quest stage 40 (after reading minor hold note)
-	CWOCourierSentGlobal.SetValueInt(0)
+;BEGIN FRAGMENT Fragment_11
+Function Fragment_11()
+;BEGIN AUTOCAST TYPE CWOSendForPlayerQuestScript
+Quest __temp = self as Quest
+CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;END AUTOCAST
+;BEGIN CODE
+; Quest stage 40 (after reading minor hold note)
+	kmyQuest.CWOCourierSentGlobal.SetValueInt(0)
 	self.SetObjectiveCompleted(10, true)
-	if CWS.CWFortSiegeCapital.IsRunning()
-		CWS.CWFortSiegeCapital.SetStage(10)
-	elseif CWS.CWFortSiegeFort.IsRunning()
-		CWS.CWFortSiegeFort.SetStage(10)
-	elseif CWS.CWCampaignS.CWMission01.IsRunning()
-		CWS.CWCampaignS.CWMission01.SetStage(10)
-	endif		
-endFunction
+	if kmyQuest.CWS.CWFortSiegeFort.IsRunning()
+		kmyQuest.CWS.CWFortSiegeFort.SetStage(10)
+	elseif kmyQuest.CWS.CWCampaignS.CWMission01.IsRunning()
+		kmyQuest.CWS.CWCampaignS.CWMission01.SetStage(10)
+	endif
+;END CODE
+EndFunction
+;END FRAGMENT
 
-function Fragment_7()
-	; Quest stage 20 (I guess this is a failsafe if the defense siege starts, called from capital/minor capital siege scripts)
-endFunction
+;BEGIN FRAGMENT Fragment_10
+Function Fragment_10()
+;BEGIN AUTOCAST TYPE CWOSendForPlayerQuestScript
+Quest __temp = self as Quest
+CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;END AUTOCAST
+;BEGIN CODE
+; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)
+	kmyQuest.CWOCourierSentGlobal.SetValueInt(0)
+	self.SetObjectiveCompleted(0, true)
+	utility.wait(8 as Float)
+	if kmyQuest.CWS.CWFortSiegeCapital.IsRunning()
+		kmyQuest.CWS.CWFortSiegeCapital.SetStage(10)
+	else
+		kmyQuest.CWS.CWSiegeS.setstage(1)
+	endif
+	Alias_FieldCO.getactorreference().removefromfaction(kmyQuest.CWODefensiveFaction)
+;END CODE
+EndFunction
+;END FRAGMENT
 
-function Fragment_0()
-	Quest __temp = self as Quest
-	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
-	;CWO - This should happen during Spanish Inquisition
-	if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance
+;BEGIN FRAGMENT Fragment_7
+Function Fragment_7()
+;BEGIN CODE
+; Quest stage 20
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_13
+Function Fragment_13()
+;BEGIN AUTOCAST TYPE CWOSendForPlayerQuestScript
+Quest __temp = self as Quest
+CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;END AUTOCAST
+;BEGIN CODE
+;CWO - This should happen during Spanish Inquisition
+	if kmyQuest.CWs.CWAttacker.GetValueInt() ==kmyQuest.CWs.PlayerAllegiance
 		return
 	endif
 	; Quest stage 0 - Start quest
 	self.setobjectivedisplayed(10, 1 as Bool, false)
-	cws.setstage(4)
-	kmyQuest.RegisterForSingleUpdateGameTime(utility.randomfloat(CWOCourierHoursMin.GetValue(), CWOCourierHoursMax.GetValue()))
-endFunction
+	kmyQuest.cws.setstage(4)
+	kmyQuest.RegisterForSingleUpdateGameTime(utility.randomfloat(kmyQuest.CWOCourierHoursMin.GetValue(), kmyQuest.CWOCourierHoursMax.GetValue()))
+;END CODE
+EndFunction
+;END FRAGMENT
 
-function Fragment_3()
-	Quest __temp = self as Quest
-	CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;BEGIN FRAGMENT Fragment_3
+Function Fragment_3()
+;BEGIN AUTOCAST TYPE CWOSendForPlayerQuestScript
+Quest __temp = self as Quest
+CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
+;END AUTOCAST
+;BEGIN CODE
+kmyQuest.UnregisterForUpdate()
+	Alias_Letter.TryToEnable()
+	kmyQuest.CourierS.AddAliasToContainer(Alias_Letter)
+	kmyQuest.CWOCourierSentGlobal.SetValueInt(1)
+;END CODE
+EndFunction
+;END FRAGMENT
 
-	kmyQuest.UnregisterForUpdate()
-	if !CWS.CWCampaignS.PlayerAllegianceLastStand()
-		If CWS.CWSiegeS.isrunning()
-			CourierS.AddAliasToContainer(Alias_Note)
-		Else
-			CourierS.AddAliasToContainer(Alias_NoteMinor)
-		endIf
-	elseIf CWS.PlayerAllegiance == CWS.iImperials
-		;Alias_FieldCO.ForceRefTo(CWS.Galmar.getreference())
-		;CourierS.AddAliasToContainer(Alias_NoteFinalSons)
-		Alias_FieldCO.ForceRefTo(CWS.Rikke.getreference())
-		CourierS.AddAliasToContainer(Alias_NoteFinalImperial)
-	else
-		;Alias_FieldCO.ForceRefTo(CWS.Rikke.getreference())
-		;CourierS.AddAliasToContainer(Alias_NoteFinalImperial)
-		Alias_FieldCO.ForceRefTo(CWS.Galmar.getreference())
-		CourierS.AddAliasToContainer(Alias_NoteFinalSons)
-	endIf
-	CWOCourierSentGlobal.SetValueInt(1)
-endfunction
-
-function Fragment_10()
-	; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)
-	CWOCourierSentGlobal.SetValueInt(0)
-	self.SetObjectiveCompleted(0, true)
-	utility.wait(8 as Float)
-	if CWS.CWFortSiegeCapital.IsRunning()
-		CWS.CWFortSiegeCapital.SetStage(10)
-	else
-		CWS.CWSiegeS.setstage(1)
-	endif
-	Alias_FieldCO.getactorreference().removefromfaction(CWODefensiveFaction)
-endFunction
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment

@@ -1,26 +1,18 @@
 scriptName CWOPlayerEnters extends ReferenceAlias
 
-;-- Properties --------------------------------------
-ReferenceAlias property MarkarthMarker auto
-ReferenceAlias property WhiterunMarker auto
-locationalias property CityAlias auto
-cwscript property CWS auto
-ReferenceAlias property CityCenterMarkerAlias auto
-locationalias property CapitalHQ auto
-ReferenceAlias property RiftenMarker auto
-actor property PlayerRef auto
-ReferenceAlias Property FieldCO Auto
-
 ;-- Variables ---------------------------------------
 Objectreference CWOMarker
 Bool IsInArea
-Location CWOMarkerLocation
 
 ;-- Functions ---------------------------------------
 
 function OnLocationChange(Location akOldLoc, Location akNewLoc)
 
-	if akNewLoc == CityAlias.getLocation() && CWS.CWSiegeS.isRunning() && FieldCO.GetActorRef().IsDead()
+	LocationAlias CityAlias = (GetOwningQuest() as CWOSendForPlayerQuestScript).CityAlias
+	ReferenceAlias FieldCO = (GetOwningQuest() as CWOSendForPlayerQuestScript).FieldCO
+	CWScript CWs = (GetOwningQuest() as CWOSendForPlayerQuestScript).CWs
+
+	if akNewLoc == CityAlias.getLocation() && (CWS.CWSiegeS.isRunning() || CWs.CWFortSiegeCapital.IsRunning()) && FieldCO.GetActorRef().IsDead()
 		IsInArea = true
 		self.RegisterForSingleUpdate(1.50000)
 	else
@@ -31,12 +23,11 @@ endFunction
 
 function OnUpdate()
 
+	LocationAlias CityAlias = (GetOwningQuest() as CWOSendForPlayerQuestScript).CityAlias
+	Actor PlayerRef = GetActorReference()
+
 	if IsInArea == true
-		if PlayerRef.isinlocation(CityAlias.getLocation()) && \
-			self.GetOwningQuest().GetStage() == 10 && \
-			(PlayerRef.getworldspace() == RiftenMarker.getreference().getworldspace() || \
-				PlayerRef.getworldspace() == MarkarthMarker.getreference().getworldspace() || \
-				PlayerRef.getworldspace() == WhiterunMarker.getreference().getworldspace())
+		if PlayerRef.isinlocation(CityAlias.getLocation()) && self.GetOwningQuest().GetStage() == 10
 			GetOwningQuest().setstage(30)
 			self.UnRegisterForUpdate()
 		else
