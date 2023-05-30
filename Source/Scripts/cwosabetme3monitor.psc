@@ -93,62 +93,88 @@ EndFunction
 
 bool function FigureItOut()
 	CWScript.Log("CWOSABETME3Monitor", " FigureItOut()") 
+	int[] holdIDs = new int[9]
+	holdIDs[0] = 1
+	holdIDs[1] = 3
+	holdIDs[2] = 2
+	holdIDs[3] = 5
+	holdIDs[4] = 4
+	holdIDs[5] = 6
+	holdIDs[6] = 9
+	holdIDs[7] = 7
+	holdIDs[8] = 8
+	int currentHold = CWs.GetHoldID(((GetOwningQuest() as CWOStillABetterEndingMonitorScript).triggerQuest as CWSiegeScript).Hold.GetLocation())
+	if currentHold == -1
+		return false
+	endif
+	int currentHoldIndex = holdIDs.Find(currentHold)
+	int[] orderedHoldIDs = new int[7]
+	int orderedIndex = 0
+	if currentHoldIndex == 0
+		orderedHoldIDs[0] = holdIDs[1]
+		orderedIndex = orderedIndex + 1
+		currentHoldIndex = 1
+	elseif currentHoldIndex == 8
+		orderedHoldIDs[0] = holdIDs[7]
+		orderedIndex = orderedIndex + 1
+		currentHoldIndex = 8
+	endif
 	if CWS.PlayerAllegiance == CWS.iImperials
-		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
-			WhereweGoinTo = CWs.MilitaryCampWinterholdImperialMapMarker
-		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
-			if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
-				WhereweGoinTo = SolitudeMarker
-				ThisIsFinale = true
-			else
-				WhereweGoinTo = CWs.MilitaryCampHjaalmarchImperialMapMarker ; schofida Edit
+		int[] imperialHoldIDs = new int[9]
+		
+		if currentHold == 1 && CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
+			WhereweGoinTo = SolitudeMarker
+			ThisIsFinale = true
+			return true
+		endif
+		int i = currentHoldIndex - 1
+		if i < 1
+			i = holdIDs.Length - 1
+		endif
+		while i != currentHoldIndex
+			orderedHoldIDs[orderedIndex] = holdIDs[i]
+			i = i - 1
+			orderedIndex = orderedIndex + 1
+			if i < 1
+				i = holdIDs.Length - 1
 			endif
-		elseIf PlayerRef.IsInLocation(CWS.HjaalmarchHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampReachImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.WhiterunHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampPaleImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.ReachHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampFalkreathImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.RiftHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampWinterholdImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.FalkreathHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampWhiterunImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.PaleHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampRiftImperialMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.WinterholdHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampEastmarchImperialMapMarker		; schofida Edit
-		else
-			return false
-		endIf
+		endwhile
 	elseIf CWS.PlayerAllegiance == CWS.iSons
-		if PlayerRef.IsInLocation(CWS.EastmarchHoldLocation)
-			if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
-				WhereweGoinTo = WindhelmMarker
-				ThisIsFinale = true
-			else
-				WhereweGoinTo = CWs.MilitaryCampWinterholdSonsMapMarker ; schofida - final scene no longer occurs for losing battle
+
+		if currentHold == 8 && CWs.CWCampaignS.PlayerAllegianceLastStand() && CWFinale.IsRunning() && CWFinale.GetStageDone(10)
+			WhereweGoinTo = WindhelmMarker
+			ThisIsFinale = true
+			return true
+		endif
+
+		int i = currentHoldIndex + 1
+		if i > holdIDs.Length - 1
+			i = 1
+		endif
+		while i != currentHoldIndex
+			orderedHoldIDs[orderedIndex] = holdIDs[i]
+			i = i + 1
+			orderedIndex = orderedIndex + 1
+			if i > holdIDs.Length - 1
+				i = 1
 			endif
-		elseIf PlayerRef.IsInLocation(CWS.HaafingarHoldLocation)
-			WhereweGoinTo = CWs.MilitaryCampHjaalmarchSonsMapMarker
-		elseIf PlayerRef.IsInLocation(CWS.WinterholdHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampRiftSonsMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.WhiterunHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampFalkreathSonsMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.PaleHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampWhiterunSonsMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.FalkreathHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampReachSonsMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.RiftHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampPaleSonsMapMarker		; schofida Edit
-		elseIf PlayerRef.IsInLocation(CWS.ReachHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampHjaalmarchSonsMapMarker		; Reddit BugFix #12
-		elseIf PlayerRef.IsInLocation(CWS.HjaalmarchHoldLocation)
-			WhereweGoinTo = CWS.MilitaryCampHaafingarSonsMapMarker		; Reddit BugFix #12
-		else
-			return false
-		endIf
+		endwhile
 	else
 		return false
 	endIf
-	return true
+	orderedIndex = 0
+	while orderedIndex < orderedHoldIDs.Length && WhereweGoinTo == none
+		if orderedHoldIDs[orderedIndex]
+			ObjectReference enableMarker = (GetOwningQuest() as CWOStillABetterEndingMonitorScript).GetCampEnableMarkerByHoldID(orderedHoldIDs[orderedIndex])
+			if enableMarker != none && enableMarker.IsEnabled()
+				WhereweGoinTo = (GetOwningQuest() as CWOStillABetterEndingMonitorScript).GetCampMapMarkerByHoldID(orderedHoldIDs[orderedIndex])
+			endif
+		endif
+		orderedIndex = orderedIndex + 1
+	endwhile
+	if WhereweGoinTo != none
+		return true
+	else
+		return false
+	endif
 endFunction

@@ -1,17 +1,15 @@
-scriptName QF_CWOStillABetterEndingMoni_02026927 extends Quest hidden
+;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
+;NEXT FRAGMENT INDEX 1
+Scriptname QF_CWOStillABetterEndingMoni_02026927 Extends Quest Hidden
 
-;-- Properties --------------------------------------
-referencealias property Alias_Player auto
-
-;-- Variables ---------------------------------------
-
-;-- Functions ---------------------------------------
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
 
 function Fragment_0()
 
 	; Empty function
 endFunction
 
-; Skipped compiler generated GetState
-
-; Skipped compiler generated GotoState
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment
