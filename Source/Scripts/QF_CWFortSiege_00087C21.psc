@@ -1835,7 +1835,7 @@ kmyQuest.CWs.CWCampaignS.cwResetCrime()
 kmyQuest.CWFortSiegeCapitalSurrenderScene.Stop()
 
 ;CWO Account for player attacking or defending
-if !kmyQuest.CWs.CWCampaign.IsRunning() || !kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1
+if !kmyQuest.CWs.CWCampaign.IsRunning() || !kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 2
 	kmyquest.CWs.CompleteCWObj(Alias_Hold.GetLocation())
 endif
 
@@ -1860,7 +1860,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
 	
-	if !kmyquest.CWs.CWCampaign.IsRunning() || !kmyquest.CWs.CWCampaign.GetStageDone(200) || kmyquest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1
+	if !kmyquest.CWs.CWCampaign.IsRunning() || !kmyquest.CWs.CWCampaign.GetStageDone(200) || kmyquest.CWs.CWCampaignS.SpanishInquisitionCompleted == 2
 		;CWO Player won, set as attacker in next Campaign
 		kmyQuest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.playerAllegiance
 
@@ -2198,10 +2198,10 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((s
 	;CWO Comment out below lines. Hold should change hands in 9000/9200
 	if ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 		;CWO We're at the very end. Stop Campaign or set Spanish inquisition flag so that wont happen anymore
-		if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+		if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 2 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 			kmyQuest.CWs.CWCampaign.SetStage(255)
 		elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStageDone(200)
-			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
+			kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 2
 		endif
 		Alias_Fort.GetLocation().setKeywordData(kmyQuest.CWs.CWSiegeRunning, 0)
 		if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)

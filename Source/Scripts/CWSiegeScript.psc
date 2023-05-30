@@ -1521,7 +1521,7 @@ CWs.CWSiegeObj.setStage(9000)
 CWs.CWCampaignS.StartDisguiseQuest()
 CWs.CWCampaignS.StartCWOBAControllerQuest()
 
-if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCampaignS.SpanishInquisitionCompleted == 1
+if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCampaignS.SpanishInquisitionCompleted == 2
 
 	;schofida - Player is defender and defender won. Now the player can attak
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)

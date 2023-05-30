@@ -2848,10 +2848,10 @@ kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 ;CWO - Shut down campaign if its running
-if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 1 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 2 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStageDone(200)
-	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 1
+	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 2
 endif
 
 if kmyQuest.CWs.CWFinale.isRunning()

@@ -425,33 +425,8 @@ CWCampaignScript kmyQuest = __temp as CWCampaignScript
 ;Stage 200... This stage will be set when a CWO 'Spanish Inquisition' occurs
 CWScript.log("CWCampaignFragment", "CWCampaign Stage 200. ")
 
-int wait = 0
-while !kmyquest.CWs.CWSiegeS.IsRunning() && !kmyquest.CWs.CWFortSiegeCapital.IsRunning() && wait < 30
-    Utility.Wait(1.0)
-    wait = wait + 1
-endWhile
-
-if wait >= 30
-    debug.notification("Tried waiting for the 30 seconds but sieges never started. Please notify author.")
-endif
-
-if kmyQuest.CWS.CWsiegeS.IsRunning()
-    kmyQuest.CWODefendingStart.sendstoryeventandwait(kmyQuest.CWS.CWsiegeS.City.GetLocation(), kmyQuest.Cws.GetReferenceHQFieldCOForHold(kmyQuest.CWS.CWsiegeS.Hold.GetLocation(), kmyQuest.CWs.PlayerAllegiance), none, 0, 0)	
-elseIf kmyQuest.CWS.CWFortSiegeCapital.IsRunning()
-    kmyQuest.CWODefendingStart.sendstoryeventandwait((kmyQuest.CWS.CWFortSiegeCapital as CWFortSiegeScript).Fort.GetLocation(), kmyQuest.Cws.GetReferenceHQFieldCOForHold((kmyQuest.CWS.CWFortSiegeCapital as CWFortSiegeScript).Hold.GetLocation(), kmyQuest.CWs.PlayerAllegiance), none, 0, 0)	
-endIf
-
-wait = 0
-while !kmyquest.CWOSendForPlayerQuest.IsRunning() && wait < 30
-    Utility.Wait(1.0)
-    wait = wait + 1
-endWhile
-
-if wait >= 30
-    debug.notification("Tried waiting for the 30 seconds but defense quest never started. Please notify author.")
-endif
-
 kmyQuest.CWOSendForPlayerQuest.SetStage(10)
+kmyQuest.SpanishInquisitionCompleted = 1
 ;END CODE
 EndFunction
 ;END FRAGMENT

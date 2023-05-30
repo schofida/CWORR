@@ -341,7 +341,7 @@ Int Property CWFortSiegeFortDone Auto Hidden Conditional
 Int Property CWMission01Or02Done Auto Hidden Conditional
 Int Property CWMission06Done Auto Hidden Conditional
 Int Property CWMission08Done Auto Hidden Conditional
-Int Property SpanishInquisitionCompleted Auto Hidden Conditional
+Int Property SpanishInquisitionCompleted Auto Hidden Conditional ;0 = Not triggered. 1 = Spanish Inquisistion in progress. 2 = Spanish Inquisistion Completed
 Int Property CanDoCWMission05 Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
@@ -2228,6 +2228,28 @@ Function StartSpanishInquisition(LocationAlias holdToStart)
 	ObjectReference SACampaignStartMarker =  CWs.getCampaignStartMarker(CWs.getIntForHoldLocation(SAHoldLoc))
 
 	StartResolutionMission(holdToStart, SACampaignStartMarker, SAFieldCO)
+
+	int wait = 0
+	while !CWs.CWSiegeS.IsRunning() && !CWs.CWFortSiegeCapital.IsRunning() && wait < 30
+		Utility.Wait(1.0)
+		wait = wait + 1
+	endWhile
+
+	if wait >= 30
+		debug.notification("Tried waiting for the 30 seconds but sieges never started. Please notify author.")
+	endif
+
+	CWODefendingStart.sendstoryeventandwait(holdToStart.GetLocation(), Cws.GetReferenceHQFieldCOForHold(SAHoldLoc, CWs.PlayerAllegiance), none, 0, 0)	
+
+	wait = 0
+	while !CWOSendForPlayerQuest.IsRunning() && wait < 30
+		Utility.Wait(1.0)
+		wait = wait + 1
+	endWhile
+
+	if wait >= 30
+		debug.notification("Tried waiting for the 30 seconds but defense quest never started. Please notify author.")
+	endif
 
 	SetStage(200)
 endfunction
