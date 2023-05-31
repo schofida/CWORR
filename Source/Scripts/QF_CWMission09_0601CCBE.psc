@@ -52,6 +52,21 @@ ReferenceAlias Property Alias_DocumentsImperial Auto
 ReferenceAlias Property Alias_Document Auto
 ;END ALIAS PROPERTY    
 
+;BEGIN ALIAS PROPERTY DocumentSpawnFieldHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DocumentSpawnFieldHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DocumentSpawnCamp
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DocumentSpawnCamp Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCamp
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_EnemyCamp Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
     ;BEGIN AUTOCAST TYPE cwmission09script
