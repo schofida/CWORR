@@ -1365,6 +1365,13 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;IT IS CALLED IN THE CWFortSiegeMissionScript's OnStoryScript() event... essentially making it a startup stage.
 ;I do this because I need to set a variable based on what keyword started it, BEFORE i run this stage so I can test that variable
 
+if kmyQuest.Hold == none
+	kmyQuest.Hold = Alias_hold
+endif
+if kmyQuest.City == none
+	kmyQuest.City = Alias_Fort
+endif
+
 ;CWO Start courier defense quest where applicable
 kmyquest.CWs.CWCampaignS.StartDefense(Alias_Fort.GetLocation())
 

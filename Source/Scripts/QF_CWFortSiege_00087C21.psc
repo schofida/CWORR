@@ -1394,6 +1394,13 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;BEGIN CODE
 ;DO NOT MAKE THIS A STARTUP STAGE!!!
 SiegeFinished = false
+
+if kmyQuest.Hold == none
+	kmyQuest.Hold = Alias_hold
+endif
+if kmyQuest.City == none
+	kmyQuest.City = Alias_Fort
+endif
 ;CWO - Record the IsPlayerAttacking() value. IsPlayerAttacking() can change once the hold ownership changes
 CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
