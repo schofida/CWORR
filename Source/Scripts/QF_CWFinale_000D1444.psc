@@ -723,6 +723,7 @@ alias_sabetme3soldier.TryToDisable()
 Alias_Leader.GetActorReference().IgnoreFriendlyHits()
 Alias_Second.GetActorReference().IgnoreFriendlyHits()
 Else
+	alias_sabetme3soldier.TryToEnable()
 	Game.GetPlayer().RemoveFromFaction(kmyQuest.CWFinaleTemporaryAllies)
 endif
 
