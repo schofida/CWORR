@@ -366,9 +366,6 @@ if kmyquest.CWs.IsPlayerAttacking(kmyquest.Hold.Getlocation())
     kmyQuest.SetCWCampaignFieldCOAliases()
 endif
 kmyQuest.MoveRikkeGalmarToCampIfNeeded(CheckIfUnloaded = true)
-if Alias_Fort != none
-    kmyQuest.CWs.AddGarrisonBackToWar(Alias_Fort.GetLocation())
-endif
 if kmyQuest.PlayerAllegianceLastStand()
     kmyQuest.AdvanceCampaignPhase(kmyQuest.ResolutionPhase)
 Else
@@ -377,6 +374,11 @@ endif
 kmyQuest.CWs.CampaignRunning = 2 ;done setting up
 
 CWScript.log("CWCampaignFragment", "CWCampaign Stage 10. Done setting up new campaign. Calling StartTraveling()  on FieldCO and EnemyFieldCO to have them moveTo if the player isn't around")
+
+if Alias_Fort != none
+    kmyQuest.CWs.AddGarrisonBackToWar(Alias_Fort.GetLocation())
+endif
+
 ;END CODE
 EndFunction
 ;END FRAGMENT
