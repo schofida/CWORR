@@ -62,6 +62,21 @@ ReferenceAlias Property Alias_EnemyCampImperialEnable Auto
 ReferenceAlias Property Alias_EnemyCampEnable Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY EnemyFieldCOHQ
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyFieldCOHQ Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCampMapMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyCampMapMarker Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyFieldCOLocation
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_EnemyFieldCOLocation Auto
+;END ALIAS PROPERTY
+	
 ;BEGIN FRAGMENT Fragment_4
 Function Fragment_4()
 ;BEGIN AUTOCAST TYPE cwmission05script
@@ -72,8 +87,8 @@ cwmission05script kmyQuest = __temp as cwmission05script
 debug.traceConditional("CWMission05 stage 100", kmyquest.CWs.debugon.value)
 	kmyQuest.objectiveCompleted = 1
 	;Just in case
-	Alias_EnemyFieldCO.TryToKill()
-	Alias_EnemyFieldCOCamp.TryToKill()
+	kmyQuest.CWs.GetAliasHQFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)).TryToKill()
+	kmyQuest.CWs.GetAliasCampFieldCOForHold(Alias_Hold.GetLocation(), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)).TryToKill()
 	
 	SetStage(200)
 ;END CODE
@@ -140,6 +155,12 @@ cwmission05script kmyQuest = __temp as cwmission05script
 debug.traceConditional("CWMission05 stage 0", kmyquest.CWs.debugon.value)
 	kmyQuest.ResetCommonMissionProperties()
 	kmyQuest.FlagFieldCOWithPotentialMissionFactions(5)
+
+	if Alias_EnemyFieldCOCamp.GetReference() != none
+		Alias_EnemyFieldCOLocation.ForceLocationTo(Alias_EnemyCamp.GetLocation())
+	else
+		Alias_EnemyFieldCOLocation.ForceLocationTo(Alias_EnemyFieldHQ.GetLocation())
+	endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -182,7 +203,10 @@ debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
 	;Reddit Bugfix #5
 
 	Alias_EnemyFieldCO.TryToEnable()
-	Alias_EnemyFieldCOCamp.TryToEnable()
+	if Alias_EnemyFieldCOCamp.GetReference() != none
+		Alias_EnemyCampEnable.TryToEnable()
+		Alias_EnemyCampMapMarker.GetReference().AddToMap(False)
+	endif
 
 	Alias_EnemyFieldCO.GetActorReference().GetActorBase().SetEssential(false)
 ;END CODE

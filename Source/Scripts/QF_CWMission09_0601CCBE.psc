@@ -2,11 +2,6 @@
 ;NEXT FRAGMENT INDEX 14
 Scriptname QF_CWMission09_0601CCBE Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY DocumentsSons
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DocumentsSons Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY MissionNumberRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_MissionNumberRef Auto
@@ -42,11 +37,6 @@ ReferenceAlias Property Alias_CampaignStartMarker Auto
 LocationAlias Property Alias_EnemyFieldHQ Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DocumentsImperial
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DocumentsImperial Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY Document
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_Document Auto
@@ -67,6 +57,16 @@ ReferenceAlias Property Alias_DocumentSpawnCamp Auto
 LocationAlias Property Alias_EnemyCamp Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY DocumentSpawnLocation
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_DocumentSpawnLocation Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY EnemyCampMapMarker
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_EnemyCampMapMarker Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
     ;BEGIN AUTOCAST TYPE cwmission09script
@@ -79,11 +79,8 @@ Function Fragment_1()
     kmyQuest.FlagFieldCOWithActiveQuestFaction(9)
     
     Alias_Document.TryToEnable()
-    if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
-        Alias_Document.GetRef().SetFactionOwner(kmyQuest.CWs.CrimeFactionSons)
-    Else
-        Alias_Document.GetRef().SetFactionOwner(kmyQuest.CWs.CrimeFactionImperial)        
-    endif
+
+    Alias_Document.GetReference().SetFactionOwner(kmyQuest.CWs.GetCrimeFactionForHold(Alias_Hold.GetLocation()))
 
     SetObjectiveDisplayed(10)
     ;END CODE
@@ -102,12 +99,6 @@ Function Fragment_10()
     
     debug.traceConditional("CWMission09 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
     kmyquest.ProcessFieldCOFactionsOnQuestShutDown()
-    if Alias_DocumentsImperial.GetRef()
-        Alias_DocumentsImperial.GetRef().DeleteWhenAble()
-    endif
-    if Alias_DocumentsSons.GetRef()   
-        Alias_DocumentsSons.GetRef().DeleteWhenAble()
-    endif
     if Alias_Document.GetRef()
         Alias_Document.GetRef().DeleteWhenAble()
     endif
@@ -127,6 +118,33 @@ Function Fragment_0()
     kmyquest.FlagFieldCOWithPotentialMissionFactions(9)
     
     kmyquest.ResetCommonMissionProperties()
+
+    int SpawnAtCampChance = Utility.RandomInt()
+    ObjectReference document
+    ObjectReference documentSpawn
+    if SpawnAtCampChance > 50 && kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+        kmyQuest.CWs.CWCampaignS.CampEnableSons.TryToEnable()
+        Alias_EnemyCampMapMarker.GetReference().AddToMap(false)
+    Elseif SpawnAtCampChance > 50
+        kmyQuest.CWs.CWCampaignS.CampEnableImperial.TryToEnable()
+        Alias_EnemyCampMapMarker.GetReference().AddToMap(false)
+    endif
+
+    if SpawnAtCampChance > 50
+        documentSpawn = Alias_DocumentSpawnCamp.GetReference()
+        Alias_DocumentSpawnLocation.ForceLocationTo(Alias_EnemyCamp.GetLocation())
+    else
+        documentSpawn = Alias_DocumentSpawnFieldHQ.GetReference()
+        Alias_DocumentSpawnLocation.ForceLocationTo(Alias_EnemyFieldHQ.GetLocation())
+    endif
+    Alias_DocumentSpawn.ForceRefTo(documentSpawn)
+
+    if kmyQuest.CWs.PlayerAllegiance == kmyQuest.CWs.iImperials
+        document = documentSpawn.PlaceAtMe(kmyQuest.CWDocumentsSons, 1, true, true)
+    else
+        document = documentSpawn.PlaceAtMe(kmyQuest.CWDocumentsImperial, 1, true, true)
+    endif
+    Alias_Document.ForceRefTo(document)
     
     ;END CODE
 EndFunction

@@ -180,9 +180,6 @@ kmyQuest.ResetCommonMissionProperties()
 
 kmyQuest.FlagFieldCOWithPotentialMissionFactions(6)
 
-if Alias_CWCampEnemyMapMarker.GetRef() == none
-    Alias_CWCampEnemyMapMarker.ForceRefTo(kmyQuest.GetCampMapMarker(Alias_Hold.GetLocation()))
-endif
 
 kmyquest.ToggleOnComplexWIInteractions(Alias_CWCampEnemy)
 ;END CODE
