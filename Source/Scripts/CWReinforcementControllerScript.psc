@@ -1012,7 +1012,7 @@ Function SetPoolAttacker(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		EndIf
 
 		;CWO - I think that setting the starting pool below the count threshold is causing issues. Default to 11
-		if pool < 11
+		if pool < 11 && ShowAttackerPoolObjective
 			pool = 11
 		endif
 		
@@ -1064,7 +1064,7 @@ Function SetPoolDefender(int BasePool = 10, float AttackDeltaMult = 1.0, float s
 		EndIf
 
 		;CWO - I think that setting the starting pool below the count threshold is causing issues. Default to 15
-		if pool < 15
+		if pool < 15 && ShowDefenderPoolObjective
 			pool = 15
 		endif
 		

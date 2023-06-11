@@ -1388,6 +1388,20 @@ elseif ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFor
 	endif
 endif
 
+location FortLocation = Alias_Fort.GetLocation()
+
+if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
+
+	;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+	;CWO - Programmatically Set the objectives in case user's modlists overwrites the CWFortSiegeFort
+	((self as quest) as cwreinforcementcontrollerscript).PoolRemainingAttackerObjective = 101
+else
+	;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
+	((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = false
+	((self as quest) as cwreinforcementcontrollerscript).ShowDefenderPoolObjective = true
+endif
 ;<From Extended CWSiegeScript>
 CWScript.Log("CWFortSiege", "Stage 0: Registering aliases")
 kmyquest.RegisterImperialAttackerAliases(Alias_AttackerImperial1, Alias_AttackerImperial2, Alias_AttackerImperial3, Alias_AttackerImperial4, Alias_AttackerImperial5, Alias_AttackerImperial6, Alias_AttackerImperial7, Alias_AttackerImperial8, Alias_AttackerImperial9, Alias_AttackerImperial10)
