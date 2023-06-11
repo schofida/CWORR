@@ -62,6 +62,9 @@ Event OnCellAttach()
 			myLinkedFieldCO.enable()
 
 		EndIf
+		if CW.PlayerAllegiance == CW.iImperials && RikkeOrGalmar.GetCurrentLocation() == CW.MilitaryCampWhiterunImperialLocation
+			RikkeOrGalmar.MoveTo(CW.CWFieldCOMapTableMarkerWhiterunCampImperial)
+		endif
 		;CWO If campaign running use campaign to start missions
 		if RikkeOrGalmar.GetCurrentLocation() == myLocation
 			if CW.CWCampaign.IsRunning()
