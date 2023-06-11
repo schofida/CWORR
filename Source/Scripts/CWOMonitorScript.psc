@@ -321,7 +321,8 @@ function DoPlayerLoadGameStuff()
 	(CWS as CWScript).debugOn.setValue(1)
 	CWs.TutorialMissionComplete = 1
 	CWs.debugAllowNonAdjacentHolds = 1
-	if CWOVersion.GetValueInt() < 302
+	int currentVersion = CWOVersion.GetValueInt()
+	if currentVersion < 302
 		player.RemoveFromFaction(CWs.CWSonsFactionNPC)
 		player.RemoveFromFaction(CWs.CWImperialFactionNPC)
 		if CWs.playerAllegiance == CWs.iImperials && CWs.WhiterunSiegeFinished
@@ -329,13 +330,13 @@ function DoPlayerLoadGameStuff()
 		endif
 		CWOVersion.SetValueInt(302)
 	endif
-	if CWOVersion.GetValueInt() < 304
+	if currentVersion < 304
 		if !CWs.WhiterunSiegeFinished
 			CWOCurrentHold.SetValueInt(4)
 		endif
 		CWOVersion.SetValueInt(304)
 	endif
-	if CWOVersion.GetValueInt() < 405
+	if currentVersion < 405
 		if CWs.CWCampaignS.CWOStillABetterEndingMonitor.IsRunning()
 			CWs.CWCampaignS.CWOStillABetterEndingMonitor.Stop()
 			utility.Wait(3.0)
@@ -343,7 +344,7 @@ function DoPlayerLoadGameStuff()
 		endif
 		CWOVersion.SetValueInt(405)
 	endif
-	if CWOVersion.GetValueInt() < 10000
+	if currentVersion < 10000
 		if !CWs.WhiterunSiegeFinished
 			CWS.CWContestedHold.SetValueInt(4)
 			cws.ContestedHold = 4
@@ -367,20 +368,20 @@ function DoPlayerLoadGameStuff()
 		unregisterforupdate()
 		CWOVersion.SetValueInt(10000)
 	endif
-	if CWOVersion.GetValueInt() < 10003
+	if currentVersion < 10003
 		(GetOwningQuest() AS CWOQuestStarter).PlayerAlias.ForceRefTo(Player)
 		CWOVersion.SetValueInt(10003)
 	endif
-	if CWOVersion.GetValueInt() < 10004
+	if currentVersion < 10004
 		cws.cwcampaigns.CWOMonitorQuest = GetOwningQuest()
 		CWOVersion.SetValueInt(10004)
 	endif
-	if CWOVersion.GetValueInt() < 10005
+	if currentVersion < 10005
 		CWAttackCityQuest = Game.GetForm(0x0004F8BF) as Quest
 		CWS.CWCampaignS.CWAttackCity = CWAttackCityQuest
 		CWOVersion.SetValueInt(10005)
 	endif
-	if CWOVersion.GetValueInt() < 10006
+	if currentVersion < 10006
 		CWs.debugAllowNonAdjacentHolds = 1
 		if CWs.CWCampaign.IsRunning()
 			CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.UlfricRef)
@@ -388,22 +389,22 @@ function DoPlayerLoadGameStuff()
 		endif
 		CWOVersion.SetValueInt(10006)
 	endif
-	if CWOVersion.GetValueInt() < 10007
+	if currentVersion < 10007
 		CWOVersion.SetValueInt(10007)
 	endif
-	if CWOVersion.GetValueInt() < 10008
+	if currentVersion < 10008
 		if Game.GetPlayer().IsInFaction((CWs.CWFinale as CWFinaleScript).CWFinaleTemporaryAllies)
 			Game.GetPlayer().RemoveFromFaction((CWs.CWFinale as CWFinaleScript).CWFinaleTemporaryAllies)
 		endif
 		CWOVersion.SetValueInt(10008)
 	endif
-	if CWOVersion.GetValueInt() < 10009
+	if currentVersion < 10009
 		if !DialogueWhiterunCaptainOfTheGuard.IsRunning()
 			DialogueWhiterunCaptainOfTheGuard.Start()
 		endif
 		CWOVersion.SetValueInt(10009)
 	endif
-	if CWOVersion.GetValueInt() < 10014
+	if currentVersion < 10014
 		if CWs.CWCampaignS.PlayerAllegianceLastStand() && CWs.CwSiegeS.GetStage() == 0
 			if CWs.PlayerAllegiance == CWs.iImperials
 				(CWs.CWSiegeS as CWSiegeScript).SetDefenderImperialV14((GetOwningQuest() as CWOQuestStarter).CWFieldCOImperialHaafingar)
@@ -413,7 +414,7 @@ function DoPlayerLoadGameStuff()
 		endif
 		CWOVersion.SetValueInt(10014)
 	endif
-	if CWOVersion.GetValueInt() < 10015
+	if currentVersion < 10015
 		CWs.CWCampaignS.SetCWCampaignFieldCOAliases()
 		CWOVersion.SetValueInt(10015)	
 		if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()

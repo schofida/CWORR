@@ -139,6 +139,13 @@ function SetReinforcements()
 	SetReinforcementsBusy = false
 endfunction
 
+string function GetCWOVersionReaderFriendly(Float version)
+	int majorVersion = Math.Floor(version / 10000.0)
+	int minorVersion = Math.Floor((version - (majorVersion * 10000)) / 100.0)
+	int bugFix = Math.Floor(version - (majorVersion * 10000) - (minorVersion * 100))
+	return majorVersion + "." + minorVersion + "." + bugFix
+endfunction
+
 function OnOptionSliderAccept(Int a_option, Float a_value)
 {Called when the user accepts a new slider value}
 
@@ -210,6 +217,7 @@ function OnOptionSliderAccept(Int a_option, Float a_value)
 		self.SetSliderOptionValue(a_option, a_value, "{0}", false)
 		CWOCourierHoursMax.SetValue(a_value)
 	endIf
+	ForcePageReset()
 endFunction
 
 
@@ -440,11 +448,15 @@ endevent
 function OnPageReset(String a_page)
 {Called when a new page is selected, including the initial empty page}
 	optionsCWOUninstallToggle = !CWOQuestMonitor.IsRunning()
+
+	optionsStopMusicToggle = false
+
 	if CWOCampaignPhaseMaxVal == ""
 		CWOCampaignPhaseMaxVal = CWOCampaignPhaseMax.GetValueInt() as string
 	endif
 	if a_page == "CWO Debug"
 		SetCursorFillMode(self.LEFT_TO_RIGHT)
+		AddtextOption("CWO Version", GetCWOVersionReaderFriendly(CWOVersion.GetValue()))
 		if CW.IsRunning()
 			self.AddtextOption("Main CW Quest", "Is On Stage " + CW.Getstage() as String, 0)
 		endIf
@@ -614,7 +626,7 @@ function OnPageReset(String a_page)
 		optionsWinHold = self.AddMenuOption("Switch sides here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
-		if CWs.CWCampaignS.CWMission01.IsRunning() || CWs.CWCampaignS.CWMission02.IsRunning()  || CWs.CWMission04.IsRunning() || CWs.CWCampaignS.CWMission08Quest.IsRunning() || CWs.CWFortSiegeFort.IsRunning()
+		if CWs.CWCampaignS.CWMission01.IsRunning() || CWs.CWCampaignS.CWMission02.IsRunning()  || CWs.CWCampaignS.CWMission08Quest.IsRunning()
 			optionsCWOHelp2 = self.AddToggleOption("Help get additional CW Missions unstuck", optionsCWOHelpToggle2, 0)
 		endif
 		optionsCWOUninstall = self.AddToggleOption("Uninstall CWO", optionsCWOUninstallToggle, 0)
@@ -721,7 +733,6 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		CWOCampaignPhaseMax.SetValueInt(campaignPhaseChoices[a_index] as int)
 		CWOCampaignPhaseMaxVal = campaignPhaseChoices[a_index]
 		CWs.CWCampaignS.ResolutionPhase = CWOCampaignPhaseMaxVal as int
-		ForcePageReset()
 	elseif a_option == optionsStartSiege
 		int holdID = holdsID[a_index]
 		if CWs.CWcontestedHold.GetValueInt() == holdID
@@ -749,11 +760,10 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		endif
 	elseif a_option == optionsDisguiseGameType
 		CWODisguiseGameType.SetValueInt(a_index)
-		if CWOArmorDisguise.IsRunning()
-			CWOArmorDisguise.Stop()
-			CWOArmorDisguise.Start()
-		endif
+		CWOArmorDisguise.Stop()
+		CWOArmorDisguise.Start()
 	endIf
+	ForcePageReset()
 endFunction
 
 function OnVersionUpdate(Int a_version)
