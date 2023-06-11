@@ -14,6 +14,9 @@ GlobalVariable property CWOVersion auto
 GlobalVariable property CWOCurrentHold auto
 Quest Property DialogueWhiterunCaptainOfTheGuard auto
 
+ObjectReference Property WhiterunDrawbridge Auto
+ObjectReference Property WhiterunDrawbridgeNavCollision Auto
+
 Event init()
 	;used by CWHoldManagerScript attached to this quest
 	registerforsingleupdate(30)	
@@ -409,6 +412,13 @@ function DoPlayerLoadGameStuff()
 			endif	
 		endif
 		CWOVersion.SetValueInt(10014)
+	endif
+	if CWOVersion.GetValueInt() < 10015
+		CWs.CWCampaignS.SetCWCampaignFieldCOAliases()
+		CWOVersion.SetValueInt(10015)	
+		if CWs.CWCampaignS.CWOSendForPlayerQuest.IsRunning()
+			(CWs.CWCampaignS.CWOSendForPlayerQuest AS CWOSendForPlayerQuestScript).CWs = CWs
+		endif
 	endif
 	registerforsingleupdate(30)
 endfunction
