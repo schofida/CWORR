@@ -237,14 +237,14 @@ else
 	Alias_Balgruuf.Clear()
 endif
 
-kmyQuest.MoveToCouncil(Alias_Elenwen, Alias_ElenwenStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Galmar, Alias_GalmarStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Balgruuf, Alias_JarlStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Vignar, Alias_VignarStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Rikke, Alias_RikkeStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Tullius, Alias_TulliusStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Ulfric, Alias_UlfricStartMarker.GetRef())
-kmyQuest.MoveToCouncil(Alias_Elisif, Alias_JarlStartMarker.GetRef())
+kmyQuest.MoveToCouncil(Alias_Elenwen, Alias_ElenwenStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Galmar, Alias_GalmarStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Balgruuf, Alias_JarlStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Vignar, Alias_VignarStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Rikke, Alias_RikkeStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Tullius, Alias_TulliusStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Ulfric, Alias_UlfricStartMarker.GetReference())
+kmyQuest.MoveToCouncil(Alias_Elisif, Alias_JarlStartMarker.GetReference())
 
 ; clear enemy flag on Greybeards
 CrimeFactionGreybeard.SetPlayerEnemy(false)
@@ -842,10 +842,10 @@ Function Fragment_142()
 ; exterior intro scene done OR player enters council room trigger
 CouncilSceneBegin.ForceStart()
 CouncilScene.Stop()
-if Alias_Delphine.GetRef().GetParentCell() != HighHrothgar
+if Alias_Delphine.GetReference().GetParentCell() != HighHrothgar
 	Alias_Delphine.TryToMoveTo(DelphineNearCouncilMarker)
 endif
-if Alias_Esbern.GetRef().GetParentCell() != HighHrothgar
+if Alias_Esbern.GetReference().GetParentCell() != HighHrothgar
 	Alias_Esbern.TryToMoveTo(DelphineNearCouncilMarker)
 endif
 ;END CODE
@@ -898,13 +898,13 @@ CouncilScene.Start()
 Alias_Jarl.RegisterForUpdate(5)
 
 ; move Esbern and Delphine
-if (!Alias_Delphine.GetRef().IsNearPlayer())
+if (!Alias_Delphine.GetReference().IsNearPlayer())
 ; 	debug.trace (self + " moving Delphine to " + Alias_DelphineStartMarker.GetRef())
-	Alias_Delphine.GetRef().MoveTo(Alias_DelphineStartMarker.GetRef())
+	Alias_Delphine.TryToMoveTo(Alias_DelphineStartMarker.GetReference())
 endif
-if (!Alias_Esbern.GetRef().IsNearPlayer())
+if (!Alias_Esbern.GetReference().IsNearPlayer())
 ; 	debug.trace (self + " moving Esbern to " + Alias_EsbernStartMarker.GetRef())
-	Alias_Esbern.GetRef().MoveTo(Alias_EsbernStartMarker.GetRef())
+	Alias_Esbern.TryToMoveTo(Alias_EsbernStartMarker.GetReference())
 endif
 
 ; pause civil war!
@@ -987,19 +987,24 @@ MQ302Script kmyQuest = __temp as MQ302Script
 MQ302CouncilFaction.SetAlly(PlayerFaction, true, true)
 Game.DisablePlayerControls()
 ; everyone ignore friendly hits
-Alias_Elenwen.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Elisif.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Tullius.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Rikke.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Esbern.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Delphine.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Balgruuf.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Vignar.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Galmar.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Arngeir.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Einarth.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Borri.GetActorRef().IgnoreFriendlyHits(true)
-Alias_Wulfgar.GetActorRef().IgnoreFriendlyHits(true)
+Alias_Elenwen.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Elisif.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Tullius.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Rikke.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Esbern.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Delphine.GetActorReference().IgnoreFriendlyHits(true)
+;USKP 2.0.2 - Sanity checks since these aliases may not fill due to Jarlship changes
+if( Alias_Balgruuf.GetActorReference() != None )
+	Alias_Balgruuf.GetActorReference().IgnoreFriendlyHits(true)
+EndIf
+if( Alias_Vignar.GetActorReference() != None )
+	Alias_Vignar.GetActorReference().IgnoreFriendlyHits(true)
+EndIf
+Alias_Galmar.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Arngeir.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Einarth.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Borri.GetActorReference().IgnoreFriendlyHits(true)
+Alias_Wulfgar.GetActorReference().IgnoreFriendlyHits(true)
 ; clear player's spells, stop combat/alarms
 Game.GetPlayer().DispelAllSpells()
 ; debug.trace(self + " stage 60 - Game.GetPlayer().StopCombatAlarm()")
@@ -1116,19 +1121,24 @@ Game.EnablePlayerControls()
 ; council faction neutral to player again
 MQ302CouncilFaction.SetEnemy(PlayerFaction, true, true)
 ; stop ignoring friendly hits
-Alias_Elenwen.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Elisif.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Tullius.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Rikke.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Esbern.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Delphine.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Balgruuf.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Vignar.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Galmar.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Arngeir.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Einarth.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Borri.GetActorRef().IgnoreFriendlyHits(false)
-Alias_Wulfgar.GetActorRef().IgnoreFriendlyHits(false)
+Alias_Elenwen.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Elisif.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Tullius.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Rikke.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Esbern.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Delphine.GetActorReference().IgnoreFriendlyHits(false)
+;USKP 2.0.2 - Sanity checks since these aliases may not fill due to Jarlship changes
+if( Alias_Balgruuf.GetActorReference() != None )
+	Alias_Balgruuf.GetActorReference().IgnoreFriendlyHits(false)
+EndIf
+if( Alias_Vignar.GetActorReference() != None )
+	Alias_Vignar.GetActorReference().IgnoreFriendlyHits(false)
+EndIf
+Alias_Galmar.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Arngeir.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Einarth.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Borri.GetActorReference().IgnoreFriendlyHits(false)
+Alias_Wulfgar.GetActorReference().IgnoreFriendlyHits(false)
 
 ; start outro scene, depending on who currently controls Whiterun
 CWScript sCW = CW as CWScript
