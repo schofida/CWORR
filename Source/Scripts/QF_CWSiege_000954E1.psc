@@ -2497,10 +2497,9 @@ else
 ;	debug.messageBox("START SPEECH SCENE")
 
 		kmyquest.CWPostWhiterunObj.setStage(1) ;turns on misc objective to Report to Jarl of Whiterun
-		ObjectReference SpeechMarker = Alias_SpeechMarker.GetReference()
-		;schofida MoveTo is not working. Set to SetPosition
-		Alias_Jarl.GetReference().SetPosition(SpeechMarker.GetPositionX(), SpeechMarker.GetPositionY(), SpeechMarker.GetPositionZ())
-		Alias_HouseCarl.GetReference().SetPosition(SpeechMarker.GetPositionX(), SpeechMarker.GetPositionY(), SpeechMarker.GetPositionZ())
+		Alias_Jarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
+		Alias_HouseCarl.GetReference().MoveTo(Alias_SpeechMarker.GetReference())
+
 		kmyquest.CWSiegeWhiterunDefendedScene.start()
 	endif
 
