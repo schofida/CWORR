@@ -421,5 +421,8 @@ function DoPlayerLoadGameStuff()
 			(CWs.CWCampaignS.CWOSendForPlayerQuest AS CWOSendForPlayerQuestScript).CWs = CWs
 		endif
 	endif
+	if currentVersion < 10016
+		CWOVersion.SetValueInt(10016)	
+	endif
 	registerforsingleupdate(30)
 endfunction
