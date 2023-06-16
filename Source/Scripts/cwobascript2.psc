@@ -8,7 +8,6 @@ ReferenceAlias property SpyTarget auto
 ;-- Functions ---------------------------------------
 Faction CrimeFaction	; Reddit BugFix #9
 Faction[] OldFactions
-Faction NewFaction
 Faction NewNPCFaction
 
 Bool HasRemovedFactions = false
@@ -28,7 +27,6 @@ function RevertFactions()
 
 	if HasSwappedCWFactions
 		HasSwappedCWFactions = false
-		Myself.RemoveFromFaction(NewFaction)
 		Myself.RemoveFromFaction(NewNPCFaction)		
 	endif
 
@@ -54,7 +52,6 @@ function UndoNPCFaction()
 
 	if HasSwappedCWFactions
 		HasSwappedCWFactions = false
-		Myself.RemoveFromFaction(NewFaction)
 		Myself.RemoveFromFaction(NewNPCFaction)		
 	endif
 endfunction
@@ -71,7 +68,6 @@ function SwapFactions()
 	if !HasSwappedCWFactions
 		HasSwappedCWFactions = true
 
-		Myself.AddToFaction(NewFaction)
 		Myself.AddToFaction(NewNPCFaction)
 
 		Myself.EvaluatePackage()
@@ -100,7 +96,6 @@ event OnInit()
 		CWscript CWs = (GetOwningQuest() as CWOBAQuestScript).CWs
 
 		int myAllegiance = CWs.GetActorAllgeiance(myself)
-		NEwFaction = CWs.getFaction(CWs.getOppositeFactionInt(myAllegiance))
 		NewNPCFaction = CWs.getFaction(CWs.getOppositeFactionInt(myAllegiance), true)
 
 		OldFactions = Myself.GetFactions(-128, 127)
