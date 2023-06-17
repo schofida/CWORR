@@ -901,13 +901,13 @@ function UninstallCWO()
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, false, true)
 			Cws.CWMission04Done = 1
 		endif
-		if CWs.GetOwner(CWs.ReachHoldLocation)
+		if CWs.GetOwner(CWs.ReachHoldLocation) == cws.iSons
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, false, true)
 			Cws.CWMission04Done = 1
 			CWs.CWMission03Done = 1
 		endif
-		if CWs.GetOwner(CWs.Hjaalmarchholdlocation)
+		if CWs.GetOwner(CWs.Hjaalmarchholdlocation) == cws.iSons
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.FalkreathHoldLocation, CWs.GetOwner(cws.FalkreathHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.FalkreathHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.ReachHoldLocation, CWs.GetOwner(cws.ReachHoldLocation) != cws.playerAllegiance, CWs.GetOwner(cws.ReachHoldLocation) == cws.playerAllegiance)
 			CWs.WinHoldOffScreenIfNotDoingCapitalBattles(cws.Hjaalmarchholdlocation, false, true)
