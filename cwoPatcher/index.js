@@ -113,12 +113,15 @@ registerPatcher({
             let i = 1;
             Object.keys(otherModdedTroops).forEach(function(key) {
                 const config = otherModdedTroops[key];
+                const troopImperials = config.iRecord ? xelib.GetElements(config.iRecord, 'Leveled List Entries').reduce(configReducer(key, 0), {}) : {};
+                const troopSons = config.sRecord ? xelib.GetElements(config.sRecord, 'Leveled List Entries').reduce(configReducer(key, 1), {}) : {};
+                if (Object.keys(troopImperials).length === 0 && Object.keys(troopSons).length === 0) {
+                    return;
+                }
                 $scope.troopConfig[i] = {
                     fileName: key,
-                    troops: [{}, {}]
+                    troops: [troopImperials, troopSons]
                 };
-                $scope.troopConfig[i].troops[0] = config.iRecord ? xelib.GetElements(config.iRecord, 'Leveled List Entries').reduce(configReducer(key, 0), {}) : {};
-                $scope.troopConfig[i].troops[1] = config.sRecord ? xelib.GetElements(config.sRecord, 'Leveled List Entries').reduce(configReducer(key, 1), {}) : {};   
                 i++;        
             });
 
