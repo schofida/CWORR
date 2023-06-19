@@ -128,7 +128,7 @@ Function PlayerEnteredCastle()
 	MakeCrowd()	;THIS MUST HAPPEN BEFORE YOU START THE SCENE as it reevals actors in running scenes, and can break the scene
 	
 	;wait before scene otherwise you miss the first bit of dialogue about locking the door
-	Game.DisablePlayerControls()
+	Game.DisablePlayerControls(sabetme3)
 
 	Utility.Wait(PauseBeforeScene)
 
