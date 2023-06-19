@@ -2375,7 +2375,7 @@ function ShuffleGarrisons()
 	if ascOrDesc == 0
 		int i = 0
 		while i <= 3
-			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
+			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none && Garrisons[i] != CWs.KarthwastenLocation
 				Garrison1.ForceLocationTo(Garrisons[i])
 				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
 				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
@@ -2387,7 +2387,7 @@ function ShuffleGarrisons()
 	else
 		int i = 3
 		while i >= 0
-			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none
+			if Garrisons[i] != none && GarrisonsEnableImperial[i] != none && GarrisonsEnableSons[i] != none && GarrisonsResourceObjects[i] != none && Garrisons[i] != CWs.KarthwastenLocation
 				Garrison1.ForceLocationTo(Garrisons[i])
 				Garrison1EnableImperial.ForceRefTo(GarrisonsEnableImperial[i])
 				Garrison1EnableSons.ForceRefTo(GarrisonsEnableSons[i])
