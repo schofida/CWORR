@@ -140,6 +140,15 @@ cwmission01script kmyQuest = __temp as cwmission01script
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("CWMission01QuestFragment", self + "Stage 0" )
+
+;CWO Set CWSiegeScript Hold and City Properties
+if kmyQuest.Hold == none
+	kmyQuest.Hold = Alias_hold
+endif
+if kmyQuest.City == none
+	kmyQuest.City = Alias_Garrison
+endif
+
 SiegeFinished = false
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 ((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
