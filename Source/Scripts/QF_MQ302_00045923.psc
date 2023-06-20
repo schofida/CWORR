@@ -446,9 +446,9 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;BEGIN CODE
 ; side asking for Whiterun has no holds at all - give back negotation points
 setStage(140)
-;CWScript sCW = CW as CWScript
-;if sCW.OwnerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+CWScript sCW = CW as CWScript
+if sCW.OwnerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 	; Imperials keeping Markarth
 	; major hold = 2
 	kmyQuest.IncrementNegotiationDelta(2)
@@ -528,9 +528,9 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;BEGIN CODE
 ; player makes a choice for first concession for Whiterun
 ; treat Whiterun as concession (will take it back if other side has nothing to trade)
-;CWScript sCW = CW as CWScript
-;if sCW.OwnerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+CWScript sCW = CW as CWScript
+if sCW.OwnerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 	; Imperials giving up Markarth
 	; major hold = -2
 	kmyQuest.IncrementNegotiationDelta(-2)
@@ -648,10 +648,10 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;END AUTOCAST
 ;BEGIN CODE
 ; Esbern speech over, back to negotiations
-;CWScript sCW = CW as CWScript
+CWScript sCW = CW as CWScript
 
-;if sCW.ownerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+if sCW.ownerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 	; Imperials control Whiterun
 	; who's losing?
 	if kmyQuest.NegotiationDelta > 0
@@ -681,9 +681,9 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;BEGIN CODE
 ; asking for minor hold
 setStage(140)
-;CWScript sCW = CW as CWScript
-;if sCW.OwnerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+CWScript sCW = CW as CWScript
+if sCW.OwnerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 	; Imperials getting minor hold in exchange for Whiterun
 	; minor hold = 1
 	kmyQuest.IncrementNegotiationDelta(1)
@@ -733,9 +733,9 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;BEGIN CODE
 ; asking for major hold
 setStage(140)
-;CWScript sCW = CW as CWScript
-;if sCW.OwnerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+CWScript sCW = CW as CWScript
+if sCW.OwnerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 	; Imperials control Whiterun
 	; major hold = +2
 	kmyQuest.IncrementNegotiationDelta(2)
@@ -766,11 +766,11 @@ MQ302Script kmyQuest = __temp as MQ302Script
 ;BEGIN CODE
 ; Scene2 complete -- decided what hold (if any) is being traded for Whiterun
 ; now, scene 3 -- Tullius or Ulfric angry about terms offered for Whiterun
-;CWScript sCW = CW as CWScript
+CWScript sCW = CW as CWScript
 
 ; debug.trace("MQ302 stage 150: negotiation delta=" + kmyquest.negotiationdelta + ", player is a Stormcloak=" + Game.GetPlayer().IsInFaction(CWSonsFaction) )
-;if sCW.ownerWhiterun == 1
-if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
+if sCW.ownerWhiterun == 1
+;if Game.GetPlayer().IsInFaction(CWSonsFaction) == 0
 ; 	debug.trace("MQ302 stage 150: Imperials control Whiterun")
 	; Imperials control Whiterun
 	; who's mad?
