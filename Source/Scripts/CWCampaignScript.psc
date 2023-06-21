@@ -480,9 +480,6 @@ Function ResetCampaign()
 		candocwmission07 = 0
 	endif
 
-	;CWO - Set Resolution Phase to 3. Will eventually be to change but should always be an odd number
-	ResolutionPhase = CWOCampaignPhaseMax.GetValueInt()
-
 EndFunction
 
 Function PurchaseGarrisons()

@@ -366,7 +366,7 @@ if kmyquest.CWs.IsPlayerAttacking(kmyquest.Hold.Getlocation())
     kmyQuest.SetCWCampaignFieldCOAliases()
 endif
 kmyQuest.MoveRikkeGalmarToCampIfNeeded(CheckIfUnloaded = true)
-if kmyQuest.PlayerAllegianceLastStand()
+if kmyQuest.PlayerAllegianceLastStand() || kmyQuest.CWOCampaignPhaseMax.GetValueInt() == 1
     kmyQuest.AdvanceCampaignPhase(kmyQuest.ResolutionPhase)
 Else
     kmyQuest.AdvanceCampaignPhase()
