@@ -704,7 +704,7 @@ kmyquest.FlagFieldCOWithMissionResultFaction(4)
 
 kmyquest.CWs.CWMission04Done = 1 ;used to conditionalize story manager node
 
-kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
 kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
 

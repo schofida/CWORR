@@ -1859,7 +1859,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 		((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(50)
 	endif		
 
-	kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+	kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
 	;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), kmyQuest.IsPlayerAttacking(), !kmyQuest.IsPlayerAttacking())

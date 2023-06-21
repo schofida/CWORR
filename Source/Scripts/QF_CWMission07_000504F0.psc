@@ -476,7 +476,7 @@ kmyquest.FlagFieldCOWithMissionResultFaction(7)
 
 kmyquest.CWs.CWMission07Done = 1 ;used to conditionalize story manager node
 
-kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
+kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
 
 UnregisterForUpdate()
 

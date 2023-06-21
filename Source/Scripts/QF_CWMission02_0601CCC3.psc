@@ -182,7 +182,7 @@ Function Fragment_9()
 
     kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
-    kmyquest.CWs.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+    kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
     while Game.GetPlayer().IsInLocation(Alias_ResourceLocation.GetLocation())
         CWScript.Log("CWCWMission02ScriptFragment", self + "SucceedQuest() Waiting for player to leave City before stopping quest")
