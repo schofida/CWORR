@@ -1529,6 +1529,11 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 	kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 endif
 
+while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
+	utility.wait(5)	
+	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
+endwhile
+
 stop()
 ;END CODE
 EndFunction
@@ -1630,11 +1635,6 @@ kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 CWScript.Log("CWFortSiege", "Stage 9999: temporarily enabling map markers until I have a function to turn off fast travel or move the marker that you fast travel to")
 ; debug.trace("TEMP: Enabling Map marker, until I can disable/enable fast travel or move heading marker.")
 Alias_MapMarker.GetReference().enable()
-
-while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
-	utility.wait(5)	
-	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
-endwhile
 
 if Alias_JarlsHouseDoor.GetReference()
 Alias_JarlsHouseDoor.GetReference().BlockActivation(false)
@@ -1911,7 +1911,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 	if FortLocation != kmyquest.CWs.FortAmolLocation && FortLocation != kmyquest.CWs.FortHraggstadLocation 
 
-		kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = True)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+		kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 		kmyquest.CWs.AddCivilWarAchievment(2, Alias_Fort.GetLocation())
 
 		;CWO Stop defense courier quest if running
@@ -1927,7 +1927,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 
 	else		;it's one of the final hold forts, so we need to generate a siege mission:
 	
-		kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;for purposes of this function, it's not a fort battle
+		kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;for purposes of this function, it's not a fort battle
 	
 		if fortLocation == kmyquest.CWs.FortAmolLocation
 			kmyquest.CWs.EastmarchFortBattleComplete = true
@@ -1944,6 +1944,11 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 ;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
 
 endif
+
+while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
+	utility.wait(5)	
+	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): doing nothing while waiting until player is not in the location of the fort.", 1)
+endwhile
 
 stop()
 ;END CODE
