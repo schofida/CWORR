@@ -318,7 +318,7 @@ endfunction
 function DoPlayerLoadGameStuff()
 	Utility.Wait(10)
 	actor player = Game.GetPlayer()
-	(CWS as CWScript).debugOn.setValue(0)
+	(CWS as CWScript).debugOn.setValue(1)
 	CWs.TutorialMissionComplete = 1
 	CWs.debugAllowNonAdjacentHolds = 1
 	int currentVersion = CWOVersion.GetValueInt()
