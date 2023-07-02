@@ -2847,10 +2847,10 @@ kmyquest.CWStateDefenderLowReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 ;CWO - Shut down campaign if its running
-if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted == 2 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
+if kmyQuest.CWs.CWCampaign.IsRunning() && (!kmyQuest.CWs.CWCampaign.GetStageDone(200) || kmyQuest.CWs.CWCampaignS.CWOSpanishInquisitionPhase.GetValueInt() == 2 || kmyQuest.CWs.CWCampaignS.failedMission == 1)
 	kmyQuest.CWs.CWCampaign.SetStage(255)
 elseif kmyQuest.CWs.CWCampaign.IsRunning() && kmyQuest.CWs.CWCampaign.GetStageDone(200)
-	kmyQuest.CWs.CWCampaignS.SpanishInquisitionCompleted = 2
+	kmyQuest.CWs.CWCampaignS.CWOSpanishInquisitionPhase.SetValueInt(2)
 endif
 
 if kmyQuest.CWs.CWFinale.isRunning()
@@ -2863,8 +2863,6 @@ Alias_City.GetLocation().setKeywordData(kmyquest.CWs.CWSiegeRunning, 0)
 ;GIVE OWNERSHIP - WAITS to return until player isn't in various locations in the hold
 if (kmyQuest.AttackersHaveWon || kmyQuest.DefendersHaveWon)
 	kmyquest.CWs.WinHoldAndSetOwner(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
-	;CWO Set this flag to kick off the CWOMonitor which starts the campaigns
-	kmyquest.CWs.CWCampaignS.CWOWarBegun.SetValueInt(1)
 endif
 
 if kmyQuest.CWs.CWCampaignS.GetMonitorState() == "WaitingForSiegeToStop"

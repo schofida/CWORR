@@ -428,7 +428,7 @@ CWCampaignScript kmyQuest = __temp as CWCampaignScript
 CWScript.log("CWCampaignFragment", "CWCampaign Stage 200. ")
 
 kmyQuest.CWOSendForPlayerQuest.SetStage(10)
-kmyQuest.SpanishInquisitionCompleted = 1
+kmyQuest.CWOSpanishInquisitionPhase.SetValueInt(1)
 ;END CODE
 EndFunction
 ;END FRAGMENT

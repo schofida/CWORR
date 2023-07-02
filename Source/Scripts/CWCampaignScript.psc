@@ -266,7 +266,7 @@ GlobalVariable Property CWOFortReinforcements Auto
 GlobalVariable Property CWOSiegeReinforcements Auto
 GlobalVariable Property CWOGarrisonReinforcements Auto
 GlobalVariable Property CWOStillABetterEndingGlobal Auto
-GlobalVariable Property CWOWarBegun Auto
+GlobalVariable Property CWOSpanishInquisitionPhase Auto ;0 = Not triggered. 1 = Spanish Inquisistion in progress. 2 = Spanish Inquisistion Completed
 GlobalVariable Property CWODisableFortSiegeFort auto
 GlobalVariable Property CWODisableSolitudeSiege auto
 GlobalVariable Property CWODisableWindhelmSiege auto
@@ -341,7 +341,6 @@ Int Property CWFortSiegeFortDone Auto Hidden Conditional
 Int Property CWMission01Or02Done Auto Hidden Conditional
 Int Property CWMission06Done Auto Hidden Conditional
 Int Property CWMission08Done Auto Hidden Conditional
-Int Property SpanishInquisitionCompleted Auto Hidden Conditional ;0 = Not triggered. 1 = Spanish Inquisistion in progress. 2 = Spanish Inquisistion Completed
 Int Property CanDoCWMission05 Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
@@ -452,7 +451,7 @@ Function ResetCampaign()
 	resolveOffscreen = 0						;reset variable
 	
 	;Re-intialize CWO stuff
-	SpanishInquisitionCompleted = 0
+	CWOSpanishInquisitionPhase.SetValueInt(0)
 	CWMission01Or02Done = 0
 	CanDoCWMission05 = 0
 	
