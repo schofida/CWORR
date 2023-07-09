@@ -1829,7 +1829,7 @@ kmyquest.AttackersHaveWon = True		;Announces the attackers as winner, causing th
 kmyQuest.DefendersHaveWon = false
 
 ;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
-if kmyquest.CWs.WhiterunSiegeFinished == False
+if kmyquest.CWs.WhiterunSiegeFinished == False && !kmyquest.IsAttack()
 	kmyquest.CWs.WhiterunSiegeFinished = True
 endif
 
@@ -2475,7 +2475,6 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 bool scenePlayedBefore = true
 ;if this is the first Whiterun siege (we assume this because the whiterun siege because that is always the first one)
 if kmyquest.CWs.WhiterunSiegeFinished == False
-	kmyquest.CWs.WhiterunSiegeFinished = True
 	;schofida - Defence of Whiterun can happen more than once. Only show Whiterun Jarl scene if defending as an imperial for the first time.
 	scenePlayedBefore = false
 endif

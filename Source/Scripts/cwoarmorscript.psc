@@ -6,15 +6,13 @@ globalvariable property CWODisguiseGlobal auto
 faction property PlayerFaction auto
 formlist property ImperialArmor auto
 keyword property SonsKeyword2 auto
-quest property MQ302 auto
 formlist property SonsArmor auto
 keyword property ImperialKeyword3 auto
 keyword property ImperialKeyword2 auto
 globalvariable property CWPlayerAllegiance auto
 keyword property SonsKeyword auto
 faction property CWSonsFactionNPC auto
-quest property CWFinale auto
-Bool property PeaceTreaty auto
+CWScript property CWs auto
 faction property CWImperialFactionNPC auto
 Armor property WhatArmor auto
 
@@ -25,7 +23,7 @@ Keyword property ArmorCuirass auto
 
 ;-- Variables ---------------------------------------
 Bool IsNowImperial
-Actor PlayerRef
+Faction EnemyFaction
 Bool WeTookItOff
 Bool isWorn
 Bool wasSons
@@ -37,10 +35,10 @@ Bool wasImperial
 function EquipmentUpdate()
 	if CWODisguiseGameType.GetValueInt() == 2
 		CWODisguiseGlobal.SetValueInt(1)
-		PlayerFaction.SetEnemy(ReturnEnemyFaction(), true, true)
+		PlayerFaction.SetEnemy(EnemyFaction, true, true)
 		return
 	endif
-	if (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iSons && PeaceTreaty == false
+	if CWs.playerAllegiance == CWs.iSons
 		if CWODisguiseGameType.GetValueInt() == 1
 			if WhatArmor != none && (WhatArmor.HasKeyword(SonsKeyword) || WhatArmor.HasKeyword(SonsKeyword2))
 				CWODisguiseGlobal.SetValueInt(0)
@@ -58,7 +56,7 @@ function EquipmentUpdate()
 				PlayerFaction.SetEnemy(CWImperialFactionNPC, false, false)
 			endIf
 		endif
-	elseIf (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iImperials && PeaceTreaty == false
+	elseIf CWs.playerAllegiance == CWs.iImperials
 		if CWODisguiseGameType.GetValueInt() == 1
 			if WhatArmor != none && (WhatArmor.HasKeyword(ImperialKeyword) || WhatArmor.HasKeyword(ImperialKeyword2) || WhatArmor.HasKeyword(ImperialKeyword3))
 				CWODisguiseGlobal.SetValueInt(0)
@@ -80,6 +78,9 @@ function EquipmentUpdate()
 endFunction
 ; Reddit BugFix #8
 event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
+	if GetIsInPeaceTreaty()
+		Return
+	endif
 	Armor thisIsArmor = akBaseObject as Armor
 	if thisIsArmor != none && akBaseObject.HasKeyword(ArmorCuirass)
 		WhatArmor = thisIsArmor
@@ -88,6 +89,9 @@ event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 endEvent
 ; Reddit BugFix #8
 event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
+	if GetIsInPeaceTreaty()
+		Return
+	endif
 	Armor thisIsArmor = akBaseObject as Armor
 	if thisIsArmor != none && akBaseObject.HasKeyword(ArmorCuirass)
 		WhatArmor = none
@@ -96,7 +100,10 @@ event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 endEvent
 ; Reddit BugFix #8
 event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	CWCampaignScript CWCampaignS = (CWFinale as cwfinalescript).CWs.CWCampaignS
+	if GetIsInPeaceTreaty()
+		return
+	endif
+	CWCampaignScript CWCampaignS = CWs.CWCampaignS
 	if CwCampaignS.IsRunning() && CwCampaignS.EnemyCamp.GetLocation() == akNewLoc && CwCampaignS.IsEnemyCampEnabled()
 		if CwCampaignS.CWODisableNotifications.GetValueInt() == 0
 			debug.notification("Your disguise does not work at the enemy camp.")
@@ -106,36 +113,42 @@ event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	else
 		EquipmentUpdate()
 	endif
-	if MQ302.IsRunning()
-		if MQ302.GetStage() > 30
-			PeaceTreaty = true
-			PlayerFaction.SetEnemy(ReturnEnemyFaction(), true, true)
-		else
-			PeaceTreaty = false
-		endIf
-	else
-		PeaceTreaty = false
-	endIf
 	; self.RegisterforSingleUpdate(10 as Float) ; Reddit BugFix #8
 endEvent
 
 ; Skipped compiler generated GetState
 
 function OnInit()
-
-	PlayerRef = game.GetPlayer()
-	PeaceTreaty = false
+	EnemyFaction = ReturnEnemyFaction()
+	if GetIsInPeaceTreaty()
+		Return
+	endif
 	EquipmentUpdate()
 	; self.RegisterforSingleUpdate(10 as Float) ; Reddit BugFix #8
 endFunction
 
 faction function ReturnEnemyFaction()
 
-	if (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iSons
+	if CWs.playerAllegiance == CWs.iSons
 		return CWImperialFactionNPC
-	elseIf (CWFinale as cwfinalescript).CWs.playerAllegiance == (CWFinale as cwfinalescript).CWs.iImperials
+	elseIf CWs.playerAllegiance == CWs.iImperials
 		return CWSonsFactionNPC
 	endIf
+	return none
 endFunction
+
+bool function GetIsInPeaceTreaty()
+	Bool PeaceTreaty = false
+	if !CWs.IsRunning() || !CWs.WhiterunSiegeFinished || CWs.GetStage() == 255 || EnemyFaction == None
+		PeaceTreaty = true
+		GetOwningQuest().Stop()
+	endIf
+	if EnemyFaction != None && PeaceTreaty
+		CWODisguiseGlobal.SetValueInt(1)
+		PlayerFaction.SetEnemy(EnemyFaction, true, true)
+	endif
+	return PeaceTreaty
+
+endfunction
 
 ; Skipped compiler generated GotoState

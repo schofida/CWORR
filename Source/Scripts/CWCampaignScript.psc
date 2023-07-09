@@ -1933,11 +1933,11 @@ function StopMonitors()
 	CWOStillABetterEndingMonitor.Stop()
 endfunction
 
-function StopDisguiseQuest()
+function StopDisguiseQuest(bool ForceBeFriends = false)
 	CWScript.Log("CWCampaignScript", " StopDisguiseQuest()") 
 	;schofida - revert Disguise changes
 	CWOArmorDisguise.Stop()
-	CWs.PlayerFaction.SetEnemy(CWs.getPlayerAllegianceEnemyFaction(true), false, false)
+	CWs.PlayerFaction.SetEnemy(CWs.getPlayerAllegianceEnemyFaction(true), ForceBeFriends, ForceBeFriends)
 	CWODisguiseGlobal.SetValueInt(0)
 endfunction
 

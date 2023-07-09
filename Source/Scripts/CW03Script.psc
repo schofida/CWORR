@@ -82,6 +82,7 @@ EndFunction
 
 function StartWhiterunAttack()
 	CWs.CWCampaignS.SetMonitorWaitingToStartCampaign()
+	CWs.WhiterunSiegeStarted = true
 	CWs.CreateMissions(CWs.GetMyCurrentHoldLocation(CWFieldCOSonsWhiterunCamp), CWFieldCOSonsWhiterunCamp, ForceFinalSiege = true)
 EndFunction
 

@@ -1174,8 +1174,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	else
 		((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(50, MissionFailure = true)
 	endif
-	;CWO - Restart disguise quest
-	kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 	;CWO - Force player to be the defender for the next campaign
 	kmyquest.CWs.CWDebugForceAttacker.Value = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.playerAllegiance)
 	;CWO - Finally have opponent win/hold onto existing hold

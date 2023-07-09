@@ -539,9 +539,7 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 
 CWScript.Log("CWFinale", "Stage 200")
 
-kmyquest.CWs.CWCampaignS.StopDisguiseQuest()
-utility.WAIT(1.0)
-kmyquest.CWs.PlayerFaction.SetEnemy(kmyquest.CWs.getPlayerAllegianceEnemyFaction(true), true, true)
+kmyquest.CWs.CWCampaignS.StopDisguiseQuest(true)
 
 ;END CODE
 EndFunction

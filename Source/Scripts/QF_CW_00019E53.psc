@@ -272,6 +272,10 @@ endif
 if kmyQuest.CWFortSiegeCapital.IsRunning()
 	kmyQuest.CWFortSiegeCapital.stop()
 endif
+
+kmyQuest.CWCampaignS.StopCWOBAControllerQuest()
+kmyQuest.CWCampaignS.StopDisguiseQuest(true)
+
 kmyQuest.CWCampaignS.SetMonitorDoNothing()
 kmyQuest.CWCampaign.stop()
 ;		;If player's side is attacking "FAIL" the CWCampaign, if player's side is defending "COMPLETE" the CWCampaign
@@ -353,6 +357,9 @@ CWScript kmyQuest = __temp as CWScript
 		kmyQuest.WarIsActive = 0  ;in case it was set to -1 due to peace treaty
 		
 	endif
+
+	kmyQuest.CWCampaignS.StartCWOBAControllerQuest()
+	kmyQuest.CWCampaignS.StartDisguiseQuest()
 	
 	kmyQuest.CWCampaignS.SetMonitorWaitingToStartCampaign()
 	kmyQuest.displayFactionLeaderObjective()

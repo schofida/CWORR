@@ -65,6 +65,10 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 	CWScript CWs = kmyQuest.CWs
 	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
 
+	if (CWCampaignS.CWOArmorDisguise.IsRunning() && (!CWs.WhiterunSiegeFinished || !CWCampaignS.CWOMonitorQuest.IsRunning()))
+		CWCampaignS.StopDisguiseQuest(true)
+	endif
+
 	if (!CWs.CWSiegeS.IsRunning() || CWs.CWSiegeS.GetStage() > 200)
 		kmyQuest.WhiterunDrawbridge.PlayGamebryoAnimation("Backward", TRUE)
 		kmyQuest.WhiterunDrawbridgeNavCollision.Disable()

@@ -760,8 +760,10 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		endif
 	elseif a_option == optionsDisguiseGameType
 		CWODisguiseGameType.SetValueInt(a_index)
-		CWOArmorDisguise.Stop()
-		CWOArmorDisguise.Start()
+		if CWOArmorDisguise.IsRunning()
+			CWOArmorDisguise.Stop()
+			CWOArmorDisguise.Start()
+		endif
 	endIf
 	ForcePageReset()
 endFunction
