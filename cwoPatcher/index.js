@@ -14,9 +14,12 @@ registerPatcher({
             const cwoFileName = 'Civil War Overhaul.esp';
             const cwoFile = xelib.FileByName(cwoFileName);
             const skyrimFile = xelib.FileByName('Skyrim.esm');
-            const cwoLCharSoldierImperial = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierImperial"));
-            const cwoLCharSoldierSons = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierSons"));
-
+            let cwoLCharSoldierImperial = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierImperial"));
+            let cwoLCharSoldierSons = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierSons"));
+            if (xelib.GetFileName(xelib.GetElementFile(cwoLCharSoldierImperial)) === 'zPatch.esp') {
+                cwoLCharSoldierImperial = xelib.GetPreviousOverride(cwoLCharSoldierImperial, xelib.GetElementFile(cwoLCharSoldierImperial));
+                cwoLCharSoldierSons = xelib.GetPreviousOverride(cwoLCharSoldierSons, xelib.GetElementFile(cwoLCharSoldierSons));
+            }
             const LCharSoldierImperial = xelib.GetElement(skyrimFile, "0001FC5B");
             const LCharSoldierSons = xelib.GetElement(skyrimFile, "0001FC5C");
 
@@ -131,6 +134,9 @@ registerPatcher({
         }
     },
     requiredFiles: ['Civil War Overhaul.esp'],
+    getFilesToPatch: (files) => {
+        return files.subtract(['zePatch.esp']);
+    },
     execute: (patchFile, helpers, settings, locals) => ({
         process: [{
             load: {
@@ -141,21 +147,27 @@ registerPatcher({
             },
             patch: function(record) {
                 xelib.RemoveElement(record, 'Leveled List Entries');
+                let cwoElements = [];
                 xelib.GetOverrides(record).forEach(override => {
                     const fileName = xelib.GetFileName(xelib.GetElementFile(override));
                     if (fileName === xelib.GetFileName(xelib.GetElementFile(record))) {
                         return;
                     }
+                    const cwoFile = fileName === 'Civil War Overhaul.esp' || xelib.GetMasterNames(xelib.GetElementFile(override)).includes('Civil War Overhaul.esp');
+                    if (cwoFile) {
+                        cwoElements = [];
+                    }
                     xelib.GetElements(override, 'Leveled List Entries').forEach(form => {
-                        if (fileName === 'Civil War Overhaul.esp') {
-                            xelib.AddLeveledEntry(record, 
-                                xelib.GetValue(form, 'LVLO\\Reference'), 
-                                xelib.GetValue(form, 'LVLO\\Level'), 
-                                xelib.GetValue(form, 'LVLO\\Count'));
-                            return;
-                        }
                         const link = xelib.GetLinksTo(form, 'LVLO\\Reference');
                         if (link === 0) {
+                            return;
+                        }
+                        if (cwoFile) {
+                            cwoElements.push({
+                                ref: xelib.GetValue(form, 'LVLO\\Reference'),
+                                lev: xelib.GetValue(form, 'LVLO\\Level'),
+                                cnt: xelib.GetValue(form, 'LVLO\\Count')
+                            })
                             return;
                         }
                         const reference = xelib.GetMasterRecord(link);
@@ -167,6 +179,9 @@ registerPatcher({
                             return;
                         }
                     });
+                });
+                cwoElements.forEach(x => {
+                    xelib.AddLeveledEntry(record, x.ref, x.lev, x.cnt)
                 });
             }
         }, {
