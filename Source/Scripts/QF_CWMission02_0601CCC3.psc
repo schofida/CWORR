@@ -110,14 +110,7 @@ Function Fragment_11()
     kmyQuest.CWS.StopCWCitizensFlee()
     kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 
-    int WinningFaction = 0 
-    if (kmyQuest.objectiveCompleted == 1)
-        WinningFaction = kmyQuest.CWs.playerAllegiance
-    else
-        WinningFaction = kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance)
-    endif
-
-    kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), WinningFaction)
+    kmyquest.CWS.SetOwner(Alias_ResourceLocation.GetLocation(), kmyQuest.CWs.playerAllegiance)
 
     Alias_CWFortSiegeSons1.TryToDisable()
     Alias_CWFortSiegeSons2.TryToDisable()
@@ -180,9 +173,11 @@ Function Fragment_9()
 
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
 
+    kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
+
     kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
-    kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_ResourceLocation.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
+    kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
     while Game.GetPlayer().IsInLocation(Alias_ResourceLocation.GetLocation())
         CWScript.Log("CWCWMission02ScriptFragment", self + "SucceedQuest() Waiting for player to leave City before stopping quest")

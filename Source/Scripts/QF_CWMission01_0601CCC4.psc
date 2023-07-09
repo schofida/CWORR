@@ -366,6 +366,8 @@ endif
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
+kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
+
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
@@ -411,6 +413,8 @@ else
 endif
 
 ((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(1, MissionFailure = true)
+
+setObjectiveFailed(20)
 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()

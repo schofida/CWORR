@@ -175,7 +175,7 @@ cwmission05script kmyQuest = __temp as cwmission05script
 debug.traceConditional("CWMission05 stage 200", kmyquest.CWs.debugon.value)
 	kmyQuest.CompleteAllObjectives()
 	kmyQuest.FlagFieldCOWithMissionResultFaction(5, false)
-	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
+	kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(2)
 	kmyQuest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), false)
 	kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 

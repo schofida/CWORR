@@ -487,7 +487,7 @@ kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
 
 UnregisterForUpdate()
 
-kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
+kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(2)
 
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 

@@ -711,7 +711,7 @@ kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
 kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 kmyquest.CWs.SetOwner(Alias_AttackPoint.GetLocation(), kmyQuest.CWs.playerAllegiance, SetKeywordDataImmediately = true)	
-
+kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 ;NOTE: quest stopped in CWMission04PrisonerScript to make sure he keeps his packages until he unloads
 ;END CODE
 EndFunction

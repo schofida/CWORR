@@ -1918,6 +1918,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 		if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 			kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 		endIf
+		kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 		;CWO Advance campaign Phase
 		kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 

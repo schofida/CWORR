@@ -289,7 +289,6 @@ cwmission08script kmyQuest = __temp as cwmission08script
 ;END AUTOCAST
 ;BEGIN CODE
 debug.traceConditional("CWMission08 stage 100", kmyquest.CWs.debugon.value)
-kmyQuest.CompleteAllObjectives()
 kmyquest.objectiveCompleted = 1
 
 setStage(200)
