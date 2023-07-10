@@ -424,5 +424,10 @@ function DoPlayerLoadGameStuff()
 	if currentVersion < 10016
 		CWOVersion.SetValueInt(10016)	
 	endif
+	if currentVersion < 10017
+		(cws.CwCampaignS.CWOSendForPlayerQuest as CWOSendForPlayerQuestScript).CWOCourierHoursMin.SetValueInt(1)
+		(cws.CwCampaignS.CWOSendForPlayerQuest as CWOSendForPlayerQuestScript).CWOCourierHoursMax.SetValueInt(8)
+		CWOVersion.SetValueInt(10017)	
+	endif
 	registerforsingleupdate(30)
 endfunction
