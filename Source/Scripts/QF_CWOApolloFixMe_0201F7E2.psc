@@ -67,13 +67,6 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 
 	Faction EnemyFaction = CWs.getPlayerAllegianceEnemyFaction(true)
 
-	if (!CWs.IsRunning() || !CWs.WhiterunSiegeFinished || CWs.GetStage() == 255) && EnemyFaction != None && CWs.PlayerFaction.GetReaction(EnemyFaction) == 1
-		debug.notification("Opposing faction is enemy when it shouldn't be. Fixing...")
-		CWs.PlayerFaction.SetEnemy(EnemyFaction, true, true)
-		Stop()
-		REturn
-	endIf
-
 	if (!CWs.CWSiegeS.IsRunning() || CWs.CWSiegeS.GetStage() > 200)
 		kmyQuest.WhiterunDrawbridge.PlayGamebryoAnimation("Backward", TRUE)
 		kmyQuest.WhiterunDrawbridgeNavCollision.Disable()

@@ -101,6 +101,7 @@ int optionsDisableFaint
 int optionsDisableNotifications
 int optionsPayCrimeFaction
 int optionsStopMusic
+int optionsFixFactionAggression
 
 Float _sliderPercent = 100.000
 
@@ -112,6 +113,7 @@ bool SetReinforcementsBusy = False
 bool optionsToggleCWWinBattle = false
 bool optionstogglePayCrimeFaction = false
 bool optionsStopMusicToggle = false
+bool optionsFixFactionAggressionToggle = false
 
 String[] gameDisguiseList
 String[] holdsList
@@ -350,9 +352,13 @@ function OnOptionSelect(Int a_option)
 			self.SetToggleOptionValue(a_option, true, false)
 		endif
 	elseif a_option == optionsStopMusic
-		optionsStopMusicToggle = !optionsStopMusicToggle
+		optionsStopMusicToggle = true
 		CWs.CWSiegeS.MUSCombatCivilWar.remove()
 		self.SetToggleOptionValue(a_option, optionsStopMusicToggle, false)
+	elseif a_option == optionsFixFactionAggression
+		optionsFixFactionAggressionToggle = true
+		CWs.CWCampaigns.StopDisguiseQuest(true)
+		self.SetToggleOptionValue(a_option, optionsFixFactionAggressionToggle, false)
 	endIf
 endFunction
 
@@ -443,13 +449,13 @@ event OnConfigClose()
 	SetReinforcementsBusy = False
 	optionsToggleCWWinBattle = false
 	optionsCWOUninstallToggle = false
+	optionsStopMusicToggle = false
+	optionsFixFactionAggressionToggle = false
 endevent
 
 function OnPageReset(String a_page)
 {Called when a new page is selected, including the initial empty page}
 	optionsCWOUninstallToggle = !CWOQuestMonitor.IsRunning()
-
-	optionsStopMusicToggle = false
 
 	if CWOCampaignPhaseMaxVal == ""
 		CWOCampaignPhaseMaxVal = CWOCampaignPhaseMax.GetValueInt() as string
@@ -605,6 +611,7 @@ function OnPageReset(String a_page)
 		optionsDisableNotifications = self.AddToggleOption("Disable Notifications", CWODisableNotifications.GetValueInt() == 1, 0)
 		optionsPayCrimeFaction = self.AddToggleOption("Pay Faction Crimes", optionstogglePayCrimeFaction, 0)
 		optionsStopMusic = self.AddToggleOption("Stop Siege Music", optionsStopMusicToggle, 0)
+		optionsFixFactionAggression = self.AddToggleOption("Stop Enemy Territories from Attacking", optionsFixFactionAggressionToggle, 0)
 		optionsReinforcementsBaseCapital = self.AddSlideroption("Capital Reinforcements Base", CWOCapitalReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
@@ -846,6 +853,8 @@ function OnOptionHighlight(Int a_option)
 		SetInfoText("If you inadvertantly hit your teammates and incurred a bounty, click here to clear it. Please exit the MCM once clicked.")	
 	elseif a_option == optionsStopMusic
 		SetInfoText("Stops the siege music in case the CW siege music does not stop (Vanilla Bug). Close MCM after selecting.")
+	elseif a_option == optionsFixFactionAggression
+		SetInfoText("This fixes an issue where CWO is installed on an existing game and for some reason, the Player is set as an enemy to enemy towns. Ticking this will stop the disguise and set enemies to neutral. Please close the MCM after selecting.")
 	endIf
 endFunction
 
