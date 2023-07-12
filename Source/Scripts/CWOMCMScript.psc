@@ -244,10 +244,12 @@ function OnOptionSelect(Int a_option)
 	elseIf a_option == optionsCWOHelp
 		optionsCWOHelpToggle = !optionsCWOHelpToggle
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle, false)
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(10)
 	elseIf a_option == optionsCWOHelp2
 		optionsCWOHelpToggle2 = !optionsCWOHelpToggle2
 		self.SetToggleOptionValue(a_option, optionsCWOHelpToggle2, false)
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(20)
 	elseIf a_option == optionsCWOUninstall
 		optionsCWOUninstallToggle = true
@@ -349,18 +351,22 @@ function OnOptionSelect(Int a_option)
 		endif
 	elseif a_option == optionsPayCrimeFaction
 		optionstogglePayCrimeFaction = true
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(60)
 		self.SetToggleOptionValue(a_option, optionstogglePayCrimeFaction, false)
 	elseif a_option == optionsStopMusic
 		optionsStopMusicToggle = true
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(30)
 		self.SetToggleOptionValue(a_option, optionsStopMusicToggle, false)
 	elseif a_option == optionsFixFactionAggression
 		optionsFixFactionAggressionToggle = true
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(40)
 		self.SetToggleOptionValue(a_option, optionsFixFactionAggressionToggle, false)
 	elseif a_option == optionsFixWhiterunBridge
 		optionsFixWhiterunBridgeToggle = true
+		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(50)
 		self.SetToggleOptionValue(a_option, optionsFixWhiterunBridgeToggle, false)
 	endIf
@@ -456,6 +462,7 @@ event OnConfigClose()
 	optionsStopMusicToggle = false
 	optionsFixFactionAggressionToggle = false
 	optionstogglePayCrimeFaction = false
+	optionsFixWhiterunBridgeToggle = false
 endevent
 
 function OnPageReset(String a_page)
