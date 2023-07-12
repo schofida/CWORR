@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 4
+;NEXT FRAGMENT INDEX 8
 Scriptname QF_CWOApolloFixMe_0201F7E2 Extends Quest Hidden
 
 ;BEGIN FRAGMENT Fragment_2
@@ -9,6 +9,7 @@ Quest __temp = self as Quest
 CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 ;END AUTOCAST
 ;BEGIN CODE
+;Stage 20
 game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 CWScript CWs = kmyQuest.CWs
 CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
@@ -59,18 +60,13 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 ;	game.getplayer().moveto(Alias_PlayerMarker.GetReference(), 0.000000, 0.000000, 0.000000, true)
 ;	utility.wait(1 as Float)
 ;	self.setstage(20)
+
+;Stage 10
 	CWScript.Log("CWScript", "GetCWOUnstuck()")
 	game.EnablePlayercontrols(true, true, true, true, true, true, true, true, 0)
 
 	CWScript CWs = kmyQuest.CWs
 	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
-
-	Faction EnemyFaction = CWs.getPlayerAllegianceEnemyFaction(true)
-
-	if (!CWs.CWSiegeS.IsRunning() || CWs.CWSiegeS.GetStage() > 200)
-		kmyQuest.WhiterunDrawbridge.PlayGamebryoAnimation("Backward", TRUE)
-		kmyQuest.WhiterunDrawbridgeNavCollision.Disable()
-	endif
 
 	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && !CWs.WhiterunSiegeFinished && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
 		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
@@ -164,5 +160,79 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 ;END CODE
 EndFunction
 ;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_5
+Function Fragment_5()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+;Stage 40
+debug.notification("Setting enemy faction reaction to neutral")
+kmyQuest.CWs.CWCampaigns.StopDisguiseQuest(true)
+Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_6
+Function Fragment_6()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+;Stage 30
+debug.notification("Stopping Music")
+kmyQuest.CWs.CWSiegeS.MUSCombatCivilWar.remove()
+Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_7
+Function Fragment_7()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+;Stage 60
+debug.notification("Clearing Civil War Faction Crime")
+kmyQuest.CWs.CWCampaignS.cwResetCrime()
+Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_4
+Function Fragment_4()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+;Stage 50
+debug.notification("Fixing Whiterun Drawbridge")
+kmyQuest.WhiterunDrawbridge.PlayGamebryoAnimation("Backward", TRUE)
+kmyQuest.WhiterunDrawbridgeNavCollision.Disable()
+Stop()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_4
+Function Fragment_1()
+;BEGIN AUTOCAST TYPE CWOApolloFixMeScript
+Quest __temp = self as Quest
+CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
+;END AUTOCAST
+;BEGIN CODE
+;Stage 0
+;END CODE
+EndFunction
+;END FRAGMENT
+	
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment

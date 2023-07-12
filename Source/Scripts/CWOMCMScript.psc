@@ -102,6 +102,7 @@ int optionsDisableNotifications
 int optionsPayCrimeFaction
 int optionsStopMusic
 int optionsFixFactionAggression
+int optionsFixWhiterunBridge
 
 Float _sliderPercent = 100.000
 
@@ -114,6 +115,7 @@ bool optionsToggleCWWinBattle = false
 bool optionstogglePayCrimeFaction = false
 bool optionsStopMusicToggle = false
 bool optionsFixFactionAggressionToggle = false
+bool optionsFixWhiterunBridgeToggle = false
 
 String[] gameDisguiseList
 String[] holdsList
@@ -346,19 +348,21 @@ function OnOptionSelect(Int a_option)
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
 	elseif a_option == optionsPayCrimeFaction
-		if !optionstogglePayCrimeFaction
-			optionstogglePayCrimeFaction = true
-			CWs.CWCampaignS.cwResetCrime()
-			self.SetToggleOptionValue(a_option, true, false)
-		endif
+		optionstogglePayCrimeFaction = true
+		CWOApolloFixMe.SetStage(60)
+		self.SetToggleOptionValue(a_option, optionstogglePayCrimeFaction, false)
 	elseif a_option == optionsStopMusic
 		optionsStopMusicToggle = true
-		CWs.CWSiegeS.MUSCombatCivilWar.remove()
+		CWOApolloFixMe.SetStage(30)
 		self.SetToggleOptionValue(a_option, optionsStopMusicToggle, false)
 	elseif a_option == optionsFixFactionAggression
 		optionsFixFactionAggressionToggle = true
-		CWs.CWCampaigns.StopDisguiseQuest(true)
+		CWOApolloFixMe.SetStage(40)
 		self.SetToggleOptionValue(a_option, optionsFixFactionAggressionToggle, false)
+	elseif a_option == optionsFixWhiterunBridge
+		optionsFixWhiterunBridgeToggle = true
+		CWOApolloFixMe.SetStage(50)
+		self.SetToggleOptionValue(a_option, optionsFixWhiterunBridgeToggle, false)
 	endIf
 endFunction
 
@@ -451,6 +455,7 @@ event OnConfigClose()
 	optionsCWOUninstallToggle = false
 	optionsStopMusicToggle = false
 	optionsFixFactionAggressionToggle = false
+	optionstogglePayCrimeFaction = false
 endevent
 
 function OnPageReset(String a_page)
@@ -612,6 +617,7 @@ function OnPageReset(String a_page)
 		optionsPayCrimeFaction = self.AddToggleOption("Pay Faction Crimes", optionstogglePayCrimeFaction, 0)
 		optionsStopMusic = self.AddToggleOption("Stop Siege Music", optionsStopMusicToggle, 0)
 		optionsFixFactionAggression = self.AddToggleOption("Stop Enemy Territories from Attacking", optionsFixFactionAggressionToggle, 0)
+		optionsFixWhiterunBridge = self.AddToggleOption("Fix Whiterun Bridge Position", optionsFixWhiterunBridgeToggle, 0)
 		optionsReinforcementsBaseCapital = self.AddSlideroption("Capital Reinforcements Base", CWOCapitalReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseFort = self.AddSlideroption("Fort Reinforcements Base", CWOFortReinforcements.GetValueInt() as Float, "{0}", 0)
 		optionsReinforcementsBaseCity = self.AddSlideroption("Siege Reinforcements Base", CWOSiegeReinforcements.GetValueInt() as Float, "{0}", 0)
@@ -855,6 +861,8 @@ function OnOptionHighlight(Int a_option)
 		SetInfoText("Stops the siege music in case the CW siege music does not stop (Vanilla Bug). Close MCM after selecting.")
 	elseif a_option == optionsFixFactionAggression
 		SetInfoText("This fixes an issue where CWO is installed on an existing game and for some reason, the Player is set as an enemy to enemy towns. Ticking this will stop the disguise and set enemies to neutral. Please close the MCM after selecting.")
+	elseif a_option == optionsFixWhiterunBridge
+		SetInfoText("Fixes vanilla issue where the Whiterun Drawbridge is closed after the Whiterun Siege is over. Please close the MCM after selecting.")
 	endIf
 endFunction
 
