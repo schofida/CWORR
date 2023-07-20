@@ -14,12 +14,18 @@ registerPatcher({
             const cwoFileName = 'Civil War Overhaul.esp';
             const cwoFile = xelib.FileByName(cwoFileName);
             const skyrimFile = xelib.FileByName('Skyrim.esm');
-            let cwoLCharSoldierImperial = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierImperial"));
-            let cwoLCharSoldierSons = xelib.GetWinningOverride(xelib.GetElement(cwoFile, "CWOLCharSoldierSons"));
-            if (xelib.GetFileName(xelib.GetElementFile(cwoLCharSoldierImperial)) === 'zPatch.esp') {
-                cwoLCharSoldierImperial = xelib.GetPreviousOverride(cwoLCharSoldierImperial, xelib.GetElementFile(cwoLCharSoldierImperial));
-                cwoLCharSoldierSons = xelib.GetPreviousOverride(cwoLCharSoldierSons, xelib.GetElementFile(cwoLCharSoldierSons));
-            }
+            let cwoLCharSoldierImperial = xelib.GetElement(cwoFile, "CWOLCharSoldierImperial");
+            xelib.GetOverrides(cwoLCharSoldierImperial).forEach(override => {
+                if (xelib.GetFileName(xelib.GetElementFile(override)) !== 'zPatch.esp') {
+                    cwoLCharSoldierImperial = override;
+                }
+            });
+            let cwoLCharSoldierSons = xelib.GetElement(cwoFile, "CWOLCharSoldierSons");
+            xelib.GetOverrides(cwoLCharSoldierSons).forEach(override => {
+                if (xelib.GetFileName(xelib.GetElementFile(override)) !== 'zPatch.esp') {
+                    cwoLCharSoldierSons = override;
+                }
+            });
             const LCharSoldierImperial = xelib.GetElement(skyrimFile, "0001FC5B");
             const LCharSoldierSons = xelib.GetElement(skyrimFile, "0001FC5C");
 
@@ -67,6 +73,9 @@ registerPatcher({
                     const level = patcherSettings.troopConfig[tab] && 
                         patcherSettings.troopConfig[tab][name] ? patcherSettings.troopConfig[tab][name].level : oldLevel;
                     const reference = xelib.LongName(xTroop);
+                    if (patcherSettings.troopConfig[tab][name] && patcherSettings.troopConfig[tab][name].reference !== reference) {
+                        patcherSettings.troopConfig[tab][name].reference = reference;
+                    }
                     const troop = {
                         reference,
                         display: xelib.FullName(xTroop) ?  xelib.FullName(xTroop) : name,
@@ -220,7 +229,9 @@ registerPatcher({
                         return;
                     }
                     for (let i = 0;i<cwoRefs[key].count;i++) {
-                        xelib.AddLeveledEntry(record, cwoRefs[key].reference, cwoRefs[key].level + '', '1');
+                        const file = xelib.FileByName(cwoRefs[key].file);
+                        const element = xelib.GetElement(file, key);
+                        xelib.AddLeveledEntry(record, xelib.LongName(element), cwoRefs[key].level + '', '1');
                     }
                 })
             }
