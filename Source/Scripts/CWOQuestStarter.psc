@@ -18,6 +18,12 @@ ReferenceAlias Property PlayerAlias Auto
 Actor Property CWFieldCOImperialHaafingar Auto
 Actor Property CWFieldCOSonsEastmarch Auto
 Actor Property CWFieldCOImperialHjaalmarchCapital Auto
+Spell Property CWO_XBOX_Debug_Spell Auto
+Spell Property CWO_XBOX_NPCFix_Spell Auto
+Spell Property CWO_XBOX_BridgeFix_Spell Auto
+Spell Property CWO_XBOX_MusicFix_Spell Auto
+Spell Property CWO_XBOX_QuestFix_Spell Auto
+
 
 
 Event OnInit()
@@ -62,6 +68,15 @@ Event OnInit()
 	;CWO - Promotions/Rewards happen very differently. Remove from all reward factions
 	CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.UlfricRef)
 	CWs.CWCampaignS.RemoveGeneralFromRewardFaction(CWs.GeneralTulliusRef)
+	;CWO - For Xbox users, add spell to fix things since MCM is not a thing
+	if SKSE.GetVersionRelease() > 0
+	else
+		Game.GetPlayer().AddSpell(CWO_XBOX_BridgeFix_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBOX_Debug_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBOX_MusicFix_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBOX_QuestFix_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBOX_NPCFix_Spell)
+	endif
 	;That's it for now...
     Debug.Notification("CWO version " + CWOVersion.GetValueInt() + " initialized :)")
 endevent

@@ -430,7 +430,18 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10017)	
 	endif
 	if currentVersion < 10018
-		CWOVersion.SetValueInt(10018)	
+		CWOVersion.SetValueInt(10018)
+	endif
+	if currentVersion < 10019
+		CWOVersion.SetValueInt(10019)
+		if SKSE.GetVersionRelease() > 0
+		else
+			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_BridgeFix_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_Debug_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_MusicFix_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_QuestFix_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_NPCFix_Spell)
+		endif	
 	endif
 	registerforsingleupdate(30)
 endfunction
