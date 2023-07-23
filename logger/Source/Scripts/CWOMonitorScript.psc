@@ -62,8 +62,10 @@ State WaitingToStartNewCampaign
 				GoToState("WaitingToFinishWar")
 				if cws.PlayerAllegiance == cws.iImperials
 					cws.CWContestedHold.setValueInt(cws.iEastmarch)
+					cws.ContestedHold = cws.iEastMarch
 				Else
 					cws.CWContestedHold.SetValueInt(cws.iHaafingar)
+					cws.ContestedHold = cws.iHaafingar
 				endif
 				cws.CWAttacker.value = cws.PlayerAllegiance
 				cws.CWDefender.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
@@ -85,6 +87,7 @@ State WaitingToStartNewCampaign
 					contestedHold = cws.iEastMarch
 				endif
 				cws.CWContestedHold.setValueInt(contestedHold)
+				cws.ContestedHold = contestedHold
 				cws.CWAttacker.value = cws.getOppositeFactionInt(cws.PlayerAllegiance)
 				cws.CWDefender.value = cws.PlayerAllegiance
 
@@ -442,6 +445,11 @@ function DoPlayerLoadGameStuff()
 			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_QuestFix_Spell)
 			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_NPCFix_Spell)
 		endif	
+	endif
+	if currentVersion < 10020
+		if !cws.WhiterunSiegeFinished
+			cws.contestedHold = 0
+		endif
 	endif
 	registerforsingleupdate(30)
 endfunction

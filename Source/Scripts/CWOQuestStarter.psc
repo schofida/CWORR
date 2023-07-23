@@ -55,7 +55,6 @@ Event OnInit()
 		;CWO - War has not started yet. Set initial variables. Stormcloaks attacking, 
 		;imperials defending, Whiterun is first hold
 		CWS.CWContestedHold.SetValueInt(4)
-		cws.ContestedHold = 4
 		CWS.CWAttacker.SetValueInt(2)
 		CWs.CWDefender.SetValueInt(1)
 	else

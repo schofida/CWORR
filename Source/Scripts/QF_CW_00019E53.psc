@@ -278,6 +278,8 @@ kmyQuest.CWCampaignS.StopDisguiseQuest(true)
 
 kmyQuest.CWCampaignS.SetMonitorDoNothing()
 kmyQuest.CWCampaign.stop()
+
+kmyQuest.ContestedHold = 0
 ;		;If player's side is attacking "FAIL" the CWCampaign, if player's side is defending "COMPLETE" the CWCampaign
 ;		if playerAllegiance == Attacker
 ;			CWCampaignObj.setStage(300)

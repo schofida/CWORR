@@ -823,6 +823,7 @@ else		;assume windhelm
 
 
 endif
+kmyQuest.CWs.ContestedHold = 0
 ;END CODE
 EndFunction
 ;END FRAGMENT
