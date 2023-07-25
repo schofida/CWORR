@@ -447,6 +447,7 @@ function DoPlayerLoadGameStuff()
 		endif	
 	endif
 	if currentVersion < 10020
+		CWOVersion.SetValueInt(10020)
 		if !cws.WhiterunSiegeFinished
 			cws.contestedHold = 0
 		endif
