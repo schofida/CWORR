@@ -1954,6 +1954,8 @@ function cwResetCrime()
 	CWs.CrimeFactionImperial.SetCrimeGoldViolent(0)
 	CWs.CrimeFactionSons.SetCrimeGold(0)
 	CWs.CrimeFactionSons.SetCrimeGoldViolent(0)
+	;schofida - also hopefully clears getting attacked by the Field CO :(
+	CWs.ClearActorsEnemyFlagOnCrimeFactions(Cws.GetRikkeOrGalmar())
 endfunction
 
 function StartDefense(Location CityFortOrGarrison)
