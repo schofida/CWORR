@@ -459,6 +459,9 @@ kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
+;schofida - Stop battle music happens in 200/205 but some users are still getting the Infinite Music Bug
+kmyQuest.MUSCombatCivilWar.Remove()
+
 kmyquest.CWStateAttackStarted.SetValue(0)
 kmyQuest.CWStateAttackerOutOfReinforcements.SetValue(0)
 kmyquest.CWStateDefenderOutOfReinforcements.SetValue(0)
