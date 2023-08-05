@@ -267,6 +267,9 @@ Function Fragment_1()
 
     kmyQuest.SetObjectiveDisplayed(10)
 
+	;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
+
     if (Alias_ResourceObject1.GetReference().GetBaseObject() As Furniture == kmyQuest.CWs.CWCampaignS.ResourceObjectMine)
         OldSmelter = Alias_ResourceObject1.GetReference()
         OldSmelter.Disable()

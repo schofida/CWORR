@@ -197,6 +197,9 @@ debug.traceConditional("CWMission06 stage 10", kmyquest.CWs.debugon.value)
 
 kmyQuest.FlagFieldCOWithActiveQuestFaction(6)
 
+;schofida - Set quest as active on the map so player knows where to meet the troops
+kmyQuest.setActive()
+
 kmyQuest.EnableMapMarkerAlias(Alias_CWCampEnemyMapMarker)
 
 if kmyquest.cws.playerAllegiance == kmyquest.cws.iImperials

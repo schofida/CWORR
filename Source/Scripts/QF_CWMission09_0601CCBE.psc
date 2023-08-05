@@ -75,6 +75,9 @@ Function Fragment_1()
     ;END AUTOCAST
     ;BEGIN CODE
     debug.traceConditional("CWMission09 stage 10", kmyquest.CWs.debugon.value)
+
+    ;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
     
     kmyQuest.FlagFieldCOWithActiveQuestFaction(9)
     

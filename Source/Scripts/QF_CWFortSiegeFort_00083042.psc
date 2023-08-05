@@ -1831,6 +1831,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 &&  ((
 
 	Alias_MapMarker.GetReference().addToMap()
 
+	;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
+
 elseif  ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 	((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(MissionType = 50)
 

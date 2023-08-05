@@ -202,6 +202,9 @@ debug.traceConditional("CWMission05 stage 10", kmyquest.CWs.debugon.value)
 	self.SetObjectiveDisplayed(10, 1 as Bool, false)
 	;Reddit Bugfix #5
 
+	;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
+
 	Alias_EnemyFieldCO.TryToEnable()
 	if Alias_EnemyFieldCOCamp.GetReference() != none
 		Alias_EnemyCampEnable.TryToEnable()

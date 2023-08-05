@@ -1613,6 +1613,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((s
 	Alias_Jarl.TryToDisable()
 	Alias_HouseCarl.TryToDisable()
 
+	;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
+	
 endif
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1

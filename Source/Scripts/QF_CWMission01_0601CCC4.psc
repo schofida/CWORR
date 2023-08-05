@@ -228,6 +228,9 @@ kmyQuest.EnableMapMarkerAlias(Alias_MapMarkerGarrison)
 
 setObjectiveDisplayed(10)
 
+;schofida - Set quest as active on the map so player knows where to meet the troops
+kmyQuest.setActive()
+
 ;<TurnOnAliases>------------------
 kmyQuest.TurnOnAllyAliases()
 
