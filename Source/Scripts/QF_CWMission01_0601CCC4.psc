@@ -269,7 +269,7 @@ setObjectiveCompleted(10)
 setObjectiveDisplayed(20)
 
 kmyquest.CWStateAttackStarted.SetValue(1)
-kmyQuest.MUSCombatCivilWar.Add()
+kmyQuest.CWOMUSCombatCWMission01.Add()
 
 kmyQuest.CWs.CWCampaignS.StartMonitors(kmyQuest)
 kmyQuest.CWs.CWCampaignS.StopDisguiseQuest()
@@ -353,7 +353,7 @@ SiegeFinished = true
 ;Successfully complete quest
 CWScript.Log("CWMission01QuestFragment", self + "Stage 200" )
 
-kmyQuest.MUSCombatCivilWar.Remove()
+kmyQuest.CWOMUSCombatCWMission01.Remove()
 
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
 
@@ -405,7 +405,7 @@ SiegeFinished = true
 ;Fail quest
 CWScript.Log("CWMission01QuestFragment", self + "Stage 205" )
 bool PlayerIsAttacking = kmyQuest.CWs.CWAttacker.GetValueInt() == kmyQuest.CWs.playerAllegiance
-kmyQuest.MUSCombatCivilWar.Remove()
+kmyQuest.CWOMUSCombatCWMission01.Remove()
 
 if PlayerIsAttacking
     kmyQuest.DefendersHaveWon = true
@@ -463,7 +463,7 @@ kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
 ;schofida - Stop battle music happens in 200/205 but some users are still getting the Infinite Music Bug
-kmyQuest.MUSCombatCivilWar.Remove()
+kmyQuest.CWOMUSCombatCWMission01.Remove()
 
 kmyquest.CWStateAttackStarted.SetValue(0)
 kmyQuest.CWStateAttackerOutOfReinforcements.SetValue(0)

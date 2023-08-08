@@ -13,6 +13,8 @@ GlobalVariable Property CWOGarrisonReinforcements Auto
 
 ObjectReference Property EnemySpawnMarker Auto
 
+MusicType Property CWOMUSCombatCWMission01 Auto
+
 ;"Array" of aliases
 ;rather than declaring these again on all siege scripts, we will create a function that the quest fragment can pass in the Alias_XXX aliases and put them in the "array"
 
