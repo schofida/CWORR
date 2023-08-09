@@ -452,5 +452,8 @@ function DoPlayerLoadGameStuff()
 			cws.contestedHold = 0
 		endif
 	endif
+	if currentVersion < 10021
+		CWOVersion.SetValueInt(10021)
+	endif
 	registerforsingleupdate(30)
 endfunction

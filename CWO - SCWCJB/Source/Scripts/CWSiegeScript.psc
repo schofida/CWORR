@@ -1520,9 +1520,6 @@ CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 
 CWs.CWSiegeObj.setStage(9000)
 
-CWs.CWCampaignS.StartDisguiseQuest()
-CWs.CWCampaignS.StartCWOBAControllerQuest()
-
 if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCampaignS.CWOSpanishInquisitionPhase.GetValueInt() == 2
 
 	;schofida - Player is defender and defender won. Now the player can attak
@@ -1548,6 +1545,10 @@ if !CWs.CWCampaign.IsRunning() || !CWs.CWCampaign.GetStageDone(200) || CWs.CWCam
 	;endwhile
 	;stop()
 endif
+
+CWs.CWCampaignS.StartDisguiseQuest()
+CWs.CWCampaignS.StartCWOBAControllerQuest()
+
 CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), false, true)
 
 CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()
@@ -1575,9 +1576,6 @@ CWs.CWStateAttackerOutOfReinforcements.SetValue(1)
 
 CWs.CWSiegeObj.setStage(9000)
 
-CWs.CWCampaignS.StartDisguiseQuest()
-CWs.CWCampaignS.StartCWOBAControllerQuest()
-
 ;schofida - Player is attacker and attacker won. Now the player can attak
 CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
 
@@ -1587,6 +1585,9 @@ CWs.CompleteCWObj(Hold.GetLocation())
 CWs.ClearHoldCrimeGold(Hold.GetLocation())
 
 CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
+
+CWs.CWCampaignS.StartDisguiseQuest()
+CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
 cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())

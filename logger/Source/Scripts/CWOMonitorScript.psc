@@ -446,11 +446,14 @@ function DoPlayerLoadGameStuff()
 			Game.GetPlayer().AddSpell((GetOwningQuest() AS CWOQuestStarter).CWO_XBOX_NPCFix_Spell)
 		endif	
 	endif
-	if currentVersion < 
+	if currentVersion < 10020
 		CWOVersion.SetValueInt(10020)
 		if !cws.WhiterunSiegeFinished
 			cws.contestedHold = 0
 		endif
+	endif
+	if currentVersion < 10021
+		CWOVersion.SetValueInt(10021)
 	endif
 	registerforsingleupdate(30)
 endfunction
