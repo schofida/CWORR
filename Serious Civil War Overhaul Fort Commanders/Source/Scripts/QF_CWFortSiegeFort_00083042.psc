@@ -1688,6 +1688,8 @@ endif
 
 kmyquest.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
+;schofida - Stop battle music happens in 1000/2000 but some users are still getting the Infinite Music Bug
+kmyQuest.MUSCombatCivilWar.Remove()
 
 CWScript.Log("CWFortSiege", "Stage 9999: temporarily enabling map markers until I have a function to turn off fast travel or move the marker that you fast travel to")
 ; debug.trace("TEMP: Enabling Map marker, until I can disable/enable fast travel or move heading marker.")
@@ -1885,6 +1887,9 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 &&  ((
 	((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(MissionType = 99)
 
 	Alias_MapMarker.GetReference().addToMap()
+
+	;schofida - Set quest as active on the map so player knows where to meet the troops
+	kmyQuest.setActive()
 
 elseif  ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 	((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(MissionType = 50)
