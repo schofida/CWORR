@@ -81,6 +81,7 @@ Int optionsPlayerDefenderScaleMult
 Int optionsEnemyAttackerScaleMult
 Int optionsEnemyDefenderScaleMult
 Int optionsWinWar
+Int optionsSwitchHold
 Int optionsWinHold
 Int optionsBAChance
 int optionsDisguiseGameType
@@ -643,7 +644,8 @@ function OnPageReset(String a_page)
 		optionsDisableFaint = self.AddToggleOption("Disable Player 'Bleedout':", CWODisableFaint.GetValueInt() == 1, 0)
 		optionsStartSiege = self.AddMenuOption("Force campaign here:", " ", 0)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
-		optionsWinHold = self.AddMenuOption("Switch sides here:", " ", 0)
+		optionsWinHold = self.AddMenuOption("Win Hold here:", " ", 0)
+		optionsSwitchHold = self.AddMenuOption("Switch sides here:", " ", 0)
 		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
 		if CWs.CWCampaignS.CWMission01.IsRunning() || CWs.CWCampaignS.CWMission02.IsRunning()  || CWs.CWCampaignS.CWMission08Quest.IsRunning()
@@ -735,6 +737,10 @@ function OnOptionMenuOpen(Int a_option)
 		self.SetMenuDialogStartIndex(0)
 		self.SetMenuDialogDefaultIndex(0)
 		self.SetMenuDialogOptions(holdsList)
+	elseif a_option == optionsSwitchHold
+		self.SetMenuDialogStartIndex(0)
+		self.SetMenuDialogDefaultIndex(0)
+		self.SetMenuDialogOptions(holdsList)
 	elseif a_option == optionsWinHold
 		self.SetMenuDialogStartIndex(0)
 		self.SetMenuDialogDefaultIndex(0)
@@ -766,7 +772,7 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		endif
 		CWs.CWDebugForceHold.SetValueInt(holdID)
 		Debug.Notification("Setting next campaign hold to " + holdsList[a_index])
-	elseIf a_option == optionsWinHold
+	elseIf a_option == optionsSwitchHold
 		int holdID = holdsID[a_index]
 		if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
 			Debug.Notification("You are on the final contested hold. switch owners.")
@@ -777,6 +783,14 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 		else
 			Debug.Notification("Switching owner of " + holdsList[a_index])
 			CWS.SetHoldOwnerByInt(holdID, CWs.getOppositeFactionInt(CWs.GetHoldOwner(holdID)))
+		endif
+	elseIf a_option == optionsWinHold
+		int holdID = holdsID[a_index]
+		if CWS.CWcontestedHold.GetValueInt() == holdID
+			CompleteRunningCampaign(true)
+		else
+			Debug.Notification("Winning hold of " + holdsList[a_index])
+			CWS.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.getLocationForHold(holdID),CWs.GetHoldOwner(holdID) != CWs.PlayerAllegiance, CWs.GetHoldOwner(holdID) == CWs.PlayerAllegiance)
 		endif
 	elseif a_option == optionsDisguiseGameType
 		CWODisguiseGameType.SetValueInt(a_index)
@@ -828,8 +842,10 @@ function OnOptionHighlight(Int a_option)
 		self.SetInfoText("Starts a campaign at a hold of your choice. Use this if you are not getting a quest from the general. Please close MCM after selecting.")
 	elseif a_option == optionsWinSiege
 		self.SetInfoText("Wins a fort or major/minor capital siege already in progress. Use this if the siege did not finish for some reason. Please do not use this at the battle of Solitude or Windhelm. Please close MCM after selecting.")
-	elseif a_option == optionsWinHold
+	elseif a_option == optionsSwitchHold
 		self.SetInfoText("Toggles a hold ownership of your choice. This might not work for the hold currently in progress. Please close MCM after selecting.")
+	elseif a_option == optionsWinHold
+		self.SetInfoText("Wins a hold of your choice. This should only be used if you own a hold but the Jarl nor troops left. Please close MCM after selecting. Everything changing hands can take some time (like it usuallly does).")
 	elseif a_option == optionsCWOHelp
 		self.SetInfoText("Attempts to move a CWO quest along in case something is stuck. Please close MCM after selecting.")
 	elseif a_option == optionsCWOHelp2
