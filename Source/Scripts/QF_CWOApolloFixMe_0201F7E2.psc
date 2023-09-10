@@ -75,6 +75,13 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 		Stop()
 		Return
     endif
+	if CWs.WhiterunSiegeFinished && kmyQuest.CW.IsRunning() && CWCampaignS.GetMonitorState() == "DoNothing" ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
+		CWScript.Log("CWScript", self + "GetCWOUnstuck() CWs.WhiterunSiegeFinished && kmyQuest.CW.IsRunning() && CWCampaignS.GetMonitorState() == 'DoNothing'")
+		debug.notification("CW03 Never started CWO Monitor. Let's get er goin..")
+		CWs.CWCampaignS.SetMonitorWaitingToStartCampaign()
+		Stop()
+		Return
+    endif
 	if CWs.WarIsActive == 1 && CWs.CWCampaign.IsRunning() && CWs.CWCampaign.GetStage() == 0
 		debug.notification("Conversation with General did not trigger Campaign to start. Setting CW Stage to 4")
 		CWs.SetStage(4)
