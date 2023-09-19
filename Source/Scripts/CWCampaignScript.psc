@@ -2013,6 +2013,16 @@ function CWOImperialsWin()
 	CWs.SetOwnerPale(CWs.iImperials, false)
 	CWs.SetOwnerWinterhold(CWs.iImperials, false)
 	CWs.SetOwnerEastmarch(CWs.iImperials, false)
+	CWs.CWFinaleStart.SendStoryEvent(CWs.WindhelmLocation)
+	int waiting = 0
+	while !CWs.CWFinale.IsRunning() || waiting >= 30
+		utility.Wait(1)
+		waiting = waiting + 1
+	endWhile
+	if waiting >= 30
+		debug.notification("Was not able to start the finale quest. Please notify the mod author")
+		return
+	endif
 	ResolveCivilWarOffscreen()
 endFunction
 
@@ -2026,6 +2036,16 @@ function CWOStormcloaksWin()
 	CWs.SetOwnerPale(CWs.iSons, false)
 	CWs.SetOwnerWinterhold(CWs.iSons, false)
 	CWs.SetOwnerEastmarch(CWs.iSons, false)
+	CWs.CWFinaleStart.SendStoryEvent(CWs.SolitudeLocation)
+	int waiting = 0
+	while !CWs.CWFinale.IsRunning() || waiting >= 30
+		utility.Wait(1)
+		waiting = waiting + 1
+	endWhile
+	if waiting >= 30
+		debug.notification("Was not able to start the finale quest. Please notify the mod author")
+		return
+	endif
 	ResolveCivilWarOffscreen()
 endFunction
 

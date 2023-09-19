@@ -107,7 +107,6 @@ int optionsFixWhiterunBridge
 
 Float _sliderPercent = 100.000
 
-Bool optionWinWarToggle = false
 Bool optionsCWOHelpToggle = false
 Bool optionsCWOHelpToggle2 = false
 Bool optionsCWOUninstallToggle = false
@@ -122,6 +121,7 @@ String[] gameDisguiseList
 String[] holdsList
 Int[] holdsID
 String[] campaignPhaseChoices
+String [] gameFactions
 
 string CWOCampaignPhaseMaxVal = ""
 ;-- Functions ---------------------------------------
@@ -230,15 +230,7 @@ endFunction
 function OnOptionSelect(Int a_option)
 {Called when the user selects a non-dialog option}
 
-	if a_option == optionsWinWar
-		optionWinWarToggle = !optionWinWarToggle
-		self.SetToggleOptionValue(a_option, optionWinWarToggle, false)
-		if CWs.PlayerAllegiance == 1
-			CWs.CWCampaignS.CWOImperialsWin()
-		else
-			CWs.CWCampaignS.CWOStormcloaksWin()
-		endIf
-	elseIf a_option == optionsWinSiege
+	If a_option == optionsWinSiege
 		optionsToggleCWWinBattle = !optionsToggleCWWinBattle
 		self.SetToggleOptionValue(a_option, optionsToggleCWWinBattle, false)
 		CompleteRunningCampaign()
@@ -454,7 +446,6 @@ function OnOptionColorOpen(Int a_option)
 endFunction
 
 event OnConfigClose()
-	optionWinWarToggle = false
 	optionsCWOHelpToggle = false
 	optionsCWOHelpToggle2 = false
 	SetReinforcementsBusy = False
@@ -646,7 +637,7 @@ function OnPageReset(String a_page)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
 		optionsWinHold = self.AddMenuOption("Win Hold here:", " ", 0)
 		optionsSwitchHold = self.AddMenuOption("Switch sides here:", " ", 0)
-		optionsWinWar = self.AddToggleOption("Win the war", optionWinWarToggle, 0)
+		optionsWinWar = self.AddMenuOption("Win the war", " ", 0)
 		optionsCWOHelp = self.AddToggleOption("Help get quests unstuck", optionsCWOHelpToggle, 0)
 		if CWs.CWCampaignS.CWMission01.IsRunning() || CWs.CWCampaignS.CWMission02.IsRunning()  || CWs.CWCampaignS.CWMission08Quest.IsRunning()
 			optionsCWOHelp2 = self.AddToggleOption("Help get additional CW Missions unstuck", optionsCWOHelpToggle2, 0)
@@ -714,6 +705,10 @@ function OnConfigInit()
 	campaignPhaseChoices[1] = 3
 	campaignPhaseChoices[2] = 5
 
+	gameFactions = new String[3]
+	gameFactions[0] = "Cancel"
+	gameFactions[1] = "Imperials"
+	gameFactions[2] = "Stormcloaks"
 endFunction
 
 function OnOptionColorAccept(Int a_option, Int a_color)
@@ -749,13 +744,28 @@ function OnOptionMenuOpen(Int a_option)
 		self.SetMenuDialogStartIndex(CWODisguiseGameType.GetValueInt())
 		self.SetMenuDialogDefaultIndex(CWODisguiseGameType.GetValueInt())
 		self.SetMenuDialogOptions(gameDisguiseList)
+	elseif a_option == optionsWinWar
+		self.SetMenuDialogStartIndex(0)
+		self.SetMenuDialogDefaultIndex(0)
+		self.SetMenuDialogOptions(gameFactions)		
 	endIf
 endFunction
 
 function OnOptionMenuAccept(Int a_option, Int a_index)
 {Called when the user accepts a new menu entry}
 
-	if a_option == optionsCampaignPhaseMax
+
+	if a_option == optionsWinWar
+		if a_index == CWs.iImperials
+			debug.notification("Winning the war for the imperials")
+			CompleteRunningCampaign()
+			CWs.CWCampaignS.CWOImperialsWin()
+		elseif a_index == CWs.iSons
+			debug.notification("Winning the war for the imperials")
+			CompleteRunningCampaign()
+			CWs.CWCampaignS.CWOStormcloaksWin()
+		endif
+	elseif a_option == optionsCampaignPhaseMax
 		CWOCampaignPhaseMax.SetValueInt(campaignPhaseChoices[a_index] as int)
 		CWOCampaignPhaseMaxVal = campaignPhaseChoices[a_index]
 		CWs.CWCampaignS.ResolutionPhase = CWOCampaignPhaseMaxVal as int
@@ -963,6 +973,10 @@ function UninstallCWO()
 endfunction
 
 function CompleteRunningCampaign(bool failQuests = false)
+	if !CWs.WhiterunSiegeFinished
+		debug.notification("No campaigns running")
+		return	
+	endif
 	debug.notification("Completing Missions if there any running")
 	CWs.CWCampaignS.CompleteCWMissions(failQuests)
 	debug.notification("Starting Hold Siege")
