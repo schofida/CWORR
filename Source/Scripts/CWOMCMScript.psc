@@ -758,10 +758,40 @@ function OnOptionMenuAccept(Int a_option, Int a_index)
 	if a_option == optionsWinWar
 		if a_index == CWs.iImperials
 			debug.notification("Winning the war for the imperials")
+			if !CWs.CW01A.isrunning()
+				CWs.CW01A.SetStage(1)
+			endif
+			CWs.CW01A.SetStage(200)
+
+			if !(CWs.CW01A as CW01Script).CW02A.isrunning()
+				(CWs.CW01A as CW01Script).CW02A.SetStage(10)
+			endif
+			(CWs.CW01A as CW01Script).CW02A.SetStage(200)
+		
+			if !CWs.CW03.isrunning()
+				CWs.CW03.SetStage(10)
+			endif
+			CWs.CW03.SetStage(255)
+
 			CompleteRunningCampaign()
 			CWs.CWCampaignS.CWOImperialsWin()
 		elseif a_index == CWs.iSons
 			debug.notification("Winning the war for the imperials")
+			if !CWs.CW01B.isrunning()
+				CWs.CW01B.SetStage(1)
+			endif
+			CWs.CW01B.SetStage(200)
+
+			if !(CWs.CW01B as CW01BScript).CW02B.isrunning()
+				(CWs.CW01B as CW01BScript).CW02B.SetStage(10)
+			endif
+			(CWs.CW01B as CW01BScript).CW02B.SetStage(200)
+		
+			if !CWs.CW03.isrunning()
+				CWs.CW03.SetStage(10)
+			endif
+			CWs.CW03.SetStage(255)
+
 			CompleteRunningCampaign()
 			CWs.CWCampaignS.CWOStormcloaksWin()
 		endif

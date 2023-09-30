@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 26
+;NEXT FRAGMENT INDEX 27
 Scriptname QF_CWFinale_000D1444 Extends Quest Hidden
 
 ;BEGIN ALIAS PROPERTY CrowdMarker5
@@ -676,7 +676,9 @@ if !kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand()
 	kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4102)
 
 	;COMPLETE THE SIEGE QUEST
+	if kmyquest.CWs.CWSiegeObj.IsRunning()
 	kmyquest.CWs.CWSiegeObj.setStage(9000)
+	endif
 elseif kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand() && kmyQuest.DefenseSuccessful
 	;COMPLETE THE SIEGE QUEST
 	kmyquest.CWs.CWSiegeObj.SetObjectiveCompleted(4200)
@@ -687,12 +689,11 @@ elseif kmyQuest.cws.cwcampaigns.PlayerAllegianceLastStand() && kmyQuest.DefenseS
 else
 	;COMPLETE THE SIEGE QUEST
 	kmyquest.CWs.CWSiegeObj.setStage(8999)
-	if !Game.GetPlayer().IsInLocation(Alias_Location.GetLocation())
-		SetStage(340)
-	endif
 endif
 
-if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
+if !Game.GetPlayer().IsInLocation(Alias_Location.GetLocation())
+	SetStage(340)
+elseif Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation
 
 	kmyquest.CWFinaleSolitudeSceneC.Start()
 
@@ -737,10 +738,8 @@ endif
 
 if kmyquest.CWs.PlayerAllegiance == 1 ;player is imperial
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4001)	;force Ulfric to surrender
-	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListImperial
 else
 	kmyquest.CWs.CWSiegeObj.SetObjectiveDisplayed(4002)	;force Tullius to surrender
-	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListSons
 endif
 
 ;END CODE
@@ -928,6 +927,22 @@ Alias_EnemyLeader.GetActorReference().SetCrimeFaction(None)
 Alias_EnemySecond.GetActorReference().SetCrimeFaction(None)
 
 sound.StopInstance(kmyQuest.CWFortSiegeS.AMBDistantBattleSoundInstance)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_26
+Function Fragment_26()
+;BEGIN AUTOCAST TYPE CWFinaleScript
+Quest __temp = self as Quest
+CWFinaleScript kmyQuest = __temp as CWFinaleScript
+;END AUTOCAST
+;BEGIN CODE
+if Alias_Location.GetLocation() == kmyquest.CWs.SolitudeLocation ;player is imperial
+	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListSons
+else
+	kmyquest.CWFinaleFactionLeaderSwordList = (kmyQuest.CWs.CWCampaignS.CWOMonitorQuest as CWOQuestStarter).CWOFinaleFactionLeaderSwordListImperial
+endif
 ;END CODE
 EndFunction
 ;END FRAGMENT

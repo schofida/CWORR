@@ -458,5 +458,8 @@ function DoPlayerLoadGameStuff()
 	if currentVersion < 10022
 		CWOVersion.SetValueInt(10022)
 	endif
+	if currentVersion < 10023
+		CWOVersion.SetValueInt(10023)
+	endif
 	registerforsingleupdate(30)
 endfunction

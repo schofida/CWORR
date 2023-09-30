@@ -2004,15 +2004,16 @@ function NoMoreDragonTime()
 endfunction
 
 function CWOImperialsWin()
-
-	CWs.SetOwnerHaafingar(CWs.iImperials, false)
-	CWs.SetOwnerHjaalmarch(CWs.iImperials, false)
-	CWs.SetOwnerReach(CWs.iImperials, false)
-	CWs.SetOwnerFalkreath(CWs.iImperials, false)
-	CWs.SetOwnerWhiterun(CWs.iImperials, false)
-	CWs.SetOwnerPale(CWs.iImperials, false)
-	CWs.SetOwnerWinterhold(CWs.iImperials, false)
-	CWs.SetOwnerEastmarch(CWs.iImperials, false)
+	debug.notification("CWOImperialsWin")
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.haafingarholdlocation,CWs.GetHoldOwner(1) != CWs.iImperials, CWs.GetHoldOwner(1) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.HjaalmarchHoldLocation,CWs.GetHoldOwner(3) != CWs.iImperials, CWs.GetHoldOwner(3) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.ReachHoldLocation,CWs.GetHoldOwner(2) != CWs.iImperials, CWs.GetHoldOwner(2) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.FalkreathHoldLocation,CWs.GetHoldOwner(5) != CWs.iImperials, CWs.GetHoldOwner(5) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.WhiterunHoldLocation,CWs.GetHoldOwner(4) != CWs.iImperials, CWs.GetHoldOwner(4) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.PaleHoldLocation,CWs.GetHoldOwner(6) != CWs.iImperials, CWs.GetHoldOwner(6) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.RiftHoldLocation,CWs.GetHoldOwner(9) != CWs.iImperials, CWs.GetHoldOwner(9) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.WinterholdHoldLocation,CWs.GetHoldOwner(7) != CWs.iImperials, CWs.GetHoldOwner(7) == CWs.iImperials)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.EastmarchHoldLocation,CWs.GetHoldOwner(8) != CWs.iImperials, CWs.GetHoldOwner(8) == CWs.iImperials)
 	CWs.CWFinaleStart.SendStoryEvent(CWs.WindhelmLocation)
 	int waiting = 0
 	while !CWs.CWFinale.IsRunning() || waiting >= 30
@@ -2027,15 +2028,17 @@ function CWOImperialsWin()
 endFunction
 
 function CWOStormcloaksWin()
+	debug.notification("CWOStormcloaksWin")
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.EastmarchHoldLocation,CWs.GetHoldOwner(8) != CWs.iSons, CWs.GetHoldOwner(8) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.WinterholdHoldLocation,CWs.GetHoldOwner(7) != CWs.iSons, CWs.GetHoldOwner(7) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.RiftHoldLocation,CWs.GetHoldOwner(9) != CWs.iSons, CWs.GetHoldOwner(9) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.PaleHoldLocation,CWs.GetHoldOwner(6) != CWs.iSons, CWs.GetHoldOwner(6) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.WhiterunHoldLocation,CWs.GetHoldOwner(4) != CWs.iSons, CWs.GetHoldOwner(4) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.FalkreathHoldLocation,CWs.GetHoldOwner(5) != CWs.iSons, CWs.GetHoldOwner(5) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.ReachHoldLocation,CWs.GetHoldOwner(2) != CWs.iSons, CWs.GetHoldOwner(2) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.HjaalmarchHoldLocation,CWs.GetHoldOwner(3) != CWs.iSons, CWs.GetHoldOwner(3) == CWs.iSons)
+	CWs.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.haafingarholdlocation,CWs.GetHoldOwner(1) != CWs.iSons, CWs.GetHoldOwner(1) == CWs.iSons)
 
-	CWs.SetOwnerHaafingar(CWs.iSons, false)
-	CWs.SetOwnerHjaalmarch(CWs.iSons, false)
-	CWs.SetOwnerReach(CWs.iSons, false)
-	CWs.SetOwnerFalkreath(CWs.iSons, false)
-	CWs.SetOwnerWhiterun(CWs.iSons, false)
-	CWs.SetOwnerPale(CWs.iSons, false)
-	CWs.SetOwnerWinterhold(CWs.iSons, false)
-	CWs.SetOwnerEastmarch(CWs.iSons, false)
 	CWs.CWFinaleStart.SendStoryEvent(CWs.SolitudeLocation)
 	int waiting = 0
 	while !CWs.CWFinale.IsRunning() || waiting >= 30

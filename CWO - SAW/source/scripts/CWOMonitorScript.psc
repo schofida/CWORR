@@ -456,6 +456,9 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10021)
 	endif
 	if currentVersion < 10022
+		CWOVersion.SetValueInt(10022)
+	endif
+	if currentVersion < 10023
 		CWS.CWRank1RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank1RewardImperial
 		CWS.CWRank2RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardImperial
 		CWS.CWRank3RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardImperial
@@ -464,7 +467,7 @@ function DoPlayerLoadGameStuff()
 		CWS.CWRank2RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardSons
 		CWS.CWRank3RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardSons
 		CwS.CWRank4RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank4RewardSons
-		CWOVersion.SetValueInt(10022)
+		CWOVersion.SetValueInt(10023)
 	endif
 	registerforsingleupdate(30)
 endfunction
