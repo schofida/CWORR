@@ -871,7 +871,7 @@ function OnOptionHighlight(Int a_option)
 	elseIf a_option == optionsPartyCrashersChance
 		self.SetInfoText("Chance for dragon attacks during major capital sieges.")
 	elseIf a_option == optionsWinWar
-		self.SetInfoText("Automatically wins the war for your side. Please close MCM after selecting.")
+		self.SetInfoText("Automatically wins the war for the chosen side. This is obviously irrevirsible once done. Note that you will gain achievements and get a cool weapon like you were going through the questline. This process takes a LONG time (around 10 minutes). Also, make sure you select this away from any major cities. Choosing an opposing side is not currently supported. Please close MCM after selecting.")
 	elseif a_option == optionsBAChance
 		self.SetInfoText("Set the chance that a random guard or inconsequential NPC will become a spy for the other side. Set to 0 to disable.")
 	elseif a_option == optionsDisguiseGameType
