@@ -296,24 +296,6 @@ Function Fragment_1()
     
     (Alias_ResourceObject1.GetReference() as ResourceObjectScript).ChangeState(2)
 
-    
-    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN AUTOCAST TYPE CWMission02Script
-    Quest __temp = self as Quest
-    CWMission02Script kmyQuest = __temp as CWMission02Script
-    ;END AUTOCAST
-    ;BEGIN CODE
-    
-    CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
-    
-    kmyQuest.CWCampaignS.StopDisguiseQuest()
-
     if kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
         Alias_CWFortSiegeSons1.TryToEnableNoWait()
         Alias_CWFortSiegeSons2.TryToEnableNoWait()
@@ -333,6 +315,24 @@ Function Fragment_2()
         Alias_CWFortSiegeImperial3.TryToEvaluatePackage()
         Alias_CWFortSiegeImperial4.TryToEvaluatePackage()
     endif
+
+    
+    (Alias_ResourceObject1 as CWMission02ResourceObjectScript).RegisterForUpdate(5)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE CWMission02Script
+    Quest __temp = self as Quest
+    CWMission02Script kmyQuest = __temp as CWMission02Script
+    ;END AUTOCAST
+    ;BEGIN CODE
+    
+    CWScript.Log("CWCWMission02ScriptFragment", self + "Stage 20")
+    
+    kmyQuest.CWCampaignS.StopDisguiseQuest()
 ;END CODE
 EndFunction
 ;END FRAGMENT
