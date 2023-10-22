@@ -1848,8 +1848,6 @@ if kmyquest.CWs.WhiterunSiegeFinished == False && !kmyquest.IsAttack()
 	kmyquest.CWs.WhiterunSiegeFinished = True
 endif
 
-((kmyQuest AS Quest) As CWReinforcementControllerScript).StopSpawning()
-
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, checking Attack/Defense and starting follow up quests")	;*** WRITE TO LOG
 
 ;**ATTACK/DEFEND SPECIFIC
@@ -1879,8 +1877,16 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	if kmyquest.IsAttack()
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1020, 1); COMPLETED - open exterior gate
 
+		if Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 3
+			Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference())
+		endif
+
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2060, 1); FAILED - open exterior gate
+
+		if Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 3
+			Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference())
+		endif
 
 	endif
 
@@ -1888,10 +1894,31 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	if kmyquest.IsAttack()
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1080, 1); COMPLETED - final barricade 
+		
+		if (Alias_Barricade3A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade3A.GetReference().DamageObject(1000)
+		    Alias_Barricade3A.GetReference().DamageObject(1000)
+		    Alias_Barricade3A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade3B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade3B.GetReference().DamageObject(1000)
+		    Alias_Barricade3B.GetReference().DamageObject(1000)
+		    Alias_Barricade3B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 
 	else
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2080, 1); FAILED - final barricade 
 
+		if (Alias_Barricade3A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade3A.GetReference().DamageObject(1000)
+		    Alias_Barricade3A.GetReference().DamageObject(1000)
+		    Alias_Barricade3A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade3B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade3B.GetReference().DamageObject(1000)
+		    Alias_Barricade3B.GetReference().DamageObject(1000)
+		    Alias_Barricade3B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 	endif
 
 
@@ -1899,6 +1926,17 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 0
 		if kmyquest.IsAttack()
 			kmyquest.CWSiegeObj.SetObjectiveCompleted(4500, 1); COMPLETED - final barricade
+
+			if (Alias_Barricade3A.GetReference().GetCurrentDestructionStage() < 4)
+				Alias_Barricade3A.GetReference().DamageObject(1000)
+				Alias_Barricade3A.GetReference().DamageObject(1000)
+				Alias_Barricade3A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+			endif
+			if (Alias_Barricade3B.GetReference().GetCurrentDestructionStage() < 4)
+				Alias_Barricade3B.GetReference().DamageObject(1000)
+				Alias_Barricade3B.GetReference().DamageObject(1000)
+				Alias_Barricade3B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+			endif
 		else
 			kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); FAILED - final barricade
 		endif
@@ -2202,6 +2240,9 @@ if cityVar == kmyquest.CWs.WhiterunLocation
 		Alias_WhiterunSeverioPelagia.GetActorReference().Kill()
 		Alias_WhiterunSeverioPelagia.GetActorReference().MoveToMyEditorLocation()
 
+		Utility.Wait(3)
+		Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
+		Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
 	endif
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
@@ -2210,14 +2251,16 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	if kmyquest.IsAttack()
 		;Do Nothing
 
-	;CWO Stuff
-	elseif (Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 1  || Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 2)	; Reddit BugFix #15
-	;CWO Stuff
-		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Open the gate
+	else
 		Alias_Defender2.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo1.GetReference())
 		Alias_Defender3.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo2.GetReference())
 		Alias_Defender4.GetReference().MoveTo(Alias_MarkarthMoveDefenderTo3.GetReference())
-
+		;CWO Stuff
+		if (Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 1  || Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 2)	; Reddit BugFix #15
+			Utility.Wait(3)
+			Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference())
+		endif
+		;CWO Stuff
 	endif
 
 
@@ -2276,6 +2319,17 @@ CWSiegeScript kmyQuest = __temp as CWSiegeScript
 ;Defenders have run out of respawns and fallen too low - this is not a victory condition, attackers must still take objectives to win
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 100")	;*** WRITE TO LOG
 kmyquest.AttackersHaveWon = TRUE    ;Attackers have won causing defenders to retreat
+
+if !kmyquest.IsAttack()
+	kmyquest.CWSiegeObj.SetObjectiveFailed(2999, 1)
+	if !GetStageDone(50)
+		SetStage(50)
+	endIf
+else
+
+	kmyquest.CWSiegeObj.SetObjectiveCompleted(1999, 1)
+
+endIf
 
 ;kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
 
@@ -2483,6 +2537,13 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 ;if !kmyQuest.isAttack()
 ;	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyquest.AttackersHaveWon, kmyquest.DefendersHaveWon)
 ;endif
+
+if kmyquest.IsAttack()
+	kmyquest.CWSiegeObj.SetObjectiveFailed(1999, 1)
+else
+	kmyquest.CWSiegeObj.SetObjectiveCompleted(2999, 1)
+endif
+
 ;**CITY SPECIFIC
 Location cityVar = Alias_City.GetLocation()
 if cityVar == kmyquest.CWs.WhiterunLocation
@@ -2501,6 +2562,7 @@ else
 	Alias_DisableFastTravelTrigger.TryToDisable()
 
 	if GetStageDone(20)
+		Utility.Wait(5)
 		;Gate was closed in stage 20, so be sure to open it again if the defense wins
 		Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Backward", TRUE)
 		Alias_WhiterunDrawbridgeNavCollision.GetReference().Disable()
@@ -2521,7 +2583,12 @@ endif
 
 
 elseif cityVar == kmyquest.CWs.MarkarthLocation
-
+	if !kmyquest.IsAttack()
+		if Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 3
+			Utility.Wait(5)
+			Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference())
+		endif
+	endif
 
 elseif cityVar == kmyquest.CWs.RiftenLocation
 
@@ -3365,6 +3432,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		kmyquest.CWAttackerStartingScene.Start()
 
 		if kmyQuest.CWs.CWCampaignS.CWODisableSolitudeSiege.GetValueInt() == 1
+			Alias_Barricade1A.GetReference().Disable()
 			Alias_Defender1General.GetReference().Disable()
 			Alias_Defender2.GetReference().Disable()
 			Alias_Defender3.GetReference().Disable()
@@ -3620,7 +3688,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 	kmyQuest.WeatherMarkarth.SetActive(True)
 
 	if kmyquest.IsAttack()
-		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1005, 1); DISPLAYED - barricade
 
 	else
 		kmyquest.AMBDistantBattleSoundInstance = kmyQuest.AMBCivilWarBattleDistantLP.Play(game.GetPlayer())
@@ -4271,8 +4339,8 @@ endif
 location cityVar = Alias_City.GetLocation()
 
 if cityVar == kmyquest.CWs.WhiterunLocation
-	Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
-	Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
+;	Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
+;	Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
 
 ;Set Dialog States
 kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
@@ -4280,13 +4348,23 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
 			kmyquest.WhiterunAmbExt01.Disable()
 			kmyquest.WhiterunAmbExt02.Enable()
 		endif
+
+		Alias_WhiterunDrawbridge.GetReference().PlayGamebryoAnimation("Forward", TRUE)
+		Alias_WhiterunDrawbridgeNavCollision.GetReference().Enable()
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1030, 1); DISPLAY - Drawbridge
@@ -4309,10 +4387,15 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
@@ -4327,7 +4410,19 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2030, 1); FAILED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2060, 1); DISPLAY - Exterior gate
 		(Alias_Defender1General as CWSiegeGeneralScript).FightForAwhile(15, 30)
-		Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Close the Gate
+		if Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 1 || Alias_MarkarthExteriorGate.GetReference().GetOpenState() == 4
+			Alias_MarkarthExteriorGate.GetReference().activate(Alias_MarkarthExteriorGate.GetReference()); Close the Gate
+		endif
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 
 	endif
 
@@ -4339,10 +4434,15 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
@@ -4356,7 +4456,16 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 		kmyquest.CWSiegeObj.SetObjectiveFailed(2065, 1); FAILED  - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2070, 1); DISPLAY - barricade
-
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().DamageObject(1000)
+		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 	endif
 
 
@@ -4371,11 +4480,16 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
 		;CWO
-		Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000, true)
+		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
 		;CWO
 		(Alias_Attacker1General as cwsiegegeneralscript).FightForAwhile(6, 30)
 
@@ -4393,10 +4507,15 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	kmyquest.CWStateDefenderFallingBack.SetValue(1)
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade1A.GetReference().GetCurrentDestructionStage() < 4)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().DamageObject(1000)
 		    Alias_Barricade1A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade1B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().DamageObject(1000)
+		    Alias_Barricade1B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(3010, 1); COMPLETED - barricade
@@ -4578,6 +4697,7 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 
 	else
 		;fighting with general - we already have the defend exterior gate
+		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
 
 	endif
 
@@ -4585,9 +4705,15 @@ elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	if kmyquest.IsAttack()
 		;If this stage is set, and these barricades aren't destroyed, then the player has skipped ahead
-		if (Alias_Barricade2A.GetReference().GetCurrentDestructionStage() < 4) && (Alias_Barricade2B.GetReference().GetCurrentDestructionStage() < 4)
+		if (Alias_Barricade2A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade2A.GetReference().DamageObject(1000)
 		    Alias_Barricade2A.GetReference().DamageObject(1000)
 		    Alias_Barricade2A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade2B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade2B.GetReference().DamageObject(1000)
+		    Alias_Barricade2B.GetReference().DamageObject(1000)
+		    Alias_Barricade2B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 		endif
 
 ;Set Dialog States
@@ -4608,6 +4734,16 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2080, 1); DISPLAY - barricade
 		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
 
+		if (Alias_Barricade2A.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade2A.GetReference().DamageObject(1000)
+		    Alias_Barricade2A.GetReference().DamageObject(1000)
+		    Alias_Barricade2A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
+		if (Alias_Barricade2B.GetReference().GetCurrentDestructionStage() < 4)
+		    Alias_Barricade2B.GetReference().DamageObject(1000)
+		    Alias_Barricade2B.GetReference().DamageObject(1000)
+		    Alias_Barricade2B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
+		endif
 	endif
 
 
@@ -4645,7 +4781,7 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 	else
 		;Currently no defense planned
 		kmyquest.CWSiegeObj.SetObjectiveFailed(4300, 1); FAILED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2060, 1); DISPLAY - barricade
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(4800, 1); DISPLAY - barricade
 		(Alias_Attacker1General as CWSiegeGeneralScript).FightForAwhile(15, 40)
 
 

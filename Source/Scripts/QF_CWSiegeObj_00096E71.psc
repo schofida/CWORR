@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 9
+;NEXT FRAGMENT INDEX 2
 Scriptname QF_CWSiegeObj_00096E71 Extends Quest Hidden
 
 ;BEGIN ALIAS PROPERTY General
@@ -77,24 +77,13 @@ ReferenceAlias Property Alias_Objective4B Auto
 ReferenceAlias Property Alias_Ulfric Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_7
-Function Fragment_7()
-;BEGIN CODE
-stop()
-;END CODE
-EndFunction
-;END FRAGMENT
+;BEGIN ALIAS PROPERTY CapitalHQ
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_CapitalHQ Auto
+;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_8
-Function Fragment_8()
-;BEGIN CODE
-stop()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_3
-Function Fragment_3()
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
 ;BEGIN AUTOCAST TYPE CWSiegeObjScript
 Quest __temp = self as Quest
 CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
@@ -116,21 +105,8 @@ CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
 ;BEGIN CODE
 ;FAILED
 debug.trace("CWSiegeObj Stage 8999")
+self.FailAllObjectives()
 stop()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_6
-Function Fragment_6()
-;BEGIN AUTOCAST TYPE CWSiegeObjScript
-Quest __temp = self as Quest
-CWSiegeObjScript kmyQuest = __temp as CWSiegeObjScript
-;END AUTOCAST
-;BEGIN CODE
-self.CompleteAllObjectives()
-	kmyQuest.CWs.displayFactionLeaderObjective()
-	self.stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT

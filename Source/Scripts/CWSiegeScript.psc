@@ -94,6 +94,7 @@ MS11QuestScript Property MS11 Auto ;ised tp call a function on MS11 to help hand
 
 ; ## External Aliases ##
 Quest Property CWSiegeObj Auto
+LocationAlias Property CWSiegeObjCapitalHQ  Auto
 LocationAlias Property CWSiegeObjCity Auto
 ReferenceAlias Property CWSiegeObjCityGate Auto
 ReferenceAlias Property CWSiegeObjJarl Auto

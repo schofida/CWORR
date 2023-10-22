@@ -1878,7 +1878,7 @@ function SetReinforcementsMajorCity(CWSiegeScript kmyQuest)
 	else
 		kmyQuest.SetPoolAttackerOnCWReinforcementScript(CWOSiegeReinforcements.GetValueInt(), 1.0, CWOEnemyAttackerScaleMult.GetValue(), false)
 		kmyQuest.SetPoolDefenderOnCWReinforcementScript(CWOSiegeReinforcements.GetValueInt(), 1.0, CWOPlayerDefenderScaleMult.GetValue(), false)
-		CWReinforcementControllerS.PoolRemainingDefenderObjective = 2998
+		CWReinforcementControllerS.PoolRemainingDefenderObjective = 1999
 	endIf
 endfunction
 

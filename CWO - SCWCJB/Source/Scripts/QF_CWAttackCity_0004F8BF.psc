@@ -1140,7 +1140,6 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 CWScript.Log("AttackCity", "Stage 31: making Jarl, Housecarl, body guards aggressive")
 
-
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1205)
 
 Alias_Jarl.GetActorReference().setAV("Aggression", 1)
@@ -1328,7 +1327,6 @@ Alias_Friend.GetActorReference().EvaluatePackage()
 ;CWO Stuff
 
 sound.StopInstance(kmyQuest.CWSiegeS.AMBDistantBattleSoundInstance)
-
 kmyquest.CWSiegeObj.setObjectiveCompleted(1200)
 ;Alias_BodyGuard1.GetActorReference().startCombat(Game.GetPlayer())
 ;Alias_BodyGuard2.GetActorReference().startCombat(Game.GetPlayer())

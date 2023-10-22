@@ -94,6 +94,7 @@ MS11QuestScript Property MS11 Auto ;ised tp call a function on MS11 to help hand
 
 ; ## External Aliases ##
 Quest Property CWSiegeObj Auto
+LocationAlias Property CWSiegeObjCapitalHQ  Auto
 LocationAlias Property CWSiegeObjCity Auto
 ReferenceAlias Property CWSiegeObjCityGate Auto
 ReferenceAlias Property CWSiegeObjJarl Auto
@@ -112,8 +113,6 @@ ReferenceAlias Property CWSiegeObjObjective4B Auto
 ReferenceAlias Property CWReservationsBalgruuf Auto
 ReferenceAlias Property CWReservationsProventus Auto
 ReferenceAlias Property CWReservationsIrileth Auto
-
-LocationAlias Property CWSiegeObjCapitalHQ  Auto
 
 ;"Array" of aliases
 ;rather than declaring these again on all siege scripts, we will create a function that the quest fragment can pass in the Alias_XXX aliases and put them in the "array"

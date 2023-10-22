@@ -9,6 +9,7 @@ Scene Property CWAttackCityConfrontationScene Auto
 Scene Property CWAttackCitySurrenderScene Auto
 Scene Property CWAttackCityJarlBleedingOutScene Auto
 Quest Property CWSiegeObj Auto
+LocationAlias Property CWSiegeObjCapitalHQ  Auto
 
 ReferenceAlias Property CWSiegeObjJarl Auto
 {Alias Jarl in CWSiegeObj quest}

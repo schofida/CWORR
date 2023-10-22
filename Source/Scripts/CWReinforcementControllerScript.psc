@@ -1379,7 +1379,6 @@ function showAttackerPool()
 		PoolRemainingObjectiveQuest.SetObjectiveDisplayed(PoolRemainingAttackerObjective, true, true)
 	Else
 		PoolRemainingObjectiveQuest.SetObjectiveDisplayed(PoolRemainingAttackerObjective)
-		PoolRemainingObjectiveQuest.SetObjectiveCompleted(PoolRemainingAttackerObjective)
 	endif
 	
 	
@@ -1399,7 +1398,6 @@ function showDefenderPool()
 		PoolRemainingObjectiveQuest.SetObjectiveDisplayed(PoolRemainingDefenderObjective, true, true)
 	Else
 		PoolRemainingObjectiveQuest.SetObjectiveDisplayed(PoolRemainingDefenderObjective)
-		PoolRemainingObjectiveQuest.SetObjectiveCompleted(PoolRemainingDefenderObjective)
 	endif
 	
 EndFunction

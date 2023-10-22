@@ -792,7 +792,9 @@ else
 endif
 
 kmyquest.CWSiegeObjJarl.ForceRefTo(Alias_Jarl.GetReference())
+kmyquest.CWSiegeObjCapitalHQ.ForceLocationTo(Alias_CapitalHQ.GetLocation())
 kmyquest.CWSiegeObj.setObjectiveCompleted(1050)
+kmyquest.CWSiegeObj.SetObjectiveCompleted(1999, 1)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1200)
 
 CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers")
@@ -1122,6 +1124,9 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;END AUTOCAST
 ;BEGIN CODE
 CWScript.Log("AttackCity", "Stage 31: making Jarl, Housecarl, body guards aggressive")
+
+kmyquest.CWSiegeObj.setObjectiveDisplayed(1205)
+
 Alias_Jarl.GetActorReference().setAV("Aggression", 1)
 Alias_HouseCarl.GetActorReference().setAV("Aggression", 1)
 Alias_BodyGuard1.GetActorReference().setAV("Aggression", 1)
@@ -1156,7 +1161,7 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 kmyquest.CWAttackCityJarlBleedingOutScene.Start()
 
-kmyquest.CWSiegeObj.setObjectiveCompleted(1200)
+kmyquest.CWSiegeObj.setObjectiveCompleted(1205)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1210)
 
 ;make everyone non-hostile
@@ -1307,7 +1312,7 @@ Alias_Friend.GetActorReference().EvaluatePackage()
 ;CWO Stuff
 
 sound.StopInstance(kmyQuest.CWSiegeS.AMBDistantBattleSoundInstance)
-
+kmyquest.CWSiegeObj.setObjectiveCompleted(1200)
 ;Alias_BodyGuard1.GetActorReference().startCombat(Game.GetPlayer())
 ;Alias_BodyGuard2.GetActorReference().startCombat(Game.GetPlayer())
 ;Alias_BodyGuard3.GetActorReference().startCombat(Game.GetPlayer())
