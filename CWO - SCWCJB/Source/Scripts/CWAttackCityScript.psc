@@ -39,7 +39,6 @@ Faction Property CWSoldierPlayerEnemy Auto
 ActorBase Property CWSiegeWhiterunSonsSoldier  Auto
 LocationAlias Property CWSiegeObjCapitalHQ  Auto
 Quest Property CWSiege  Auto
-ActorBase Property CWSiegeImperialSoldier  Auto
 
 ;THIS WAS A WHILE LOOP IN STAGE 9000 BUT BECAUSE THAT WAS ULTIMATE TRIGGERED BY A SCENE END SCRIPT, THE SCENE WOULD HANG INDEFINATELY
 Event OnUpdate()  ;REGISTERED IN STAGE 9000

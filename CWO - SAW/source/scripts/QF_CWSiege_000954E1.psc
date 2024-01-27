@@ -1961,13 +1961,13 @@ if kmyquest.IsAttack()
 
 		;CWO - In case CWattack City does not start
 		int wait = 0
-		while !kmyquest.CWs.CWCampaignS.CWAttackCity.IsRunning() && wait < 30
+		while !kmyquest.CWs.CWCampaignS.CWAttackCity.IsRunning() && wait < 60
 			Utility.Wait(1.0)
 			wait = wait + 1
 		endWhile
 		;CWO - If unable to start attack quest, run new SucceedAttackQuest routine.
-		if wait >= 30
-			debug.notification("Tried waiting for the 30 seconds but CWAttackCity never started. Finishing siege.")
+		if wait >= 60
+			debug.notification("Tried waiting for the 60 seconds but CWAttackCity never started. Finishing siege.")
 			kmyQuest.SucceedAttackQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
 		elseif ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG

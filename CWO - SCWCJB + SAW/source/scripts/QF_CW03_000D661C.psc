@@ -518,8 +518,13 @@ endif
 kmyquest.CWs.AddGarrisonBackToWar(kmyquest.RiverwoodLocation)
 
 utility.WaitGameTime(1.00000)
-CWWhiterunGuardNeutralFaction.SetAlly(CWImperialFaction, false, false)
-CWWhiterunGuardNeutralFaction.SetEnemy(CWSonsFactionNPC, false, false)
+if kmyquest.CWs.GetHoldOwner(kmyquest.CWs.iWhiterun) == kmyquest.CWs.iSons
+	CWWhiterunGuardNeutralFaction.SetAlly(CWSonsFactionNPC, false, false)
+	CWWhiterunGuardNeutralFaction.SetEnemy(kmyquest.CWs.CWImperialFactionNPC, false, false)
+else
+	CWWhiterunGuardNeutralFaction.SetAlly(kmyquest.CWs.CWImperialFactionNPC, false, false)
+	CWWhiterunGuardNeutralFaction.SetEnemy(CWSonsFactionNPC, false, false)
+endif
 SAW_Campaign_Whiterun_Patrol_IMP_Whiterun.MoveTo(SAW_WhiterunGatesPatrolLocation, 0.000000, 0.000000, 0.000000, true)
 SAW_Campaign_Whiterun_Patrol_SC_Whiterun.MoveTo(SAW_WhiterunGatesPatrolLocation, 0.000000, 0.000000, 0.000000, true)
 WRC_A52_Whiterun.MoveTo(SAW_WhiterunGatesPatrolLocation, 0.000000, 0.000000, 0.000000, true)
