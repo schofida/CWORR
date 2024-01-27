@@ -2150,11 +2150,15 @@ bool function isCWMissionsOrSiegesRunning()
 	elseif CWs.CWFortSiegeFort.IsRunning()
 		ret = "CWFortSiegeFort"
 	endif
-	if StringUtil.GetLength(ret) == 0
+	if ret == ""
 		ret = isCWSiegesRunning()
 	endif
 	CWScript.Log("CWCampaignScript", " isCWMissionsOrSiegesRunning() = " + ret)
-	return StringUtil.GetLength(ret) > 0
+	if ret == ""
+		return false
+	else
+		return true
+	endif
 endFunction
 
 string function isCWSiegesRunning()

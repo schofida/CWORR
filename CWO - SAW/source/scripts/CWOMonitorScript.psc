@@ -165,7 +165,10 @@ State WaitingToFinishWar
 			bool FieldCOInCampLocation  = false
 			Location CurrentHold
 			Actor FieldCO = CWs.GetRikkeOrGalmar(CWs.PlayerAllegiance)
-			bool SiegeIsRunning = StringUtil.GetLength(CWs.CWCampaignS.isCWSiegesRunning()) > 0
+			bool SiegeIsRunning = false
+			if CWs.CWCampaignS.isCWSiegesRunning() != ""
+				SiegeIsRunning = true
+			endif
 			if !SiegeIsRunning && CWs.PlayerAllegiance == CWs.iImperials
 				InCampLocation = GetActorRef().IsInLocation(CWs.MilitaryCampEastmarchImperialLocation)
 				FieldCOInCampLocation = FieldCO.IsInLocation(CWs.MilitaryCampEastmarchImperialLocation)
