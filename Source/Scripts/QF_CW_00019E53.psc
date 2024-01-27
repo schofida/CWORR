@@ -361,10 +361,13 @@ CWScript kmyQuest = __temp as CWScript
 	endif
 
 	kmyQuest.CWCampaignS.StartCWOBAControllerQuest()
-	kmyQuest.CWCampaignS.StartDisguiseQuest()
 	
-	kmyQuest.CWCampaignS.SetMonitorWaitingToStartCampaign()
-	kmyQuest.displayFactionLeaderObjective()
+	if kmyQuest.WhiteRunSiegeFinished
+		kmyQuest.CWCampaignS.StartDisguiseQuest()
+
+		kmyQuest.CWCampaignS.SetMonitorWaitingToStartCampaign()
+		kmyQuest.displayFactionLeaderObjective()
+	endif
 ;END CODE
 EndFunction
 ;END FRAGMENT
