@@ -65,8 +65,9 @@ Event OnCellAttach()
 		if CW.PlayerAllegiance == CW.iImperials && RikkeOrGalmar.GetCurrentLocation() == CW.MilitaryCampWhiterunImperialLocation
 			RikkeOrGalmar.MoveTo(CW.CWFieldCOMapTableMarkerWhiterunCampImperial)
 		endif
-		;CWO If campaign running use campaign to start missions
-		if RikkeOrGalmar.GetCurrentLocation() == myLocation
+		;CWO Ensure that player is attackinng and that the player allegiance is attacking
+		if RikkeOrGalmar.GetCurrentLocation() == myLocation && CW.CWAttacker.GetValueInt() == CW.PlayerAllegiance
+			;CWO If campaign running use campaign to start missions
 			if CW.CWCampaign.IsRunning()
 				CW.CWCampaignS.StartMissions()
 			Else
