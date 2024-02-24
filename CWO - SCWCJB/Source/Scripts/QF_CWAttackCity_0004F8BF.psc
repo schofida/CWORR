@@ -794,7 +794,6 @@ endif
 kmyquest.CWSiegeObjJarl.ForceRefTo(Alias_Jarl.GetReference())
 kmyquest.CWSiegeObjCapitalHQ.ForceLocationTo(Alias_CapitalHQ.GetLocation())
 kmyquest.CWSiegeObj.setObjectiveCompleted(1050)
-kmyquest.CWSiegeObj.SetObjectiveCompleted(1999, 1)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1200)
 
 CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers")
