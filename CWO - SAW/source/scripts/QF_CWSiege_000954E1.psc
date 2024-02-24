@@ -1961,12 +1961,12 @@ if kmyquest.IsAttack()
 
 		;CWO - In case CWattack City does not start
 		int wait = 0
-		while !kmyquest.CWs.CWCampaignS.CWAttackCity.IsRunning() && wait < 60
+		while !kmyquest.CWs.CWCampaignS.CWAttackCity.IsRunning() && wait < 120
 			Utility.Wait(1.0)
 			wait = wait + 1
 		endWhile
 		;CWO - If unable to start attack quest, run new SucceedAttackQuest routine.
-		if wait >= 60
+		if wait >= 120
 			debug.notification("Tried waiting for the 60 seconds but CWAttackCity never started. Finishing siege.")
 			kmyQuest.SucceedAttackQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
 		elseif ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
@@ -2439,18 +2439,18 @@ Alias_Defender8.TryToDisable()
 Alias_Defender9.TryToDisable()
 Alias_Defender10.TryToDisable()
 
-Alias_NonRespawningDefenderImperial1.TryToDisable()
-Alias_NonRespawningDefenderImperial2.TryToDisable()
-Alias_NonRespawningDefenderImperial3.TryToDisable()
-Alias_NonRespawningDefenderImperial4.TryToDisable()
-Alias_NonRespawningDefenderImperial5.TryToDisable()
-Alias_NonRespawningDefenderImperial6.TryToDisable()
-Alias_NonRespawningDefenderSons1.TryToDisable()
-Alias_NonRespawningDefenderSons2.TryToDisable()
-Alias_NonRespawningDefenderSons3.TryToDisable()
-Alias_NonRespawningDefenderSons4.TryToDisable()
-Alias_NonRespawningDefenderSons5.TryToDisable()
-Alias_NonRespawningDefenderSons6.TryToDisable()
+;Alias_NonRespawningDefenderImperial1.TryToDisable()
+;Alias_NonRespawningDefenderImperial2.TryToDisable()
+;Alias_NonRespawningDefenderImperial3.TryToDisable()
+;Alias_NonRespawningDefenderImperial4.TryToDisable()
+;Alias_NonRespawningDefenderImperial5.TryToDisable()
+;Alias_NonRespawningDefenderImperial6.TryToDisable()
+;Alias_NonRespawningDefenderSons1.TryToDisable()
+;Alias_NonRespawningDefenderSons2.TryToDisable()
+;Alias_NonRespawningDefenderSons3.TryToDisable()
+;Alias_NonRespawningDefenderSons4.TryToDisable()
+;Alias_NonRespawningDefenderSons5.TryToDisable()
+;Alias_NonRespawningDefenderSons6.TryToDisable()
 
 else
 	;If defense
@@ -2717,18 +2717,18 @@ kmyQuest.CWs.CWCampaignS.SolitudeExteriorGate01.Disable()
 ;Disable aliases
 Alias_ThreatTriggersToggle.TryToDisable()
 
-Alias_NonRespawningDefenderImperial1.TryToDisable()
-Alias_NonRespawningDefenderImperial2.TryToDisable()
-Alias_NonRespawningDefenderImperial3.TryToDisable()
-Alias_NonRespawningDefenderImperial4.TryToDisable()
-Alias_NonRespawningDefenderImperial5.TryToDisable()
-Alias_NonRespawningDefenderImperial6.TryToDisable()
-Alias_NonRespawningDefenderSons1.TryToDisable()
-Alias_NonRespawningDefenderSons2.TryToDisable()
-Alias_NonRespawningDefenderSons3.TryToDisable()
-Alias_NonRespawningDefenderSons4.TryToDisable()
-Alias_NonRespawningDefenderSons5.TryToDisable()
-Alias_NonRespawningDefenderSons6.TryToDisable()
+;Alias_NonRespawningDefenderImperial1.TryToDisable()
+;Alias_NonRespawningDefenderImperial2.TryToDisable()
+;Alias_NonRespawningDefenderImperial3.TryToDisable()
+;Alias_NonRespawningDefenderImperial4.TryToDisable()
+;Alias_NonRespawningDefenderImperial5.TryToDisable()
+;Alias_NonRespawningDefenderImperial6.TryToDisable()
+;Alias_NonRespawningDefenderSons1.TryToDisable()
+;Alias_NonRespawningDefenderSons2.TryToDisable()
+;Alias_NonRespawningDefenderSons3.TryToDisable()
+;Alias_NonRespawningDefenderSons4.TryToDisable()
+;Alias_NonRespawningDefenderSons5.TryToDisable()
+;Alias_NonRespawningDefenderSons6.TryToDisable()
 
 
 ;THIS ALSO HAPPENS IN STAGE 200
@@ -3388,19 +3388,19 @@ endif
 
 	;Enable Initial Advanced Defender for correct side
 	if kmyQuest.CWs.GetDefender(Alias_City.GetLocation()) == kmyQuest.CWs.iImperials	;Player is an Imperial
-		Alias_NonRespawningDefenderImperial1.TryToEnable()
-		Alias_NonRespawningDefenderImperial2.TryToEnable()
-		Alias_NonRespawningDefenderImperial3.TryToEnable()
-		Alias_NonRespawningDefenderImperial4.TryToEnable()
-		Alias_NonRespawningDefenderImperial5.TryToEnable()
-		Alias_NonRespawningDefenderImperial6.TryToEnable()
+;		Alias_NonRespawningDefenderImperial1.TryToEnable()
+;		Alias_NonRespawningDefenderImperial2.TryToEnable()
+;		Alias_NonRespawningDefenderImperial3.TryToEnable()
+;		Alias_NonRespawningDefenderImperial4.TryToEnable()
+;		Alias_NonRespawningDefenderImperial5.TryToEnable()
+;		Alias_NonRespawningDefenderImperial6.TryToEnable()
 	else		;defender is a Sons
-		Alias_NonRespawningDefenderSons1.TryToEnable()
-		Alias_NonRespawningDefenderSons2.TryToEnable()
-		Alias_NonRespawningDefenderSons3.TryToEnable()
-		Alias_NonRespawningDefenderSons4.TryToEnable()
-		Alias_NonRespawningDefenderSons5.TryToEnable()
-		Alias_NonRespawningDefenderSons6.TryToEnable()
+;		Alias_NonRespawningDefenderSons1.TryToEnable()
+;		Alias_NonRespawningDefenderSons2.TryToEnable()
+;		Alias_NonRespawningDefenderSons3.TryToEnable()
+;		Alias_NonRespawningDefenderSons4.TryToEnable()
+;		Alias_NonRespawningDefenderSons5.TryToEnable()
+;		Alias_NonRespawningDefenderSons6.TryToEnable()
 	endif
 
 	;Enabling the correct reinforcements based on if player is attacking, and which side he's on.
@@ -4222,33 +4222,33 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allie
 
 ; ;CWScript.Log("CWSiegeQuestFragmentScript", self + "Calling Reset() on advanced soldiers that aren't meant to respawn")	
 ;Aiases I will be enabling through the course of the attack.  Should be taken care of in 255.
-Alias_NonRespawningDefenderImperial1.TryToReset()
-Alias_NonRespawningDefenderImperial2.TryToReset()
-Alias_NonRespawningDefenderImperial3.TryToReset()
-Alias_NonRespawningDefenderImperial4.TryToReset()
-Alias_NonRespawningDefenderImperial5.TryToReset()
-Alias_NonRespawningDefenderImperial6.TryToReset()
+;Alias_NonRespawningDefenderImperial1.TryToReset()
+;Alias_NonRespawningDefenderImperial2.TryToReset()
+;Alias_NonRespawningDefenderImperial3.TryToReset()
+;Alias_NonRespawningDefenderImperial4.TryToReset()
+;Alias_NonRespawningDefenderImperial5.TryToReset()
+;Alias_NonRespawningDefenderImperial6.TryToReset()
 
-Alias_NonRespawningDefenderSons1.TryToReset()
-Alias_NonRespawningDefenderSons2.TryToReset()
-Alias_NonRespawningDefenderSons3.TryToReset()
-Alias_NonRespawningDefenderSons4.TryToReset()
-Alias_NonRespawningDefenderSons5.TryToReset()
-Alias_NonRespawningDefenderSons6.TryToReset()
+;Alias_NonRespawningDefenderSons1.TryToReset()
+;Alias_NonRespawningDefenderSons2.TryToReset()
+;Alias_NonRespawningDefenderSons3.TryToReset()
+;Alias_NonRespawningDefenderSons4.TryToReset()
+;Alias_NonRespawningDefenderSons5.TryToReset()
+;Alias_NonRespawningDefenderSons6.TryToReset()
 
-Alias_NonRespawningDefenderImperial1.TryToDisable()
-Alias_NonRespawningDefenderImperial2.TryToDisable()
-Alias_NonRespawningDefenderImperial3.TryToDisable()
-Alias_NonRespawningDefenderImperial4.TryToDisable()
-Alias_NonRespawningDefenderImperial5.TryToDisable()
-Alias_NonRespawningDefenderImperial6.TryToDisable()
+;Alias_NonRespawningDefenderImperial1.TryToDisable()
+;Alias_NonRespawningDefenderImperial2.TryToDisable()
+;Alias_NonRespawningDefenderImperial3.TryToDisable()
+;Alias_NonRespawningDefenderImperial4.TryToDisable()
+;Alias_NonRespawningDefenderImperial5.TryToDisable()
+;Alias_NonRespawningDefenderImperial6.TryToDisable()
 
-Alias_NonRespawningDefenderSons1.TryToDisable()
-Alias_NonRespawningDefenderSons2.TryToDisable()
-Alias_NonRespawningDefenderSons3.TryToDisable()
-Alias_NonRespawningDefenderSons4.TryToDisable()
-Alias_NonRespawningDefenderSons5.TryToDisable()
-Alias_NonRespawningDefenderSons6.TryToDisable()
+;Alias_NonRespawningDefenderSons1.TryToDisable()
+;Alias_NonRespawningDefenderSons2.TryToDisable()
+;Alias_NonRespawningDefenderSons3.TryToDisable()
+;Alias_NonRespawningDefenderSons4.TryToDisable()
+;Alias_NonRespawningDefenderSons5.TryToDisable()
+;Alias_NonRespawningDefenderSons6.TryToDisable()
 
 Alias_Barricade1A.TryToReset()
 if Alias_Barricade1A.GetReference() != none
