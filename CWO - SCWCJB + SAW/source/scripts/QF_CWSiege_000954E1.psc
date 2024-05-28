@@ -2772,7 +2772,6 @@ kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
 kmyquest.CWs.CWAlliesS.DeactivateAllies()
-kmyquest.CWs.CWCampaignS.CWMission06Done = 0
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
 UnregisterForUpdate()

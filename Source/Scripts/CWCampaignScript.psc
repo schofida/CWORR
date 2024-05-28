@@ -453,6 +453,7 @@ Function ResetCampaign()
 	;Re-intialize CWO stuff
 	CWOSpanishInquisitionPhase.SetValueInt(0)
 	CWMission01Or02Done = 0
+	CWMission06Done = 0
 	CanDoCWMission05 = 0
 	
 	if (CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance &&  CWs.contestedHold == CWs.iFalkreath) || CWODisableFortSiegeFort.GetValueInt() == 1

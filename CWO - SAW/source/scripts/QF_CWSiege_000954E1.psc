@@ -1967,7 +1967,7 @@ if kmyquest.IsAttack()
 		endWhile
 		;CWO - If unable to start attack quest, run new SucceedAttackQuest routine.
 		if wait >= 120
-			debug.notification("Tried waiting for the 60 seconds but CWAttackCity never started. Finishing siege.")
+			debug.notification("Tried waiting for the 120 seconds but CWAttackCity never started. Finishing siege.")
 			kmyQuest.SucceedAttackQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
 		elseif ((self as quest) as CWSiegePollPlayerLocation).PlayerHasRunAway == true
 			CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 50, Calling Stop() and *NOT* starting CWAttackCity because PlayerHasRunAway")	;*** WRITE TO LOG
@@ -2762,7 +2762,6 @@ kmyQuest.CWs.CWStateDefenderOutOfReinforcements.SetValue(0)
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
 kmyquest.CWs.CWAlliesS.DeactivateAllies()
-kmyquest.CWs.CWCampaignS.CWMission06Done = 0
 
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255: UnregisterForUpdate().")
 UnregisterForUpdate()
