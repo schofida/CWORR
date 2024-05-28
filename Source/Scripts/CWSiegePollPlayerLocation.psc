@@ -94,6 +94,13 @@ Event OnUpdate()
 		PlayerHasBeenToLocationOfBattle = True
 	EndIf
 
+	;schofida - This does not need to keep running if successfully defended
+
+	if (!PlayerIsAttacking && GetStageDone(StageThatMeansPlayerIsConsideredNotToHaveRunAwayFromDefense)) || (GetStageDone(StageThatMeansPlayerHasEnteredFinalCityBattle))
+		GoToState("DONE")
+		return
+	endif
+
 	;CHECK IF PLAYER IS TOO FAR AWAY
 	
 	PlayerDistanceFromBattleCenterMarker = PlayerRef.GetDistance(BattleCenterMarker)
