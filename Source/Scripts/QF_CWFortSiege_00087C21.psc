@@ -1097,6 +1097,76 @@ ReferenceAlias Property Alias_RespawnAttackerPhase3D Auto
 ReferenceAlias Property Alias_BarricadeNormal16 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY AllyMarkerAttack0
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack0 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerAttack6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerAttack6 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend0
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend0 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend1
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend1 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend2
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend2 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend3
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend3 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend4
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend4 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend5
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend5 Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY AllyMarkerDefend6
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_AllyMarkerDefend6 Auto	
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_30
 Function Fragment_30()
 ;BEGIN AUTOCAST TYPE CWFortSiegeScript
@@ -1476,6 +1546,30 @@ kmyquest.RegisterInteriorDefenderAliases(Alias_InteriorDefender1, Alias_Interior
 kmyquest.CreateInteriorDefenders(Alias_Fort.GetLocation())
 kmyquest.DisableInteriorDefenders()
 
+;<Special Allies> ---------------
+
+CWScript.Log("CWFortSiege", self + "Setting up Special Allies.")	;*** WRITE TO LOG
+
+;we are testing for whether player is attacking or defending here so we can simply copy and paste this in all sieges regardless.
+if kmyquest.IsPlayerAttacking()   ;player is attacking, so register attacker markers for allies
+	CWScript.Log("CWFortSiege", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerAttackerPhaseX markers")	;*** WRITE TO LOG
+	kmyquest.CWs.CWAlliesS.RegisterAllyPhaseMarkers(Alias_AllyMarkerAttack0.GetReference(), Alias_AllyMarkerAttack1.GetReference(), Alias_AllyMarkerAttack2.GetReference(), Alias_AllyMarkerAttack3.GetReference(), Alias_AllyMarkerAttack4.GetReference(), Alias_AllyMarkerAttack5.GetReference(), Alias_AllyMarkerAttack6.GetReference())
+
+elseif !kmyquest.IsPlayerAttacking()   ;player is defending, so register defender markers for allies
+	CWScript.Log("CWFortSiege", self + "Calling RegisterAllyPhaseMarkers() passing in AllyMarkerDefenderPhaseX markers")	;*** WRITE TO LOG
+	kmyquest.CWs.CWAlliesS.RegisterAllyPhaseMarkers(Alias_AllyMarkerDefend0.GetReference(), Alias_AllyMarkerDefend1.GetReference(), Alias_AllyMarkerDefend2.GetReference(), Alias_AllyMarkerDefend3.GetReference(), Alias_AllyMarkerDefend4.GetReference(), Alias_AllyMarkerDefend5.GetReference(), Alias_AllyMarkerDefend6.GetReference())
+
+else ;something bad happened
+CWScript.Log("CWFortSiege", self + " WARNING: Expected player allegiance to be attacking or defending but is neither. THIS WILL BREAK ALLIES SHOWING UP FOR THE BATTLE!")	;*** WRITE TO LOG
+
+endif
+
+kmyquest.CWs.CWAlliesS.ProcessAlliesForSiege(Alias_Hold.GetLocation())
+
+CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allies.")	;*** WRITE TO LOG
+
+;</Special Allies> ---------------
+
 ;go ahead and "accept the quest" if we are a special fort siege (IE not the normal Mission version, but the final attack inside the city for Solitude and Windhelm)
 ;and start the CWCitizensFlee quest to put the citizens in their editor locations
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1
@@ -1588,6 +1682,9 @@ While kmyquest.DoneTurningOnAliases == false
  	CWScript.Log("CWFortSiege", self + "Waiting for DoneTurningOnAliases != false, happens in TurnOnAliases() in CWSiegeScript.psc")	;*** WRITE TO LOG
 endWhile
 ;</TurnOnAliases>-----------------
+
+;ENABLE ALLIES
+kmyquest.CWs.CWAlliesS.EnableActiveAllies()
 
 CWScript.Log("CWFortSiege", "Stage 10: Enabling siege aliases")
 kmyquest.EnableInteriorDefenders()
@@ -2190,6 +2287,8 @@ Alias_BarricadeNormal14.TryToDisable()
 Alias_BarricadeNormal15.TryToDisable()
 Alias_BarricadeNormal16.TryToDisable()
 
+CWScript.Log("CWFortSiege", self + "calling DeactivateAllies() on CWAllies quest.")  ;*** WRITE TO LOG
+kmyquest.CWs.CWAlliesS.DeactivateAllies()
 
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): turning on complex WI interactions")
 ((self as quest) as CWFortSiegeMissionScript).ToggleOnComplexWIInteractions(Alias_Fort)
