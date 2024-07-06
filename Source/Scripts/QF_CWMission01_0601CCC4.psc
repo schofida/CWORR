@@ -499,6 +499,8 @@ kmyQuest.DeleteAliasWhenAble(Alias_Enemy1)
 kmyQuest.DeleteAliasWhenAble(Alias_Enemy2)
 kmyQuest.DeleteAliasWhenAble(Alias_Enemy3)
 kmyQuest.DeleteAliasWhenAble(Alias_Enemy4)
+
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
 ;END CODE
 EndFunction
 ;END FRAGMENT

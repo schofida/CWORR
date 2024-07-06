@@ -52,6 +52,7 @@ GlobalVariable Property CWODisableWindhelmSiege Auto
 GlobalVariable Property CWODisableSolitudeSiege Auto
 GlobalVariable Property CWODisableFaint Auto
 GlobalVariable Property CWODisableNotifications Auto
+GlobalVariable Property CWOEnableAdditionalSoldiers Auto
 LeveledItem Property LItemArmorCuirassLightSpecial Auto
 LeveledItem Property LItemArmorCuirassHeavySpecial Auto
 LeveledItem Property LItemArmorShieldLightSpecial Auto

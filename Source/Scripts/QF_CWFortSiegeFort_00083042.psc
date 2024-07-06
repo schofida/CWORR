@@ -1072,6 +1072,11 @@ ReferenceAlias Property Alias_InteriorDefender10 Auto
 ReferenceAlias Property Alias_BarricadeNormal11 Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_13
 Function Fragment_13()
 ;BEGIN AUTOCAST TYPE CWFortSiegeScript
@@ -1665,6 +1670,7 @@ CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling DisableAllAlia
 kmyquest.DisableAllAliases()
 kmyquest.DisableInteriorDefenders()
 kmyquest.DisableBarricades()
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 ; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript StopCWCitizensFlee()")

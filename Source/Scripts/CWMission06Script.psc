@@ -151,6 +151,7 @@ function processPreRevoltFactions(ReferenceAlias AliasToProcess)
 	ActorRef.RemoveFromFaction(CWs.IsGuardFaction)
 	ActorRef.addToFaction(CWs.CWDisaffectedSoldierFaction)
 
+	giveNewOutfit(AliasToProcess.GetActorRef(), false)
 
 EndFunction
 
@@ -182,9 +183,9 @@ function processPostRevoltFactions(ReferenceAlias AliasToProcess)
 
 EndFunction
 
-function giveNewOutfit(Actor ActorRef)
+function giveNewOutfit(Actor ActorRef, bool GiveOpposite)
 
-	if CWs.PlayerAllegiance == CWs.iImperials
+	if (CWs.PlayerAllegiance == CWs.iImperials && !GiveOpposite) || (CWs.PlayerAllegiance == CWs.iSons && GiveOpposite)
 		ActorRef.setOutfit(CWMission06TurncoatGuardImperialOutfit)
 			
 	Else
@@ -236,7 +237,7 @@ endfunction
 function AddDisaffectedSoldierToPotentialAlly(ReferenceAlias refAlias)
 	if refAlias.GetActorReference() != none && !refAlias.GetActorReference().IsDead()
 		refAlias.GetActorRef().ResetHealthAndLimbs()
-		giveNewOutfit(refAlias.GetActorRef())
+		giveNewOutfit(refAlias.GetActorRef(), true)
 		cws.CWAlliesS.AddPotentialAlly(refAlias.GetActorRef(), \
 			AllowedInHaafingar = False, \
 			AllowedInReach = True, \

@@ -1757,6 +1757,11 @@ ReferenceAlias Property Alias_WhiterunAttackerRikke Auto
 ReferenceAlias Property Alias_WhiterunDefenderGalmar Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_21
 Function Fragment_21()
 ;BEGIN AUTOCAST TYPE CWSiegeScript

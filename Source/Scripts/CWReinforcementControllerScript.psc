@@ -128,6 +128,13 @@ ReferenceAlias[] RespawnSoldierArray
 int RespawnSoldierArray_Front
 int RespawnSoldierArray_Rear
 
+Actor[] CleanupActors
+int NextFaction
+int MaxExtraSoldiersPerPhase = 0
+int ExtraSoldiersAdded = 0
+int nextSoldierCount = 0
+int iCleanupActors = 0
+
 bool function RespawnSoldierArray_IsFull()
 	return RespawnSoldierArray_Rear >= 40 - 1
 EndFunction
@@ -198,9 +205,15 @@ Event OnInit()
 	CWs = CW as CWscript
 	
 	RespawnSoldierArray = new ReferenceAlias[40]
+	CleanupActors = new Actor[100]
 	RespawnSoldierArray_Front = -1 
 	RespawnSoldierArray_Rear = -1
 	iterating = false
+	NextFaction = Utility.RandomInt(1,2)
+	iCleanupActors = 0
+	ExtraSoldiersAdded = 0
+    nextSoldierCount = 0
+	MaxExtraSoldiersPerPhase = 0
 ; 	CWScript.Log("CWReinforcementControllerScript", self + "OnInit()", 0, true, true)
 		
 EndEvent
@@ -266,6 +279,139 @@ function registerDeath(ReferenceAlias DeadAlias)			;called in OnDeath event of t
 
 	
 EndFunction
+
+event onUpdate()
+	if GetState() == "StopSpawning" || iCleanupActors >= CleanupActors.Length || ExtraSoldiersAdded >= MaxExtraSoldiersPerPhase
+		return
+	endif
+	if nextSoldierCount < 3 || GetState() == "Respawning"
+		nextSoldierCount = nextSoldierCount+1
+		return
+	endif
+	ObjectReference RespawnPoint
+	bool IsAttacking
+	if (NextFaction == CWs.iImperials &&  CWs.ImperialsAreAttacking(AttackPoint)) || (NextFaction == CWs.iSons && CWs.SonsAreAttacking(AttackPoint))
+		RespawnPoint = GetAttackerSpawnRef(none)
+		IsAttacking = true
+	else
+		RespawnPoint = GetDefenderSpawnRef(none)
+		IsAttacking = false
+	endif
+
+	CleanupActors[iCleanupActors] = PlaceSoldierAtPointAndAttack(RespawnPoint, NextFaction, IsAttacking)
+
+	if (NextFaction == CWs.iImperials)
+		NextFaction = CWs.iSons
+	else
+		NextFaction = CWs.iImperials
+	endif
+	iCleanupActors = iCleanupActors + 1
+	ExtraSoldiersAdded = ExtraSoldiersAdded + 1
+
+	nextSoldierCount = 0
+EndEvent
+
+
+Actor function PlaceSoldierAtPointAndAttack(ObjectReference SpawnPoint, int FactionToAdd, bool IsAttacking)
+	Actor NewSoldier
+	if (FactionToAdd == CWs.iImperials)
+		NewSoldier = SpawnPoint.PlaceActorAtMe(CWs.CWSoldierImperialNotGuard)
+	else
+		NewSoldier = SpawnPoint.PlaceActorAtMe(CWs.CWSoldierSonsNotGuard)
+	endif
+	Actor SoldierToAttack = GetRandomReferenceToAttack(!IsAttacking, CWs.PlayerAllegiance != FactionToAdd)
+	if (SoldierToAttack != none)
+		NewSoldier.StartCombat(SoldierToAttack)
+	endif
+	return NewSoldier
+endFunction
+
+Actor Function GetRandomReferenceToAttack(bool GetAttackers, bool AddPlayer)
+	int randomMax = 20
+	if (AddPlayer)
+		randomMax = 21
+	endif
+
+	int rand = Utility.RandomInt(1, randomMax)
+
+	int numTries = 0
+
+	Actor FoundActor = none
+	while numTries < 10 || FoundActor != none
+		if (rand == 1)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A1, D1)
+		elseif (rand == 2)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A2, D2)
+		elseif (rand == 3)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A3, D3)
+		elseif (rand == 4)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A4, D4)
+		elseif (rand == 5)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A5, D5)
+		elseif (rand == 6)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A6, D6)
+		elseif (rand == 7)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A7, D7)
+		elseif (rand == 8)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A8, D8)
+		elseif (rand == 9)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A9, D9)
+		elseif (rand == 10)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A10, D10)
+		elseif (rand == 11)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A11, D11)
+		elseif (rand == 12)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A12, D12)
+		elseif (rand == 13)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A13, D13)
+		elseif (rand == 14)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A14, D14)
+		elseif (rand == 15)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A15, D15)
+		elseif (rand == 16)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A16, D16)
+		elseif (rand == 17)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A17, D17)
+		elseif (rand == 18)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A18, D18)
+		elseif (rand == 19)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A19, D19)
+		elseif (rand == 20)
+			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A20, D20)
+		else
+			return Game.GetPlayer()
+		endif
+		numTries = numTries + 1
+	endWhile
+
+	return FoundActor
+
+EndFunction
+
+Actor function ReturnAttackerOrDefenderIfAlive(bool GetAttackers, ReferenceAlias Attacker, ReferenceAlias Defender)
+	if (GetAttackers && IsAliasAlive(Attacker) == 1)
+		return Attacker.GetActorRef()
+	elseif (!GetAttackers && IsAliasAlive(Defender) == 1)
+		return Defender.GetActorRef()
+	endif
+	return none
+EndFunction
+
+function ResetPhaseExtraAttackers()
+	ExtraSoldiersAdded = 0
+	MaxExtraSoldiersPerPhase = CWCampaignS.CWOEnableAdditionalSoldiers.GetValueInt()
+EndFunction
+
+function DeleteAndCleanUpExtraActors()
+
+	While iCleanupActors
+		iCleanupActors = iCleanupActors - 1
+		Actor ActorToCleanUp = CleanupActors[iCleanupActors]
+		ActorToCleanUp.Disable()
+		ActorToCleanUp.DeleteWhenAble()
+		ActorToCleanUp = none
+	endwhile
+endfunction
 
 function tryToRespawnAliass()
 
@@ -842,10 +988,12 @@ ObjectReference Function GetAttackerSpawnRef(ReferenceAlias AliasToCheckFor)
 	actor playerActor = Game.GetPlayer() as actor
 	
  	CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef()  " )
-	
-	ObjectReference PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
-	ObjectReference ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
-	
+	ObjectReference PrioritySpawn
+	ObjectReference ForcedSpawn
+	if AliasToCheckFor != none
+		PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
+		ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
+	endif
 	if ForcedSpawn
  		CWScript.Log("CWReinforcementControllerScript", self + "GetAttackerSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)
 		return ForcedSpawn
@@ -885,8 +1033,12 @@ ObjectReference Function GetDefenderSpawnRef(ReferenceAlias AliasToCheckFor)
 	
  	CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef()  " )
 	
-	ObjectReference PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
-	ObjectReference ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
+	 ObjectReference PrioritySpawn
+	 ObjectReference ForcedSpawn
+	 if AliasToCheckFor != none
+		 PrioritySpawn =	TryToGetPrioritySpawnLinkedRef(AliasToCheckFor)
+		 ForcedSpawn =	TryToGetForcedSpawnLinkedRef(AliasToCheckFor)
+	 endif
 	
 	if ForcedSpawn
  		CWScript.Log("CWReinforcementControllerScript", self + "GetDefenderSpawnRef() playerActor.HasLOS(ForcedSpawn) == False, returning " + ForcedSpawn)

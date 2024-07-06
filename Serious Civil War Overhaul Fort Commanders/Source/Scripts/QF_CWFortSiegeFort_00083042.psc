@@ -1723,6 +1723,8 @@ kmyquest.DisableAllAliases()
 kmyquest.DisableInteriorDefenders()
 kmyquest.DisableBarricades()
 
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
+
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 1
 ; 	CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling CWScript StopCWCitizensFlee()")
 	kmyquest.CWs.StopCWCitizensFlee()

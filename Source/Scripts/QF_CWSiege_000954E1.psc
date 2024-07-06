@@ -1747,6 +1747,11 @@ ReferenceAlias Property Alias_SolitudeDisableNearbyGarrisonEnableMarker3 Auto
 LocationAlias Property Alias_CapitalHQ Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
 ;BEGIN FRAGMENT Fragment_21
 Function Fragment_21()
 ;BEGIN AUTOCAST TYPE CWSiegeScript
@@ -2138,7 +2143,7 @@ CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase5A, Alias_RespawnAttackerPhase5B, Alias_RespawnAttackerPhase5C, Alias_RespawnAttackerPhase5D, Alias_RespawnAttackerPhase5FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase5A, Alias_RespawnDefenderPhase5B, Alias_RespawnDefenderPhase5C, Alias_RespawnDefenderPhase5D, Alias_RespawnDefenderPhase5FailSafe)
-
+CWReinforcementControllerS.ResetPhaseExtraAttackers()
 
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
@@ -2452,6 +2457,8 @@ Alias_NonRespawningDefenderSons4.TryToDisable()
 Alias_NonRespawningDefenderSons5.TryToDisable()
 Alias_NonRespawningDefenderSons6.TryToDisable()
 
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
+
 else
 	;If defense
 
@@ -2729,6 +2736,8 @@ Alias_NonRespawningDefenderSons3.TryToDisable()
 Alias_NonRespawningDefenderSons4.TryToDisable()
 Alias_NonRespawningDefenderSons5.TryToDisable()
 Alias_NonRespawningDefenderSons6.TryToDisable()
+
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
 
 
 ;THIS ALSO HAPPENS IN STAGE 200
@@ -3771,7 +3780,7 @@ CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase2A, Alias_RespawnAttackerPhase2B, Alias_RespawnAttackerPhase2C, Alias_RespawnAttackerPhase2D, Alias_RespawnAttackerPhase2FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase2A, Alias_RespawnDefenderPhase2B, Alias_RespawnDefenderPhase2C, Alias_RespawnDefenderPhase2D, Alias_RespawnDefenderPhase2FailSafe)
-
+CWReinforcementControllerS.ResetPhaseExtraAttackers()
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
@@ -4130,7 +4139,7 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers initial spawn point
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase1A, Alias_RespawnAttackerPhase1B, Alias_RespawnAttackerPhase1C, Alias_RespawnAttackerPhase1D, Alias_RespawnAttackerPhase1FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase1A, Alias_RespawnDefenderPhase1B, Alias_RespawnDefenderPhase1C, Alias_RespawnDefenderPhase1D, Alias_RespawnDefenderPhase1FailSafe)
-
+CWReinforcementControllerS.ResetPhaseExtraAttackers()
 
 ;</Respawn set up>-------------------------
 
@@ -4292,7 +4301,7 @@ CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase3A, Alias_RespawnAttackerPhase3B, Alias_RespawnAttackerPhase3C, Alias_RespawnAttackerPhase3D, Alias_RespawnAttackerPhase3FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase3A, Alias_RespawnDefenderPhase3B, Alias_RespawnDefenderPhase3C, Alias_RespawnDefenderPhase3D, Alias_RespawnDefenderPhase3FailSafe)
-
+CWReinforcementControllerS.ResetPhaseExtraAttackers()
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
@@ -4627,7 +4636,7 @@ CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase4A, Alias_RespawnAttackerPhase4B, Alias_RespawnAttackerPhase4C, Alias_RespawnAttackerPhase4D, Alias_RespawnAttackerPhase4FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase4A, Alias_RespawnDefenderPhase4B, Alias_RespawnDefenderPhase4C, Alias_RespawnDefenderPhase4D, Alias_RespawnDefenderPhase4FailSafe)
-
+CWReinforcementControllerS.ResetPhaseExtraAttackers()
 ;EVP EVERYONE
 Alias_Attacker1General.TryToEvaluatePackage()
 Alias_Attacker2.TryToEvaluatePackage()
