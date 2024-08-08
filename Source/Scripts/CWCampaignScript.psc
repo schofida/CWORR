@@ -278,6 +278,7 @@ GlobalVariable Property CWOEnemyDefenderScaleMult Auto
 GlobalVariable Property CWOCampaignPhaseMax Auto
 GlobalVariable Property CWODisableNotifications Auto
 GlobalVariable Property CWOEnableAdditionalSoldiers Auto
+GlobalVariable Property CWODisableMinorCapitalStuff Auto
 ;New Packages for CO's
 Package Property CWGalmarAtCampWhiterun Auto
 Package Property CWRikkeAtCampWhiterun Auto

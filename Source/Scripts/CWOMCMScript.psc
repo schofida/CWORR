@@ -53,6 +53,8 @@ GlobalVariable Property CWODisableSolitudeSiege Auto
 GlobalVariable Property CWODisableFaint Auto
 GlobalVariable Property CWODisableNotifications Auto
 GlobalVariable Property CWOEnableAdditionalSoldiers Auto
+GlobalVariable Property CWODisableFriendlyFire Auto
+GlobalVariable Property CWODisableMinorCapitalStuff Auto
 LeveledItem Property LItemArmorCuirassLightSpecial Auto
 LeveledItem Property LItemArmorCuirassHeavySpecial Auto
 LeveledItem Property LItemArmorShieldLightSpecial Auto
@@ -105,6 +107,9 @@ int optionsPayCrimeFaction
 int optionsStopMusic
 int optionsFixFactionAggression
 int optionsFixWhiterunBridge
+int optionsEnableAdditionalSoldiers
+int optionsDisableFriendlyFire
+int optionsDisableMinorCapitalStuff
 
 Float _sliderPercent = 100.000
 
@@ -305,6 +310,14 @@ function OnOptionSelect(Int a_option)
 			CWODisableWindhelmSiege.SetValueInt(0)
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
+	elseif a_option == optionsDisableMinorCapitalStuff
+		if CWODisableMinorCapitalStuff.GetValueInt() == 0
+			CWODisableMinorCapitalStuff.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableMinorCapitalStuff.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
 	elseif a_option == optionsCWODisableFortSiegeFort
 		if CWODisableFortSiegeFort.GetValueInt() == 0
 			CWODisableFortSiegeFort.SetValueInt(1)
@@ -363,6 +376,14 @@ function OnOptionSelect(Int a_option)
 		CWOApolloFixMe.Reset()
 		CWOApolloFixMe.SetStage(50)
 		self.SetToggleOptionValue(a_option, optionsFixWhiterunBridgeToggle, false)
+	elseif a_option == optionsEnableAdditionalSoldiers
+		if CWODisableFriendlyFire.GetValueInt() == 0
+			CWODisableFriendlyFire.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableFriendlyFire.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
 	endIf
 endFunction
 
@@ -433,6 +454,11 @@ function OnOptionSliderOpen(Int a_option)
 		self.SetSliderDialogStartValue(CWOCourierHoursMax.GetValueInt() as Float)
 		self.SetSliderDialogDefaultValue(124 as Float)
 		self.SetSliderDialogRange(2 as Float, 124 as Float)
+		self.SetSliderDialogInterval(1 as Float)
+	elseIf a_option == optionsEnableAdditionalSoldiers
+		self.SetSliderDialogStartValue(CWOEnableAdditionalSoldiers.GetValueInt() as Float)
+		self.SetSliderDialogDefaultValue(20 as Float)
+		self.SetSliderDialogRange(0 as Float, 20 as Float)
 		self.SetSliderDialogInterval(1 as Float)
 	endIf
 endFunction
@@ -626,6 +652,7 @@ function OnPageReset(String a_page)
 		optionsPlayerDefenderScaleMult = self.AddSlideroption("Player Defending Scale Mult", CWOPlayerDefenderScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyAttackerScaleMult = self.AddSlideroption("Enemy Attacking Scale Mult", CWOEnemyAttackerScaleMult.GetValue() as Float, "{1}", 0)
 		optionsEnemyDefenderScaleMult = self.AddSlideroption("Enemy Defending Scale Mult", CWOEnemyDefenderScaleMult.GetValue() as Float, "{1}", 0)
+		optionsEnableAdditionalSoldiers = self.AddSliderOption("Additional soldiers per phase", CWOEnableAdditionalSoldiers.GETValue() as  Float, "{1}",0)
 		optionsCampaignPhaseMax = self.AddMenuOption("Campaign Phase Max", CWOCampaignPhaseMaxVal, 0)
 		optionsPartyCrashersChance = self.AddSlideroption("PARTY CRASHERS chance", CWOPCChance.GetValueInt() as Float, "{0}%", 0)
 		optionsBAChance = self.AddSlideroption("Benedict Arnold Spies Chance", CWOBAChance.GetValueInt() as Float, "{0}%", 0)
@@ -634,6 +661,7 @@ function OnPageReset(String a_page)
 		optionsCourierHoursMax = self.AddSlideroption("Courier Hours Max", CWOCourierHoursMax.GetValueInt() as Float, "{0}", 0)
 		optionsDisguiseGameType = self.AddMenuOption("Disguise Mechanic:", " ", 0)
 		optionsDisableFaint = self.AddToggleOption("Disable Player 'Bleedout':", CWODisableFaint.GetValueInt() == 1, 0)
+		optionsDisableFriendlyFire = self.AddToggleOption("Disable Friendly Fire:", CWODisableFriendlyFire.GetValueInt() == 1, 0)
 		optionsStartSiege = self.AddMenuOption("Force campaign here:", " ", 0)
 		optionsWinSiege = self.AddToggleOption("Win running siege:", optionsToggleCWWinBattle, 0)
 		optionsWinHold = self.AddMenuOption("Win Hold here:", " ", 0)
@@ -658,6 +686,7 @@ function OnPageReset(String a_page)
 		optionsCWODisableFortSiegeFort = self.AddToggleOption("Fort Siege Quest", CWODisableFortSiegeFort.GetValueInt() == 1, 0)
 		optionsCWODisableSolitudeSiege = self.AddToggleOption("Solitude Exterior Siege", CWODisableSolitudeSiege.GetValueInt() == 1, 0)
 		optionsCWODisableWindhelmSiege = self.AddToggleOption("Windhelm Exterior Siege", CWODisableWindhelmSiege.GetValueInt() == 1, 0)
+		optionsDisableMinorCapitalStuff = self.AddToggleOption("Minor Capital Siege", CWODisableMinorCapitalStuff.GetValueInt() == 1, 0)
 	endIf
 endFunction
 
@@ -927,6 +956,10 @@ function OnOptionHighlight(Int a_option)
 		SetInfoText("This fixes an issue where CWO is installed on an existing game and for some reason, the Player is set as an enemy to enemy towns. Ticking this will stop the disguise and set enemies to neutral. Please close the MCM after selecting.")
 	elseif a_option == optionsFixWhiterunBridge
 		SetInfoText("Fixes vanilla issue where the Whiterun Drawbridge is closed after the Whiterun Siege is over. Please close the MCM after selecting.")
+	elseif a_option == optionsEnableAdditionalSoldiers
+		SetInfoText("Tosses additional troops during sieges. They are not added in the beginning but should be thrown in as the siege progresses. Set to 0 to disable.")
+	elseif a_option == optionsDisableFriendlyFire
+		SetInfoText("Ignores damage to fellow troops from the player. Only effective during sieges and select missions")
 	endIf
 endFunction
 
