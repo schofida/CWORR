@@ -1513,7 +1513,9 @@ kmyquest.RegisterSonsDefenderAliases(Alias_DefenderSons1, Alias_DefenderSons2, A
 kmyquest.RegisterAttackerAliases(Alias_Attacker1, Alias_Attacker2, Alias_Attacker3, Alias_Attacker4, Alias_Attacker5, Alias_Attacker6, Alias_Attacker7, Alias_Attacker8, Alias_Attacker9, Alias_Attacker10)
 kmyquest.RegisterDefenderAliases(Alias_Defender1, Alias_Defender2, Alias_Defender3, Alias_Defender4, Alias_Defender5, Alias_Defender6, Alias_Defender7, Alias_Defender8, Alias_Defender9, Alias_Defender10)
 
-kmyquest.RegisterGenericAliases(Alias_BarricadeNormal1, Alias_BarricadeNormal2, Alias_BarricadeNormal3, Alias_BarricadeNormal4, Alias_BarricadeNormal5, Alias_BarricadeNormal6, Alias_BarricadeNormal7, Alias_BarricadeNormal8, Alias_BarricadeNormal9, Alias_BarricadeNormal10, Alias_BarricadeNormal11, Alias_BarricadeNormal12, Alias_BarricadeNormal13, Alias_BarricadeNormal14, Alias_BarricadeNormal15, Alias_BarricadeNormal16)
+if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 1 || kmyQuest.CWs.CWCampaignS.CWODisableMinorCapitalStuff.GetValueInt() != 1
+	kmyquest.RegisterGenericAliases(Alias_BarricadeNormal1, Alias_BarricadeNormal2, Alias_BarricadeNormal3, Alias_BarricadeNormal4, Alias_BarricadeNormal5, Alias_BarricadeNormal6, Alias_BarricadeNormal7, Alias_BarricadeNormal8, Alias_BarricadeNormal9, Alias_BarricadeNormal10, Alias_BarricadeNormal11, Alias_BarricadeNormal12, Alias_BarricadeNormal13, Alias_BarricadeNormal14, Alias_BarricadeNormal15, Alias_BarricadeNormal16)
+endif
 
 CWScript.Log("CWFortSiege", "Stage 0: Calling SetUpAliases()")
 kmyquest.SetUpAliases(Alias_Fort.GetLocation())
@@ -1569,6 +1571,32 @@ kmyquest.CWs.CWAlliesS.ProcessAlliesForSiege(Alias_Hold.GetLocation())
 CWScript.Log("CWSiegeQuestFragmentScript", self + "Done Setting up Special Allies.")	;*** WRITE TO LOG
 
 ;</Special Allies> ---------------
+
+Alias_Barricade1.TryToReset()
+if Alias_Barricade1.GetReference() != none
+	Alias_Barricade1.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade1.TryToDisableNoWait()
+Alias_Barricade2.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade2.GetReference() != none
+	Alias_Barricade2.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade2.TryToDisableNoWait()
+Alias_Barricade3.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade3.GetReference() != none
+	Alias_Barricade3.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade3.TryToDisableNoWait()
+Alias_Barricade4.TryToReset() ;Reddit bugfix #15
+if Alias_Barricade4.GetReference() != none
+	Alias_Barricade4.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade4.TryToDisableNoWait()
+Alias_Barricade5.TryToReset()  ;Reddit bugfix #15
+if Alias_Barricade5.GetReference() != none
+	Alias_Barricade5.GetReference().ClearDestruction() ;Reddit bugfix #15
+endif
+Alias_Barricade5.TryToDisableNoWait()
 
 ;go ahead and "accept the quest" if we are a special fort siege (IE not the normal Mission version, but the final attack inside the city for Solitude and Windhelm)
 ;and start the CWCitizensFlee quest to put the citizens in their editor locations
@@ -1763,6 +1791,14 @@ endIf
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
+
+if kmyQuest.CWs.CWCampaignS.CWODisableMinorCapitalStuff.GetValueInt() != 1
+	Alias_Barricade1.TryToEnable()
+	Alias_Barricade2.TryToEnable()
+	Alias_Barricade3.TryToEnable()
+	Alias_Barricade4.TryToEnable()
+	Alias_Barricade5.TryToEnable()
+endif
 
 if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
 	debug.Notification("Getting CW Siege soldiers are now in position. You may now fast travel.")
@@ -2201,6 +2237,12 @@ CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): Calling DisableAllAlia
 kmyquest.DisableAllAliases()
 kmyquest.DisableInteriorDefenders()
 kmyquest.DisableBarricades()
+
+Alias_Barricade1.TryToDisable()
+Alias_Barricade2.TryToDisable()
+Alias_Barricade3.TryToDisable()
+Alias_Barricade4.TryToDisable()
+Alias_Barricade5.TryToDisable()
 
 CWScript.Log("CWFortSiege", "Stage 9999 (shutdown phase): removing aliases from CWSurrentTemporaryAllies faction")
 ;make them temporarily allies
