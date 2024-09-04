@@ -55,6 +55,9 @@ GlobalVariable Property CWODisableNotifications Auto
 GlobalVariable Property CWOEnableAdditionalSoldiers Auto
 GlobalVariable Property CWODisableFriendlyFire Auto
 GlobalVariable Property CWODisableMinorCapitalStuff Auto
+GlobalVariable Property CWODisableMinorSieges Auto
+GlobalVariable Property CWODisableMarkarthSiege Auto
+GlobalVariable Property CWODisableRiftenSiege Auto
 LeveledItem Property LItemArmorCuirassLightSpecial Auto
 LeveledItem Property LItemArmorCuirassHeavySpecial Auto
 LeveledItem Property LItemArmorShieldLightSpecial Auto
@@ -101,6 +104,9 @@ int optionsCWODisableCWMission09
 int optionsCWODisableFortSiegeFort
 int optionsCWODisableWindhelmSiege
 int optionsCWODisableSolitudeSiege
+int optionsCWODisableMarkthSiege
+int optionsCWODisableRiftenSiege
+int optionsCWODisableMinorSieges
 int optionsDisableFaint
 int optionsDisableNotifications
 int optionsPayCrimeFaction
@@ -338,6 +344,30 @@ function OnOptionSelect(Int a_option)
 			self.SetToggleOptionValue(a_option, true, false)
 		else
 			CWODisableSolitudeSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableMarkthSiege
+		if CWODisableMarkarthSiege.GetValueInt() == 0
+			CWODisableMarkarthSiege.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableMarkarthSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableRiftenSiege
+		if CWODisableRiftenSiege.GetValueInt() == 0
+			CWODisableRiftenSiege.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableRiftenSiege.SetValueInt(0)
+			self.SetToggleOptionValue(a_option, false, false)
+		endif
+	elseif a_option == optionsCWODisableMinorSieges
+		if CWODisableMinorSieges.GetValueInt() == 0
+			CWODisableMinorSieges.SetValueInt(1)
+			self.SetToggleOptionValue(a_option, true, false)
+		else
+			CWODisableMinorSieges.SetValueInt(0)
 			self.SetToggleOptionValue(a_option, false, false)
 		endif
 	elseif a_option == optionsDisableFaint
@@ -686,7 +716,10 @@ function OnPageReset(String a_page)
 		optionsCWODisableFortSiegeFort = self.AddToggleOption("Fort Siege Quest", CWODisableFortSiegeFort.GetValueInt() == 1, 0)
 		optionsCWODisableSolitudeSiege = self.AddToggleOption("Solitude Exterior Siege", CWODisableSolitudeSiege.GetValueInt() == 1, 0)
 		optionsCWODisableWindhelmSiege = self.AddToggleOption("Windhelm Exterior Siege", CWODisableWindhelmSiege.GetValueInt() == 1, 0)
-		optionsDisableMinorCapitalStuff = self.AddToggleOption("Minor Capital Siege", CWODisableMinorCapitalStuff.GetValueInt() == 1, 0)
+		optionsDisableMinorCapitalStuff = self.AddToggleOption("Minor Capital Extra Obstacles/Clutter", CWODisableMinorCapitalStuff.GetValueInt() == 1, 0)
+		optionsCWODisableMarkthSiege = self.AddToggleOption("Markath Siege", CWODisableMarkarthSiege.GetValueInt() == 1, 0)
+		optionsCWODisableRiftenSiege = self.AddToggleOption("Riften Siege", CWODisableRiftenSiege.GetValueInt() == 1, 0)
+		optionsCWODisableMinorSieges = self.AddToggleOption("Minor Capital Sieges", CWODisableMinorSieges.GetValueInt() == 1, 0)
 	endIf
 endFunction
 
@@ -960,6 +993,14 @@ function OnOptionHighlight(Int a_option)
 		SetInfoText("Tosses additional troops during sieges. They are not added in the beginning but should be thrown in as the siege progresses. Set to 0 to disable.")
 	elseif a_option == optionsDisableFriendlyFire
 		SetInfoText("Ignores damage to fellow troops from the player. Only effective during sieges and select missions")
+	elseif a_option == optionsCWODisableMarkthSiege
+		SetInfoText("Skips the new Siege at Markath. Just takes The Reach after the quests and moves onto the next hold")
+	elseif a_option == optionsCWODisableRiftenSiege
+		SetInfoText("Skips the new Siege at Riften. Just takes The Rift after the quests and moves onto the next hold")
+	elseif a_option == optionsDisableMinorCapitalStuff
+		SetInfoText("CWO Adds barricades and extra clutter to minor capitals. Toggle on and off")
+	elseif a_option == optionsCWODisableMinorSieges
+		SetInfoText("Skips the new Sieges at Falkreath, Dawnstar, Morthal, and Winterhold")
 	endIf
 endFunction
 
@@ -1052,14 +1093,18 @@ function CompleteRunningCampaign(bool failQuests = false)
 	endWhile
 	if wait >= 30
 		debug.notification("Waited 30 seconds to start the hold siege put it never started. Please notify author.")
-	endif
-	debug.notification("Completing Hold Siege")
-	if failQuests
-		CWs.CWCampaignS.FailCWSieges()
+		CWs.CWCampaignS.AddGeneralToRewardFaction()
+		Location contestedHoldLocation = cws.GetLocationForHold(cws.CWContestedHold.GetValueInt())
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(contestedHoldLocation, CWs.GetOwner(contestedHoldLocation) != cws.playerAllegiance, CWs.GetOwner(contestedHoldLocation) == cws.playerAllegiance)
 	else
-		CWs.CWCampaignS.CompleteCWSieges()
+		debug.notification("Completing Hold Siege")
+		if failQuests
+			CWs.CWCampaignS.FailCWSieges()
+		else
+			CWs.CWCampaignS.CompleteCWSieges()
+		endif
+		debug.notification("Hold Siege Completed")
 	endif
-	debug.notification("Hold Siege Completed")
 endfunction
 
 ; Skipped compiler generated GetState

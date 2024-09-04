@@ -279,6 +279,9 @@ GlobalVariable Property CWOCampaignPhaseMax Auto
 GlobalVariable Property CWODisableNotifications Auto
 GlobalVariable Property CWOEnableAdditionalSoldiers Auto
 GlobalVariable Property CWODisableMinorCapitalStuff Auto
+GlobalVariable Property CWODisableMinorSieges Auto
+GlobalVariable Property CWODisableMarkarthSiege Auto
+GlobalVariable Property CWODisableRiftenSiege Auto
 ;New Packages for CO's
 Package Property CWGalmarAtCampWhiterun Auto
 Package Property CWRikkeAtCampWhiterun Auto
@@ -1213,11 +1216,15 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 		FieldCOToStart = CWs.FieldCO.GetReference()
 	endif
 
-	If CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0 ;capital is a city (note the debugTreatCityCapitalsAsTowns)
+	bool siegeStarted
+
+	If (CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0) && \
+		(Capital.GetLocation() == CWs.RiftenLocation && CWODisableRiftenSiege.GetValueInt() == 0) && \
+		(Capital.GetLocation() == CWs.MarkarthLocation && CWODisableMarkarthSiege.GetValueInt() == 0) ;capital is a city (note the debugTreatCityCapitalsAsTowns)
 		;CWO - This might not have worked before. Added FieldCO
 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart + " FieldCO " + FieldCOToStart)
-		CWs.CWSiegeStart.SendStoryEvent(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
-	
+		siegeStarted = CWs.CWSiegeStart.SendStoryEventAndWait(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
+		
 	;	if Capital.GetLocation() == CWs.WhiterunLocation 	;ADD || OTHER CITY HERE
 ; 	;		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting attack on Whiterun.")
 	;		CWSiegeStart.SendStoryEvent(Capital.GetLocation())	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
@@ -1229,13 +1236,20 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 	;			
 	;	EndIf
 
-	Else
+	Elseif (CWODisableMinorSieges.GetValueInt() == 0)
 		; code	;start an Attack the Capital Settlement resolution quest
 		;CWO - Resolution Quests do not really work so kicking off the CWFortSiegeMinorCapitalStart
  		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWFortSiegeMinorCapitalStart for " + CapitalToStart + " FieldCO " + FieldCOToStart + " CampaignStartMarker " + CampaignStartMarkerToStart)
-		CWs.CWFortSiegeMinorCapitalStart.SendStoryEvent(CapitalToStart, FieldCOToStart, CampaignStartMarkerToStart) 
+		siegeStarted = CWs.CWFortSiegeMinorCapitalStart.SendStoryEventAndWait(CapitalToStart, FieldCOToStart, CampaignStartMarkerToStart) 
 	
 	EndIf
+
+	if !siegeStarted
+		debug.notification("Waited 30 seconds to start the hold siege put it never started (or toggled off). Winning hold automatically.")
+		Location contestedHoldLocation = cws.GetLocationForHold(cws.CWContestedHold.GetValueInt())
+		AddGeneralToRewardFaction(CapitalToStart)
+		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(contestedHoldLocation, CWs.GetOwner(contestedHoldLocation) != cws.playerAllegiance, CWs.GetOwner(contestedHoldLocation) == cws.playerAllegiance)
+	endif
 
 EndFunction
 
@@ -2624,8 +2638,17 @@ function EnableLydiaAfterSiege()
 	HousecarlWhiterunRef.Enable()
 endfunction
 
-function AddGeneralToRewardFaction(Location City)
+function AddGeneralToRewardFaction(Location ParamCity = none)
 	Actor General
+
+
+	Location City
+	If ParamCity != none
+		City = ParamCity
+	else
+		City = Capital.GetLocation()
+	endif
+
 	if CWs.PlayerAllegiance == CWs.iImperials
 		General = CWs.GeneralTulliusRef
 	else
