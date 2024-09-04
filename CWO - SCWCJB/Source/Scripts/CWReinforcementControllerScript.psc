@@ -227,6 +227,10 @@ State StopSpawning
 				
  		CWScript.Log("CWReinforcementControllerScript", self + "registerDeath(" + DeadAlias + ") [in state 'StopSpawning'] so will do nothing.")
 	EndFunction
+
+	function onUpdate()
+		;Do Nothing
+	EndFunction
 EndState
 
 
@@ -240,6 +244,10 @@ State Respawning
 		
 		RespawnSoldierArray_enQueue(DeadAlias)
 
+	EndFunction
+
+	function onUpdate()
+		;Do Nothing
 	EndFunction
 
 EndState
@@ -281,13 +289,16 @@ function registerDeath(ReferenceAlias DeadAlias)			;called in OnDeath event of t
 EndFunction
 
 event onUpdate()
-	if GetState() == "StopSpawning" || iCleanupActors >= CleanupActors.Length || ExtraSoldiersAdded >= MaxExtraSoldiersPerPhase
+	CWScript.Log("CWReinforcementControllerScript", self + "onUpdate() Called")
+
+
+	if iCleanupActors >= CleanupActors.Length || ExtraSoldiersAdded >= MaxExtraSoldiersPerPhase || !RespawnSoldierArray_IsEmpty()
+		CWScript.Log("CWReinforcementControllerScript", self + "Bailing Out 1. " + iCleanupActors + " " + ExtraSoldiersAdded + " " + MaxExtraSoldiersPerPhase)
 		return
 	endif
-	if nextSoldierCount < 3 || GetState() == "Respawning"
-		nextSoldierCount = nextSoldierCount+1
-		return
-	endif
+
+	GoToState("Respawning")	
+
 	ObjectReference RespawnPoint
 	bool IsAttacking
 	if (NextFaction == CWs.iImperials &&  CWs.ImperialsAreAttacking(AttackPoint)) || (NextFaction == CWs.iSons && CWs.SonsAreAttacking(AttackPoint))
@@ -300,6 +311,7 @@ event onUpdate()
 
 	CleanupActors[iCleanupActors] = PlaceSoldierAtPointAndAttack(RespawnPoint, NextFaction, IsAttacking)
 
+	CWScript.Log("CWReinforcementControllerScript", self + "Spawned Soldier . " + CleanupActors[iCleanupActors] + " RespawnPoint " + RespawnPoint + " NextFaction " + NextFaction + " IsAttacking " + IsAttacking)
 	if (NextFaction == CWs.iImperials)
 		NextFaction = CWs.iSons
 	else
@@ -309,6 +321,11 @@ event onUpdate()
 	ExtraSoldiersAdded = ExtraSoldiersAdded + 1
 
 	nextSoldierCount = 0
+
+	if GetState() != "StopSpawning" ;reminder case sensative
+		GoToState("none")	
+ 		CWScript.Log("CWReinforcementControllerScript", self + "onUpdate() [in state 'none'] is done respawning and is gone to state 'none'")
+	EndIf
 EndEvent
 
 
@@ -337,7 +354,7 @@ Actor Function GetRandomReferenceToAttack(bool GetAttackers, bool AddPlayer)
 	int numTries = 0
 
 	Actor FoundActor = none
-	while numTries < 10 || FoundActor != none
+	while numTries < 10 && FoundActor == none
 		if (rand == 1)
 			FoundActor = ReturnAttackerOrDefenderIfAlive(GetAttackers, A1, D1)
 		elseif (rand == 2)
