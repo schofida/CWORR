@@ -99,7 +99,9 @@ State WaitingToStartNewCampaign
 
 				CWs.startCampaignQuest(ContestedHold)
 			
-		elseif !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && !(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && CWS.CWCampaign.IsRunning() == False
+		elseif !(CWSiegeQuest as CWSiegeScript).GetQuestStillRunning() && \
+			!(CWSiegeCapitalQuest as CWFortSiegeScript).GetMinorCityQuestStillRunning() && \
+			(CWS.CWCampaign.IsRunning() == False || cws.GetHoldOwner(cws.CWContestedHold.GetValueInt()) == cws.CWAttacker.GetValueInt())
 				GoToState("StartingNewCampaign")
 				CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaign.")
 				cws.cwcampaigns.SetLastStand(0)
@@ -112,7 +114,7 @@ State WaitingToStartNewCampaign
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 0, keep waiting.")
 		
 		EndIf
-		registerforsingleupdate(30)
+		registerforsingleupdate(10)
 	EndEvent
 
 
