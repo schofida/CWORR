@@ -1474,7 +1474,7 @@ CWScript.Log("CWFortSiege", self + "setting WasThisAnAttack")  ;*** WRITE TO LOG
 kmyquest.WasThisAnAttack = kmyquest.IsPlayerAttacking()
 
 if kmyQuest.WasThisAnAttack && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege != 1 && (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
-	debug.notification("Siege is starting. Please wait until done before talking to Officer")
+	kmyQuest.CWSiege1Start.Show()
 endif
 ;CWO - Make attacker/defender objectives appear. CWReinforcementControllerScript does not calculate the troops remaining otherwise 
 ((self as quest) as cwreinforcementcontrollerscript).ShowAttackerPoolObjective = true
@@ -1628,7 +1628,7 @@ else
 
    	kmyQuest.CWS.CWCampaignS.SetReinforcementsMinorCity(kmyQuest)
 	if kmyQuest.WasThisAnAttack && (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0)
-		debug.notification("Siege done setting up. You can talk to CO now")
+		kmyQuest.CWSiege1End.Show()
 	endif
 	Actor JarlActor = Alias_Jarl.GetActorReference()
 	;CWO If player has SKSE, get Jarl's outfit
@@ -1651,7 +1651,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ;END AUTOCAST
 ;BEGIN CODE
 if (kmyQuest.CWs.CWCampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
-	debug.Notification("Getting CW Siege into position. Please wait before fast traveling...")
+	kmyQuest.CWSiege0Start.Show()
 endif
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
@@ -1801,7 +1801,7 @@ if kmyQuest.CWs.CWCampaignS.CWODisableMinorCapitalStuff.GetValueInt() != 1
 endif
 
 if (kmyQuest.CWs.CWcampaignS.CWODisableNotifications.GetValueInt() == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0)
-	debug.Notification("Getting CW Siege soldiers are now in position. You may now fast travel.")
+	kmyQuest.CWSiege0End.Show()
 endif
 
 ;END CODE

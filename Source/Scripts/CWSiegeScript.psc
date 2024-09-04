@@ -114,6 +114,11 @@ ReferenceAlias Property CWReservationsBalgruuf Auto
 ReferenceAlias Property CWReservationsProventus Auto
 ReferenceAlias Property CWReservationsIrileth Auto
 
+Message Property CWSiege0Start Auto
+Message Property CWSiege0End Auto
+Message Property CWSiege1Start Auto
+Message Property CWSiege1End Auto
+
 ;"Array" of aliases
 ;rather than declaring these again on all siege scripts, we will create a function that the quest fragment can pass in the Alias_XXX aliases and put them in the "array"
 
