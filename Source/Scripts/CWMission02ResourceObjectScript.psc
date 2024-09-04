@@ -5,6 +5,7 @@ CWMission02Script property CWMission02S auto Hidden
 int Property myType auto Hidden
 int Property primaryResourceType auto Hidden
 int Property DiscoverDistance = 3000 auto Hidden
+Idle Property IdleLockPick auto
 
 ;#### Pointers to things in master file
 
@@ -27,7 +28,7 @@ Event OnActivate(ObjectReference akActionRef)
 		CWMission02Script CWMission02 = GetOwningQuest() as CWMission02Script
 		
 		if RType == 1 || RType == 3		;1 = Wheat Mill(Farm), 2 = Saw Mill, 3 = Smelter(Mine)
-			
+			(akActionRef as Actor).PlayIdle(IdleLockPick)
 			;TEMP HACK TO MAKE IT SABOTAGED WHEN YOU ACTIVATE IT
 			GetReference().DamageObject(9999)
 			CWMission02.CWs.GetFaction(CWMission02.CWs.getOppositeFactionInt(CWMission02.CWs.PlayerAllegiance), false).SendAssaultAlarm()
