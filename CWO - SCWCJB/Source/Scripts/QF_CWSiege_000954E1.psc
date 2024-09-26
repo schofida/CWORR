@@ -2096,8 +2096,7 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 elseif cityVar == kmyquest.CWs.RiftenLocation
 
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - final barricade
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
 
 ;Set Dialog States
 kmyquest.CWStateAttackerAtGate.SetValue(1)
@@ -2157,8 +2156,7 @@ kmyquest.CWStateDefenderLastStand.SetValue(1)
 elseif cityVar == kmyquest.CWs.WindhelmLocation
 
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAY - final barricade
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
 
 ;Set Dialog States
 kmyquest.CWStateAttackerAtGate.SetValue(1)
@@ -4482,7 +4480,8 @@ elseif cityVar == kmyquest.CWs.MarkarthLocation
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1005, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - Follow General
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - Exterior gate
 
 		;CWO
 		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
@@ -4570,7 +4569,8 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 		endif
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1060, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); Displayed - Exterior Gate
 		;CWO
 		Alias_Attacker1General.GetReference().MoveToIfUnloaded(Alias_Barricade1A.GetReference(), 0.000000, 0.000000, 0.000000)
 		;CWO
@@ -4771,8 +4771,7 @@ kmyquest.CWStateAttackerAtGate.SetValue(1)
 elseif cityVar == kmyquest.CWs.MarkarthLocation
 
 	if kmyquest.IsAttack()
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); DISPLAY - Exterior gate
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - Follow General
 
 ;Set Dialog States
 kmyquest.CWStateAttackerAtGate.SetValue(1)
@@ -4805,7 +4804,8 @@ kmyquest.CWStateDefenderFallingBack.SetValue(1)
 
 
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(1070, 1); COMPLETED - barricade
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAY - follow general
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1080, 1); DISPLAY - final barricade
 				;CWO
 				Alias_Attacker1General.GetReference().MoveTo(Alias_Barricade2A.GetReference(), 0.000000, 0.000000, 0.000000, true)
 				;CWO
@@ -4835,8 +4835,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	if kmyquest.IsAttack()
 		;Set Dialog States
 kmyquest.CWStateDefenderFallingBack.SetValue(1)
-		kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1020, 1); COMPLETED - barricade
+		;kmyquest.CWSiegeObj.SetObjectiveCompleted(1015, 1); COMPLETED - follow general
 	else
 		;Currently no defense planned
 	endif
@@ -4851,7 +4850,8 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 			;Do nothing since the player didn't hit the skip trigger.
 		endif
 		kmyquest.CWSiegeObj.SetObjectiveCompleted(3020, 1); COMPLETED - First Gate
-		kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAYED - Last Gate
+		;kmyquest.CWSiegeObj.SetObjectiveDisplayed(1015, 1); DISPLAYED - Follow General
+		kmyquest.CWSiegeObj.SetObjectiveDisplayed(3030, 1); DISPLAY - final barricade
 
 		;Set Dialog States
 		kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
