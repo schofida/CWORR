@@ -233,6 +233,10 @@ function OnOptionSliderAccept(Int a_option, Float a_value)
 		_sliderPercent = a_value
 		self.SetSliderOptionValue(a_option, a_value, "{0}", false)
 		CWOCourierHoursMax.SetValue(a_value)
+	elseIf a_option == optionsEnableAdditionalSoldiers
+		_sliderPercent = a_value
+		self.SetSliderOptionValue(a_option, a_value, "{0}", false)
+		CWOEnableAdditionalSoldiers.SetValue(a_value)
 	endIf
 	ForcePageReset()
 endFunction

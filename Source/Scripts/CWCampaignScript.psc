@@ -1219,8 +1219,8 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 	bool siegeStarted
 
 	If (CapitalToStart.HasKeyword(LocTypeCity)	&& CWs.debugTreatCityCapitalsAsTowns == 0) && \
-		(Capital.GetLocation() == CWs.RiftenLocation && CWODisableRiftenSiege.GetValueInt() == 0) && \
-		(Capital.GetLocation() == CWs.MarkarthLocation && CWODisableMarkarthSiege.GetValueInt() == 0) ;capital is a city (note the debugTreatCityCapitalsAsTowns)
+		!(Capital.GetLocation() == CWs.RiftenLocation && CWODisableRiftenSiege.GetValueInt() == 1) && \
+		!(Capital.GetLocation() == CWs.MarkarthLocation && CWODisableMarkarthSiege.GetValueInt() == 1) ;capital is a city (note the debugTreatCityCapitalsAsTowns)
 		;CWO - This might not have worked before. Added FieldCO
 		CWScript.Log("CWCampaignScript", " StartResolutionMission() starting CWSiegeStart for " + CapitalToStart + " FieldCO " + FieldCOToStart)
 		siegeStarted = CWs.CWSiegeStart.SendStoryEventAndWait(CapitalToStart, FieldCOToStart)	;the story manager handles checking the location, the player's allegiance and who is attacking to start the quests
