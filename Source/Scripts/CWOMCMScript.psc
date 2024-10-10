@@ -1099,7 +1099,12 @@ function CompleteRunningCampaign(bool failQuests = false)
 		debug.notification("Waited 30 seconds to start the hold siege put it never started. Please notify author.")
 		CWs.CWCampaignS.AddGeneralToRewardFaction()
 		Location contestedHoldLocation = cws.GetLocationForHold(cws.CWContestedHold.GetValueInt())
+		CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
+		if CWs.CWCampaign.IsRunning()
+			CWs.SetStage(255)
+		endif
 		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(contestedHoldLocation, CWs.GetOwner(contestedHoldLocation) != cws.playerAllegiance, CWs.GetOwner(contestedHoldLocation) == cws.playerAllegiance)
+		CWs.CWCampaignS.CWOMonitorQuest.GoToState("WaitingToStartNewCampaign")
 	else
 		debug.notification("Completing Hold Siege")
 		if failQuests

@@ -1248,7 +1248,10 @@ Function StartResolutionMission(LocationAlias paramCapitalToStart = none, Object
 		debug.notification("Waited 30 seconds to start the hold siege put it never started (or toggled off). Winning hold automatically.")
 		Location contestedHoldLocation = cws.GetLocationForHold(cws.CWContestedHold.GetValueInt())
 		AddGeneralToRewardFaction(CapitalToStart)
+		CWs.CWDebugForceAttacker.SetValueInt(CWs.PlayerAllegiance)
+		SetStage(255)
 		CWs.WinHoldOffScreenIfNotDoingCapitalBattles(contestedHoldLocation, CWs.GetOwner(contestedHoldLocation) != cws.playerAllegiance, CWs.GetOwner(contestedHoldLocation) == cws.playerAllegiance)
+		CWOMonitorQuest.GotoState("WaitingToStartNewCampaign")
 	endif
 
 EndFunction
