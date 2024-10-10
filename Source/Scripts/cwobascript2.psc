@@ -3,6 +3,8 @@ scriptName CWOBAScript2 extends ReferenceAlias
 faction property CWSoldierNoGuardDialogueFaction auto
 faction property GuardFaction auto
 ReferenceAlias property SpyTarget auto
+Spell property CWOBAEvaluatePackageSpell auto
+Bool property HasFiredEvaluatePackageSpell auto hidden
 ;-- Variables ---------------------------------------
 
 ;-- Functions ---------------------------------------
@@ -85,6 +87,14 @@ event OnUpdate()
 	RegisterForSingleUpdate(3.0)
 endevent
 
+event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, \
+	bool abBashAttack, bool abHitBlocked)
+	if !HasFiredEvaluatePackageSpell && akAggressor == Game.GetPlayer()	;and the player has hit 
+		CWOBAEvaluatePackageSpell.Cast(self.GetActorRef())
+		HasFiredEvaluatePackageSpell = true
+	endif
+EndEvent
+
 event OnInit()
 	Actor Myself = self.GetActorReference()
 	if Myself == none
@@ -104,6 +114,8 @@ event OnInit()
 	endif
 
 	Myself.EvaluatePackage()
+
+	HasFiredEvaluatePackageSpell = false
 
 	RegisterForSingleUpdate(3.0)
 

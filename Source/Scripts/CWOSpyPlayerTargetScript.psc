@@ -25,4 +25,6 @@ Event OnHit(ObjectReference akAggressor, Form akWeapon, Projectile akProjectile,
     (GetOwningQuest() as CWOBAQuestScript).TargetHit = true
     self.GetActorRef().AddItem(CWOBAPoisoned, 1, true)
     self.GetActorRef().EquipItem(CWOBAPoisoned, true, true)
+    (spy1 as cwobascript2).CWOBAEvaluatePackageSpell.Cast(spy1.GetActorRef())
+    (spy1 as cwobascript2).HasFiredEvaluatePackageSpell = true
 EndEvent
