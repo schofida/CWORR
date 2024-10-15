@@ -348,6 +348,8 @@ Int Property CWMission06Done Auto Hidden Conditional
 Int Property CWMission08Done Auto Hidden Conditional
 Int Property CanDoCWMission05 Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
+Message Property CWCampaignMissionStart Auto
+Message Property CWCampaignMissionEnd Auto
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
 Location PurchasedLocationImperial2
@@ -1802,7 +1804,7 @@ Function StartMissions()
 	
  		CWScript.Log("CWCampaignScript", " StartMissions() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
 		if CWODisableNotifications.GetValueInt() == 0	
-			debug.Notification("CW Campaign Missions starting. Please wait...")
+			CWCampaignMissionStart.Show()
 		endif
 
 		bool cwVanillaMissionStarted
@@ -1847,12 +1849,12 @@ Function StartMissions()
 			AdvanceCampaignPhase()
 			utility.wait(2.0)
 		endif
-		if CWCampaignPhase.value == 5
+		if CWCampaignPhase.value >= 5
 			StartResolutionMission()
 		endif
 
 		if CWODisableNotifications.GetValueInt() == 0	
-			debug.Notification("CW Campaign Missions have been started.")
+			CWCampaignMissionEnd.Show()
 		endif
 		;we used to offer three missiosn, now we are only offering two at a time
 		;CWMissionStart.SendStoryEvent(Hold.Getlocation(), CampaignStartMarker.GetReference(), CWMission3Ref)
