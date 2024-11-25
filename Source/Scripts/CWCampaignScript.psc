@@ -1799,6 +1799,10 @@ Function StartMissions()
 		StartMissionsRunning = false
 		return
 	endif
+
+	if CWs.FieldCO.GetActorRef() == none
+		CWs.SetFieldCOAlias(CWs.GetRikkeOrGalmar())
+	endif
 		
 	If CWCampaignPhase.value < ResolutionPhase		;then start normal missions
 	
@@ -2756,4 +2760,39 @@ endFunction
 
 function CWOMonitorRecover()
 	(CWOStillABetterEndingMonitor.GetAlias(0) As CWOSABETME3Monitor).Recover()
+EndFunction
+
+Function SetHoldOwnerVariableByInt(int HoldToSet, int FactionToOwn	)
+{Takes int HoldToSet and int FactionToOwn, and calls the appropriate setOwnerXXX(FactionToOwn) This is needed when loading a new campaign because GetHoldOwner uses these values instead of the Hold Keyword for some reason}
+
+	if HoldToSet == CWs.iHaafingar ;1
+		cws.ownerHaafingar = FactionToOwn
+	elseif HoldToSet == 	CWs.iReach ; 2
+		cws.ownerReach = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iHjaalmarch ;3
+		cws.ownerHjaalmarch = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iWhiterun ;4
+		cws.ownerWhiterun = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iFalkreath ;5
+		cws.ownerFalkreath = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iPale ;6
+		cws.ownerPale = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iWinterhold ;7
+		cws.ownerWinterhold = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iEastmarch ;8
+		cws.ownerEastmarch = FactionToOwn
+		
+	elseif HoldToSet == 	CWs.iRift ;9
+		cws.ownerRift = FactionToOwn
+		
+	else
+		CWScript.log("CWScript", "SetHoldOwnerByInt(" + HoldToSet + ") parametered unrecognized. Expected an int 1-9 as HoldToCheck, got something else.")
+	EndIf
+
 EndFunction
