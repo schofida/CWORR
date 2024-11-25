@@ -1483,6 +1483,7 @@ function FailDefenseQuest(locationAlias CityAlias)
 	CWs.ContestedHoldWinner = CWs.GetAttacker(CityAlias.GetLocation())
 	if !cws.cwfinale.isrunning()
 		CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
+		CWs.CWCampaignS.SetHoldOwnerVariableByInt(CWs.GetHoldID(Hold.GetLocation()), CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
 	endif
 	;schofida - Player is defender and defender lost. Set next campaign attacker to enemy
 	CWs.CWDebugForceAttacker.SetValueInt(CWs.getOppositeFactionInt(CWs.PlayerAllegiance))
@@ -1594,6 +1595,7 @@ CWs.CWCampaignS.StartDisguiseQuest()
 CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 CWs.WinHoldAndSetOwnerKeywordDataOnly(Hold.GetLocation(), true, false)
+CWs.CWCampaignS.SetHoldOwnerVariableByInt(CWs.GetHoldID(Hold.GetLocation()), CWs.PlayerAllegiance)
 cws.CWCampaignS.AddGeneralToRewardFaction(CityAlias.GetLocation())
 
 CWs.CWCampaignS.SetMonitorMajorCitySiegeStopping()

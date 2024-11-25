@@ -1443,6 +1443,7 @@ kmyquest.CWs.CWCampaignS.StartDisguiseQuest()
 kmyquest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 
 kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(currentHold, true, false)
+kmyquest.CWs.CWCampaignS.SetHoldOwnerVariableByInt(kmyQuest.CWs.GetHoldID(currentHold), kmyQuest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance))
 kmyquest.CWs.CWCampaignS.AddGeneralToRewardFaction(Alias_City.GetLocation())
 
 ;registerForSingleUpdate(5)   ;enters a while loop until the player leaves, then stops this quest and CWSiege quest
