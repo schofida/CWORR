@@ -1249,6 +1249,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 	;CWO - Finally have opponent win/hold onto existing hold
 	;kmyquest.CWs.WinHoldOffScreenIfNotDoingCapitalBattles(Alias_Hold.GetLocation(), !((self as Quest) as CWFortSiegeScript).WasThisAnAttack, ((self as Quest) as CWFortSiegeScript).WasThisAnAttack)
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_hold.getlocation(), ((self as Quest) as CWFortSiegeScript).AttackersHaveWon, ((self as Quest) as CWFortSiegeScript).DefendersHaveWon)
+	kmyquest.CWs.CWCampaignS.SetHoldOwnerVariableByInt(kmyquest.CWs.GetHoldID(Alias_hold.getlocation()), kmyquest.CWs.getOppositeFactionInt(kmyQuest.CWs.PlayerAllegiance))
 endif
 
 kmyQuest.CWs.CWCampaignS.SetMonitorMinorCitySiegeStopping()
@@ -2000,6 +2001,7 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0
 
 	;ELSE -- if this is a SpecialCapitalResolutionFortSiege this stage is called in the CWFortSiegeCapitalSurrenderScene
 	kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(Alias_Hold.GetLocation(), kmyQuest.AttackersHaveWon, kmyQuest.DefendersHaveWon)
+	kmyquest.CWs.CWCampaignS.SetHoldOwnerVariableByInt(kmyquest.CWs.GetHoldID(Alias_hold.getlocation()), kmyQuest.CWs.PlayerAllegiance)
 	
 	if !kmyquest.CWs.CWCampaign.IsRunning() || !kmyquest.CWs.CWCampaign.GetStageDone(200) || kmyquest.CWs.CWCampaignS.CWOSpanishInquisitionPhase.GetValueInt() == 2
 		;CWO Player won, set as attacker in next Campaign
