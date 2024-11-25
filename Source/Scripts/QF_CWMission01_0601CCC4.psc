@@ -7,9 +7,9 @@ Scriptname QF_CWMission01_0601CCC4 Extends Quest Hidden
 LocationAlias Property Alias_Garrison Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY ImperialSoldier4
+;BEGIN ALIAS PROPERTY ImperialSolder4
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ImperialSoldier4 Auto
+ReferenceAlias Property Alias_ImperialSolder4 Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY ImperialSoldier1
@@ -164,7 +164,7 @@ Location garrisonLocation = Alias_Garrison.GetLocation()
 
 kmyQuest.CWs.CwCampaignS.StartDefense(garrisonLocation)
 
-kmyQuest.RegisterImperialAliases(Alias_ImperialSoldier1, Alias_ImperialSoldier2, Alias_ImperialSoldier3, Alias_ImperialSoldier4)
+kmyQuest.RegisterImperialAliases(Alias_ImperialSoldier1, Alias_ImperialSoldier2, Alias_ImperialSoldier3, Alias_ImperialSolder4)
 kmyQuest.RegisterSonsAliases(Alias_SonsSoldier1, Alias_SonsSoldier2, Alias_SonsSoldier3, Alias_SonsSoldier4)
 kmyQuest.RegisterAllyAliases(Alias_Ally1, Alias_Ally2, Alias_Ally3, Alias_Ally4)
 kmyQuest.RegisterEnemyAliases(Alias_Enemy1, Alias_Enemy2, Alias_Enemy3, Alias_Enemy4)
@@ -188,13 +188,13 @@ kmyQuest.RegisterAliasesWithCWReinforcementScript(garrisonLocation)
 
 CWScript.Log("CWMission01QuestFragment", "Stage 0: Calling RegisterSpawnDefenderAliasesWithCWReinforcementScript()")
 if kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
-    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
+    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons)
 elseif kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
-    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
+    kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial)
 elseif kmyQuest.CWs.GetDefender(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
-    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerSons)
+    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons)
 else
-    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerImperial)
+    kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial)
 endif
 
 ;CWO Move P
@@ -298,7 +298,7 @@ Alias_Enemy4.TryToEvaluatePackage()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_2
+;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
 ;BEGIN AUTOCAST TYPE cwmission01script
 Quest __temp = self as Quest
@@ -486,7 +486,7 @@ kmyquest.CWS.SetOwner(Alias_Garrison.GetLocation(), WinningFaction)
 kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier1)
 kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier2)
 kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier3)
-kmyQuest.DeleteAliasWhenAble(Alias_ImperialSoldier4)
+kmyQuest.DeleteAliasWhenAble(Alias_ImperialSolder4)
 kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier1)
 kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier2)
 kmyQuest.DeleteAliasWhenAble(Alias_SonsSoldier3)
