@@ -252,13 +252,27 @@ function RegisterAllyPhaseMarkers(ObjectReference Phase0MarkerRef, ObjectReferen
 {Called by Siege scripts to register 1 set of phase1/2/3/4/5 markers for all the allies to use for that siege}
 
  	CWScript.Log("CWAlliesScript", self + "RegisterAllyPhaseMarkers() forcing Refs: " + Phase0MarkerRef + "," + Phase1MarkerRef + ", " + Phase2MarkerRef + ", " +  Phase3MarkerRef + ", " + Phase4MarkerRef + ", " + Phase5MarkerRef + ", " + Phase6MarkerRef +  " into Phase0/1/2/3/4/5/6Marker Aliases.")
-	Phase0Marker.ForceRefTo(Phase0MarkerRef)
-	Phase1Marker.ForceRefTo(Phase1MarkerRef)
-	Phase2Marker.ForceRefTo(Phase2MarkerRef)
-	Phase3Marker.ForceRefTo(Phase3MarkerRef)
-	Phase4Marker.ForceRefTo(Phase4MarkerRef)
-	Phase5Marker.ForceRefTo(Phase5MarkerRef)
-	Phase6Marker.ForceRefTo(Phase6MarkerRef)
+	If Phase0MarkerRef != none
+		Phase0Marker.ForceRefTo(Phase0MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase1Marker.ForceRefTo(Phase1MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase2Marker.ForceRefTo(Phase2MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase3Marker.ForceRefTo(Phase3MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase4Marker.ForceRefTo(Phase4MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase5Marker.ForceRefTo(Phase5MarkerRef)
+	endif
+	If Phase0MarkerRef != none
+		Phase6Marker.ForceRefTo(Phase6MarkerRef)
+	endif
 
 EndFunction
 
