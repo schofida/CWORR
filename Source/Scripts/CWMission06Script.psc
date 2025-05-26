@@ -50,9 +50,9 @@ Event OnUpdate()
 			Else
 				CWMission06SonsScene.start()
 			endif
-			UnregisterForUpdate()
 		endif
-		
+	else
+		registerForSingleUpdate(2)
 	EndIf
 
 EndEvent
@@ -151,7 +151,7 @@ function processPreRevoltFactions(ReferenceAlias AliasToProcess)
 	ActorRef.RemoveFromFaction(CWs.IsGuardFaction)
 	ActorRef.addToFaction(CWs.CWDisaffectedSoldierFaction)
 
-	giveNewOutfit(AliasToProcess.GetActorRef(), false)
+	giveNewOutfit(AliasToProcess.GetActorRef(), true)
 
 EndFunction
 
@@ -237,7 +237,7 @@ endfunction
 function AddDisaffectedSoldierToPotentialAlly(ReferenceAlias refAlias)
 	if refAlias.GetActorReference() != none && !refAlias.GetActorReference().IsDead()
 		refAlias.GetActorRef().ResetHealthAndLimbs()
-		giveNewOutfit(refAlias.GetActorRef(), true)
+		giveNewOutfit(refAlias.GetActorRef(), false)
 		cws.CWAlliesS.AddPotentialAlly(refAlias.GetActorRef(), \
 			AllowedInHaafingar = False, \
 			AllowedInReach = True, \
