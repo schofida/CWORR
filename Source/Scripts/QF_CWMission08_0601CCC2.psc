@@ -238,6 +238,8 @@ Alias_CWMission08ImperialSolder3.TryToReset()
 Alias_CWMission08ImperialSolder4.TryToEnable()
 Alias_CWMission08ImperialSolder4.TryToReset()
 
+Alias_Goldar.TryToEnable()
+
 kmyQuest.SetObjectiveDisplayed(10)
 ;END CODE
 EndFunction
@@ -319,6 +321,8 @@ Alias_CWMission08ImperialSolder1.TryToDisableNoWait()
 Alias_CWMission08ImperialSolder2.TryToDisableNoWait()
 Alias_CWMission08ImperialSolder3.TryToDisableNoWait()
 Alias_CWMission08ImperialSolder4.TryToDisableNoWait()
+
+Alias_Goldar.TryToDisable()
 ;END CODE
 EndFunction
 ;END FRAGMENT
