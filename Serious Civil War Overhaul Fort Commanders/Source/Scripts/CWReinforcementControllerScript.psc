@@ -301,15 +301,31 @@ event onUpdate()
 
 	ObjectReference RespawnPoint
 	bool IsAttacking
-	if (NextFaction == CWs.iImperials &&  CWs.ImperialsAreAttacking(AttackPoint)) || (NextFaction == CWs.iSons && CWs.SonsAreAttacking(AttackPoint))
-		RespawnPoint = GetAttackerSpawnRef(none)
-		IsAttacking = true
+
+	CWMission01Script CWMission01 = ((self as quest) as CWMission01Script)
+
+	if CWMission01 != none
+		if CWs.GetAttacker(AttackPoint) == CWs.PlayerAllegiance
+			RespawnPoint = GetDefenderSpawnRef(none)
+		else
+			RespawnPoint = GetAttackerSpawnRef(none)
+		endif
+		if NextFaction == CWs.PlayerAllegiance
+			isAttacking = true
+		else
+			isAttacking = false
+		endif
 	else
-		RespawnPoint = GetDefenderSpawnRef(none)
-		IsAttacking = false
+		if (NextFaction == CWs.iImperials &&  CWs.ImperialsAreAttacking(AttackPoint)) || (NextFaction == CWs.iSons && CWs.SonsAreAttacking(AttackPoint))
+			RespawnPoint = GetAttackerSpawnRef(none)
+			IsAttacking = true
+		else
+			RespawnPoint = GetDefenderSpawnRef(none)
+			IsAttacking = false
+		endif
 	endif
 
-	CleanupActors[iCleanupActors] = PlaceSoldierAtPointAndAttack(RespawnPoint, NextFaction, IsAttacking)
+	CleanupActors[iCleanupActors] = PlaceSoldierAtPointAndAttack(RespawnPoint, NextFaction, IsAttacking, CWMission01)
 
 	CWScript.Log("CWReinforcementControllerScript", self + "Spawned Soldier . " + CleanupActors[iCleanupActors] + " RespawnPoint " + RespawnPoint + " NextFaction " + NextFaction + " IsAttacking " + IsAttacking)
 	if (NextFaction == CWs.iImperials)
@@ -329,14 +345,20 @@ event onUpdate()
 EndEvent
 
 
-Actor function PlaceSoldierAtPointAndAttack(ObjectReference SpawnPoint, int FactionToAdd, bool IsAttacking)
+Actor function PlaceSoldierAtPointAndAttack(ObjectReference SpawnPoint, int FactionToAdd, bool IsAttacking, CWMission01Script CWMission01)
 	Actor NewSoldier
 	if (FactionToAdd == CWs.iImperials)
 		NewSoldier = SpawnPoint.PlaceActorAtMe(CWs.CWSoldierImperialNotGuard)
 	else
 		NewSoldier = SpawnPoint.PlaceActorAtMe(CWs.CWSoldierSonsNotGuard)
 	endif
-	Actor SoldierToAttack = GetRandomReferenceToAttack(!IsAttacking, CWs.PlayerAllegiance != FactionToAdd)
+
+	Actor SoldierToAttack
+	if CWMission01 != none
+		SoldierToAttack = CWMission01.GetRandomReferenceToAttack(!IsAttacking, CWs.PlayerAllegiance != FactionToAdd)
+	else
+		SoldierToAttack = GetRandomReferenceToAttack(!IsAttacking, CWs.PlayerAllegiance != FactionToAdd)
+	endif
 	if (SoldierToAttack != none)
 		NewSoldier.StartCombat(SoldierToAttack)
 	endif
@@ -428,6 +450,7 @@ function DeleteAndCleanUpExtraActors()
 		ActorToCleanUp.DeleteWhenAble()
 		ActorToCleanUp = none
 	endwhile
+	OnInit()
 endfunction
 
 function tryToRespawnAliass()

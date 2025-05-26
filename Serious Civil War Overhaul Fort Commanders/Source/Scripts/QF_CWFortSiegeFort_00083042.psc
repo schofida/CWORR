@@ -1265,6 +1265,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ; CWScript.Log("CWFortSiege", "Stage 400: Setting new spawn points for reinforcements by calling RegisterSpawnAttackerAliasesWithCWReinforcementScript() & RegisterSpawnDefenderAliasesWithCWReinforcementScript() ")
 kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAttackerPhase4A, Alias_RespawnAttackerPhase4B, Alias_RespawnAttackerPhase4C, Alias_RespawnAttackerPhase4D, Alias_RespawnAttackerPhase4FailSafe)
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase4A, Alias_RespawnDefenderPhase4B, Alias_RespawnDefenderPhase4C, Alias_RespawnDefenderPhase4D, Alias_RespawnDefenderPhase4FailSafe)
+kmyQuest.ResetPhaseExtraAttackers()
 kmyquest.CWBattlePhase.SetValue(4)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -1333,6 +1334,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ; CWScript.Log("CWFortSiege", "Stage 300: Setting new spawn points for reinforcements by calling RegisterSpawnAttackerAliasesWithCWReinforcementScript() & RegisterSpawnDefenderAliasesWithCWReinforcementScript() ")
 kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAttackerPhase3A, Alias_RespawnAttackerPhase3B, Alias_RespawnAttackerPhase3C, Alias_RespawnAttackerPhase3D, Alias_RespawnAttackerPhase3FailSafe)
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase3A, Alias_RespawnDefenderPhase3B, Alias_RespawnDefenderPhase3C, Alias_RespawnDefenderPhase3D, Alias_RespawnDefenderPhase3FailSafe)
+kmyQuest.ResetPhaseExtraAttackers()
 kmyquest.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -1668,6 +1670,7 @@ debug.messageBox("CWFortSiege Stage 100")
 ; CWScript.Log("CWFortSiege", "Stage 100: Setting new spawn points for reinforcements by calling RegisterSpawnAttackerAliasesWithCWReinforcementScript() & RegisterSpawnDefenderAliasesWithCWReinforcementScript() ")
 kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAttackerPhase1A, Alias_RespawnAttackerPhase1B, Alias_RespawnAttackerPhase1C, Alias_RespawnAttackerPhase1D, Alias_RespawnAttackerPhase1FailSafe)
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase1A, Alias_RespawnDefenderPhase1B, Alias_RespawnDefenderPhase1C, Alias_RespawnDefenderPhase1D, Alias_RespawnDefenderPhase1FailSafe)
+kmyQuest.ResetPhaseExtraAttackers()
 kmyquest.CWBattlePhase.SetValue(1)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 ;END CODE
@@ -1832,6 +1835,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 ; CWScript.Log("CWFortSiege", "Stage 500: Setting new spawn points for reinforcements by calling RegisterSpawnAttackerAliasesWithCWReinforcementScript() & RegisterSpawnDefenderAliasesWithCWReinforcementScript() ")
 kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAttackerPhase5A, Alias_RespawnAttackerPhase5B, Alias_RespawnAttackerPhase5C, Alias_RespawnAttackerPhase5D, Alias_RespawnAttackerPhase5FailSafe)
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase5A, Alias_RespawnDefenderPhase5B, Alias_RespawnDefenderPhase5C, Alias_RespawnDefenderPhase5D, Alias_RespawnDefenderPhase5FailSafe)
+kmyQuest.ResetPhaseExtraAttackers()
 kmyquest.CWBattlePhase.SetValue(5)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
@@ -1865,6 +1869,7 @@ CWScript.Log("CWFortSiege", self + "Stage 200" )
 ; CWScript.Log("CWFortSiege", "Stage 200: Setting new spawn points for reinforcements by calling RegisterSpawnAttackerAliasesWithCWReinforcementScript() & RegisterSpawnDefenderAliasesWithCWReinforcementScript() ")
 kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_RespawnAttackerPhase2A, Alias_RespawnAttackerPhase2B, Alias_RespawnAttackerPhase2C, Alias_RespawnAttackerPhase2D, Alias_RespawnAttackerPhase2FailSafe)
 kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_RespawnDefenderPhase2A, Alias_RespawnDefenderPhase2B, Alias_RespawnDefenderPhase2C, Alias_RespawnDefenderPhase2D, Alias_RespawnDefenderPhase2FailSafe)
+kmyQuest.ResetPhaseExtraAttackers()
 kmyquest.CWBattlePhase.SetValue(2)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 ;CWO Start battle sounds and music

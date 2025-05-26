@@ -709,7 +709,6 @@ Function RegisterSpawnAttackerAliasesWithCWReinforcementScript(ReferenceAlias Ma
 	
 ; 	CWScript.Log("CWSiegeScript", self + "RegisterSpawnAttackerAliasesWithCWReinforcementScript() calling RegisterSpawnAttackerAliases() on CWReinforcementControllerScript")
 	CWReinforcementControllerS.RegisterSpawnAttackerAliases(Marker1Alias, Marker2Alias, Marker3Alias, Marker4Alias, FailSafeMarkerAlias)
-	CWReinforcementControllerS.ResetPhaseExtraAttackers()
 EndFunction
 
 Function RegisterSpawnDefenderAliasesWithCWReinforcementScript(ReferenceAlias Marker1Alias, ReferenceAlias Marker2Alias, ReferenceAlias Marker3Alias, ReferenceAlias Marker4Alias, ReferenceAlias FailSafeMarkerAlias)
@@ -717,6 +716,13 @@ Function RegisterSpawnDefenderAliasesWithCWReinforcementScript(ReferenceAlias Ma
 	
 ; 	CWScript.Log("CWSiegeScript", self + "RegisterSpawnDefenderAliasesWithCWReinforcementScript() calling RegisterSpawnDefenderAliases() on CWReinforcementControllerScript")
 	CWReinforcementControllerS.RegisterSpawnDefenderAliases(Marker1Alias, Marker2Alias, Marker3Alias, Marker4Alias, FailSafeMarkerAlias)
+
+EndFunction
+
+Function ResetPhaseExtraAttackers()
+	CWReinforcementControllerScript CWReinforcementControllerS = (self as quest ) as CWReinforcementControllerScript
+
+	CWReinforcementControllerS.ResetPhaseExtraAttackers()
 
 EndFunction
 

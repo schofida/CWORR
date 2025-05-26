@@ -303,3 +303,50 @@ function DeleteAliasWhenAble(ReferenceAlias akAlias)
 	endif
 	ref.DeleteWhenAble()
 endfunction
+
+	Actor Function GetRandomReferenceToAttack(bool GetAllies, bool AddPlayer)
+		int randomMax = 4
+		if (AddPlayer)
+			randomMax = 5
+		endif
+	
+		int rand = Utility.RandomInt(1, randomMax)
+	
+		int numTries = 0
+	
+		Actor FoundActor = none
+		while numTries < 10 && FoundActor == none
+			if (rand == 1)
+				FoundActor = ReturnAttackerOrDefenderIfAlive(GetAllies, Ally1, Enemy1)
+			elseif (rand == 2)
+				FoundActor = ReturnAttackerOrDefenderIfAlive(GetAllies, Ally2, Enemy2)
+			elseif (rand == 3)
+				FoundActor = ReturnAttackerOrDefenderIfAlive(GetAllies, Ally3, Enemy3)
+			elseif (rand == 4)
+				FoundActor = ReturnAttackerOrDefenderIfAlive(GetAllies, Ally4, Enemy4)
+			else
+				return Game.GetPlayer()
+			endif
+			numTries = numTries + 1
+		endWhile
+	
+		return FoundActor
+	
+	EndFunction
+
+Actor function ReturnAttackerOrDefenderIfAlive(bool GetAlly, ReferenceAlias Ally, ReferenceAlias Enemy)
+	if (GetAlly && IsAliasAlive(Ally))
+		return Ally.GetActorRef()
+	elseif (!GetAlly && IsAliasAlive(Enemy))
+		return Enemy.GetActorRef()
+	endif
+	return none
+EndFunction
+
+
+bool Function IsAliasAlive(ReferenceAlias AliasVariableToCheck)
+		
+	
+	return AliasVariableToCheck && AliasVariableToCheck.GetActorReference() != none && !AliasVariableToCheck.GetActorReference().IsDead()
+	
+EndFunction

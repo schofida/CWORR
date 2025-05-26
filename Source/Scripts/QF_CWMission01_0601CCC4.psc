@@ -149,6 +149,8 @@ if kmyQuest.City == none
 	kmyQuest.City = Alias_Garrison
 endif
 
+kmyQuest.FriendlyShouldAttack = 0 
+
 SiegeFinished = false
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 ((self as quest) as CWFortSiegeMissionScript).ResetCommonMissionProperties()
@@ -187,11 +189,11 @@ endwhile
 kmyQuest.RegisterAliasesWithCWReinforcementScript(garrisonLocation)
 
 CWScript.Log("CWMission01QuestFragment", "Stage 0: Calling RegisterSpawnDefenderAliasesWithCWReinforcementScript()")
-if kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+if kmyQuest.CWs.GetAttacker(garrisonLocation) == kmyQuest.cws.playerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
     kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons)
-elseif kmyQuest.CWs.GetAttacker(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
+elseif kmyQuest.CWs.GetAttacker(garrisonLocation) == kmyQuest.cws.playerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iSons
     kmyquest.RegisterSpawnDefenderAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial)
-elseif kmyQuest.CWs.GetDefender(garrisonLocation) && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
+elseif kmyQuest.CWs.GetDefender(garrisonLocation) == kmyQuest.cws.playerAllegiance && kmyQuest.cws.playerAllegiance == kmyQuest.cws.iImperials
     kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons)
 else
     kmyquest.RegisterSpawnAttackerAliasesWithCWReinforcementScript(Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial, Alias_CWGarrisonEnableMarkerSons, Alias_CWGarrisonEnableMarkerImperial)
@@ -310,7 +312,6 @@ CWScript.Log("CWMission01QuestFragment", self + "Stage 51" )
 kmyquest.CWs.CWBattlePhase.SetValue(3)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
-kmyQuest.FriendlyShouldAttack = 0
 Alias_Ally1.TryToEvaluatePackage()
 Alias_Ally2.TryToEvaluatePackage()
 Alias_Ally3.TryToEvaluatePackage()
@@ -319,6 +320,8 @@ Alias_Enemy1.TryToEvaluatePackage()
 Alias_Enemy2.TryToEvaluatePackage()
 Alias_Enemy3.TryToEvaluatePackage()
 Alias_Enemy4.TryToEvaluatePackage()
+
+kmyQuest.ResetPhaseExtraAttackers()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -454,6 +457,8 @@ CWScript.Log("CWMission01QuestFragment", self + "Stage 255" )
 ;*** TO DO: When we have arrays, CreateMissionAliasedActor should put all created references to an array, then a new funciton should delete ALL of them
 kmyQuest.DisableAllAliases()
 
+((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
+
 kmyQuest.CWS.StopCWCitizensFlee()
 kmyQuest.CWs.CWCampaignS.CWMission01Or02Done = 1
 ; ; debug.traceConditional("CWMission04 stage 255 (shut down phase)", kmyquest.CWs.debugon.value)
@@ -500,7 +505,6 @@ kmyQuest.DeleteAliasWhenAble(Alias_Enemy2)
 kmyQuest.DeleteAliasWhenAble(Alias_Enemy3)
 kmyQuest.DeleteAliasWhenAble(Alias_Enemy4)
 
-((self as quest) as CWReinforcementControllerScript).DeleteAndCleanUpExtraActors()
 ;END CODE
 EndFunction
 ;END FRAGMENT
