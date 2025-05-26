@@ -88,13 +88,13 @@ CWOSendForPlayerQuestScript kmyQuest = __temp as CWOSendForPlayerQuestScript
 ; Quest stage 30 - Defense of Major capital (after reading note and player is in one of these cities or talked to FieldCO)
 	kmyQuest.CWOCourierSentGlobal.SetValueInt(0)
 	self.SetObjectiveCompleted(0, true)
+	Alias_FieldCO.getactorreference().removefromfaction(kmyQuest.CWODefensiveFaction)
 	utility.wait(8 as Float)
 	if kmyQuest.CWS.CWFortSiegeCapital.IsRunning()
 		kmyQuest.CWS.CWFortSiegeCapital.SetStage(10)
 	else
 		kmyQuest.CWS.CWSiegeS.setstage(1)
 	endif
-	Alias_FieldCO.getactorreference().removefromfaction(kmyQuest.CWODefensiveFaction)
 ;END CODE
 EndFunction
 ;END FRAGMENT
