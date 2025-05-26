@@ -50,6 +50,8 @@ Event OnUpdate()
 			Else
 				CWMission06SonsScene.start()
 			endif
+		else
+			registerForSingleUpdate(2)
 		endif
 	else
 		registerForSingleUpdate(2)
