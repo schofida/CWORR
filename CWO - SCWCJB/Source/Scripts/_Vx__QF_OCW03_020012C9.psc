@@ -86,8 +86,8 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_21
 Function Fragment_21()
 ;BEGIN AUTOCAST TYPE OCW03SiegeQuickStartScript
-Quest __temp = self as Quest
-OCW03SiegeQuickStartScript kmyQuest = __temp as OCW03SiegeQuickStartScript
+;Quest __temp = self as Quest
+;OCW03SiegeQuickStartScript kmyQuest = __temp as OCW03SiegeQuickStartScript
 ;END AUTOCAST
 ;BEGIN CODE
 if CWObj.isObjectiveDisplayed(1001)
@@ -385,8 +385,8 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_42
 Function Fragment_42()
 ;BEGIN AUTOCAST TYPE OCW03SiegeQuickStartScript
-Quest __temp = self as Quest
-OCW03SiegeQuickStartScript kmyQuest = __temp as OCW03SiegeQuickStartScript
+;Quest __temp = self as Quest
+;OCW03SiegeQuickStartScript kmyQuest = __temp as OCW03SiegeQuickStartScript
 ;END AUTOCAST
 ;BEGIN CODE
 ; fix the interior city soldiers
@@ -506,7 +506,7 @@ setStage(66)
 setStage(73)  ; added in Balgruuf Dilemma 0.1.3 - updates global variables of CWO
 
 ;setStage(70)  ; blocking until Whiterun civil war locations are unloaded !
-RegisterForSingleUpdate(30) ;Set stage 70 in an OnUpdate event, rather than immediately
+;RegisterForSingleUpdate(30) ;Set stage 70 in an OnUpdate event, rather than immediately
 
 ;CWs.AddEnemyFortsToBackToWar()
 
