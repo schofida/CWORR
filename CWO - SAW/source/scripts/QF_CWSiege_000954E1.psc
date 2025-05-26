@@ -3812,7 +3812,7 @@ RegisterForUpdate(1)		;Needed for checking if the player has left the battle
 	else
 		kmyquest.CWSiegeObj.SetObjectiveDisplayed(2000, 1);DISPLAYED - Meet with General
 	endif
-kmyQuest.CWSiegeObj.setStage(1)
+kmyQuest.CWSiegeObj.setActive()
 ;</CWSiegeObj>--------------------
 
 
