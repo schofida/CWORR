@@ -23,6 +23,9 @@ Spell Property CWO_XBOX_NPCFix_Spell Auto
 Spell Property CWO_XBOX_BridgeFix_Spell Auto
 Spell Property CWO_XBOX_MusicFix_Spell Auto
 Spell Property CWO_XBOX_QuestFix_Spell Auto
+Spell Property CWO_XBox_Adjust_SoldierCount_0_Spell Auto
+Spell Property CWO_XBox_Adjust_SoldierCount_10_Spell Auto
+Spell Property CWO_XBox_Adjust_SoldierCount_20_Spell Auto
 
 
 
@@ -75,6 +78,9 @@ Event OnInit()
 		Game.GetPlayer().AddSpell(CWO_XBOX_MusicFix_Spell)
 		Game.GetPlayer().AddSpell(CWO_XBOX_QuestFix_Spell)
 		Game.GetPlayer().AddSpell(CWO_XBOX_NPCFix_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_0_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_10_Spell)
+		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_20_Spell)
 	endif
 	;That's it for now...
     Debug.Notification("CWO version " + CWOVersion.GetValueInt() + " initialized :)")

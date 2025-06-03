@@ -476,6 +476,12 @@ function DoPlayerLoadGameStuff()
 		CWS.CWRank2RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardSons
 		CWS.CWRank3RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardSons
 		CwS.CWRank4RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank4RewardSons
+		if SKSE.GetVersionRelease() > 0
+		else
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_0_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_10_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_20_Spell)
+		endif
 		CWOVersion.SetValueInt(10100)
 	endif
 	registerforsingleupdate(30)

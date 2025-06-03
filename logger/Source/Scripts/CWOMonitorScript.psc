@@ -468,6 +468,12 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10024)
 	endif
 	if currentVersion < 10100
+		if SKSE.GetVersionRelease() > 0
+		else
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_0_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_10_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_20_Spell)
+		endif
 		CWOVersion.SetValueInt(10100)
 	endif
 	registerforsingleupdate(30)
