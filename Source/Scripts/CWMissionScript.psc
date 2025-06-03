@@ -515,7 +515,7 @@ Function FlagFieldCOWithMissionResultFaction(int MissionType = -1, Bool MissionF
 		
 	Else	;MissionFailure == true; called when quest is failed
  		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() will add FieldCO " + FieldCOActor + " to CWFieldCOFailedMissionFaction with rank meaning mission type = " + MissionType)
-		FieldCOActor.SetFactionRank(CWs.CWFieldCOFailedMissionFaction, MissionType)
+		;FieldCOActor.SetFactionRank(CWs.CWFieldCOFailedMissionFaction, MissionType)
 		
 	EndIf
 	
