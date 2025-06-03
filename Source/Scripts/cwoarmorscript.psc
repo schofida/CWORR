@@ -21,6 +21,8 @@ globalvariable property CWODisguiseGameType auto
 
 Keyword property ArmorCuirass auto
 
+Message property CWODisguiseEnemyCamp auto
+
 ;-- Variables ---------------------------------------
 Bool IsNowImperial
 Faction EnemyFaction
@@ -106,7 +108,7 @@ event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	CWCampaignScript CWCampaignS = CWs.CWCampaignS
 	if CwCampaignS.IsRunning() && CwCampaignS.EnemyCamp.GetLocation() == akNewLoc && CwCampaignS.IsEnemyCampEnabled()
 		if CwCampaignS.CWODisableNotifications.GetValueInt() == 0
-			debug.notification("Your disguise does not work at the enemy camp.")
+			CWODisguiseEnemyCamp.Show()
 		endif
 		PlayerFaction.SetEnemy(ReturnEnemyFaction(), false, false)
 		CWODisguiseGlobal.SetValueInt(0)

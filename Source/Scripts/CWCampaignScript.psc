@@ -350,6 +350,7 @@ Int Property CanDoCWMission05 Auto Hidden Conditional
 ;# SetOwner() Location Variables 	-- these should be arrays, consider converting when we get arrays implemented in the language											
 Message Property CWCampaignMissionStart Auto
 Message Property CWCampaignMissionEnd Auto
+Message Property CWCampaignPhaseMSG Auto
 ;Variables for holding locations that are purchased so we can pass them all to CWScript SetOwner()
 Location PurchasedLocationImperial1
 Location PurchasedLocationImperial2
@@ -1159,7 +1160,7 @@ Function AdvanceCampaignPhase(int OptionalPhaseToSetTo = -1)
 	EndIf
 	
 	if DebugOn.value == 1
-		debug.Notification("CWCampaignPhase: " + CWCampaignPhase.value)
+		CWCampaignPhaseMSG.Show(CWCampaignPhase.value)
 	EndIf
 	
 	;Increment the NextPhaseDay

@@ -12,7 +12,9 @@ LocationAlias Property Alias_Hold Auto
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN CODE
-Debug.Notification("Spanish Inquisition Triggered. Starting Defense Quest.")
+	if CWS.CwCampaignS.CWODisableNotifications.GetValueInt() == 0
+		CWOSpanishInquisition.Show()
+	endif
 	CWS.CWCampaignS.StartSpanishInquisition(Alias_Hold)	; Reddit BugFix #11
 	self.stop()
 ;END CODE
@@ -20,5 +22,7 @@ EndFunction
 ;END FRAGMENT
 
 CWScript Property CWs Auto 
+
+Message Property CWOSpanishInquisition Auto
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
