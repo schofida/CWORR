@@ -260,6 +260,9 @@ if !EnemyFieldCO.GetActorRef().IsDead()
 endif
 
 kmyQuest.TurncoatLeader = Alias_DissaffectedSoldier01
+
+Alias_DissaffectedSoldier01.GetActorRef().GetActorBase().SetVoiceType(kmyQuest.MaleSoldier)
+
 kmyQuest.RegisterForSingleUpdate(2)
 kmyQuest.processPreRevoltFactions(Alias_DissaffectedSoldier01)
 kmyQuest.processPreRevoltFactions(Alias_DissaffectedSoldier02)

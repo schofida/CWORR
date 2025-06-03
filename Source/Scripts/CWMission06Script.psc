@@ -35,6 +35,8 @@ Faction Property CWMission06LoyalistSoldierFaction Auto
 
 ObjectReference Property CWCampEnemyEnable Auto
 
+VoiceType Property MaleSoldier Auto
+
 Event OnUpdate()
 
 ; ;	debug.trace("TurncoatLeader.GetReference():" + TurncoatLeader.GetReference())
