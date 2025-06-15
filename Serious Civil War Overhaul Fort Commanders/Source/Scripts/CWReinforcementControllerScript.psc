@@ -134,6 +134,7 @@ int MaxExtraSoldiersPerPhase = 0
 int ExtraSoldiersAdded = 0
 int nextSoldierCount = 0
 int iCleanupActors = 0
+int nextSoldierCountMax = 3
 
 bool function RespawnSoldierArray_IsFull()
 	return RespawnSoldierArray_Rear >= 40 - 1
@@ -294,6 +295,11 @@ event onUpdate()
 
 	if iCleanupActors >= CleanupActors.Length || ExtraSoldiersAdded >= MaxExtraSoldiersPerPhase || !RespawnSoldierArray_IsEmpty()
 		CWScript.Log("CWReinforcementControllerScript", self + "Bailing Out 1. " + iCleanupActors + " " + ExtraSoldiersAdded + " " + MaxExtraSoldiersPerPhase)
+		return
+	endif
+
+	if nextSoldierCount < nextSoldierCountMax
+		nextSoldierCount = nextSoldierCount + 1
 		return
 	endif
 
