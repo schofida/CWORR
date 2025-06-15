@@ -1927,11 +1927,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 				Alias_Barricade3A.GetReference().DamageObject(1000)
 				Alias_Barricade3A.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
 			endif
-			if (Alias_Barricade3B.GetReference().GetCurrentDestructionStage() < 4)
-				Alias_Barricade3B.GetReference().DamageObject(1000)
-				Alias_Barricade3B.GetReference().DamageObject(1000)
-				Alias_Barricade3B.GetReference().PlaceAtMe(kmyquest.CWCatapultExp, 1)
-			endif
 		else
 			kmyquest.CWSiegeObj.SetObjectiveFailed(4400, 1); FAILED - final barricade
 		endif
@@ -1945,26 +1940,6 @@ elseif cityVar == kmyquest.CWs.WindhelmLocation
 				;Do nothing since the player didn't hit the skip trigger.
 			endif
 			kmyquest.CWSiegeObj.SetObjectiveCompleted(3030, 1); COMPLETED - Last Gate
-			if kmyQuest.CWs.CWCampaignS.CWOEnableAdditionalSoldiers.GetValueInt() > 0
-				Alias_AttackerSons2.TryToReset()
-				Alias_AttackerSons2.TryToEnable()
-				Alias_AttackerSons3.TryToReset()
-				Alias_AttackerSons3.TryToEnable()
-				Alias_AttackerSons4.TryToReset()
-				Alias_AttackerSons4.TryToEnable()
-				Alias_AttackerSons5.TryToReset()
-				Alias_AttackerSons5.TryToEnable()
-				Alias_AttackerSons6.TryToReset()
-				Alias_AttackerSons6.TryToEnable()
-				Alias_AttackerSons7.TryToReset()
-				Alias_AttackerSons7.TryToEnable()
-				Alias_AttackerSons8.TryToReset()
-				Alias_AttackerSons8.TryToEnable()
-				Alias_AttackerSons9.TryToReset()
-				Alias_AttackerSons9.TryToEnable()
-				Alias_AttackerSons10.TryToReset()
-				Alias_AttackerSons10.TryToEnable()
-			endif
 		else
 			kmyquest.CWSiegeObj.SetObjectiveFailed(4800, 1); COMPLETED - Last Gate
 			;no defense planned
@@ -2115,27 +2090,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 kmyquest.CWStateAttackerAtGate.SetValue(1)
 kmyquest.CWStateAttackerBrokeThrough.SetValue(1)
 kmyquest.CWStateDefenderLastStand.SetValue(1)
-
-		if kmyQuest.CWs.CWCampaignS.CWOEnableAdditionalSoldiers.GetValueInt() > 0
-			Alias_AttackerImperial2.TryToReset()
-			Alias_AttackerImperial2.TryToEnable()
-			Alias_AttackerImperial3.TryToReset()
-			Alias_AttackerImperial3.TryToEnable()
-			Alias_AttackerImperial4.TryToReset()
-			Alias_AttackerImperial4.TryToEnable()
-			Alias_AttackerImperial5.TryToReset()
-			Alias_AttackerImperial5.TryToEnable()
-			Alias_AttackerImperial6.TryToReset()
-			Alias_AttackerImperial6.TryToEnable()
-			Alias_AttackerImperial7.TryToReset()
-			Alias_AttackerImperial7.TryToEnable()
-			Alias_AttackerImperial8.TryToReset()
-			Alias_AttackerImperial8.TryToEnable()
-			Alias_AttackerImperial9.TryToReset()
-			Alias_AttackerImperial9.TryToEnable()
-			Alias_AttackerImperial10.TryToReset()
-			Alias_AttackerImperial10.TryToEnable()
-		endif
 
     else
 		;no new objectives, already displayed the defend finale barricade
@@ -3165,7 +3119,6 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 			kmyquest.AMBCloseBattleSoundInstance = kmyQuest.AMBCivilWarBattleStart.Play(game.GetPlayer())
 			kmyquest.CWSiegeObj.SetObjectiveDisplayed(1060, 1); DISPLAYED - barricade
 			;kmyquest.CWAttackerStartingScene.Stop()
-			utility.Wait(8)
 			SetStage(10)
 		endif
 	else
@@ -4199,7 +4152,6 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Registers initial spawn point
 ;Registers initial spawn points
 CWReinforcementControllerS.RegisterSpawnAttackerAliases(Alias_RespawnAttackerPhase1A, Alias_RespawnAttackerPhase1B, Alias_RespawnAttackerPhase1C, Alias_RespawnAttackerPhase1D, Alias_RespawnAttackerPhase1FailSafe)
 CWReinforcementControllerS.RegisterSpawnDefenderAliases(Alias_RespawnDefenderPhase1A, Alias_RespawnDefenderPhase1B, Alias_RespawnDefenderPhase1C, Alias_RespawnDefenderPhase1D, Alias_RespawnDefenderPhase1FailSafe)
-CWReinforcementControllerS.ResetPhaseExtraAttackers()
 
 ;</Respawn set up>-------------------------
 
@@ -4278,6 +4230,7 @@ elseif cityVar == kmyquest.CWs.SolitudeLocation
 	kmyquest.CurrentCity = 1
 	kmyquest.CWSiegeObjObjective1A.ForceRefTo(Alias_Objective1A.GetReference())  ;First Barricade
 	kmyquest.CWSiegeObjObjective2A.ForceRefTo(Alias_SolitudeGateLever1.GetReference())  ;Exterior Gate
+	kmyquest.CWSiegeObjObjective2B.ForceRefTo(Alias_Objective2B.GetReference())   ;Ladder
 	kmyquest.CWSiegeObjObjective3A.ForceRefTo(Alias_Objective3A.GetReference())  ;Final Barricade
 
 elseif cityVar == kmyquest.CWs.WindhelmLocation
