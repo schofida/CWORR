@@ -1,7 +1,7 @@
 Scriptname CWLockDuringSiegeScript extends ObjectReference  
 {For doors that normally don't have locks but should be locked during sieges (like Taverns and Inns)}
 
-CWScript property CW Auto
+Quest property CW Auto
 {Pointer to CWScript attached to CW quest}
 
 int Property LockLevelDuringSiege = 75 Auto
@@ -19,17 +19,19 @@ bool Property RequireSiegeQuestToBeAcceptedToLock = true Auto
 bool property TreatCWSiegeStage255AsStopped = true auto
 {Default: true; Treats CWSiege stage 255 the same as if the quest isn't running for purposes of unlocking doors}
 
+CWScript Property CWs Auto hidden
+
 Event OnCellLoad()	
 
 	;check to see if siege is running and running in the location where this ref is currently located
-	location SiegeLoc = CW.CWSiegeCity.GetLocation()
-	Location SiegeLocMinor = CW.CWFortSiegeCapitalFort.GetLocation()
+	location SiegeLoc = CWs.CWSiegeCity.GetLocation()
+	Location SiegeLocMinor = CWs.CWFortSiegeCapitalFort.GetLocation()
 	
 	
-	if CW.CWSiegeS.IsStopped() == False && (IsInLocation(SiegeLoc) ) && !CW.CWCampaignS.PlayerAllegianceLastStand()
+	if CWs.CWSiegeS.IsStopped() == False && (IsInLocation(SiegeLoc) ) && !CWs.CWCampaignS.PlayerAllegianceLastStand()
 ; 		CWScript.Log("CWLockDuringSiegeScript", self + "OnCellLoad() CWSiege is running and my location is the siege's location.")
 	
-		if RequireSiegeQuestToBeAcceptedToLock && CW.CWSiegeS.GetStageDone(1)
+		if RequireSiegeQuestToBeAcceptedToLock && CWs.CWSiegeS.GetStageDone(1)
 ; 			CWScript.Log("CWLockDuringSiegeScript", self + "OnCellLoad() Locking after setting lock level to LockLevelDuringSiege: " + LockLevelDuringSiege)
 			SetLockLevel(LockLevelDuringSiege)
 			Lock()
@@ -42,10 +44,10 @@ Event OnCellLoad()
 
 		
 	
-	elseif CW.CWFortSiegeCapital.IsStopped() == false && (IsInLocation(SiegeLocMinor) ) && !CW.CWCampaignS.PlayerAllegianceLastStand()
+	elseif CWs.CWFortSiegeCapital.IsStopped() == false && (IsInLocation(SiegeLocMinor) ) && !CWs.CWCampaignS.PlayerAllegianceLastStand()
 ; 		CWScript.Log("CWLockDuringSiegeScript", self + "OnCellLoad() CWFortSiegeCapital is running and my location is the siege's location.")
 			
-		if RequireSiegeQuestToBeAcceptedToLock && CW.CWSiegeS.GetStageDone(1)
+		if RequireSiegeQuestToBeAcceptedToLock && CWs.CWFortSiegeCapital.GetStageDone(10)
 ; 			CWScript.Log("CWLockDuringSiegeScript", self + "OnCellLoad() Locking after setting lock level to LockLevelDuringSiege: " + LockLevelDuringSiege)
 			SetLockLevel(LockLevelDuringSiege)
 			Lock()
@@ -54,7 +56,7 @@ Event OnCellLoad()
 			
 		EndIf
 	
-	elseif CW.CWSiegeS.IsStopped()|| ( TreatCWSiegeStage255AsStopped && CW.CWSiegeS.GetStageDone(255) )	;siege isn't running, or is running somewhere other than my current location
+	elseif CWs.CWSiegeS.IsStopped()|| ( TreatCWSiegeStage255AsStopped && CWs.CWSiegeS.GetStageDone(255) )	;siege isn't running, or is running somewhere other than my current location
 ; 		CWScript.Log("CWLockDuringSiegeScript", self + "OnCellLoad() Neither CWSiege nor CWFortSiegeCapital are running in my location, unlocking and setting lock level to LockLevelPostSiege: " + LockLevelPostSiege)
 		
 		SetLockLevel(LockLevelPostSiege)
@@ -65,5 +67,8 @@ Event OnCellLoad()
 
 	endif
 
-	EndEvent
+EndEvent
 
+Event OnInit()
+	CWs = CW as CWScript
+EndEvent
