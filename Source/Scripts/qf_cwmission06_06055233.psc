@@ -139,8 +139,6 @@ kmyQuest.CleanUpLoyalistFactions(Alias_LoyalistSoldier01, Alias_LoyalistSoldier0
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
 
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-
 while Game.GetPlayer().IsInLocation(Alias_CWCampEnemy.GetLocation())
     utility.wait(5)
 endwhile
@@ -403,15 +401,13 @@ debug.traceConditional("CWMission06 stage 200 (Misson Success)", kmyquest.CWs.de
 
 kmyQuest.CompleteAllObjectives()
 
-kmyQuest.FlagFieldCOWithMissionResultFaction(6)
+kmyQuest.FlagFieldCOWithMissionResultFactionWithDelta(6, false, 0)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
 
 kmyQuest.CleanUpLoyalistFactions(Alias_LoyalistSoldier01, Alias_LoyalistSoldier02, Alias_LoyalistSoldier03, Alias_LoyalistSoldier04, Alias_LoyalistSoldier05, Alias_LoyalistSoldier06, Alias_LoyalistSoldier07, Alias_LoyalistSoldier08, Alias_LoyalistSoldier09, Alias_LoyalistSoldier10, Alias_LoyalistSoldier11, Alias_LoyalistSoldier12)
 
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
-
-kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 kmyQuest.AddDisaffectedSoldierToPotentialAlly(Alias_DissaffectedSoldier01)
 kmyQuest.AddDisaffectedSoldierToPotentialAlly(Alias_DissaffectedSoldier02)

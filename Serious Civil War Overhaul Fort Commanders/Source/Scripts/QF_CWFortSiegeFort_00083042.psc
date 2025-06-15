@@ -1589,8 +1589,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 	if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 		kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 	endIf
-	;CWO advance campaign phase
-	kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 endif
 
 while Game.GetPlayer().IsInLocation(Alias_Fort.GetLocation())
@@ -1977,7 +1975,7 @@ CWFortSiegeScript kmyQuest = __temp as CWFortSiegeScript
 CWScript.Log("CWFortSiege", "Stage 9000: SUCCESS! Calling Stop() on quest.")
 
 if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((self as quest) as CWFortSiegeMissionScript).SpecialCapitalResolutionFortSiege == 0
-	((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(99)
+	((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFactionWithDelta(99, false, 1)
 
 
 	location FortLocation = Alias_Fort.GetLocation()
@@ -1991,9 +1989,6 @@ if ((self as quest) as CWFortSiegeMissionScript).SpecialNonFortSiege == 0 && ((s
 		if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 			kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 		endIf
-		kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
-		;CWO Advance campaign Phase
-		kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 		;WE ARE NOW NOT HAVING BATTLES AT CAPITAL TOWNS
 		;CWO - Do not set hold owner from a Fort

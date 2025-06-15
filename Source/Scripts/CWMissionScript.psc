@@ -498,6 +498,12 @@ Function FlagFieldCOWithActiveQuestFaction(int MissionType = -1, Bool ShouldRemo
 EndFunction
 
 Function FlagFieldCOWithMissionResultFaction(int MissionType = -1, Bool MissionFailure = False)
+
+	FlagFieldCOWithMissionResultFactionWithDelta(MissionType, MissionFailure, 2)
+	
+EndFunction
+
+Function FlagFieldCOWithMissionResultFactionWithDelta(int MissionType, Bool MissionFailure, int MissionDelta = 0)
  	CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction()")
 	
 	Actor FieldCOActor = FieldCo.GetActorReference()
@@ -511,6 +517,10 @@ Function FlagFieldCOWithMissionResultFaction(int MissionType = -1, Bool MissionF
 		
  		CWScript.Log("CWMissionScript", self + ": FlagFieldCOWithMissionResultFaction() setting CWCountMissionsDone global to:" + newCount)
 		CWs.CWCountMissionsDone.SetValue(newCount)
+
+		if CWCampaign.IsRunning() && MissionDelta > 0
+			CWS.CWCampaignS.addAttackDeltaMissionBonus(MissionDelta)
+		endif
 		
 		
 	Else	;MissionFailure == true; called when quest is failed
@@ -518,7 +528,10 @@ Function FlagFieldCOWithMissionResultFaction(int MissionType = -1, Bool MissionF
 		;FieldCOActor.SetFactionRank(CWs.CWFieldCOFailedMissionFaction, MissionType)
 		
 	EndIf
-	
+
+	if CWCampaign.IsRunning()
+		CWs.CWCampaignS.AdvanceCampaignPhase()
+	endif
 EndFunction
 
 Function RemoveFieldCOFromHooksAcceptedFaction()

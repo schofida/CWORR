@@ -373,8 +373,6 @@ kmyquest.FlagFieldCOWithMissionResultFaction(7, MissionFailure = true)
 
 UnregisterForUpdate()
 
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-
 stop()
 ;END CODE
 EndFunction
@@ -476,13 +474,9 @@ kmyquest.FlagFieldCOWithMissionResultFaction(7)
 
 kmyquest.CWs.CWMission07Done = 1 ;used to conditionalize story manager node
 
-kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
+kmyquest.CWs.registerMissionSuccess(Alias_Hold.GetLocation())
 
 UnregisterForUpdate()
-
-kmyQuest.CWs.CWCampaignS.addAttackDeltaMissionBonus(2)
-
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 stop()
 ;END CODE
@@ -512,6 +506,8 @@ kmyquest.ToggleOnComplexWIInteractions(Alias_AttackPoint)
 ;delete created references
 ;*** TO DO: When we have arrays, CreateMissionAliasedActor should put all created references to an array, then a new funciton should delete ALL of them
 Alias_Evidence.GetReference().delete()
+
+Alias_CaravanToggle.TryToDisable() ; USKP 2.0.4 - The caravan and stuff are never turned back off.
 ;END CODE
 EndFunction
 ;END FRAGMENT

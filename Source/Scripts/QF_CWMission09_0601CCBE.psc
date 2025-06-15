@@ -167,8 +167,6 @@ Function Fragment_8()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(9, True)
     
-    kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-    
     stop()
     ;END CODE
 EndFunction
@@ -222,10 +220,6 @@ Function Fragment_13()
     
     Alias_Player.GetActorRef().RemoveItem(Alias_Document.GetRef().GetBaseObject())
     Alias_FieldCO.GetActorRef().AddItem(Alias_Document.GetRef().GetBaseObject())
-
-    kmyQuest.CWs.CWCampaignS.addAttackDeltaMissionBonus(2)
-    
-    kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
     
     stop()
     ;END CODE

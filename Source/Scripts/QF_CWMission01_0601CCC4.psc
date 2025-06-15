@@ -368,11 +368,9 @@ Else
     kmyquest.CWStateAttackerOutOfReinforcements.SetValue(1)
 endif
 
-((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFaction(1)
+((self as quest) as CWFortSiegeMissionScript).FlagFieldCOWithMissionResultFactionWithDelta(1, False, 1)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = False)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
-
-kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 
 kmyQuest.CWs.CWCampaignS.StopMonitors()
 kmyQuest.CWs.CWCampaignS.StartDisguiseQuest()
@@ -382,8 +380,6 @@ kmyQuest.CWs.CWCampaignS.StartCWOBAControllerQuest()
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
-
-kmyquest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
     CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
@@ -430,8 +426,6 @@ kmyQuest.CWs.CWCampaignS.StopCWOBAControllerQuest()
 if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 	kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Stop()
 endIf
-
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
     CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")

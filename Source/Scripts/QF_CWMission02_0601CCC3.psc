@@ -169,13 +169,9 @@ Function Fragment_9()
 
     kmyQuest.CompleteAllObjectives()
     
-    kmyquest.FlagFieldCOWithMissionResultFaction(2)
+    kmyquest.FlagFieldCOWithMissionResultFactionWithDelta(2, false, 1)
 
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
-
-    kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
-
-    kmyQuest.CWCampaignS.AdvanceCampaignPhase()
     
     kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFortBattle = false)	;if isFortBattle then we won't display the Objective for the hold again, because we've just won the campain
     
@@ -219,8 +215,6 @@ Function Fragment_10()
     (Alias_ResourceObject1 as CWMission02ResourceObjectScript).UnregisterForUpdate()
     
     kmyquest.FlagFieldCOWithMissionResultFaction(2, MissionFailure = true)
-    
-    kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 
     while Game.GetPlayer().IsInLocation(Alias_ResourceLocation.GetLocation())
         CWScript.Log("CWCWMission02ScriptFragment", self + "FailQuest() Waiting for player to leave City before stopping quest")

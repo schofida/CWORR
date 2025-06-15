@@ -369,8 +369,6 @@ kmyQuest.FailAllObjectives()
 
 kmyquest.FlagFieldCOWithMissionResultFaction(8, MissionFailure = true)
 
-kmyQuest.CWCampaignS.AdvanceCampaignPhase()
-
 Utility.Wait(10.0)
 
 Stop()
@@ -391,15 +389,13 @@ debug.traceConditional("CWMission08 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.
 
 kmyQuest.CompleteAllObjectives()
 
-kmyquest.FlagFieldCOWithMissionResultFaction(8)
+kmyquest.FlagFieldCOWithMissionResultFactionWithDelta(8, False, 0)
 
 kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation())
 
 kmyQuest.CWs.CWAlliesS.AddPotentialAlly(Alias_Goldar.GetRef(), false, true, true, true, true, true, true, false, true, false, true)
 
 kmyQuest.CWs.CWCampaignS.CWMission08Done = 1
-
-kmyQuest.CWCampaignS.AdvanceCampaignPhase()
 
 ;CWO - Quest is stopped on success via CWMission08GiantScript
 ;END CODE

@@ -700,7 +700,7 @@ CWMission04Script kmyQuest = __temp as CWMission04Script
 
 debug.traceConditional("CWMission04 stage 200 SUCCESS!!!", kmyquest.CWs.debugon.value)
 
-kmyquest.FlagFieldCOWithMissionResultFaction(4)
+kmyquest.FlagFieldCOWithMissionResultFactionWithDelta(4, False, 0)
 
 kmyquest.CWs.CWMission04Done = 1 ;used to conditionalize story manager node
 
@@ -708,10 +708,8 @@ kmyquest.CWs.CWCampaignS.registerMissionSuccess(Alias_Hold.GetLocation(), isFort
 
 kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
 
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
-
+;CWO Set Fort Owner instead. Don't Win Entire Hold!
 kmyquest.CWs.SetOwner(Alias_AttackPoint.GetLocation(), kmyQuest.CWs.playerAllegiance, SetKeywordDataImmediately = true)	
-kmyQuest.CWS.CWCampaignS.addAttackDeltaMissionBonus(1)
 ;NOTE: quest stopped in CWMission04PrisonerScript to make sure he keeps his packages until he unloads
 ;END CODE
 EndFunction
@@ -771,7 +769,7 @@ if IsObjectiveCompleted(12) == false
 endif
 
 SetObjectiveDisplayed(15)
-setObjectiveDisplayed(20)
+; setObjectiveDisplayed(20) - Commented out by USKP 2.0. There is no objective 20.
 setObjectiveDisplayed(40)
 ;END CODE
 EndFunction
@@ -793,8 +791,6 @@ kmyquest.FlagFieldCOWithMissionResultFaction(4, MissionFailure = true)
 UnregisterForUpdate()
 
 kmyQuest.CWs.CWCampaignS.CWFortSiegeFortDone = 1
-
-kmyQuest.CWs.CWCampaignS.AdvanceCampaignPhase()
 
 stop()  ;if unsuccessful, stop quest... quest is also stopped in CWMission04PrisonerScript if successful and he unloads
 ;END CODE
