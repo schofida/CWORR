@@ -39,9 +39,13 @@ ReferenceAlias Property Alias_SonsTarget Auto
 
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
+;BEGIN AUTOCAST TYPE CWOBAQuestScript
+Quest __temp = self as Quest
+CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
+;END AUTOCAST
 ;BEGIN CODE
-(Alias_StormcloakSpy01 as cwobascript2).RevertFactions()
-(Alias_ImperialSpy01 as cwobascript2).RevertFactions()
+kmyQuest.RevertFactions(Alias_StormcloakSpy01.GetActorRef())
+kmyQuest.RevertFactions(Alias_ImperialSpy01.GetActorRef())
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -53,27 +57,21 @@ Quest __temp = self as Quest
 CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.registerforsingleupdate(kmyQuest.QuestLength.GetValue())
+kmyQuest.InitFactionSwitch(Alias_StormcloakSpy01, kmyQuest.CWs.iSons)
+kmyQuest.InitFactionSwitch(Alias_ImperialSpy01, kmyQuest.CWs.iImperials)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
+;BEGIN AUTOCAST TYPE CWOBAQuestScript
+Quest __temp = self as Quest
+CWOBAQuestScript kmyQuest = __temp as CWOBAQuestScript
+;END AUTOCAST
 ;BEGIN CODE
-(Alias_StormcloakSpy01 as cwobascript2).SwapFactions()
-(Alias_ImperialSpy01 as cwobascript2).SwapFactions()
-;Source NOT loaded
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_4
-Function Fragment_4()
-;BEGIN CODE
-(Alias_StormcloakSpy01 as cwobascript2).UndoNPCFaction()
-(Alias_ImperialSpy01 as cwobascript2).UndoNPCFaction()
-;Source NOT loaded
+kmyQuest.SwapFactions(Alias_StormcloakSpy01.GetActorRef())
+kmyQuest.SwapFactions(Alias_ImperialSpy01.GetActorRef())
 ;END CODE
 EndFunction
 ;END FRAGMENT
