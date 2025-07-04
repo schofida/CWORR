@@ -382,7 +382,7 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 endIf
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
-    CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
+    CWScript.Log("CWSiegeScript", self + "Fragment_9() Waiting for player to leave City before stoping Siege quest")
    utility.wait(5)
 endwhile
 stop()
@@ -428,7 +428,7 @@ if kmyQuest.CWs.CWCampaignS.CWOSendForPlayerQuest.Isrunning()
 endIf
 
 while Game.GetPlayer().IsInLocation(Alias_Garrison.GetLocation())
-    CWScript.Log("CWSiegeScript", self + "FailDefenseQuest() Waiting for player to leave City before stoping Siege quest")
+    CWScript.Log("CWSiegeScript", self + "Fragment_10() Waiting for player to leave City before stoping Siege quest")
    utility.wait(5)
 endwhile
 stop()

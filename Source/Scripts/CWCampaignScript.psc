@@ -404,8 +404,6 @@ Location PurchasedLocationBothFactions6
 Location PurchasedLocationBothFactions7
 Location PurchasedLocationBothFactions8
 
-bool StartMissionsRunning = false
-
 Event OnInit()
 	CWs = CW as CWScript
 
@@ -1780,24 +1778,22 @@ EndFunction
 ;*******************************************************************************************************************
 ;***	OBSOLETE FUNCTIONS BELOW	***
 ;*******************************************************************************************************************
+State StartMissionsRunning
+	Function StartMissions()
+		;Do not do anything if missions are already running.
+	endfunction
+EndState
 
 Function StartMissions()
 	;CWO - Mostly a rewrite of this function. If we have not yet reached the resolution phase
 	;phase try to start 2 CWMissions... If reached or we could not start any CWMissions, start
 	;final siege for the hold.
 	;*******************************************************************
-	;Do not do anything if missions are already running.
-	CWScript.Log("CWCampaignScript", " StartMissions()")
-	if StartMissionsRunning
-		CWScript.Log("CWCampaignScript", "StartMissions() in progress...")
-		return
-	endif
-
-	StartMissionsRunning = true
+	GoToState("StartMissionsRunning")
 
 	if isCWMissionsOrSiegesRunning()
 		CWScript.Log("CWCampaignScript", "StartMissions() Missions already running. Bailing out")
-		StartMissionsRunning = false
+		GotoState(None)
 		return
 	endif
 
@@ -1807,7 +1803,7 @@ Function StartMissions()
 		
 	If CWCampaignPhase.value < ResolutionPhase		;then start normal missions
 	
- 		CWScript.Log("CWCampaignScript", " StartMissions() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
+		CWScript.Log("CWCampaignScript", " StartMissions() CWCampaignPhase(" + CWCampaignPhase.value + ") < ResolutionPhase(" + ResolutionPhase + "). Starting Missions.")
 		if CWODisableNotifications.GetValueInt() == 0	
 			CWCampaignMissionStart.Show()
 		endif
@@ -1854,7 +1850,7 @@ Function StartMissions()
 			AdvanceCampaignPhase()
 			utility.wait(2.0)
 		endif
-		if CWCampaignPhase.value >= 5
+		if CWCampaignPhase.value >= 5 && !CWFortSiegeFortStarted
 			StartResolutionMission()
 		endif
 
@@ -1885,10 +1881,9 @@ Function StartMissions()
 	
 	EndIf
 
-	StartMissionsRunning = false
+	GotoState(None)
 
 EndFunction
-
 ;*******************************************************************************************************************
 ;***	NEW CWO FUNCTIONS BELOW	***
 ;*******************************************************************************************************************
