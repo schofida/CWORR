@@ -2675,6 +2675,8 @@ else ;defenders are victorious
 	;NOTE: The following function WAITS in a while loop until the player leaves the city location, so do this LAST
 	kmyquest.SucceedDefenseQuest(Alias_Hold, Alias_City, Alias_MainGateExterior)
 endif
+
+((self as quest) as CWReinforcementControllerScript).pacifyExtraSoldiersForSurrender()
 ;END CODE
 EndFunction
 ;END FRAGMENT

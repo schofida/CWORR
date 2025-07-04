@@ -1436,6 +1436,8 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender8)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender9)
 kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 
+((self as quest) as CWReinforcementControllerScript).pacifyExtraSoldiersForSurrender()
+
 ((self as Quest) as CWFortSiegeMissionScript).FlagFieldCOWithActiveQuestFaction(ShouldRemoveFromFactions = True)
 ;location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
 ;END CODE

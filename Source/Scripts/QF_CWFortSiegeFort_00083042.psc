@@ -1357,6 +1357,8 @@ kmyquest.CWs.pacifyAliasForSurrender(Alias_Defender10)
 location currentHold = kmyquest.CWs.GetMyCurrentHoldLocation(Alias_Jarl.GetReference())
 kmyquest.CWs.WinHoldAndSetOwnerKeywordDataOnly(currentHold, AttackersWon = true, DefendersWon = false)
 kmyquest.CWs.CompleteCWObj(currentHold)
+
+((self as quest) as CWReinforcementControllerScript).pacifyExtraSoldiersForSurrender()
 ;END CODE
 EndFunction
 ;END FRAGMENT

@@ -1599,3 +1599,18 @@ function showDefenderPool()
 	endif
 	
 EndFunction
+
+function pacifyExtraSoldiersForSurrender()
+
+	int i = iCleanupActors
+	While i
+		i = i - 1
+		Actor Solider = CleanupActors[i]
+		if Solider != none && !Solider.isDead()
+			CWs.ClearActorsEnemyFlagOnCrimeFactions(Solider)
+			Solider.AddToFaction(CWs.CWSurrenderTemporaryAllies)
+			Solider.StopCombatAlarm()
+			Solider.StopCombat()
+		endif
+	endwhile
+endfunction
