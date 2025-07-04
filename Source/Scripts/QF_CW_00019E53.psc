@@ -362,7 +362,7 @@ CWScript kmyQuest = __temp as CWScript
 
 	kmyQuest.CWCampaignS.StartCWOBAControllerQuest()
 	
-	if kmyQuest.WhiteRunSiegeFinished
+	if kmyQuest.WhiteRunSiegeFinished && (game.Getplayer().IsInFaction(kmyQuest.CWSonsFaction) || game.Getplayer().IsInFaction(kmyQuest.CWImperialFaction))
 		kmyQuest.CWCampaignS.StartDisguiseQuest()
 
 		kmyQuest.CWCampaignS.SetMonitorWaitingToStartCampaign()
