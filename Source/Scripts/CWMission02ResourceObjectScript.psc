@@ -29,6 +29,7 @@ Event OnActivate(ObjectReference akActionRef)
 		
 		if RType == 1 || RType == 3		;1 = Wheat Mill(Farm), 2 = Saw Mill, 3 = Smelter(Mine)
 			(akActionRef as Actor).PlayIdle(IdleLockPick)
+			utility.wait(3)
 			;TEMP HACK TO MAKE IT SABOTAGED WHEN YOU ACTIVATE IT
 			GetReference().DamageObject(9999)
 			CWMission02.CWs.GetFaction(CWMission02.CWs.getOppositeFactionInt(CWMission02.CWs.PlayerAllegiance), false).SendAssaultAlarm()
