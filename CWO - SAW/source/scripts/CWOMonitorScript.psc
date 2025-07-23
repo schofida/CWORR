@@ -468,6 +468,15 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10024)
 	endif
 	if currentVersion < 10100
+		if SKSE.GetVersionRelease() > 0
+		else
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_0_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_10_Spell)
+			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_20_Spell)
+		endif
+		CWOVersion.SetValueInt(10100)
+	endif
+	if currentVersion < 10101
 		CWS.CWRank1RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank1RewardImperial
 		CWS.CWRank2RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardImperial
 		CWS.CWRank3RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardImperial
@@ -476,13 +485,7 @@ function DoPlayerLoadGameStuff()
 		CWS.CWRank2RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardSons
 		CWS.CWRank3RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardSons
 		CwS.CWRank4RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank4RewardSons
-		if SKSE.GetVersionRelease() > 0
-		else
-			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_0_Spell)
-			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_10_Spell)
-			Game.GetPlayer().AddSpell((GetOwningQuest() as CWOQuestStarter).CWO_XBox_Adjust_SoldierCount_20_Spell)
-		endif
-		CWOVersion.SetValueInt(10100)
+		CWOVersion.SetValueInt(10101)
 	endif
 	registerforsingleupdate(30)
 endfunction
