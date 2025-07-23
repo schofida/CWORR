@@ -68,8 +68,8 @@ CWOApolloFixMeScript kmyQuest = __temp as CWOApolloFixMeScript
 	CWScript CWs = kmyQuest.CWs
 	CWCampaignScript CWCampaignS = kmyQuest.CWs.CWCampaignS
 
-	if CWs.WarIsActive == 0 && CWs.WhiteRunSiegeStarted && !CWs.WhiterunSiegeFinished && CWs.CW03.GetStageDone(100) && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
-		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 100 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
+	if CWs.WarIsActive == 0 && (CWs.WhiteRunSiegeStarted || CWs.CW03.GetStageDone(50)) && !CWs.WhiterunSiegeFinished && !CWs.CWSiegeS.isRunning() ;I BELIEVE THIS SHOULD ONLY BE THE GENERIC FIELD CO IN WHITERUN CITY
+		CWScript.Log("CWScript", self + "GetCWOUnstuck() IsPlayerInMyFaction == true && WarIsActive == false, CWs.CW03.GetStageDone(" + 50 + ") == true,  so starting the siege at Whiterun by calling CWScript SetFieldCOAlias() and CreateMissions()")
 		debug.notification("Trying to start Whiterun Siege")
 	    CWs.CreateMissions(CWs.WhiterunHoldLocation, CWs.GetReferenceHQFieldCOForHold(CWs.WhiterunHoldLocation, Cws.PlayerAllegiance), ForceFinalSiege = true)
 		Stop()
