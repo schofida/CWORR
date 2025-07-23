@@ -505,6 +505,7 @@ setStage(66)
 
 setStage(73)  ; added in Balgruuf Dilemma 0.1.3 - updates global variables of CWO
 
+CWs.SetOwnerKeywordDataOnly(CWs.WhiterunLocation, 2)
 ;setStage(70)  ; blocking until Whiterun civil war locations are unloaded !
 ;RegisterForSingleUpdate(30) ;Set stage 70 in an OnUpdate event, rather than immediately
 
