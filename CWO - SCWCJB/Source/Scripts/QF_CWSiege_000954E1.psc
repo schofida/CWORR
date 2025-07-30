@@ -2718,6 +2718,8 @@ endif
 
 kmyQuest.CWs.CWCampaignS.NoMoreDragonTime()
 
+kmyQuest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
+
 kmyquest.CWs.CWBattlePhase.SetValue(0)
 kmyquest.CWs.CWThreatCombatBarksS.RegisterBattlePhaseChanged()
 
