@@ -1769,6 +1769,10 @@ function TryToFixQuest()
 			SetStage(200)
 			return
 		endif
+		if GetStage() == 200
+			Stop()
+			return
+		endif
 	endif
 endfunction
 
