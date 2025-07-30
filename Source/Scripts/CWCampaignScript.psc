@@ -2507,7 +2507,6 @@ endfunction
 function SetMonitorWaitingToStartCampaign()
 	if CWOMonitorQuest.IsRunning()
 		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).GoToState("WaitingToStartNewCampaign")
-		(CWOMonitorQuest.GetAlias(0) as CWOMonitorScript).RegisterForSingleUpdate(30.0)
 	endif
 endfunction
 

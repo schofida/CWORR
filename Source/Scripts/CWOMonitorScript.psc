@@ -17,11 +17,6 @@ Quest Property DialogueWhiterunCaptainOfTheGuard auto
 ObjectReference Property WhiterunDrawbridge Auto
 ObjectReference Property WhiterunDrawbridgeNavCollision Auto
 
-Event init()
-	;used by CWHoldManagerScript attached to this quest
-	registerforsingleupdate(30)	
-EndEvent	
-
 Auto State DoNothing
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -33,6 +28,10 @@ Auto State DoNothing
 endState
 
 State WaitingToStartNewCampaign
+
+	event onBeginState()
+		registerforsingleupdate(5)
+	endevent
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -112,15 +111,18 @@ State WaitingToStartNewCampaign
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, Campaign is already running. Moving forward to StartingNewCampaign")
 		Else
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 0, keep waiting.")
-		
+			registerforsingleupdate(10)
 		EndIf
-		registerforsingleupdate(10)
 	EndEvent
 
 
 EndState
 
 State StartingNewCampaign
+
+	event OnBeginState()
+		registerforsingleupdate(30)
+	endevent
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -141,14 +143,17 @@ State StartingNewCampaign
 				return	
 			Else
 				CWScript.log("CWScript", "StartingNewCampaign, CWCampaign.isRunning == False, waiting for CWCampaign to start.")
-				
+				registerforsingleupdate(30)
 			endif
-			registerforsingleupdate(30)
 	EndEvent
 
 EndState
 
 State WaitingToFinishWar
+
+	event OnBeginState()
+		RegisterForSingleUpdate(30)
+	endevent
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -157,10 +162,8 @@ State WaitingToFinishWar
 		if cws.CWDebugForceAttacker.Value != cws.PlayerAllegiance
 			GoToState("WaitingToStartNewCampaign")
 			CWScript.log("CWScript", "WaitingToFinishWar, Player lost final fort or city siege. Now its opponent's turn.")
-			registerforsingleupdate(30)
 		elseif cws.cwobj.getstagedone(255)
 			CWScript.log("CWScript", "WaitingToFinishWar, That's all folks. Thanks for Playing!")
-			unregisterforupdate()
 			GetOwningQuest().Stop()
 		else
 			bool InCampLocation  = false
@@ -203,13 +206,16 @@ State StartingNewCampaignOffscreenMode
 	endfunction
 	Event OnUpdate()
 		CWScript.log("CWScript", "StartingNewCampaignOffscreenMode state OnUpdate() is doing nothing until StartNewCampaign() function call has called ResolveOffscreen() and that function call has finished.")
-
 		registerforsingleupdate(30)
 	EndEvent
 
 EndState
 
 State WaitingForCampaignToFinish
+
+	Event OnBeginState()
+		registerforsingleupdate(30)
+	EndEvent
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -220,7 +226,6 @@ State WaitingForCampaignToFinish
 			GoToState("WaitingToStartNewCampaign")
 
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == False, going to state WaitingToStartNewCampaign.")
-			registerforsingleupdate(5)
 		Elseif (CWs.CWAttacker.GetValueInt() == CWs.playerAllegiance && Cws.CwCampaignS.FieldHQ.GetLocation() != none && player.IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation()) && CWs.FieldCO.GetActorRef() != none && CWs.FieldCO.GetActorRef().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())) || CWs.CWDefender.GetValueInt() == CWs.playerAllegiance
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
 			CWs.CWCampaignS.StartMissions()
@@ -238,6 +243,10 @@ EndState
 
 State WaitingForPlayerToBeOutOfMajorCity
 
+	Event OnBeginState()
+		registerforsingleupdate(5)
+	EndEvent
+
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
 	endfunction
@@ -248,12 +257,17 @@ State WaitingForPlayerToBeOutOfMajorCity
 			GoToState("WaitingForSiegeToStop")
 			CWSiegeQuest.Stop()
 			CWAttackCityQuest.Stop()
+		else
+			registerforsingleupdate(5)
 		endif
-		registerforsingleupdate(5)
 	EndEvent
 EndState
 
 State WaitingForPlayerToBeOutOfMinorCity
+
+	Event OnBeginState()
+		registerforsingleupdate(5)
+	EndEvent
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -263,13 +277,17 @@ State WaitingForPlayerToBeOutOfMinorCity
 		if !(CWs.CWFortSiegeCapital As CWFortSiegeScript).PlayerInMinorCity(self.GetActorRef())
 			GoToState("WaitingForSiegeToStop")
 			CWSiegeCapitalQuest.Stop()
+		else
+			registerforsingleupdate(5)
 		endif
-		registerforsingleupdate(5)
 	EndEvent
 EndState
 
 State WaitingForSiegeToStop
 
+	function onBeginState()
+		registerforsingleupdate(5)
+	endFunction
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
 	endfunction
@@ -279,7 +297,6 @@ State WaitingForSiegeToStop
 			GoToState("WaitingToStartNewCampaign")
 
 			CWScript.log("CWScript", "WaitingForSiegeToStop, going to state WaitingToStartNewCampaign.")
-			registerforsingleupdate(5)
 		else
 			registerforsingleupdate(5)
 		endif
@@ -288,6 +305,10 @@ EndState
 
 
 State ResolvingCampaignOffscreen
+
+	function onBeginState()
+		registerforsingleupdate(30)
+	endFunction
 
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
