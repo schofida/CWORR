@@ -65,6 +65,7 @@ function TryToFixQuest()
 		return
 	endif
 	if GetStageDone(9000)
+		CWSiegeS.Stop()
 		Stop()
 	endif
 endfunction
