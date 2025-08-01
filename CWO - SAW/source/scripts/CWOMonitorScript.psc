@@ -17,6 +17,8 @@ Quest Property DialogueWhiterunCaptainOfTheGuard auto
 ObjectReference Property WhiterunDrawbridge Auto
 ObjectReference Property WhiterunDrawbridgeNavCollision Auto
 
+float property ftimeSinceLastRegisterForUpdate auto hidden
+
 Auto State DoNothing
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -31,6 +33,7 @@ State WaitingToStartNewCampaign
 
 	event onBeginState()
 		registerforsingleupdate(5)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	endevent
 
 	function OnPlayerLoadGame()
@@ -43,10 +46,12 @@ State WaitingToStartNewCampaign
 		if !cws.WhiterunSiegeFinished
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, War has not started yet. Bailing out here.")
 			registerforsingleupdate(30)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 			return
 		endif
 	 
 		if cws.debugForceOffscreenResult == 1
+			;Obsolete. Never hit
 			GoToState("StartingNewCampaignOffscreenMode")
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 1 & CWCampaign.IsRunning() == False, going to state StartingNewCampaignOffscreenMode.")
 			
@@ -112,6 +117,7 @@ State WaitingToStartNewCampaign
 		Else
 			CWScript.log("CWScript", "WaitingToStartNewCampaign, WarIsActive == 0, keep waiting.")
 			registerforsingleupdate(10)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		EndIf
 	EndEvent
 
@@ -122,6 +128,7 @@ State StartingNewCampaign
 
 	event OnBeginState()
 		registerforsingleupdate(30)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	endevent
 
 	function OnPlayerLoadGame()
@@ -144,6 +151,7 @@ State StartingNewCampaign
 			Else
 				CWScript.log("CWScript", "StartingNewCampaign, CWCampaign.isRunning == False, waiting for CWCampaign to start.")
 				registerforsingleupdate(30)
+				ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 			endif
 	EndEvent
 
@@ -153,6 +161,7 @@ State WaitingToFinishWar
 
 	event OnBeginState()
 		RegisterForSingleUpdate(30)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	endevent
 
 	function OnPlayerLoadGame()
@@ -195,11 +204,13 @@ State WaitingToFinishWar
 				CWScript.log("CWScript", "WaitingToFinishWar, ...still waiting")
 				registerforsingleupdate(30)	
 			endif
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		endif
 	EndEvent
 
 EndState
 
+;Obsolete. Commented out CWs Code
 State StartingNewCampaignOffscreenMode
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -215,6 +226,7 @@ State WaitingForCampaignToFinish
 
 	Event OnBeginState()
 		registerforsingleupdate(30)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	EndEvent
 
 	function OnPlayerLoadGame()
@@ -230,13 +242,16 @@ State WaitingForCampaignToFinish
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, Player is in Camp start quests if there are none running.")
 			CWs.CWCampaignS.StartMissions()
 			registerforsingleupdate(10)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		Elseif CWs.CWAttacker.GetValueInt() == CWs.playerAllegiance && Cws.CwCampaignS.FieldHQ.GetLocation() != none && player.IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation()) && CWs.FieldCO.GetActorRef() != none && !CWs.FieldCO.GetActorRef().IsInLocation(Cws.CwCampaignS.FieldHQ.GetLocation())
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CO is not in Camp for some reason. Get em over there.")
 			CWs.CWCampaignS.MoveRikkeGalmarToCampIfNeeded()
 			registerforsingleupdate(5)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		Else
 			CWScript.log("CWScript", "WaitingForCampaignToFinish, CWCampaign.IsRunning() == True, waiting for CWCampaign quest to stop.")
 			registerforsingleupdate(30)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		endif
 	EndEvent
 EndState
@@ -245,6 +260,7 @@ State WaitingForPlayerToBeOutOfMajorCity
 
 	Event OnBeginState()
 		registerforsingleupdate(5)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	EndEvent
 
 	function OnPlayerLoadGame()
@@ -259,6 +275,7 @@ State WaitingForPlayerToBeOutOfMajorCity
 			CWAttackCityQuest.Stop()
 		else
 			registerforsingleupdate(5)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		endif
 	EndEvent
 EndState
@@ -267,6 +284,7 @@ State WaitingForPlayerToBeOutOfMinorCity
 
 	Event OnBeginState()
 		registerforsingleupdate(5)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	EndEvent
 
 	function OnPlayerLoadGame()
@@ -279,6 +297,7 @@ State WaitingForPlayerToBeOutOfMinorCity
 			CWSiegeCapitalQuest.Stop()
 		else
 			registerforsingleupdate(5)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		endif
 	EndEvent
 EndState
@@ -287,6 +306,7 @@ State WaitingForSiegeToStop
 
 	function onBeginState()
 		registerforsingleupdate(5)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	endFunction
 	function OnPlayerLoadGame()
 		DoPlayerLoadGameStuff()
@@ -299,15 +319,17 @@ State WaitingForSiegeToStop
 			CWScript.log("CWScript", "WaitingForSiegeToStop, going to state WaitingToStartNewCampaign.")
 		else
 			registerforsingleupdate(5)
+			ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 		endif
 	EndEvent
 EndState
 
-
+;Never Hit
 State ResolvingCampaignOffscreen
 
 	function onBeginState()
 		registerforsingleupdate(30)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	endFunction
 
 	function OnPlayerLoadGame()
@@ -318,6 +340,7 @@ State ResolvingCampaignOffscreen
 		CWScript.log("CWScript", "ResolvingCampaignOffscreen state OnUpdate() is doing nothing until ResolveOffscreen() function call has finished.")
 
 		registerforsingleupdate(30)
+		ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 	EndEvent
 
 EndState
@@ -510,4 +533,5 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10101)
 	endif
 	registerforsingleupdate(30)
+	ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 endfunction

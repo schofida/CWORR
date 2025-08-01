@@ -21,3 +21,14 @@ Event OnInit()
  	CWScript.Log("CWMissionScript", self + ": OnInit()")
 	
 EndEvent
+
+function KickOffUpdateIfNeeded()
+	Quest CWOMonitorQuest = CwCampaignS.CWOMonitorQuest
+	if CWOMonitorQuest.IsRunning()
+		CWOMonitorScript CWOMonitor = (CWOMonitorQuest.GetAlias(0) as CWOMonitorScript)
+		if CWOMonitor != none && CWOMonitor.ftimeSinceLastRegisterForUpdate < Utility.GetCurrentRealTime() - 45.0
+			CWOMonitor.RegisterForSingleUpdate(5)
+			CWOMonitor.ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
+		endif
+	endif
+EndFunction
