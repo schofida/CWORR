@@ -62,10 +62,11 @@ registerPatcher({
             const configReducer = function(fileName, tab) {
                 return function(accumulator, entry) {
                     const xTroop = xelib.GetMasterRecord(xelib.GetLinksTo(entry, 'LVLO\\Reference'));
-                    if (fileName !== cwoFileName && xelib.GetFileName(xelib.GetElementFile(xTroop)) === 'Skyrim.esm') {
+                    const troopFileName = xelib.GetFileName(xelib.GetElementFile(xTroop));
+                    if (fileName !== cwoFileName && troopFileName === 'Skyrim.esm') {
                         return accumulator;
                     }
-                    const name = xelib.EditorID(xTroop);
+                    const name = troopFileName + '::' + xelib.GetHexFormID(xTroop, true, true);
                     const oldCount = accumulator[name] ? accumulator[name].oldCount + (fileName !== cwoFileName ? 0 : 1) : fileName !== cwoFileName ? 0 : 1;
                     const count = patcherSettings.troopConfig[tab] && 
                         patcherSettings.troopConfig[tab][name] ? patcherSettings.troopConfig[tab][name].count : oldCount;
@@ -78,14 +79,14 @@ registerPatcher({
                     }
                     const troop = {
                         reference,
-                        display: xelib.FullName(xTroop) ?  xelib.FullName(xTroop) : name,
+                        display: xelib.FullName(xTroop) ?  xelib.FullName(xTroop) : xelib.EditorID(xTroop),
                         name,
                         count,
                         oldCount,
                         level,
                         oldLevel,
                         formID: xelib.GetHexFormID(xTroop),
-                        race: xelib.FullName(xelib.GetLinksTo(xTroop, 'RNAM')),
+                        race: xelib.FullName(xelib.GetLinksTo(xTroop, 'RNAM'))
                     };
 
                     accumulator[name] = troop;
@@ -156,41 +157,44 @@ registerPatcher({
             },
             patch: function(record) {
                 xelib.RemoveElement(record, 'Leveled List Entries');
-                let cwoElements = [];
+                let cwoElements = {};
+                let totalElements = {};
                 xelib.GetOverrides(record).forEach(override => {
                     const fileName = xelib.GetFileName(xelib.GetElementFile(override));
                     if (fileName === xelib.GetFileName(xelib.GetElementFile(record))) {
                         return;
                     }
-                    const cwoFile = fileName === 'Civil War Overhaul.esp' || xelib.GetMasterNames(xelib.GetElementFile(override)).includes('Civil War Overhaul.esp');
-                    if (cwoFile) {
-                        cwoElements = [];
-                    }
+                    let totalsPerOverride = {};
                     xelib.GetElements(override, 'Leveled List Entries').forEach(form => {
                         const link = xelib.GetLinksTo(form, 'LVLO\\Reference');
                         if (link === 0) {
                             return;
                         }
-                        if (cwoFile) {
-                            cwoElements.push({
+                        const reference = xelib.GetMasterRecord(link);
+                        const troopKey = xelib.GetFileName(xelib.GetElementFile(reference)) + '::' + xelib.GetHexFormID(reference, true, true);
+                        cwoElements[troopKey] = {
                                 ref: xelib.GetValue(form, 'LVLO\\Reference'),
                                 lev: xelib.GetValue(form, 'LVLO\\Level'),
                                 cnt: xelib.GetValue(form, 'LVLO\\Count')
-                            })
-                            return;
+                            };
+                        if (!totalsPerOverride[troopKey]) {
+                            totalsPerOverride[troopKey] = 1;
+                        } else {
+                            totalsPerOverride[troopKey]++;
                         }
-                        const reference = xelib.GetMasterRecord(link);
-                        if (xelib.GetFileName(xelib.GetElementFile(reference)) !== 'Skyrim.esm') {
-                            xelib.AddLeveledEntry(record, 
-                                xelib.GetValue(form, 'LVLO\\Reference'), 
-                                xelib.GetValue(form, 'LVLO\\Level'), 
-                                xelib.GetValue(form, 'LVLO\\Count'));
-                            return;
+                    });
+                    Object.keys(totalsPerOverride).forEach(x => {
+                        if (!totalElements[x]) {
+                            totalElements[x] = totalsPerOverride[x];
+                        } else if (totalsPerOverride[x] > totalElements[x]) {
+                            totalElements[x] = totalsPerOverride[x];
                         }
                     });
                 });
-                cwoElements.forEach(x => {
-                    xelib.AddLeveledEntry(record, x.ref, x.lev, x.cnt)
+                Object.keys(cwoElements).forEach(x => {
+                    for (let i = 0;i<totalElements[x];i++) {
+                        xelib.AddLeveledEntry(record, cwoElements[x].ref, cwoElements[x].lev, cwoElements[x].cnt)
+                    }
                 });
             }
         }, {
@@ -206,9 +210,9 @@ registerPatcher({
                     const reference = xelib.GetValue(current, 'LVLO\\Reference');
                     const level = xelib.GetValue(current, 'LVLO\\Level');
                     const xTroop = xelib.GetLinksTo(current, 'LVLO\\Reference');
-                    const editorID = xelib.EditorID(xTroop);
-                    const count = accumulator[editorID] ? accumulator[editorID].count + 1 : 1;
-                    accumulator[editorID] = {
+                    const troopKey = xelib.GetFileName(xelib.GetElementFile(xTroop)) + '::' + xelib.GetHexFormID(xTroop, true, true);
+                    const count = accumulator[troopKey] ? accumulator[troopKey].count + 1 : 1;
+                    accumulator[troopKey] = {
                         count,
                         reference,
                         level,
@@ -229,9 +233,7 @@ registerPatcher({
                         return;
                     }
                     for (let i = 0;i<cwoRefs[key].count;i++) {
-                        const file = xelib.FileByName(cwoRefs[key].file);
-                        const element = xelib.GetElement(file, key);
-                        xelib.AddLeveledEntry(record, xelib.LongName(element), cwoRefs[key].level + '', '1');
+                            xelib.AddLeveledEntry(record, cwoRefs[key].reference, cwoRefs[key].level + '', '1');                    
                     }
                 })
             }
