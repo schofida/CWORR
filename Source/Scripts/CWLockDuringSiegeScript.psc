@@ -23,6 +23,10 @@ CWScript Property CWs Auto hidden
 
 Event OnCellLoad()	
 
+	;schofida - Additional setting of CWS script property to ensure it is set in case OnInit() didn't fire for some reason
+	if CWs == None
+		CWs = CW as CWScript
+	endIf
 	;check to see if siege is running and running in the location where this ref is currently located
 	location SiegeLoc = CWs.CWSiegeCity.GetLocation()
 	Location SiegeLocMinor = CWs.CWFortSiegeCapitalFort.GetLocation()

@@ -36,6 +36,7 @@ function OnUpdate()
 	endIf
 	if WaitForHelgen.IsCompleted() && \
 		!player.IsInInterior() && \
+		player.getCurrentLocation() != None && \
 		CWOBAChance.GetValueInt() > 0 && \
 		(player.getCurrentLocation().HasKeyword(CWCapital) || \
 			player.getCurrentLocation().HasKeyword(LocTypeMilitaryCamp)) && \
