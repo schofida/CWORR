@@ -535,6 +535,7 @@ Alias_Friendly1.TryToMoveTo(Alias_FriendlyStartMarker.GetReference())
 Alias_Friendly2.TryToMoveTo(Alias_FriendlyStartMarker.GetReference())
 Alias_Friendly3.TryToMoveTo(Alias_FriendlyStartMarker.GetReference())
 
+Alias_Friend.TryToEnable()
 Alias_Friendly1.TryToEnable()
 Alias_Friendly2.TryToEnable()
 Alias_Friendly3.TryToEnable()

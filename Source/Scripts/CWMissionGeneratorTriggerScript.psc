@@ -42,11 +42,19 @@ Event OnCellAttach()
 	if myLocation.HasKeyword(CWCampImperial) && CW.PlayerAllegiance == CW.iImperials
  		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampImperial trying to starting Imperial missions")
 		RikkeOrGalmar = RikkeRef
-
+		
+		; removing from opposing faction because something is adding the wrong faction to the COs, breaking the dialogues for the missions
+		If RikkeRef.IsInFaction(CW.CWSonsFaction)
+			RikkeRef.RemoveFromFaction(CW.CWSonsFaction)
+		Endif
 	ElseIf myLocation.HasKeyword(CWCampSons) && CW.PlayerAllegiance == CW.iSons
  		CWScript.Log("CWMissionGeneratorTriggerScript", self + "OnCellAttach() in location with keyword CWCampSons trying to starting Sons missions")
 		RikkeOrGalmar = GalmarRef
-	
+		
+		; removing from opposing faction because something is adding the wrong faction to the COs, breaking the dialogues for the missions
+		If GalmarRef.IsInFaction(CW.CWImperialFaction)
+			GalmarRef.RemoveFromFaction(CW.CWImperialFaction)
+		Endif
 	Else
  		CWScript.Log("CWMissionGeneratorTriggerScript", self + " WARNING: OnCellAttach() in location with NEITHER CWCampImperial nor CWCampSons!", 2, True, True)
 		

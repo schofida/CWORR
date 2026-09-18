@@ -527,6 +527,8 @@ ReferenceAlias Property Alias_SABETME3WindhelmMarker Auto
 ReferenceAlias Property Alias_SABETME3Soldier Auto
 ;END ALIAS PROPERTY
 
+Bool SeasonUnendingWorkaround
+
 ;BEGIN FRAGMENT Fragment_8
 Function Fragment_8()
 ;BEGIN AUTOCAST TYPE CWFinaleScript
@@ -604,6 +606,15 @@ CWFinaleScript kmyQuest = __temp as CWFinaleScript
 ;BEGIN CODE
 ;SCENE END COMBAT WITH ENEMY SECOND
 ;ALSO SET IF PLAYER HITS EnemyLeader or EnemySecond
+
+; Checks if Season Unending was started then finishes it, otherwise it breaks the CW Finale
+	SeasonUnendingWorkaround = False
+	Quest MQ302 = Quest.GetQuest("MQ302")
+	
+	If MQ302.GetStage() == 10
+		MQ302.Reset()
+		SeasonUnendingWorkaround = True
+	EndIf
 
 bool sabetme3 = kmyQuest.CWs.CWcampaignS.PlayerAllegianceLastStand()
 
@@ -775,6 +786,16 @@ elseif !kmyQuest.DefenseSuccessful
 	kmyquest.CWs.PlayerRank = 4
 
 	kmyquest.CWs.CWFin.Start()   ;start the post questline dialogue quest
+	
+	If SeasonUnendingWorkaround
+		Quest.GetQuest("MQ302").CompleteQuest()
+	EndIf
+	
+	Quest MQ301 = Quest.GetQuest("MQ301")
+	
+	If MQ301.GetStage() == 30
+		MQ301.setStage(40)
+	EndIf
 endif
 
 ;UNLOCK THE DOORS
