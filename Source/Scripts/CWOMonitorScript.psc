@@ -524,6 +524,15 @@ function DoPlayerLoadGameStuff()
 	if currentVersion < 10101
 		CWOVersion.SetValueInt(10101)
 	endif
+	if currentVersion < 10102
+		cws.SetGarrisonCost((GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation, cws.iCostSmall)
+		if (cws.GetHoldOwner(cws.iReach) == cws.iSons)
+			(GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iSons)
+		else
+			(GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iImperials)
+		endif
+		CWOVersion.SetValueInt(10102)
+	endif
 	registerforsingleupdate(30)
 	ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
 endfunction
