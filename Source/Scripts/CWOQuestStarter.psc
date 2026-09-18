@@ -27,6 +27,8 @@ Spell Property CWO_XBox_Adjust_SoldierCount_0_Spell Auto
 Spell Property CWO_XBox_Adjust_SoldierCount_10_Spell Auto
 Spell Property CWO_XBox_Adjust_SoldierCount_20_Spell Auto
 
+Location Property SoljundsSinkholeLocation Auto
+
 
 
 Event OnInit()
@@ -81,6 +83,12 @@ Event OnInit()
 		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_0_Spell)
 		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_10_Spell)
 		Game.GetPlayer().AddSpell(CWO_XBox_Adjust_SoldierCount_20_Spell)
+	endif
+	cws.SetGarrisonCost(SoljundsSinkholeLocation, cws.iCostSmall)
+	if (cws.GetHoldOwner(cws.iReach) == cws.iSons)
+		SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iSons)
+	else
+		SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iImperials)
 	endif
 	;That's it for now...
     Debug.Notification("CWO version " + CWOVersion.GetValueInt() + " initialized :)")

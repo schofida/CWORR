@@ -67,6 +67,11 @@ LeveledItem Property CWRankRewardSons Auto
 LeveledItem Property CWRankRewardImperial Auto
 LeveledItem Property CWFinaleFactionLeaderSwordList Auto
 Quest Property CWOApolloFixMe Auto
+;-- MCM Helper (config.json) read by the CallFunction actions ----------
+Int Property iStartSiegeHold Auto
+Int Property iWinHold Auto
+Int Property iSwitchHold Auto
+Int Property iWinWarFaction Auto
 ;-- Variables ---------------------------------------
 Int _color = 16777215
 Int _colorOID_C
@@ -1113,6 +1118,201 @@ function CompleteRunningCampaign(bool failQuests = false)
 			CWs.CWCampaignS.CompleteCWSieges()
 		endif
 		debug.notification("Hold Siege Completed")
+	endif
+endfunction
+
+;-- MCM Helper Action Functions ---------------------------------------
+;Called by MCM Helper via config.json CallFunction actions. Mirrors the
+;corresponding classic OnOption* handlers so JSON mode behaves identically.
+
+function EnsureHoldLists()
+	if holdsID == none || holdsList == none
+		holdsList = new String[7]
+		holdsList[0] = "Markarth"
+		holdsList[1] = "Morthal"
+		holdsList[2] = "Whiterun"
+		holdsList[3] = "Falkreath"
+		holdsList[4] = "Dawnstar"
+		holdsList[5] = "Winterhold"
+		holdsList[6] = "Riften"
+
+		holdsID = new Int[7]
+		holdsID[0] = 2
+		holdsID[1] = 3
+		holdsID[2] = 4
+		holdsID[3] = 5
+		holdsID[4] = 6
+		holdsID[5] = 7
+		holdsID[6] = 9
+	endif
+endfunction
+
+function OnGarrisonReinforcementsChanged()
+	if CWs.CWCampaignS.CWMission01.IsRunning() && CWs.CWCampaignS.CWMission01.GetStage() < 10
+		(CWs.CWCampaignS.CWMission01 as CWMission01Script).SetEnemyPools()
+	endif
+endfunction
+
+function OnCampaignPhaseChanged()
+	if CWs.CWCampaignS != none
+		CWs.CWCampaignS.ResolutionPhase = CWOCampaignPhaseMax.GetValueInt()
+	endif
+endfunction
+
+function OnDisguiseGameTypeChanged()
+	if CWOArmorDisguise.IsRunning()
+		CWOArmorDisguise.Stop()
+		CWOArmorDisguise.Start()
+	endif
+endfunction
+
+function OnDisableFortSiegeFortChanged()
+	if CWODisableFortSiegeFort.GetValueInt() == 1
+		CWs.CWCampaignS.CWFortSiegeFortDone = 1
+	else
+		if CWS.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && CWs.contestedHold == CWs.iFalkreath
+			CWs.CWCampaignS.CWFortSiegeFortDone = 1
+		else
+			CWs.CWCampaignS.CWFortSiegeFortDone = 0
+		endif
+	endif
+endfunction
+
+function OnPayCrimeFaction()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(60)
+endfunction
+
+function OnStopMusic()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(30)
+endfunction
+
+function OnFixFactionAggression()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(40)
+endfunction
+
+function OnFixWhiterunBridge()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(50)
+endfunction
+
+function OnHelp()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(10)
+endfunction
+
+function OnHelp2()
+	CWOApolloFixMe.Reset()
+	CWOApolloFixMe.SetStage(20)
+endfunction
+
+function OnUninstall()
+	UninstallCWO()
+endfunction
+
+function OnWinSiege()
+	CompleteRunningCampaign()
+endfunction
+
+function OnStartSiege()
+	EnsureHoldLists()
+	int holdIndex = iStartSiegeHold
+	if holdIndex < 0 || holdIndex >= holdsID.length
+		Debug.Notification("No hold selected.")
+		return
+	endif
+	int holdID = holdsID[holdIndex]
+	if CWs.CWcontestedHold.GetValueInt() == holdID
+		Debug.Notification("Cannot set to current contested hold.")
+	elseif CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
+		Debug.Notification("You are on the final contested hold. Cannot set.")
+		return
+	elseif CWs.GetHoldOwner(holdID) == CWs.PlayerAllegiance
+		Debug.Notification("Cannot set to a hold you already own.")
+		return
+	endif
+	CWs.CWDebugForceHold.SetValueInt(holdID)
+	Debug.Notification("Setting next campaign hold to " + holdsList[holdIndex])
+endfunction
+
+function OnWinHold()
+	EnsureHoldLists()
+	int holdIndex = iWinHold
+	if holdIndex < 0 || holdIndex >= holdsID.length
+		Debug.Notification("No hold selected.")
+		return
+	endif
+	int holdID = holdsID[holdIndex]
+	if CWS.CWcontestedHold.GetValueInt() == holdID
+		CompleteRunningCampaign(true)
+	else
+		Debug.Notification("Winning hold of " + holdsList[holdIndex])
+		CWS.WinHoldOffScreenIfNotDoingCapitalBattles(CWs.getLocationForHold(holdID), CWs.GetHoldOwner(holdID) != CWs.PlayerAllegiance, CWs.GetHoldOwner(holdID) == CWs.PlayerAllegiance)
+	endif
+endfunction
+
+function OnSwitchHold()
+	EnsureHoldLists()
+	int holdIndex = iSwitchHold
+	if holdIndex < 0 || holdIndex >= holdsID.length
+		Debug.Notification("No hold selected.")
+		return
+	endif
+	int holdID = holdsID[holdIndex]
+	if CWs.CWAttacker.GetValueInt() == CWs.PlayerAllegiance && (CWs.CWcontestedHold.GetValueInt() == 1 || CWs.CWcontestedHold.GetValueInt() == 8)
+		Debug.Notification("You are on the final contested hold. Switch owners.")
+		return
+	endif
+	if CWS.CWcontestedHold.GetValueInt() == holdID
+		CompleteRunningCampaign(true)
+	else
+		Debug.Notification("Switching owner of " + holdsList[holdIndex])
+		CWS.SetHoldOwnerByInt(holdID, CWs.getOppositeFactionInt(CWs.GetHoldOwner(holdID)))
+	endif
+endfunction
+
+function OnWinWar()
+	int factionIndex = iWinWarFaction
+	if factionIndex == CWs.iImperials
+		debug.notification("Winning the war for the imperials")
+		if !CWs.CW01A.isrunning()
+			CWs.CW01A.SetStage(1)
+		endif
+		CWs.CW01A.SetStage(200)
+
+		if !(CWs.CW01A as CW01Script).CW02A.isrunning()
+			(CWs.CW01A as CW01Script).CW02A.SetStage(10)
+		endif
+		(CWs.CW01A as CW01Script).CW02A.SetStage(200)
+
+		if !CWs.CW03.isrunning()
+			CWs.CW03.SetStage(10)
+		endif
+		CWs.CW03.SetStage(255)
+
+		CompleteRunningCampaign()
+		CWs.CWCampaignS.CWOImperialsWin()
+	elseif factionIndex == CWs.iSons
+		debug.notification("Winning the war for the stormcloaks")
+		if !CWs.CW01B.isrunning()
+			CWs.CW01B.SetStage(1)
+		endif
+		CWs.CW01B.SetStage(200)
+
+		if !(CWs.CW01B as CW01BScript).CW02B.isrunning()
+			(CWs.CW01B as CW01BScript).CW02B.SetStage(10)
+		endif
+		(CWs.CW01B as CW01BScript).CW02B.SetStage(200)
+
+		if !CWs.CW03.isrunning()
+			CWs.CW03.SetStage(10)
+		endif
+		CWs.CW03.SetStage(255)
+
+		CompleteRunningCampaign()
+		CWs.CWCampaignS.CWOStormcloaksWin()
 	endif
 endfunction
 
