@@ -522,6 +522,9 @@ function DoPlayerLoadGameStuff()
 		CWOVersion.SetValueInt(10100)
 	endif
 	if currentVersion < 10101
+		CWOVersion.SetValueInt(10101)
+	endif
+	if currentVersion < 10102
 		CWS.CWRank1RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank1RewardImperial
 		CWS.CWRank2RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardImperial
 		CWS.CWRank3RewardImperial = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardImperial
@@ -530,7 +533,13 @@ function DoPlayerLoadGameStuff()
 		CWS.CWRank2RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank2RewardSons
 		CWS.CWRank3RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank3RewardSons
 		CwS.CWRank4RewardSons = (GetOwningQuest() as CWOQuestStarter).CWORank4RewardSons
-		CWOVersion.SetValueInt(10101)
+		cws.SetGarrisonCost((GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation, cws.iCostSmall)
+		if (cws.GetHoldOwner(cws.iReach) == cws.iSons)
+			(GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iSons)
+		else
+			(GetOwningQuest() AS CWOQuestStarter).SoljundsSinkholeLocation.SetKeywordData(cws.CWOwner, cws.iImperials)
+		endif
+		CWOVersion.SetValueInt(10102)
 	endif
 	registerforsingleupdate(30)
 	ftimeSinceLastRegisterForUpdate = Utility.GetCurrentRealTime()
