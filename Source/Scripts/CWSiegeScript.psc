@@ -856,52 +856,64 @@ EndFunction
 
 function SetUpAliasesImperialsAttacking()
 ; 	CWScript.Log("CWSiegeScript", self + "calling SetUpAliasesImperialsAttacking()")
-	Attacker1.ForceRefTo(ImperialAttacker1.GetReference())
-	Attacker2.ForceRefTo(ImperialAttacker2.GetReference())
-	Attacker3.ForceRefTo(ImperialAttacker3.GetReference())
-	Attacker4.ForceRefTo(ImperialAttacker4.GetReference())
-	Attacker5.ForceRefTo(ImperialAttacker5.GetReference())
-	Attacker6.ForceRefTo(ImperialAttacker6.GetReference())
-	Attacker7.ForceRefTo(ImperialAttacker7.GetReference())
-	Attacker8.ForceRefTo(ImperialAttacker8.GetReference())
-	Attacker9.ForceRefTo(ImperialAttacker9.GetReference())
-	Attacker10.ForceRefTo(ImperialAttacker10.GetReference())
-	
-	Defender1.ForceRefTo(SonsDefender1.GetReference())
-	Defender2.ForceRefTo(SonsDefender2.GetReference())
-	Defender3.ForceRefTo(SonsDefender3.GetReference())
-	Defender4.ForceRefTo(SonsDefender4.GetReference())
-	Defender5.ForceRefTo(SonsDefender5.GetReference())
-	Defender6.ForceRefTo(SonsDefender6.GetReference())
-	Defender7.ForceRefTo(SonsDefender7.GetReference())
-	Defender8.ForceRefTo(SonsDefender8.GetReference())
-	Defender9.ForceRefTo(SonsDefender9.GetReference())
-	Defender10.ForceRefTo(SonsDefender10.GetReference())	
+	;[DVs CW Fix] Bug 3.5: Null guard ForceRefTo calls
+	safeForceRefTo(Attacker1, ImperialAttacker1)
+	safeForceRefTo(Attacker2, ImperialAttacker2)
+	safeForceRefTo(Attacker3, ImperialAttacker3)
+	safeForceRefTo(Attacker4, ImperialAttacker4)
+	safeForceRefTo(Attacker5, ImperialAttacker5)
+	safeForceRefTo(Attacker6, ImperialAttacker6)
+	safeForceRefTo(Attacker7, ImperialAttacker7)
+	safeForceRefTo(Attacker8, ImperialAttacker8)
+	safeForceRefTo(Attacker9, ImperialAttacker9)
+	safeForceRefTo(Attacker10, ImperialAttacker10)
+
+	safeForceRefTo(Defender1, SonsDefender1)
+	safeForceRefTo(Defender2, SonsDefender2)
+	safeForceRefTo(Defender3, SonsDefender3)
+	safeForceRefTo(Defender4, SonsDefender4)
+	safeForceRefTo(Defender5, SonsDefender5)
+	safeForceRefTo(Defender6, SonsDefender6)
+	safeForceRefTo(Defender7, SonsDefender7)
+	safeForceRefTo(Defender8, SonsDefender8)
+	safeForceRefTo(Defender9, SonsDefender9)
+	safeForceRefTo(Defender10, SonsDefender10)
 EndFunction
 
 function SetUpAliasesSonsAttacking()
 ; 	CWScript.Log("CWSiegeScript", self + "calling SetUpAliasesSonsAttacking()")
-	Attacker1.ForceRefTo(SonsAttacker1.GetReference())
-	Attacker2.ForceRefTo(SonsAttacker2.GetReference())
-	Attacker3.ForceRefTo(SonsAttacker3.GetReference())
-	Attacker4.ForceRefTo(SonsAttacker4.GetReference())
-	Attacker5.ForceRefTo(SonsAttacker5.GetReference())
-	Attacker6.ForceRefTo(SonsAttacker6.GetReference())
-	Attacker7.ForceRefTo(SonsAttacker7.GetReference())
-	Attacker8.ForceRefTo(SonsAttacker8.GetReference())
-	Attacker9.ForceRefTo(SonsAttacker9.GetReference())
-	Attacker10.ForceRefTo(SonsAttacker10.GetReference())
-	
-	Defender1.ForceRefTo(ImperialDefender1.GetReference())
-	Defender2.ForceRefTo(ImperialDefender2.GetReference())
-	Defender3.ForceRefTo(ImperialDefender3.GetReference())
-	Defender4.ForceRefTo(ImperialDefender4.GetReference())
-	Defender5.ForceRefTo(ImperialDefender5.GetReference())
-	Defender6.ForceRefTo(ImperialDefender6.GetReference())
-	Defender7.ForceRefTo(ImperialDefender7.GetReference())
-	Defender8.ForceRefTo(ImperialDefender8.GetReference())
-	Defender9.ForceRefTo(ImperialDefender9.GetReference())
-	Defender10.ForceRefTo(ImperialDefender10.GetReference())	
+	;[DVs CW Fix] Bug 3.5: Null guard ForceRefTo calls
+	safeForceRefTo(Attacker1, SonsAttacker1)
+	safeForceRefTo(Attacker2, SonsAttacker2)
+	safeForceRefTo(Attacker3, SonsAttacker3)
+	safeForceRefTo(Attacker4, SonsAttacker4)
+	safeForceRefTo(Attacker5, SonsAttacker5)
+	safeForceRefTo(Attacker6, SonsAttacker6)
+	safeForceRefTo(Attacker7, SonsAttacker7)
+	safeForceRefTo(Attacker8, SonsAttacker8)
+	safeForceRefTo(Attacker9, SonsAttacker9)
+	safeForceRefTo(Attacker10, SonsAttacker10)
+
+	safeForceRefTo(Defender1, ImperialDefender1)
+	safeForceRefTo(Defender2, ImperialDefender2)
+	safeForceRefTo(Defender3, ImperialDefender3)
+	safeForceRefTo(Defender4, ImperialDefender4)
+	safeForceRefTo(Defender5, ImperialDefender5)
+	safeForceRefTo(Defender6, ImperialDefender6)
+	safeForceRefTo(Defender7, ImperialDefender7)
+	safeForceRefTo(Defender8, ImperialDefender8)
+	safeForceRefTo(Defender9, ImperialDefender9)
+	safeForceRefTo(Defender10, ImperialDefender10)
+EndFunction
+
+;[DVs CW Fix] Bug 3.5: Null-safe wrapper for ForceRefTo
+Function safeForceRefTo(ReferenceAlias targetAlias, ReferenceAlias sourceAlias)
+	ObjectReference ref = sourceAlias.GetReference()
+	if ref
+		targetAlias.ForceRefTo(ref)
+	else
+		Debug.Trace("[DVs CW Fix] safeForceRefTo: Source alias " + sourceAlias + " has no reference, skipping")
+	endif
 EndFunction
 
 function tryToDisableAlias(ReferenceAlias AliasToTry)
@@ -1660,7 +1672,8 @@ function setupInteriorSiege(Location SiegeLocation, ObjectReference FieldCORef, 
 	
 	;safety check, in case you just finished a fort or capital siege, and before it finished shutting down, started the final battle - highly unlikely, put I can envision happening
 	int waitingFor
-	While CWs.CWFortSiegeCapital.IsStopped() == False
+  int maxWait = 600	;[DVs CW Fix] Bug 3.4: 600s timeout to prevent infinite loop
+	While CWs.CWFortSiegeCapital.IsStopped() == False && waitingFor < maxWait
 		waitingFor += 1
 		utility.wait(1)
 	
@@ -1669,6 +1682,9 @@ function setupInteriorSiege(Location SiegeLocation, ObjectReference FieldCORef, 
 		;this is important enough to make sure even if we aren't explicitly testing in Civil War debug mode we get a message about it
 ; 		debug.trace(self + "CWSiegeScript: setupInteriorSiege(" + SiegeLocation + ") WAITING for CWFortSiegeCapital.IsStopped() == false. Have been waiting for:" + waitingFor, 1)
 	EndWhile
+  if waitingFor >= maxWait
+		Debug.Trace("[DVs CW Fix] setupInteriorSiege: Timeout after 600s waiting for CWFortSiegeCapital to stop, forcing continuation")
+	endif
 	
 	
 	CWs.CWFortSiegeSpecialStart.SendStoryEventAndWait(SiegeLocation, FieldCORef, CityCenterMarker, aiValue1 = 3)

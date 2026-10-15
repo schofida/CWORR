@@ -515,7 +515,12 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 	float pool
 	bool isAttacker
 	
-	if !AliasToRespawn || AliasToRespawn.GetActorReference().IsDead() == False
+	;[DVs CW Fix] Bug 5.2: Split chained call for null safety
+	Actor respawnActor = None
+	if AliasToRespawn
+		respawnActor = AliasToRespawn.GetActorReference()
+	endif
+	if !AliasToRespawn || !respawnActor || respawnActor.IsDead() == False
  		CWScript.Log("CWReinforcementControllerScript", self + "TryToRespawnAlias(" + AliasToRespawn + ") variable is empty or is currently alive, so we are returning without trying to repawn.")
 
 		Return
@@ -597,11 +602,16 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
  		CWScript.Log("CWReinforcementControllerScript", self + "respawning" + AliasToRespawn + " which is ref:" + AliasToRespawn.GetReference())
 
 		;SPAWN ALIASES HERE
+    ;[DVs CW Fix] Bug 5.2: Null guard respawn actor reference
+		Actor spawnActor = AliasToRespawn.GetActorReference()
+		if !spawnActor
+			Debug.Trace("[DVs CW Fix] TryToRespawnAlias: Actor is None for " + AliasToRespawn + ", skipping respawn")
+			return
+		endif
 		if isAttacker
 			;SPAWN ME AND SUBTRACT FROM POOLAttacker	
-			ObjectReference SpawnRef = GetAttackerSpawnRef(AliasToRespawn)
-			Actor ActorRef = AliasToRespawn.GetActorReference()
-			ActorRef.Reset(SpawnRef)
+			spawnActor.Reset(GetAttackerSpawnRef(AliasToRespawn))
+
 ;			;****TEMP TEST A THEORY ABOUT WHY STUFF IS BROKEN:
 ;			utility.wait(2)
 ;			if AliasToRespawn.GetActorReference().IsDead()
@@ -615,9 +625,8 @@ Function TryToRespawnAlias(ReferenceAlias AliasToRespawn)
 		
 		else	;assuming is Defender
 			;SPAWN ME AND SUBTRACT FROM POOLDefender
-			ObjectReference SpawnRef = GetDefenderSpawnRef(AliasToRespawn)
-			Actor ActorRef = AliasToRespawn.GetActorReference()
-			ActorRef.Reset(SpawnRef)
+			spawnActor.Reset(GetDefenderSpawnRef(AliasToRespawn))
+
 ;			;****TEMP TEST A THEORY ABOUT WHY STUFF IS BROKEN:
 ;			utility.wait(2)
 ;			if AliasToRespawn.GetActorReference().IsDead()
@@ -640,8 +649,14 @@ bool function IsAliasAttacker(ReferenceAlias AliasToRespawn)
 
 	bool isAttacker
 	bool isDefender
+  
+  ;[DVs CW Fix] Bug 5.2: Null guard actor reference before faction checks
+	Actor aliasActor = AliasToRespawn.GetActorReference()
+	if !aliasActor
+		return false
+	endif
 
-	if AliasToRespawn.GetActorReference().IsInFaction(CWs.CWImperialFaction)
+	if aliasActor.IsInFaction(CWs.CWImperialFaction)
 		if CWs.iImperials == CWs.GetAttacker(AttackPoint)
 			isAttacker = true
 		Elseif CWs.iImperials == CWs.GetDefender(AttackPoint)
@@ -650,7 +665,7 @@ bool function IsAliasAttacker(ReferenceAlias AliasToRespawn)
  			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: TryToRespawnAlias(" + AliasToRespawn + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf
 	
-	elseif AliasToRespawn.GetActorReference().IsInFaction(CWs.CWSonsFaction)
+	elseif aliasActor.IsInFaction(CWs.CWSonsFaction)
 		if CWs.iSons == CWs.GetAttacker(AttackPoint)
 			isAttacker = true
 		Elseif CWs.iSons == CWs.GetDefender(AttackPoint)
@@ -742,20 +757,22 @@ int Function CountDefendersAlive()
 EndFunction
 
 int Function IsAliasAlive(ReferenceAlias AliasVariableToCheck)
-		
-	
-	if AliasVariableToCheck && AliasVariableToCheck.GetActorReference().IsDead() == False
+
+  ;[DVs CW Fix] Bug 5.2: Null guard actor reference
+	if !AliasVariableToCheck
+		return 0
+	endif
+	Actor checkActor = AliasVariableToCheck.GetActorReference()
+	if !checkActor
+		return 0
+	endif
+
+	if checkActor.IsDead() == False
  		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning true (1) for AliasVariableToCheck:"  + AliasVariableToCheck)
 		Return 1
-		
-	ElseIf AliasVariableToCheck && AliasVariableToCheck.GetActorReference().IsDead() == True
- 		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck)
-		return 0
-		
 	Else
  		CWScript.Log("CWReinforcementControllerScript", self + "IsAliasAlive() is returning false (0) for AliasVariableToCheck:"  + AliasVariableToCheck + " because it's empty" )
 		return 0
-		
 	endif
 	
 EndFunction
@@ -771,9 +788,14 @@ Function RegisterAlias(ReferenceAlias AliasToAdd)
 		
  	CWScript.Log("CWReinforcementControllerScript", self + "RegisterAlias(" + AliasToAdd +  ") checking faction and attacker or defender status, and then will call the appropriate RegisterAliasAttacker() or RegisterAliasDefender()")
 
+	;[DVs CW Fix] Bug 5.2: Null guard actor reference before faction checks
+	Actor addActor = AliasToAdd.GetActorReference()
+	if !addActor
+		Debug.Trace("[DVs CW Fix] RegisterAlias: Actor is None for " + AliasToAdd + ", skipping registration")
+		return
+	endif
 
-
-	if AliasToAdd.GetActorReference().IsInFaction(CWs.CWImperialFaction)
+	if addActor.IsInFaction(CWs.CWImperialFaction)
 		if CWs.iImperials == CWs.GetAttacker(AttackPoint)
 			RegisterAliasAttacker(AliasToAdd)
 		Elseif CWs.iImperials == CWs.GetDefender(AttackPoint)
@@ -782,7 +804,7 @@ Function RegisterAlias(ReferenceAlias AliasToAdd)
  			CWScript.Log("CWReinforcementControllerScript", self + " ERROR: FAILING TO ADD ReferenceAlias TO RESPAWN ARRAY! RegisterAlias(" + AliasToAdd + ") expected to be either the attacker, or the defender.", 2, True, True)
 		EndIf
 	
-	elseif AliasToAdd.GetActorReference().IsInFaction(CWs.CWSonsFaction)
+	elseif addActor.IsInFaction(CWs.CWSonsFaction)
 		if CWs.iSons == CWs.GetAttacker(AttackPoint)
 			RegisterAliasAttacker(AliasToAdd)
 		Elseif CWs.iSons == CWs.GetDefender(AttackPoint)

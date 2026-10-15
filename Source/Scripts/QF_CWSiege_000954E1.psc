@@ -2808,6 +2808,7 @@ CWScript.Log("CWSiegeQuestFragmentScript", self + "Stage 255, stopping sounds an
 kmyquest.StopCombatSoundsLoop()
 ;Removes this music from the stack
 kmyQuest.MUSCombatCivilWar.Remove()
+kmyQuest.MUSCombatCivilWar.Remove()	;[DVs CW Fix] Bug 10.2: safety net second Remove() in case of double-push
 
 ;disabled battle center marker
 Alias_BattleCenterMarker.GetReference().Enable()
@@ -4578,7 +4579,10 @@ location cityVar = Alias_City.GetLocation()
 kmyQuest.CWs.CWStateAttackStarted.SetValue(1)
 
 ;Adds this music to stack, at highest priority
-kmyQuest.MUSCombatCivilWar.Add()
+;[DVs CW Fix] Bug 10.1: Removed redundant MUSCombatCivilWar.Add() here.
+;Fragment_37 already calls Add() for ALL attacks (including Whiterun).
+;Double-push means the single Remove() at stage 255 only pops one — music loops forever.
+;kmyQuest.MUSCombatCivilWar.Add()
 
 if CommanderNewPositionX != 0.0
 	Alias_Attacker1General.GetActorRef().SetAngle(CommanderNewAngleX, CommanderNewAngleY, CommanderNewAngleZ)
