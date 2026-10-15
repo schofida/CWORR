@@ -41,11 +41,18 @@ Faction Property CWSoldierPlayerEnemy Auto
 
 ;THIS WAS A WHILE LOOP IN STAGE 9000 BUT BECAUSE THAT WAS ULTIMATE TRIGGERED BY A SCENE END SCRIPT, THE SCENE WOULD HANG INDEFINATELY
 Event OnUpdate()  ;REGISTERED IN STAGE 9000
-	while Game.GetPlayer().IsInLocation(City.GetLocation())
+	;[DVs CW Fix] Bug 6.1: Added 30-minute timeout to prevent infinite loop if player never leaves city
+	int timeoutCounter = 0
+	int maxIterations = 360  ; 360 * 5s = 1800s = 30 minutes
+	while Game.GetPlayer().IsInLocation(City.GetLocation()) && timeoutCounter < maxIterations
 ; 		CWScript.Log("AttackCity", "OnUpdate() initiated by stage 9000: Waiting for player to leave City before stoping CWSiege and CWAttackCity quest")
 		utility.wait(5)
 	endwhile
-	
+
+  if timeoutCounter >= maxIterations
+		Debug.Trace("[DVs CW Fix] CWAttackCity OnUpdate: Timeout reached after 1800s, forcing quest stop even though player is still in city")
+	endif
+
 ; 	CWScript.Log("AttackCity", "OnUpdate() initiated by stage 9000: stoping CWSiege and CWAttackCity quest")
 
 	

@@ -513,6 +513,9 @@ Function DeleteWhenAbleInteriorDefenders()
 EndFunction
 
 function tryToDeleteWhenAbleAlias(ReferenceAlias AliasToDeleteWhenAble)
+  if !AliasToDeleteWhenAble		;[DVs CW Fix] Bug 1.4: null guard on alias parameter
+		return
+	endif
 	ObjectReference RefToDeleteWhenAble = AliasToDeleteWhenAble.GetReference() 
 		if RefToDeleteWhenAble
 ; 			CWScript.Log("CWFortSiegeScript", self + "tryToDeleteWhenAbleAlias() disabling " + RefToDeleteWhenAble + " in alias " + AliasToDeleteWhenAble)
@@ -523,7 +526,6 @@ EndFunction
 
 function SetNewOwnerOfFort(int StageThatMeansDefendersLost, int StageThatMeansAttackersLost)
 	;CWO - This function had a lot of problems. But I think I fixed it. This is called by qf_CWFortSiegeFort
-	;TODO Also Call for CWMission01
  	CWScript.Log("CWFortSiegeScript", self + "SetNewOwnerOfFort()")
 	int AttackingFaction
 	int DefendingFaction
@@ -589,35 +591,44 @@ Function tryToPulseTrigger(ReferenceAlias TriggerAliasToTry)
 
 EndFunction
 
+;[DVs CW Fix] Bug 1.2: Helper function with null check to prevent GetDistance on None
+bool Function IsRefNearPlayer(ReferenceAlias AliasToCheck, ObjectReference PlayerRef)
+	ObjectReference ref = AliasToCheck.GetReference()
+	if ref
+		return PlayerRef.GetDistance(ref) < DistanceToArmyToCompleteObjective
+	endif
+	return false
+EndFunction
+
 bool Function IsPlayerIsNearAFriendly(bool PlayerIsAttacking)
 	
 	ObjectReference PlayerRef = Game.GetPlayer()
 	
 	if playerIsAttacking
-	
-		return PlayerRef.GetDistance(Attacker1.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker2.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker3.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker4.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker5.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker6.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker7.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker8.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker9.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Attacker10.GetReference()) < DistanceToArmyToCompleteObjective
+		;[DVs CW Fix] Bug 1.2: Use null-safe helper instead of chained GetReference().GetDistance()
+		return IsRefNearPlayer(Attacker1, PlayerRef) || \
+		IsRefNearPlayer(Attacker2, PlayerRef) || \
+		IsRefNearPlayer(Attacker3, PlayerRef) || \
+		IsRefNearPlayer(Attacker4, PlayerRef) || \
+		IsRefNearPlayer(Attacker5, PlayerRef) || \
+		IsRefNearPlayer(Attacker6, PlayerRef) || \
+		IsRefNearPlayer(Attacker7, PlayerRef) || \
+		IsRefNearPlayer(Attacker8, PlayerRef) || \
+		IsRefNearPlayer(Attacker9, PlayerRef) || \
+		IsRefNearPlayer(Attacker10, PlayerRef)
 		
 	Else
 	
-		return PlayerRef.GetDistance(Defender1.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender2.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender3.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender4.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender5.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender6.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender7.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender8.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender9.GetReference()) < DistanceToArmyToCompleteObjective || \
-		PlayerRef.GetDistance(Defender10.GetReference()) < DistanceToArmyToCompleteObjective
+		return IsRefNearPlayer(Defender1, PlayerRef) || \
+		IsRefNearPlayer(Defender2, PlayerRef) || \
+		IsRefNearPlayer(Defender3, PlayerRef) || \
+		IsRefNearPlayer(Defender4, PlayerRef) || \
+		IsRefNearPlayer(Defender5, PlayerRef) || \
+		IsRefNearPlayer(Defender6, PlayerRef) || \
+		IsRefNearPlayer(Defender7, PlayerRef) || \
+		IsRefNearPlayer(Defender8, PlayerRef) || \
+		IsRefNearPlayer(Defender9, PlayerRef) || \
+		IsRefNearPlayer(Defender10, PlayerRef)
 
 	
 	EndIf
@@ -653,29 +664,39 @@ function StartFinalCityInteriorBattle()
 	Defender9.TryToEvaluatePackage()
 	Defender10.TryToEvaluatePackage()
 	
-	Attacker1.GetActorReference().MoveToPackageLocation()
-	Attacker2.GetActorReference().MoveToPackageLocation()
-	Attacker3.GetActorReference().MoveToPackageLocation()
-	Attacker4.GetActorReference().MoveToPackageLocation()
-	Attacker5.GetActorReference().MoveToPackageLocation()
-	Attacker6.GetActorReference().MoveToPackageLocation()
-	Attacker7.GetActorReference().MoveToPackageLocation()
-	Attacker8.GetActorReference().MoveToPackageLocation()
-	Attacker9.GetActorReference().MoveToPackageLocation()
-	Attacker10.GetActorReference().MoveToPackageLocation()
-	Defender1.GetActorReference().MoveToPackageLocation()
-	Defender2.GetActorReference().MoveToPackageLocation()
-	Defender3.GetActorReference().MoveToPackageLocation()
-	Defender4.GetActorReference().MoveToPackageLocation()
-	Defender5.GetActorReference().MoveToPackageLocation()
-	Defender6.GetActorReference().MoveToPackageLocation()
-	Defender7.GetActorReference().MoveToPackageLocation()
-	Defender8.GetActorReference().MoveToPackageLocation()
-	Defender9.GetActorReference().MoveToPackageLocation()
-	Defender10.GetActorReference().MoveToPackageLocation()
+	;[DVs CW Fix] Bug 1.3: Null guard MoveToPackageLocation calls
+	safeMoveToPackageLocation(Attacker1)
+	safeMoveToPackageLocation(Attacker2)
+	safeMoveToPackageLocation(Attacker3)
+	safeMoveToPackageLocation(Attacker4)
+	safeMoveToPackageLocation(Attacker5)
+	safeMoveToPackageLocation(Attacker6)
+	safeMoveToPackageLocation(Attacker7)
+	safeMoveToPackageLocation(Attacker8)
+	safeMoveToPackageLocation(Attacker9)
+	safeMoveToPackageLocation(Attacker10)
+	safeMoveToPackageLocation(Defender1)
+	safeMoveToPackageLocation(Defender2)
+	safeMoveToPackageLocation(Defender3)
+	safeMoveToPackageLocation(Defender4)
+	safeMoveToPackageLocation(Defender5)
+	safeMoveToPackageLocation(Defender6)
+	safeMoveToPackageLocation(Defender7)
+	safeMoveToPackageLocation(Defender8)
+	safeMoveToPackageLocation(Defender9)
+	safeMoveToPackageLocation(Defender10)
 	
 	
 EndFunction
+
+;[DVs CW Fix] Bug 1.3: Null-safe wrapper for MoveToPackageLocation
+Function safeMoveToPackageLocation(ReferenceAlias aliasRef)
+	Actor actorRef = aliasRef.GetActorReference()
+	if actorRef
+		actorRef.MoveToPackageLocation()
+	endif
+EndFunction
+
 
 function TryToFixQuest()
 	debug.notification("Trying to fix CWFortSiegeCapital quest")

@@ -178,18 +178,24 @@ function EnemySecondDied()
 ; 	CWScript.Log("CWFinaleScript", self + "EnemySecondDied() waiting for leader to be in bleedout, then will stop combat and start scene.")
 	
 	int waitingFor
-
+	int maxWait = 120	;[DVs CW Fix] Bug 2.1: 120s timeout to prevent infinite loop if bleedout state is missed
 	;CWO Unregister for update. Scene gonna start
 	UnregisterForUpdate()
 	
 	Actor EnemyLeaderActor = EnemyLeader.GetActorReference()
 	
-	while EnemyLeaderActor.isBleedingOut() == False
+	while EnemyLeaderActor.isBleedingOut() == False && !EnemyLeaderActor.isDead() && waitingFor < maxWait	;[DVs CW Fix] Bug 2.1: added isDead check + timeout
 		Utility.wait(1)
 		waitingFor += 1
 ; 		CWScript.Log("CWFinaleScript", self + "EnemySecondDied() waiting for leader to be in bleedout. Waiting for " + waitingFor)
 	
 	EndWhile
+
+  if waitingFor >= maxWait
+		Debug.Trace("[DVs CW Fix] EnemySecondDied: Timeout after " + maxWait + "s waiting for bleedout, forcing continuation")
+	elseif EnemyLeaderActor.isDead()
+		Debug.Trace("[DVs CW Fix] EnemySecondDied: Leader isDead, skipping bleedout wait")
+	endif
 
 
 	setStage(200)

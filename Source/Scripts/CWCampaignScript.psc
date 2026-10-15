@@ -914,7 +914,11 @@ Function ResetCamps()
 		SetPurchasedLocation(CampImperial.GetLocation(), CWs.iImperials)	
 		
 ; 		CWScript.Log("CWCampaignScript", " ResetCamps() disabling CampEnableSons.")
-		CampEnableSons.GetReference().disable()
+		;[DVs CW Fix] Null guard camp reference
+		ObjectReference campSonsRef = CampEnableSons.GetReference()
+		if campSonsRef
+			campSonsRef.disable()
+		endif
 
 		
 	Else	;Sons are attacking
@@ -923,8 +927,12 @@ Function ResetCamps()
 		SetPurchasedLocation(CampSons.GetLocation(), CWs.iSons)			
 		
 ; 		CWScript.Log("CWCampaignScript", " ResetCamps() disabling CampEnableImperial.")
-		CampEnableImperial.GetReference().disable()
-	
+		;[DVs CW Fix] Null guard camp reference
+		ObjectReference campImpRef = CampEnableImperial.GetReference()
+		if campImpRef
+			campImpRef.disable()
+		endif
+
 	endif
 	
 	
@@ -975,8 +983,15 @@ Function EnablePatrols()
 EndFunction
 
 Function EnableDefaultPatrols()
-	PatrolsDefaultEnableImperial.GetReference().Enable()
-	PatrolsDefaultEnableSons.GetReference().Enable()
+	;[DVs CW Fix] Null guard patrol enable references
+	ObjectReference patrolImpRef = PatrolsDefaultEnableImperial.GetReference()
+	ObjectReference patrolSonsRef = PatrolsDefaultEnableSons.GetReference()
+	if patrolImpRef
+		patrolImpRef.Enable()
+	endif
+	if patrolSonsRef
+		patrolSonsRef.Enable()
+	endif
 
 ; 	CWScript.Log("CWCampaignScript", " EnableDefaultPatrols() enabling ReferenceAliases PatrolsDefaultEnableImperial and PatrolsDefaultEnableSons.")
 	
@@ -1461,7 +1476,7 @@ int Function GetAttackDeltaPointsForPatrols()
 	if PatrolsLoc.GetRefTypeAliveCount(CWPatrol2) >= 1
 		if OwnerPatrol2 == Attacker
 			PatrolsAttackDeltaPoints += PatrolValue
-		Elseif OwnerPatrol1 == Defender		;must be explictly owned
+		Elseif OwnerPatrol2 == Defender		;[DVs CW Fix] Bug 4.2: was OwnerPatrol1 (copy-paste error)
 			PatrolsAttackDeltaPoints += -(PatrolValue)	;negative value means in the defender's favor
 		EndIf
 	EndIf
@@ -1469,7 +1484,7 @@ int Function GetAttackDeltaPointsForPatrols()
 	if PatrolsLoc.GetRefTypeAliveCount(CWPatrol3) >= 1
 		if OwnerPatrol3 == Attacker
 			PatrolsAttackDeltaPoints += PatrolValue
-		Elseif OwnerPatrol1 == Defender		;must be explictly owned
+		Elseif OwnerPatrol3 == Defender		;[DVs CW Fix] Bug 4.2: was OwnerPatrol1 (copy-paste error)
 			PatrolsAttackDeltaPoints += -(PatrolValue)	;negative value means in the defender's favor
 		EndIf
 	EndIf
@@ -1477,7 +1492,7 @@ int Function GetAttackDeltaPointsForPatrols()
 	if PatrolsLoc.GetRefTypeAliveCount(CWPatrol4) >= 1
 		if OwnerPatrol4 == Attacker
 			PatrolsAttackDeltaPoints += PatrolValue
-		Elseif OwnerPatrol1 == Defender		;must be explictly owned
+		Elseif OwnerPatrol4 == Defender		;[DVs CW Fix] Bug 4.2: was OwnerPatrol1 (copy-paste error)
 			PatrolsAttackDeltaPoints += -(PatrolValue)	;negative value means in the defender's favor
 		EndIf
 	EndIf
@@ -1485,7 +1500,7 @@ int Function GetAttackDeltaPointsForPatrols()
 	if PatrolsLoc.GetRefTypeAliveCount(CWPatrol5) >= 1
 		if OwnerPatrol5 == Attacker
 			PatrolsAttackDeltaPoints += PatrolValue
-		Elseif OwnerPatrol1 == Defender		;must be explictly owned
+		Elseif OwnerPatrol5 == Defender		;[DVs CW Fix] Bug 4.2: was OwnerPatrol1 (copy-paste error)
 			PatrolsAttackDeltaPoints += -(PatrolValue)	;negative value means in the defender's favor
 		EndIf
 	EndIf

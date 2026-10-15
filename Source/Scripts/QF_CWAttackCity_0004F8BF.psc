@@ -796,9 +796,16 @@ kmyquest.CWSiegeObjCapitalHQ.ForceLocationTo(Alias_CapitalHQ.GetLocation())
 kmyquest.CWSiegeObj.setObjectiveCompleted(1050)
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1200)
 
-CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers")
-Alias_ImperialEnable.getReference().disable()
-Alias_SonsEnable.getReference().disable()
+CWScript.Log("AttackCity", "Stage 0: Disabling Garrison enable markers");[DVs CW Fix] Bug 8.1: Null guard getReference().disable() calls
+ObjectReference tempRef
+tempRef = Alias_ImperialEnable.getReference()
+if tempRef
+	tempRef.disable()
+endif
+tempRef = Alias_SonsEnable.getReference()
+if tempRef
+	tempRef.disable()
+endif
 
 
 Actor JarlActor = Alias_Jarl.GetActorReference()
@@ -905,11 +912,14 @@ endif
 
 
 CWScript.Log("AttackCity", "Stage 0: moving FieldCO inside city gate")
-Alias_FieldCO.GetReference().moveto(SpawnAttacker1)
-
-;CWO Stuff
-Alias_FieldCO.GetActorReference().EvaluatePackage()
-;CWO Stuff
+;[DVs CW Fix] Bug 8.1: Null guard FieldCO GetReference().moveto()
+ObjectReference tempFieldCORef = Alias_FieldCO.GetReference()
+if tempFieldCORef
+	tempFieldCORef.moveto(SpawnAttacker1)
+  ;CWO Stuff
+  Alias_FieldCO.GetActorReference().EvaluatePackage()
+  ;CWO Stuff
+endif
 
 CWScript.Log("AttackCity", "Stage 0: enabling DefenderMarkers")
 ObjectReference ResolutionDefenderMarkerRef1 = Alias_ResolutionDefenderMarker1.GetReference()
@@ -1042,12 +1052,22 @@ else
 endif
 
 ; CWScript.Log("AttackCity", "Stage 0: making Jarl, Housecarl, body guards non-aggressive")
+;[DVs CW Fix] Bug 8.1: Null guard setAV calls
+Actor tempActor
 Alias_Jarl.GetActorReference().setAV("Aggression", 0)
 Alias_HouseCarl.GetActorReference().setAV("Aggression", 0)
-Alias_BodyGuard1.GetActorReference().setAV("Aggression", 0)
-Alias_BodyGuard2.GetActorReference().setAV("Aggression", 0)
-Alias_BodyGuard3.GetActorReference().setAV("Aggression", 0)
-
+tempActor = Alias_BodyGuard1.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 0)
+endif
+tempActor = Alias_BodyGuard2.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 0)
+endif
+tempActor = Alias_BodyGuard3.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 0)
+endif
 ;USKP 2.0.1 - Sanity check since this alias is usually empty anyway.
 if( Alias_Justiciar.GetActorReference() != None )
   Alias_Justiciar.GetActorReference().setAV("Aggression", 0)
@@ -1080,10 +1100,14 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 ;BEGIN CODE
 ;A CONDITION ON FRIEND PACKAGES... SET BY DOOR INTO WORLD SPACE
 CWScript.Log("AttackCity", "Stage 10: moving friend into city.")
-Alias_Friend.GetReference().MoveTo(Alias_Player.GetReference())
-Alias_Friend.TryToEnable()
+;[DVs CW Fix] Bug 8.1: Null guard Friend GetReference().MoveTo()
+ObjectReference tempFriendRef = Alias_Friend.GetReference()
+if tempFriendRef
+  tempFriendRef.MoveTo(Alias_Player.GetReference())
+  Alias_Friend.TryToEnable()
+  Alias_Friend.GetActorReference().EvaluatePackage()
+endif
 kmyQuest.SkyrimOvercastWar.ForceActive(1)
-Alias_Friend.GetActorReference().EvaluatePackage()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -1125,13 +1149,25 @@ CWAttackCityScript kmyQuest = __temp as CWAttackCityScript
 CWScript.Log("AttackCity", "Stage 31: making Jarl, Housecarl, body guards aggressive")
 
 kmyquest.CWSiegeObj.setObjectiveDisplayed(1205)
-
+;[DVs CW Fix] Bug 8.2: Null guard setAV, EvaluatePackage, startCombat calls
+Actor tempActor
 Alias_Jarl.GetActorReference().setAV("Aggression", 1)
 Alias_HouseCarl.GetActorReference().setAV("Aggression", 1)
-Alias_BodyGuard1.GetActorReference().setAV("Aggression", 1)
-Alias_BodyGuard2.GetActorReference().setAV("Aggression", 1)
-Alias_BodyGuard3.GetActorReference().setAV("Aggression", 1)
-
+tempActor = Alias_BodyGuard1.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 1)
+	tempActor.EvaluatePackage()
+endif
+tempActor = Alias_BodyGuard2.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 1)
+	tempActor.EvaluatePackage()
+endif
+tempActor = Alias_BodyGuard3.GetActorReference()
+if tempActor
+	tempActor.setAV("Aggression", 1)
+	tempActor.EvaluatePackage()
+endif
 if( Alias_Justiciar.GetActorReference() != None )
 	Alias_Justiciar.GetActorReference().setAV("Aggression", 1)
 	Alias_Justiciar.GetActorReference().EvaluatePackage()
@@ -1141,10 +1177,6 @@ EndIf
 
 Alias_Jarl.GetActorReference().EvaluatePackage()
 Alias_HouseCarl.GetActorReference().EvaluatePackage()
-Alias_BodyGuard1.GetActorReference().EvaluatePackage()
-Alias_BodyGuard2.GetActorReference().EvaluatePackage()
-Alias_BodyGuard3.GetActorReference().EvaluatePackage()
-
 Alias_Jarl.GetActorReference().startCombat(Game.GetPlayer())
 Alias_HouseCarl.GetActorReference().startCombat(Alias_FieldCO.GetActorReference())
 ;END CODE
@@ -1237,46 +1269,63 @@ Alias_NewJarl.GetActorReference().EvaluatePackage()
 Actor Jarl = Alias_Jarl.GetActorReference()
 Jarl.SetNoBleedoutRecovery(false) 
 Jarl.restoreAv("Health", 1000)
+Actor tempActor
 Alias_HouseCarl.GetActorReference().restoreAv("Health", 1000)
 Alias_FieldCO.GetActorReference().restoreAv("Health", 1000)
-Alias_Friend.GetActorReference().restoreAv("Health", 1000)
+tempActor = Alias_Friend.GetActorReference()
+if tempActor
+	tempActor.restoreAv("Health", 1000)
+endif
 ;CWO - Stop combat alarm to be safe
 Alias_FieldCO.GetActorReference().StopCombatAlarm()
-Alias_Friend.GetActorReference().StopCombatAlarm()
 
+tempActor = Alias_Friend.GetActorReference()
+if tempActor
+	tempActor.StopCombatAlarm()
+endif
+;[DVs CW Fix] Bug 8.3: Surrender scene Start() must ALWAYS be reached
 kmyquest.CWAttackCitySurrenderScene.Start()
 
 Game.EnablePlayerControls()
 
 ;START CLEANING UP THE CITY REFERENCES
-Alias_EnemySoldier1.GetActorReference().disable()
-Alias_EnemySoldier2.GetActorReference().disable()
-Alias_EnemySoldier3.GetActorReference().disable()
-Alias_EnemySoldier4.GetActorReference().disable()
-Alias_EnemySoldier5.GetActorReference().disable()
-Alias_EnemySoldier6.GetActorReference().disable()
-Alias_EnemySoldier7.GetActorReference().disable()
-Alias_EnemySoldier8.GetActorReference().disable()
-Alias_EnemySoldier9.GetActorReference().disable()
-Alias_EnemySoldier10.GetActorReference().disable()
-Alias_EnemySoldier11.GetActorReference().disable()
-Alias_EnemySoldier12.GetActorReference().disable()
+;[DVs CW Fix] Bug 8.3: Null guard enemy soldier disable calls
+safeDisableActor(Alias_EnemySoldier1)
+safeDisableActor(Alias_EnemySoldier2)
+safeDisableActor(Alias_EnemySoldier3)
+safeDisableActor(Alias_EnemySoldier4)
+safeDisableActor(Alias_EnemySoldier5)
+safeDisableActor(Alias_EnemySoldier6)
+safeDisableActor(Alias_EnemySoldier7)
+safeDisableActor(Alias_EnemySoldier8)
+safeDisableActor(Alias_EnemySoldier9)
+safeDisableActor(Alias_EnemySoldier10)
+safeDisableActor(Alias_EnemySoldier11)
+safeDisableActor(Alias_EnemySoldier12)
 
-Alias_Soldier1.GetActorReference().disable()
-Alias_Soldier2.GetActorReference().disable()
-Alias_Soldier3.GetActorReference().disable()
-Alias_Soldier4.GetActorReference().disable()
-Alias_Soldier5.GetActorReference().disable()
-Alias_Soldier6.GetActorReference().disable()
+;[DVs CW Fix] Bug 8.3: Null guard ally soldier disable calls
+safeDisableActor(Alias_Soldier1)
+safeDisableActor(Alias_Soldier2)
+safeDisableActor(Alias_Soldier3)
+safeDisableActor(Alias_Soldier4)
+safeDisableActor(Alias_Soldier5)
+safeDisableActor(Alias_Soldier6)
 
 ;TURN ON NORMAL GUARDS
 
 kmyquest.CWs.ClearHoldCrimeGold(Alias_Hold.GetLocation())
 
+;[DVs CW Fix] Bug 8.3: Null guard enable marker calls
 if kmyquest.CWs.PlayerAllegiance == kmyquest.CWs.iImperials
-	Alias_ImperialEnable.GetReference().Enable()
+	ObjectReference tempEnableRef = Alias_ImperialEnable.GetReference()
+	if tempEnableRef
+		tempEnableRef.Enable()
+	endif
 else
-	Alias_SonsEnable.GetReference().Enable()
+	ObjectReference tempEnableRef = Alias_SonsEnable.GetReference()
+	if tempEnableRef
+		tempEnableRef.Enable()
+	endif
 endif
 
 ;setStage(50) - THIS NOW HAPPENS IN A SCENE
@@ -1303,11 +1352,17 @@ Alias_FieldCO.GetActorReference().RemoveFromFaction(kmyQuest.CWSoldierPlayerEnem
 Alias_FieldCO.GetActorReference().StopCombat()
 Alias_FieldCO.GetReference().Enable(false)
 
-Alias_Friend.GetReference().Moveto(Game.GetPlayer())
-
+;[DVs CW Fix] Bug 8.2: Null guard GetReference().Moveto() calls
+ObjectReference tempRef
+tempRef = Alias_Friend.GetReference()
+if tempRef
+  tempRef.Moveto(Game.GetPlayer())
+  ;CWO Stuff
+  Alias_Friend.GetActorReference().EvaluatePackage()
+  ;CWO Stuff
+endif
 ;CWO Stuff
 Alias_FieldCO.GetActorReference().EvaluatePackage()
-Alias_Friend.GetActorReference().EvaluatePackage()
 ;CWO Stuff
 
 sound.StopInstance(kmyQuest.CWSiegeS.AMBDistantBattleSoundInstance)
@@ -1352,9 +1407,14 @@ CWScript.Log("AttackCity", "Stage 9999: Shut down stage, removing everyone from 
 
 Game.GetPlayer().RemoveFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
 
+;[DVs CW Fix] Bug 8.4: Null guard removeFromFaction calls
+Actor tempActor
 Alias_Jarl.GetActorReference().removeFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
 Alias_HouseCarl.GetActorReference().removeFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
-Alias_Steward.GetActorReference().removeFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+tempActor = Alias_Steward.GetActorReference()
+if tempActor
+	tempActor.removeFromFaction(kmyquest.CWs.CWSurrenderTemporaryAllies)
+endif
 
 
 ;turns off fires in the city
@@ -1371,32 +1431,33 @@ Alias_BodyGuard4.TryToDisable()
 Alias_BodyGuard5.TryToDisable()
 Alias_BodyGuard6.TryToDisable()
 
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard1)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard2)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard3)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard4)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard5)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_BodyGuard6)
+;[DVs CW Fix] Bug 8.4: Null guard DeleteWhenAble calls using helper function
+safeDeleteActorWhenAble(Alias_BodyGuard1)
+safeDeleteActorWhenAble(Alias_BodyGuard2)
+safeDeleteActorWhenAble(Alias_BodyGuard3)
+safeDeleteActorWhenAble(Alias_BodyGuard4)
+safeDeleteActorWhenAble(Alias_BodyGuard5)
+safeDeleteActorWhenAble(Alias_BodyGuard6)
 
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier1)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier2)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier3)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier4)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier5)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier6)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier7)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier8)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier9)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier10)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier11)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_EnemySoldier12)
+safeDeleteActorWhenAble(Alias_EnemySoldier1)
+safeDeleteActorWhenAble(Alias_EnemySoldier2)
+safeDeleteActorWhenAble(Alias_EnemySoldier3)
+safeDeleteActorWhenAble(Alias_EnemySoldier4)
+safeDeleteActorWhenAble(Alias_EnemySoldier5)
+safeDeleteActorWhenAble(Alias_EnemySoldier6)
+safeDeleteActorWhenAble(Alias_EnemySoldier7)
+safeDeleteActorWhenAble(Alias_EnemySoldier8)
+safeDeleteActorWhenAble(Alias_EnemySoldier9)
+safeDeleteActorWhenAble(Alias_EnemySoldier10)
+safeDeleteActorWhenAble(Alias_EnemySoldier11)
+safeDeleteActorWhenAble(Alias_EnemySoldier12)
 
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier1)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier2)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier3)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier4)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier5)
-kmyQuest.tryToDeleteWhenAbleAlias(Alias_Soldier6)
+safeDeleteActorWhenAble(Alias_Soldier1)
+safeDeleteActorWhenAble(Alias_Soldier2)
+safeDeleteActorWhenAble(Alias_Soldier3)
+safeDeleteActorWhenAble(Alias_Soldier4)
+safeDeleteActorWhenAble(Alias_Soldier5)
+safeDeleteActorWhenAble(Alias_Soldier6)
 
 CWScript.Log("AttackCity", self + "Stage 9999: Shutdown stage, Giving Jarl his normal outfit")
 ;WE DONT YET HAVE FUNCTIONALITY TO GET OUTFIT
@@ -1439,3 +1500,18 @@ EndFunction
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 Outfit JarlDefaultOutfit ;CWO If player has SKSE, get Jarl's outfit
+
+;[DVs CW Fix] Bug 8.4: Null-safe wrapper for actor operations
+Function safeDeleteActorWhenAble(ReferenceAlias aliasRef)
+	Actor actorRef = aliasRef.GetActorReference()
+	if actorRef
+		actorRef.DeleteWhenAble()
+	endif
+EndFunction
+
+Function safeDisableActor(ReferenceAlias aliasRef)
+	Actor actorRef = aliasRef.GetActorReference()
+	if actorRef
+		actorRef.disable()
+	endif
+EndFunction
